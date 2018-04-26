@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<BrowserSetting xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <IsDisplayAddress>false</IsDisplayAddress>
+  <IsDisplayTabHeader>false</IsDisplayTabHeader>
+  <IsClearHistoryExit>true</IsClearHistoryExit>
+  <HomePage>http://10.42.0.88:8080/cqe</HomePage>
+  <DownloadDirPath>C:\Users\Administrator\Documents\检察专用浏览器</DownloadDirPath>
+  <ZoomPercent>100</ZoomPercent>
+  <StandardFontFamily>宋体</StandardFontFamily>
+  <SerifFontFamily>宋体</SerifFontFamily>
+  <SansSerifFontFamily>宋体</SansSerifFontFamily>
+  <CursiveFontFamily>宋体</CursiveFontFamily>
+  <FantasyFontFamily>宋体</FantasyFontFamily>
+  <FixedFontFamily>新宋体</FixedFontFamily>
+  <DefaultFontSize>12</DefaultFontSize>
+  <DefaultFixedFontSize>12</DefaultFixedFontSize>
+  <MinimumFontSize>12</MinimumFontSize>
+  <MinimumLogicalFontSize>12</MinimumLogicalFontSize>
+</BrowserSetting>

@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.XtQxRyJsfpMapper">
+  <resultMap id="BaseResultMap" type="com.start.boot.domain.XtQxRyJsfp">
+    <id column="DWBM" jdbcType="CHAR" property="dwbm" />
+    <id column="BMBM" jdbcType="CHAR" property="bmbm" />
+    <id column="JSBM" jdbcType="CHAR" property="jsbm" />
+    <id column="GH" jdbcType="CHAR" property="gh" />
+    <result column="ZJLDGH" jdbcType="CHAR" property="zjldgh" />
+    <result column="RYXH" jdbcType="DECIMAL" property="ryxh" />
+    <result column="YDWBM" jdbcType="CHAR" property="ydwbm" />
+    <result column="YDWMC" jdbcType="VARCHAR" property="ydwmc" />
+    <result column="YBMBM" jdbcType="CHAR" property="ybmbm" />
+    <result column="YBMMC" jdbcType="VARCHAR" property="ybmmc" />
+    <result column="YJSBM" jdbcType="CHAR" property="yjsbm" />
+    <result column="YJSMC" jdbcType="VARCHAR" property="yjsmc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    DWBM, BMBM, JSBM, GH, ZJLDGH, RYXH, YDWBM, YDWMC, YBMBM, YBMMC, YJSBM, YJSMC
+  </sql>
+  <select id="selectByExample" parameterType="com.start.boot.domain.XtQxRyJsfpExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from XT_QX_RYJSFP
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.start.boot.domain.XtQxRyJsfpKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from XT_QX_RYJSFP
+    where DWBM = #{dwbm,jdbcType=CHAR}
+      and BMBM = #{bmbm,jdbcType=CHAR}
+      and JSBM = #{jsbm,jdbcType=CHAR}
+      and GH = #{gh,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.start.boot.domain.XtQxRyJsfpKey">
+    delete from XT_QX_RYJSFP
+    where DWBM = #{dwbm,jdbcType=CHAR}
+      and BMBM = #{bmbm,jdbcType=CHAR}
+      and JSBM = #{jsbm,jdbcType=CHAR}
+      and GH = #{gh,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.start.boot.domain.XtQxRyJsfpExample">
+    delete from XT_QX_RYJSFP
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.start.boot.domain.XtQxRyJsfp">
+    insert into XT_QX_RYJSFP (DWBM, BMBM, JSBM, GH, 
+      ZJLDGH, RYXH, YDWBM, YDWMC, 
+      YBMBM, YBMMC, YJSBM, YJSMC
+      )
+    values (#{dwbm,jdbcType=CHAR}, #{bmbm,jdbcType=CHAR}, #{jsbm,jdbcType=CHAR}, #{gh,jdbcType=CHAR}, 
+      #{zjldgh,jdbcType=CHAR}, #{ryxh,jdbcType=DECIMAL}, #{ydwbm,jdbcType=CHAR}, #{ydwmc,jdbcType=VARCHAR}, 
+      #{ybmbm,jdbcType=CHAR}, #{ybmmc,jdbcType=VARCHAR}, #{yjsbm,jdbcType=CHAR}, #{yjsmc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.start.boot.domain.XtQxRyJsfp">
+    insert into XT_QX_RYJSFP
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dwbm != null">
+        DWBM,
+      </if>
+      <if test="bmbm != null">
+        BMBM,
+      </if>
+      <if test="jsbm != null">
+        JSBM,
+      </if>
+      <if test="gh != null">
+        GH,
+      </if>
+      <if test="zjldgh != null">
+        ZJLDGH,
+      </if>
+      <if test="ryxh != null">
+        RYXH,
+      </if>
+      <if test="ydwbm != null">
+        YDWBM,
+      </if>
+      <if test="ydwmc != null">
+        YDWMC,
+      </if>
+      <if test="ybmbm != null">
+        YBMBM,
+      </if>
+      <if test="ybmmc != null">
+        YBMMC,
+      </if>
+      <if test="yjsbm != null">
+        YJSBM,
+      </if>
+      <if test="yjsmc != null">
+        YJSMC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dwbm != null">
+        #{dwbm,jdbcType=CHAR},
+      </if>
+      <if test="bmbm != null">
+        #{bmbm,jdbcType=CHAR},
+      </if>
+      <if test="jsbm != null">
+        #{jsbm,jdbcType=CHAR},
+      </if>
+      <if test="gh != null">
+        #{gh,jdbcType=CHAR},
+      </if>
+      <if test="zjldgh != null">
+        #{zjldgh,jdbcType=CHAR},
+      </if>
+      <if test="ryxh != null">
+        #{ryxh,jdbcType=DECIMAL},
+      </if>
+      <if test="ydwbm != null">
+        #{ydwbm,jdbcType=CHAR},
+      </if>
+      <if test="ydwmc != null">
+        #{ydwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="ybmbm != null">
+        #{ybmbm,jdbcType=CHAR},
+      </if>
+      <if test="ybmmc != null">
+        #{ybmmc,jdbcType=VARCHAR},
+      </if>
+      <if test="yjsbm != null">
+        #{yjsbm,jdbcType=CHAR},
+      </if>
+      <if test="yjsmc != null">
+        #{yjsmc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.start.boot.domain.XtQxRyJsfpExample" resultType="java.lang.Long">
+    select count(*) from XT_QX_RYJSFP
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update XT_QX_RYJSFP
+    <set>
+      <if test="record.dwbm != null">
+        DWBM = #{record.dwbm,jdbcType=CHAR},
+      </if>
+      <if test="record.bmbm != null">
+        BMBM = #{record.bmbm,jdbcType=CHAR},
+      </if>
+      <if test="record.jsbm != null">
+        JSBM = #{record.jsbm,jdbcType=CHAR},
+      </if>
+      <if test="record.gh != null">
+        GH = #{record.gh,jdbcType=CHAR},
+      </if>
+      <if test="record.zjldgh != null">
+        ZJLDGH = #{record.zjldgh,jdbcType=CHAR},
+      </if>
+      <if test="record.ryxh != null">
+        RYXH = #{record.ryxh,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ydwbm != null">
+        YDWBM = #{record.ydwbm,jdbcType=CHAR},
+      </if>
+      <if test="record.ydwmc != null">
+        YDWMC = #{record.ydwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ybmbm != null">
+        YBMBM = #{record.ybmbm,jdbcType=CHAR},
+      </if>
+      <if test="record.ybmmc != null">
+        YBMMC = #{record.ybmmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yjsbm != null">
+        YJSBM = #{record.yjsbm,jdbcType=CHAR},
+      </if>
+      <if test="record.yjsmc != null">
+        YJSMC = #{record.yjsmc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update XT_QX_RYJSFP
+    set DWBM = #{record.dwbm,jdbcType=CHAR},
+      BMBM = #{record.bmbm,jdbcType=CHAR},
+      JSBM = #{record.jsbm,jdbcType=CHAR},
+      GH = #{record.gh,jdbcType=CHAR},
+      ZJLDGH = #{record.zjldgh,jdbcType=CHAR},
+      RYXH = #{record.ryxh,jdbcType=DECIMAL},
+      YDWBM = #{record.ydwbm,jdbcType=CHAR},
+      YDWMC = #{record.ydwmc,jdbcType=VARCHAR},
+      YBMBM = #{record.ybmbm,jdbcType=CHAR},
+      YBMMC = #{record.ybmmc,jdbcType=VARCHAR},
+      YJSBM = #{record.yjsbm,jdbcType=CHAR},
+      YJSMC = #{record.yjsmc,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.start.boot.domain.XtQxRyJsfp">
+    update XT_QX_RYJSFP
+    <set>
+      <if test="zjldgh != null">
+        ZJLDGH = #{zjldgh,jdbcType=CHAR},
+      </if>
+      <if test="ryxh != null">
+        RYXH = #{ryxh,jdbcType=DECIMAL},
+      </if>
+      <if test="ydwbm != null">
+        YDWBM = #{ydwbm,jdbcType=CHAR},
+      </if>
+      <if test="ydwmc != null">
+        YDWMC = #{ydwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="ybmbm != null">
+        YBMBM = #{ybmbm,jdbcType=CHAR},
+      </if>
+      <if test="ybmmc != null">
+        YBMMC = #{ybmmc,jdbcType=VARCHAR},
+      </if>
+      <if test="yjsbm != null">
+        YJSBM = #{yjsbm,jdbcType=CHAR},
+      </if>
+      <if test="yjsmc != null">
+        YJSMC = #{yjsmc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DWBM = #{dwbm,jdbcType=CHAR}
+      and BMBM = #{bmbm,jdbcType=CHAR}
+      and JSBM = #{jsbm,jdbcType=CHAR}
+      and GH = #{gh,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.start.boot.domain.XtQxRyJsfp">
+    update XT_QX_RYJSFP
+    set ZJLDGH = #{zjldgh,jdbcType=CHAR},
+      RYXH = #{ryxh,jdbcType=DECIMAL},
+      YDWBM = #{ydwbm,jdbcType=CHAR},
+      YDWMC = #{ydwmc,jdbcType=VARCHAR},
+      YBMBM = #{ybmbm,jdbcType=CHAR},
+      YBMMC = #{ybmmc,jdbcType=VARCHAR},
+      YJSBM = #{yjsbm,jdbcType=CHAR},
+      YJSMC = #{yjsmc,jdbcType=VARCHAR}
+    where DWBM = #{dwbm,jdbcType=CHAR}
+      and BMBM = #{bmbm,jdbcType=CHAR}
+      and JSBM = #{jsbm,jdbcType=CHAR}
+      and GH = #{gh,jdbcType=CHAR}
+  </update>
+</mapper>

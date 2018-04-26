@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../../../plugin/jquery-easyui-1.4.1/themes/bootstrap/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="../../../plugin/jquery-easyui-1.4.1/themes/icon.css" />
+    <script src="../../../plugin/jquery-easyui-1.4.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../plugin/jquery-easyui-1.4.1/jquery.easyui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../plugin/jquery-easyui-1.4.1/locale/easyui-lang-zh_TW.js" type="text/javascript"></script>
+    <script src="../../../plugin/Main.js" type="application/javascript"></script>
+</head>
+<body>
+
+
+<label class="easyui-lable1">请输入单位编码：</label><input type="text" id="gh" name="gh" value="1">
+<p/>
+<label class="easyui-lable1">请输入工号：</label><input type="text" id="dwbm" value="1" name="dwbm">
+<p/>
+<input type="button" id="getPersonList_button" value="查询" onclick="loadPersonList()">
+<table id="datagrid_easyui_resource_person_list" class="easyui-datagrid" style="height:90%;"></table>
+</body>
+<script type="application/javascript">
+$(function () {
+    initPersonListDataGrid();
+})
+    function loadPersonList() {
+        var gridOpts = $('#datagrid_easyui_resource_person_list').datagrid('getPager').data('pagination').options;
+        var obj = new Object();
+        obj.gh = $('#gh').val()
+        obj.dwbm = $('#dwbm').val()
+        obj.page = gridOpts.pageNumber;
+        obj.pageSize = gridOpts.pageSize;
+        $('#datagrid_easyui_resource_person_list').datagrid({
+            url: getRootPath()+'/person/getPersonList',
+            queryParams: obj
+        });
+    }
+
+    function initPersonListDataGrid() {
+        $('#datagrid_easyui_resource_person_list').datagrid({
+            pagination: true,
+            pageNumber: 0,
+            pageSize: 20,
+            pageList: [10,20,30,40,50],
+            loadMsg: '数据加载中，请稍等。。。',
+            fitColumns: true,
+            striped: true,
+            rownumbers:true,
+            columns: [[
+                { field: 'id', title: '评查受理编码', hidden: true },
+                { field: 'PCSLBM', title: '评查受理编码', hidden: true },
+                { field: 'BMSAH', title: '评查受理编码', hidden: true },
+                { field: 'zllx', title: '资料类型', width: 90 },
+                { field: 'gyzy', title: '关联资源', width: 90},
+                { field: 'zlmc', title: '资料名称', width: 350},
+                { field: 'bh', title: '编号', width: 180 },
+                { field: 'cjsj', title: '创建时间', width: 120 ,formatter: function (value) {
+                    var temp=new Date(value)
+                    var year=  temp.getFullYear();
+                    var month=  temp.getMonth();
+                    var day= temp.getDay();
+                    return year+'年'+month+'月'+day+'日';
+                }},
+                { field: 'dwbm', title: '单位编码', width: 140 },
+                { field: 'gh', title: '工号', width: 80},
+                { field: 'sfsc', title: '是否有效', hidden: true },
+                { field: 'gxbm', title: '共享编码', hidden: true },
+                {
+                    field: 'cz',
+                    title: '操作',
+                    width: 80,
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        debugger
+                        var d = '<a href="#" onclick="delPersonById(' + index + ')">删除</a> ';
+                        return  d;
+                    }
+                }
+            ]]
+        });
+    }
+    function formaterDate(value) {
+            var temp=new Date(value)
+            var year=  temp.getFullYear();
+            var month=  temp.getMonth();
+            var day= temp.getDay();
+            return year+'年'+month+'月'+day+'日';
+    }
+
+    // 删除评查案件
+    delPersonById = function(index) {
+
+        var rowDatas = $('#datagrid_easyui_resource_person_list').datagrid('getRows');
+        var id = rowDatas[index].id;
+
+        Confirm("确认", "是否删除？", function (r) {
+            if (r) {
+                debugger
+                $.ajax({
+                    url: getRootPath() + "/person/delPerson",
+                    data: {'id':id},
+                    type: 'get',
+                    async: true,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.status == 200){
+                            Alert('删除评查案件成功');
+                            loadPersonList();
+                            return data.value;
+                        }else {
+                            Alert(data.note);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function getRootPath() {
+        var strFullPath = window.document.location.href;
+        var strPath = window.document.location.pathname;
+
+        var pos = strFullPath.indexOf(strPath);
+        var prePath = strFullPath.substring(0, pos);
+        var postPath = strPath.substring(0, strPath.substr(1).indexOf('/') + 1);
+        return (prePath + postPath);
+    }
+
+
+</script>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" class="tjfx_echarts">
+<head>
+    <meta charset="UTF-8">
+    <title>案件质量年度趋势图</title>
+</head>
+<body>
+<script type="text/javascript",>
+    AddScript("text/javascript","script/statistics/casesearch/index.js")
+</script>
+    <div id="pcaj_top">
+        <!--<div class="top_cx_title">-->
+            <!--<p>综合分析<span>(按年)</span></p>-->
+        <!--</div>-->
+        <div class="top_cx_content">
+            <!--<div class="cx_box">-->
+                <!--<p class="cx_text">评查单位：</p>-->
+                <!--<div class="easyui-combotree" id="pcaj_pcdw"></div>-->
+            <!--</div>-->
+            <div class="cx_box">
+                <p class="cx_text">办案日期：</p>
+                <div class="easyui-combobox" id="pcaj_barq"></div>
+            </div>
+            <div class="cx_box">
+                <p class="cx_text">评查方式：</p>
+                <div class="easyui-combobox" id="pcaj_pcfs"></div>
+            </div>
+            <div class="btn" id="pcaj_cx" onclick="init_line()">查询</div>
+        </div>
+    </div>
+    <div id="pcaj_content">
+        <div id="echart_line" style="height:100%;">
+            <div id="echart1" style="width:70%; height:100%;float:left"></div>
+            <div id="echart2" style="width:30%; height:100%;float:left"></div>
+        </div>
+
+    </div>
+</body>
+</html>

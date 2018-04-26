@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案件信息</title>
+</head>
+
+<body>
+<script type="text/javascript">
+    AddScript("text/javascript","script/evaluate/pcblWin/caseinfo.js");
+    AddScript("text/javascript", "script/document/ntkoofficecontrol_pcxx.js");
+    AddScript("text/javascript", "script/document/JScriptDoc.js");
+</script>
+
+<div class="pcbl_ajxx" id="div_eval_handle_caseinfo">
+    <!--      <input id="cbt_case_info_bmsahs" class="easyui-combotree" style="width: 348px;height: 30px;margin-left: 5px" />-->
+    <div id="pcbl_ajxx_left" style="position:relative;width: calc(100% - 30px);height: 100%;float: left;">
+        <div class="caseinfo_fanyeBtn" id="caseinfo_previous" onclick="open_file_pre()"
+             style="display: none; cursor:pointer;z-index:20;position: absolute;top:50%;margin-top: -20px;left: 10px;width: 40px;height: 40px;">
+            <img style="display: block;width:40px;" src="./image/pdf/pdfLeft.png">
+        </div>
+        <div class="caseinfo_fanyeBtn" id="caseinfo_next" onclick="open_file_next()"
+             style="display: none;cursor:pointer;z-index:20;position: absolute;top:50%;margin-top: -20px;right: 30px;width: 40px;height: 40px;">
+            <img style="display: block;width:40px;" src="./image/pdf/pdfRight.png">
+        </div>
+        <div id="div_caseinfo_panel" class="easyui-panel" style="height: 600px; width: 100%; display: block;" data-options="fit:'true',border:false">
+            <!--<iframe width="100%" height="100%" frameborder="0"></iframe>-->
+        </div>
+        <div id="div_caseinfo_doc" style="height: 665px; display: none;">
+        </div>
+    </div>
+    <ul class="pcbl_ajxx_btn">
+        <li class="pcbl_ajxx_btn_click pcbl_ajxx_btn_ul_li">
+            <div class="pcbl_ajxx_btn_ul_li_text">文书卷宗</div>
+            <div class="pcbl_ajxx_sjx"></div>
+            <div class="pcbl_ajxx_btn_postion" style="top: 0px;">
+                <ul id="tree_caseinfo_doc_files" class="easyui-tree" style="padding: 10px;color:#000">
+                </ul>
+            </div>
+        </li>
+        <li class="pcbl_ajxx_btn_ul_li">
+            <div class="pcbl_ajxx_btn_ul_li_text">电子卷宗</div>
+            <div class="pcbl_ajxx_sjx"></div>
+            <div class="pcbl_ajxx_btn_postion" style="top: -111px;">
+                <ul id="tree_caseinfo_dossier_files" class="easyui-tree" style="padding: 10px;color:#000">
+                </ul>
+            </div>
+        </li>
+        <li class="pcbl_ajxx_btn_ul_li">
+            <div style="margin-top: 32px" class="pcbl_ajxx_btn_ul_li_text">案卡</div>
+            <div class="pcbl_ajxx_sjx"></div>
+            <div class="pcbl_ajxx_btn_postion"  style="top: -222px;">
+                <ul id="gaxx_akList" class="pacbl_ajxx_tabs_ul">
+                    <!--<li class="pacbl_ajxx_tabs_li">
+                        审查起诉受理情况
+                    </li>-->
+                </ul>
+            </div>
+        </li>
+        <li class="pcbl_ajxx_btn_ul_li">
+            <div class="pcbl_ajxx_btn_ul_li_text">过程信息</div>
+            <div class="pcbl_ajxx_sjx"></div>
+            <div class="pcbl_ajxx_btn_postion"  style="top: -333px;">
+                <ul id="gaxx_gcList" class="pacbl_ajxx_tabs_ul">
+                    <!--<li class="pacbl_ajxx_tabs_li">
+                        辩护代理信息
+                    </li>-->
+                </ul>
+            </div>
+        </li>
+        <li class="pcbl_ajxx_btn_ul_li">
+            <div class="pcbl_ajxx_btn_ul_li_text">流程监控</div>
+            <div class="pcbl_ajxx_sjx"></div>
+            <div class="pcbl_ajxx_btn_postion"  style="top:-444px;">
+                <ul id="gaxx_jkList" class="pacbl_ajxx_tabs_ul">
+                    <li onclick="show_flow_card_info()">
+                        流程监控信息
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>
+<!--文书打开提示框-->
+<div id="win_caseinfo_doc_files" class="easyui-window" title="提示" style="width: 500px; height: 250px; text-align:center; line-height:60px"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,closable:false">
+    <span id="span_win_caseinfo_doc_files_tipinfo" style=" font-size:14px"></span><br/>
+    <a id="btn_win_caseinfo_doc_files_close" class="easyui-linkbutton" >关闭</a>
+</div>
+<div>
+    <input type="hidden" id="gaxx_gcakxh" />
+    <input type="hidden" id="gaxx_akxh" />
+</div>
+
+</body>
+</html>

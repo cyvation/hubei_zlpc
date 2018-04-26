@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" class="tjfx_echarts">
+<head>
+    <meta charset="UTF-8">
+    <title>评查基本情况二</title>
+</head>
+<body>
+<script type="text/javascript" ,>
+    AddScript("text/javascript", "script/statistics/situation2/index.js")
+</script>
+
+<!--<div >-->
+    <!--<div style="float: left;width: 50%;height:auto;background: red"></div>-->
+    <!--<div style="float: left;width: 50%;height:auto;background: gold"></div>-->
+<!--</div>-->
+<!--<div >-->
+    <!--<div style="float: left;width: 50%;height:auto;background: #2773ff"></div>-->
+    <!--<div style="float: left;width: 50%;height:auto;background: #15ff28"></div>-->
+<!--</div>-->
+
+
+<div id="pcaj_top">
+    <div class="top_cx_content">
+        <div class="cx_box">
+            <p class="cx_text">单位：</p>
+            <div class="easyui-combotree" id="cbt_situation2_dw"></div>
+        </div>
+        <div class="cx_box">
+            <p class="cx_text">年度：</p>
+            <div class="easyui-combobox" id="cb_situation2_year"></div>
+        </div>
+        <div class="btn" id="btn_situation2_search" onclick="btn_situation2_search()">查询</div>
+    </div>
+</div>
+<div id="pcaj_content">
+    <div id="echart_line" style="height:100%;">
+        <div id="echart_situation2_bar_line" style="width:100%; height:50%;"></div>
+        <div id="echart_year_quality_bar" style="width: 100%;height: 50%;">
+        </div>
+        <div id="win_statistics_situatuion2" class="easyui-window" title="列表"
+             data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,cache:false,resizable:true,width:1000,height:600">
+            <table id="table_win_statistics_situatuion2"></table>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

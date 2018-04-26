@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <title>高级查询</title>
+</head>
+<body style="height: 100%;">
+<script type="text/javascript">
+    AddScript("text/javascript", "script/evaluate/build/special_gjcx_rd.js");
+</script>
+<div id="rd">
+
+    <div id="rd_lay_left">
+        <div style="border: 1px solid #A1C9E6; padding: 0 15px; height: 100%;">
+        <!--       2018-2-8修改高级查询               -->
+        <!--<div id="rd_lay_leftTop">-->
+            <!--<div id="rd_title_box">-->
+                <!--<div class="rd_tj_box_sf" style="text-align: center;color: #2d6cb5;">-->
+                    <!--筛选条件-->
+                <!--</div>-->
+                <!--<div class="rd_tj_box_ysf" style="text-align: center;color: #2d6cb5;">-->
+                    <!--运算符-->
+                <!--</div>-->
+                <!--<div class="rd_tj_box_value" style="color: #2d6cb5;text-align: center">-->
+                    <!--比较值-->
+                <!--</div>-->
+                <!--<div class="rd_tj_box_action" style="color: #2d6cb5;text-align: center">-->
+                    <!--操作-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div >
+            <div id="date_box_rd" style="height: 45px;padding-top: 12px;width: 100%;margin: 0 auto;">
+                <span style="display: inline-block;color: #666666;  margin: 0 0px 0 0;;float: left;">完成日期</span>
+                <div style="width: calc(100% - 71px);float: right">
+                <input id="date_eval_build_gjcx_rd_dept_begin" class="easyui-datebox" style="width: 145px;height: 22px;">
+                <span style="margin:0">~ </span>
+                <input id="date_eval_build_gjcx_rd_dept_end" class="easyui-datebox" style="width: 145px;height: 22px;">
+                </div>
+            </div>
+
+            <!--承办单位固定行-->
+            <div class="rd_tj_row_fixed" id="rd_row_fixed">
+                <!--       2018-2-8修改高级查询               -->
+                <!--<div class="rd_tj_box_sf_fixed">-->
+                    <!--<input style="height:22px;" id="rd_sf_gd_fixed" class="rd_sf easyui-combobox" data-options="wincom:true" data-index="0" value="承办单位" readonly>-->
+                <!--</div>-->
+                <!--<div class="rd_tj_box_ysf_fixed">-->
+                    <!--<input style="height:22px;" id="rd_ysf_fixed" class="rd_ysf easyui-combobox" data-options="wincom:true" value="为" readonly>-->
+                <!--</div>-->
+                <span style="display: inline-block;color: #666666; margin: 0 0px 0 0;float: left;">承办单位</span>
+                <div class="rd_tj_box_value_fixed" id="rd_value_box_fixed" style="width: calc(100% - 71px);height: 35px; float: right">
+                    <input style="height:22px;width: 309px;" class="rd_sf_value easyui-combotree" id="rd_value_fixed" data-tip="input">
+                </div>
+                <div style="height: 45px;clear: left;">
+                    <div class="gjcx_mode_but yl"  style="width: 100px;padding-left: 43px;" >预览</div>
+                    <div class="gjcx_mode_but cxtj" onclick="addNewRow()" style="width: 140px;    padding-left: 34px;" >增加查询条件</div>
+                    <div class="gjcx_mode_but_cx cx" id="rd_cx_btn" style="width: 100px;" >查询</div>
+                </div>
+            </div>
+
+            <!--<div class="rd_tj_row" id="rd_row_0">-->
+                <!--<div class="rd_tj_box_sf">-->
+                    <!--<input style="height:22px;" id="rd_sf_0" class="easyui-combobox rd_sf" data-options="wincom:true" data-index="0">-->
+                <!--</div>-->
+                <!--<div class="rd_tj_box_ysf">-->
+                    <!--<input style="height:22px;" id="rd_ysf_0" class="easyui-combobox rd_ysf" data-options="wincom:true">-->
+                <!--</div>-->
+                <!--<div class="rd_tj_box_value" id="rd_value_box_0">-->
+                    <!--<input style="height:22px;" class="rd_sf_value" id="rd_value_0" data-options="wincom:true" data-tip="input">-->
+                <!--</div>-->
+                <!--<div class="rd_tj_box_action" data-index="0">-->
+                    <!--&lt;!&ndash;<div class="tiaojian_btn tiaojian_add" onclick="addNewRow()">增加</div>&ndash;&gt;-->
+                    <!--<div class="rd_tiaojian_btn rd_tiaojian_delet" onclick="delRow(this)">删除</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+       <div id="rd_gjcx_tiaojian"></div>
+    </div>
+    </div>
+
+
+    <div id="rd_gjcx_center">
+        <div class="easyui-datagrid" id="rd_gjcx_datagrid" style="height:100%;width: 100%;"></div>
+    </div>
+</div>
+</body>
+</html>

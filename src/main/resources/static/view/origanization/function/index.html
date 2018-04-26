@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>功能模板管理</title>
+</head>
+<body>
+<!--页面JS加载，放在头部不能正确加载-->
+<script type="text/javascript">
+    AddScript("text/javascript", "script/origanization/function/index.js");
+</script>
+<style>
+
+</style>
+<!--功能模块-->
+<div id="layout_func_main" class="easyui-layout" data-options="fit:'true'">
+    <!--功能分类-->
+    <div id="layout_func_main_west" data-options="region:'west',title:'功能分类',border:false,split:true"
+         style="width: 260px;">
+        <div id="pnl_func_gnfl_tool" class="easyui-panel"
+             style="padding: 3px 0px 3px 6px; margin-bottom: 0px; border-left:0;border-bottom:0px; border-top:0px;">
+            <!--<a id="btn_func_gnfl_refresh" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-reload'">刷新</a>-->
+            <a id="btn_func_gnfl_add" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-add'">新增分类</a>
+            <a id="btn_func_gnfl_edit" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-edit'" >编辑分类</a>
+            <a id="btn_func_gnfl_remove" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-remove'" style="margin-top: 2px;">删除</a>
+        </div>
+        <div id="pnl_func_gnfl_tree" class="easyui-panel" data-options="fit:'true'">
+            <ul id="tree_func_gnfl" class="easyui-tree" style=" margin:5px;"></ul>
+        </div>
+    </div>
+    <!--功能模块定义-->
+    <div id="layout_func_main_center" data-options="region:'center',title:'功能定义',border:false"
+         style="width: 100%; padding: 0;">
+
+        <div id="pnl_func_gndy_tool" class="easyui-panel"
+             style="padding: 3px 0px 3px 6px; margin-bottom: 0; border-top:0;">
+            <a id="btn_func_gndy_add" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-add'">增加</a>
+            <a id="btn_func_gndy_refresh" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-reload'">刷新</a>
+        </div>
+        <div id="pnl_func_gndy_dg" class="easyui-panel" data-options="fit:'true'" style=" border-top:1px;">
+            <table id="dg_func_gndy" data-options="border:false">
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<!--弹出框：功能分类编辑-->
+<div id="win_func_gnfl_manage" class="easyui-window" title="功能分类"
+     style="width: 420px; height:240px; padding:15px 10px 10px 15px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+    <table cellpadding="5">
+        <tr>
+            <td style="width: 120px; text-align:right">父分类名称:</td>
+            <td style="width: 280px;">
+                <input id="txt_win_func_gnfl_ffl_cbt" class="easyui-combotree"  style="width: 260px;"/>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 120px;text-align:right ">分类名称:</td>
+            <td style="width: 280px;">
+                <input id="txt_win_func_gnfl_flmc" class="easyui-textbox" style="width: 260px;"/>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 120px;text-align:right ">序号:</td>
+            <td><input id="txt_win_func_gnfl_flxh" class="easyui-numberbox" style="width: 260px;"
+                       data-options="min:0,max:99"/></td>
+        </tr>
+        <tr>
+            <td style="width: 120px;text-align:right ">图标:</td>
+            <td>
+                <input id="txt_win_func_gnfl_icon" class="easyui-textbox" style="width: 260px;"/>
+            </td>
+        </tr>
+    </table>
+    <div style="text-align: center; margin-top:10px; margin-bottom: 10px;">
+        <a id="btn_win_func_gnfl_confirm" class="easyui-linkbutton">确定</a>&nbsp;
+        <a id="btn_win_func_gnfl_cancel" class="easyui-linkbutton">取消</a>
+    </div>
+</div>
+
+<div id="win_func_gndy_manage" class="easyui-window" title="功能定义" style="width: 640px; height: 260px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+    <table cellpadding="5">
+        <tr>
+            <td style="text-align: right;">
+                功能分类:
+            </td>
+            <td>
+                <input id="txt_win_func_gndy_flmc" class="easyui-textbox" type="text" data-options="readonly:true"
+                       style="width: 230px;">
+            </td>
+            <td style="text-align: right;">
+                功能名称:
+            </td>
+            <td>
+                <input id="txt_win_func_gndy_gnmc" class="easyui-textbox" type="text" style="width: 230px;">
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">
+                功能窗体:
+            </td>
+            <td>
+                <input id="txt_win_func_gndy_gnct" class="easyui-textbox" type="text" style="width: 230px;">
+            </td>
+            <td style="text-align: right;">
+                显示名称:
+            </td>
+            <td>
+                <input id="txt_win_func_gndy_gnxsmc" class="easyui-textbox" type="text" style="width: 230px;">
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">
+                功能序号:
+            </td>
+            <td>
+                <input id="txt_win_func_gndy_gnxh" class="easyui-numberbox" type="text" data-options="min:0,max:99"
+                       style="width: 230px;">
+            </td>
+
+            <td style="text-align: right;">
+                功能图标:
+            </td>
+            <td>
+                <input id="txt_win_func_gndy_gncxj" class="easyui-textbox" type="text" style="width: 230px;">
+            </td>
+        </tr>
+        <!--        <tr>
+                    <td style="text-align: right;">
+                        功能参数:
+                    </td>
+                    <td>
+                        <input id="txt_win_func_gndy_gncs" class="easyui-textbox" type="text" style="width: 230px;">
+                    </td>
+                    <td style="text-align: right;">
+                        初始参数:
+                    </td>
+                    <td>
+                        <input id="txt_win_func_gndy_cscs" class="easyui-textbox" type="text" style="width: 230px;">
+                    </td>
+                </tr>-->
+        <tr>
+            <td style="text-align: right;">
+                功能说明:
+            </td>
+            <td colspan="3">
+                <input id="txt_win_func_gndy_gnsm" class="easyui-textbox" data-options="multiline:true" type="text"
+                       style="height: 60px;width:538px; ">
+            </td>
+        </tr>
+    </table>
+    <div style="margin-top: 10px; margin-left: 5%">
+        <input id="txt_win_func_gndy_gnbm" type="text" style="display: none"/>
+    </div>
+    <div style="margin-top: 10px; margin-left: 40%">
+        <a id="btn_win_func_gndy_confirm" class="easyui-linkbutton">确定</a>
+        <label style="margin-left: 20px">
+        </label>
+        <a id="btn_win_func_gndy_cancel" class="easyui-linkbutton">取消</a>
+    </div>
+</div>
+</body>
+</html>

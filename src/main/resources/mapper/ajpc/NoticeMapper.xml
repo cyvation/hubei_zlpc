@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.NoticeMapper">
+  <resultMap id="BaseResultMap" type="com.start.boot.domain.Notice">
+    <id column="BH" jdbcType="VARCHAR" property="bh" />
+    <result column="FBRDWBM" jdbcType="CHAR" property="fbrdwbm" />
+    <result column="FBRDWMC" jdbcType="VARCHAR" property="fbrdwmc" />
+    <result column="FBRGH" jdbcType="CHAR" property="fbrgh" />
+    <result column="FBRXM" jdbcType="VARCHAR" property="fbrxm" />
+    <result column="LXDM" jdbcType="CHAR" property="lxdm" />
+    <result column="LXMC" jdbcType="VARCHAR" property="lxmc" />
+    <result column="BT" jdbcType="VARCHAR" property="bt" />
+    <result column="CJSJ" jdbcType="TIMESTAMP" property="cjsj" />
+    <result column="ZHXGSJ" jdbcType="TIMESTAMP" property="zhxgsj" />
+    <result column="SFSC" jdbcType="CHAR" property="sfsc" />
+    <result column="GHSJ" jdbcType="TIMESTAMP" property="ghsj" />
+    <result column="SFJYKJ" jdbcType="CHAR" property="sfjykj" />
+    <result column="FJ" jdbcType="VARCHAR" property="fj" />
+    <result column="ZLMC" jdbcType="VARCHAR" property="zlmc" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.start.boot.domain.Notice">
+    <result column="NR" jdbcType="CLOB" property="nr" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    BH, FBRDWBM, FBRDWMC, FBRGH, FBRXM, LXDM, LXMC, BT, CJSJ, ZHXGSJ, SFSC, GHSJ, SFJYKJ, 
+    FJ, ZLMC
+  </sql>
+  <sql id="Blob_Column_List">
+    NR
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.start.boot.domain.NoticeExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from YX_PC_TZGG
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.start.boot.domain.NoticeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YX_PC_TZGG
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from YX_PC_TZGG
+    where BH = #{bh,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from YX_PC_TZGG
+    where BH = #{bh,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.start.boot.domain.NoticeExample">
+    delete from YX_PC_TZGG
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.start.boot.domain.Notice">
+    insert into YX_PC_TZGG (BH, FBRDWBM, FBRDWMC, 
+      FBRGH, FBRXM, LXDM, LXMC, 
+      BT, CJSJ, ZHXGSJ, 
+      SFSC, GHSJ, SFJYKJ, FJ, 
+      ZLMC, NR)
+    values (#{bh,jdbcType=VARCHAR}, #{fbrdwbm,jdbcType=CHAR}, #{fbrdwmc,jdbcType=VARCHAR}, 
+      #{fbrgh,jdbcType=CHAR}, #{fbrxm,jdbcType=VARCHAR}, #{lxdm,jdbcType=CHAR}, #{lxmc,jdbcType=VARCHAR}, 
+      #{bt,jdbcType=VARCHAR}, #{cjsj,jdbcType=TIMESTAMP}, #{zhxgsj,jdbcType=TIMESTAMP}, 
+      #{sfsc,jdbcType=CHAR}, #{ghsj,jdbcType=TIMESTAMP}, #{sfjykj,jdbcType=CHAR}, #{fj,jdbcType=VARCHAR}, 
+      #{zlmc,jdbcType=VARCHAR}, #{nr,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.start.boot.domain.Notice">
+    insert into YX_PC_TZGG
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bh != null">
+        BH,
+      </if>
+      <if test="fbrdwbm != null">
+        FBRDWBM,
+      </if>
+      <if test="fbrdwmc != null">
+        FBRDWMC,
+      </if>
+      <if test="fbrgh != null">
+        FBRGH,
+      </if>
+      <if test="fbrxm != null">
+        FBRXM,
+      </if>
+      <if test="lxdm != null">
+        LXDM,
+      </if>
+      <if test="lxmc != null">
+        LXMC,
+      </if>
+      <if test="bt != null">
+        BT,
+      </if>
+      <if test="cjsj != null">
+        CJSJ,
+      </if>
+      <if test="zhxgsj != null">
+        ZHXGSJ,
+      </if>
+      <if test="sfsc != null">
+        SFSC,
+      </if>
+      <if test="ghsj != null">
+        GHSJ,
+      </if>
+      <if test="sfjykj != null">
+        SFJYKJ,
+      </if>
+      <if test="fj != null">
+        FJ,
+      </if>
+      <if test="zlmc != null">
+        ZLMC,
+      </if>
+      <if test="nr != null">
+        NR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bh != null">
+        #{bh,jdbcType=VARCHAR},
+      </if>
+      <if test="fbrdwbm != null">
+        #{fbrdwbm,jdbcType=CHAR},
+      </if>
+      <if test="fbrdwmc != null">
+        #{fbrdwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="fbrgh != null">
+        #{fbrgh,jdbcType=CHAR},
+      </if>
+      <if test="fbrxm != null">
+        #{fbrxm,jdbcType=VARCHAR},
+      </if>
+      <if test="lxdm != null">
+        #{lxdm,jdbcType=CHAR},
+      </if>
+      <if test="lxmc != null">
+        #{lxmc,jdbcType=VARCHAR},
+      </if>
+      <if test="bt != null">
+        #{bt,jdbcType=VARCHAR},
+      </if>
+      <if test="cjsj != null">
+        #{cjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="zhxgsj != null">
+        #{zhxgsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sfsc != null">
+        #{sfsc,jdbcType=CHAR},
+      </if>
+      <if test="ghsj != null">
+        #{ghsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sfjykj != null">
+        #{sfjykj,jdbcType=CHAR},
+      </if>
+      <if test="fj != null">
+        #{fj,jdbcType=VARCHAR},
+      </if>
+      <if test="zlmc != null">
+        #{zlmc,jdbcType=VARCHAR},
+      </if>
+      <if test="nr != null">
+        #{nr,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.start.boot.domain.NoticeExample" resultType="java.lang.Long">
+    select count(*) from YX_PC_TZGG
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update YX_PC_TZGG
+    <set>
+      <if test="record.bh != null">
+        BH = #{record.bh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fbrdwbm != null">
+        FBRDWBM = #{record.fbrdwbm,jdbcType=CHAR},
+      </if>
+      <if test="record.fbrdwmc != null">
+        FBRDWMC = #{record.fbrdwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fbrgh != null">
+        FBRGH = #{record.fbrgh,jdbcType=CHAR},
+      </if>
+      <if test="record.fbrxm != null">
+        FBRXM = #{record.fbrxm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lxdm != null">
+        LXDM = #{record.lxdm,jdbcType=CHAR},
+      </if>
+      <if test="record.lxmc != null">
+        LXMC = #{record.lxmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bt != null">
+        BT = #{record.bt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cjsj != null">
+        CJSJ = #{record.cjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.zhxgsj != null">
+        ZHXGSJ = #{record.zhxgsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sfsc != null">
+        SFSC = #{record.sfsc,jdbcType=CHAR},
+      </if>
+      <if test="record.ghsj != null">
+        GHSJ = #{record.ghsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sfjykj != null">
+        SFJYKJ = #{record.sfjykj,jdbcType=CHAR},
+      </if>
+      <if test="record.fj != null">
+        FJ = #{record.fj,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zlmc != null">
+        ZLMC = #{record.zlmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nr != null">
+        NR = #{record.nr,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update YX_PC_TZGG
+    set BH = #{record.bh,jdbcType=VARCHAR},
+      FBRDWBM = #{record.fbrdwbm,jdbcType=CHAR},
+      FBRDWMC = #{record.fbrdwmc,jdbcType=VARCHAR},
+      FBRGH = #{record.fbrgh,jdbcType=CHAR},
+      FBRXM = #{record.fbrxm,jdbcType=VARCHAR},
+      LXDM = #{record.lxdm,jdbcType=CHAR},
+      LXMC = #{record.lxmc,jdbcType=VARCHAR},
+      BT = #{record.bt,jdbcType=VARCHAR},
+      CJSJ = #{record.cjsj,jdbcType=TIMESTAMP},
+      ZHXGSJ = #{record.zhxgsj,jdbcType=TIMESTAMP},
+      SFSC = #{record.sfsc,jdbcType=CHAR},
+      GHSJ = #{record.ghsj,jdbcType=TIMESTAMP},
+      SFJYKJ = #{record.sfjykj,jdbcType=CHAR},
+      FJ = #{record.fj,jdbcType=VARCHAR},
+      ZLMC = #{record.zlmc,jdbcType=VARCHAR},
+      NR = #{record.nr,jdbcType=CLOB}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update YX_PC_TZGG
+    set BH = #{record.bh,jdbcType=VARCHAR},
+      FBRDWBM = #{record.fbrdwbm,jdbcType=CHAR},
+      FBRDWMC = #{record.fbrdwmc,jdbcType=VARCHAR},
+      FBRGH = #{record.fbrgh,jdbcType=CHAR},
+      FBRXM = #{record.fbrxm,jdbcType=VARCHAR},
+      LXDM = #{record.lxdm,jdbcType=CHAR},
+      LXMC = #{record.lxmc,jdbcType=VARCHAR},
+      BT = #{record.bt,jdbcType=VARCHAR},
+      CJSJ = #{record.cjsj,jdbcType=TIMESTAMP},
+      ZHXGSJ = #{record.zhxgsj,jdbcType=TIMESTAMP},
+      SFSC = #{record.sfsc,jdbcType=CHAR},
+      GHSJ = #{record.ghsj,jdbcType=TIMESTAMP},
+      SFJYKJ = #{record.sfjykj,jdbcType=CHAR},
+      FJ = #{record.fj,jdbcType=VARCHAR},
+      ZLMC = #{record.zlmc,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.start.boot.domain.Notice">
+    update YX_PC_TZGG
+    <set>
+      <if test="fbrdwbm != null">
+        FBRDWBM = #{fbrdwbm,jdbcType=CHAR},
+      </if>
+      <if test="fbrdwmc != null">
+        FBRDWMC = #{fbrdwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="fbrgh != null">
+        FBRGH = #{fbrgh,jdbcType=CHAR},
+      </if>
+      <if test="fbrxm != null">
+        FBRXM = #{fbrxm,jdbcType=VARCHAR},
+      </if>
+      <if test="lxdm != null">
+        LXDM = #{lxdm,jdbcType=CHAR},
+      </if>
+      <if test="lxmc != null">
+        LXMC = #{lxmc,jdbcType=VARCHAR},
+      </if>
+      <if test="bt != null">
+        BT = #{bt,jdbcType=VARCHAR},
+      </if>
+      <if test="cjsj != null">
+        CJSJ = #{cjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="zhxgsj != null">
+        ZHXGSJ = #{zhxgsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sfsc != null">
+        SFSC = #{sfsc,jdbcType=CHAR},
+      </if>
+      <if test="ghsj != null">
+        GHSJ = #{ghsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sfjykj != null">
+        SFJYKJ = #{sfjykj,jdbcType=CHAR},
+      </if>
+      <if test="fj != null">
+        FJ = #{fj,jdbcType=VARCHAR},
+      </if>
+      <if test="zlmc != null">
+        ZLMC = #{zlmc,jdbcType=VARCHAR},
+      </if>
+      <if test="nr != null">
+        NR = #{nr,jdbcType=CLOB},
+      </if>
+    </set>
+    where BH = #{bh,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.start.boot.domain.Notice">
+    update YX_PC_TZGG
+    set FBRDWBM = #{fbrdwbm,jdbcType=CHAR},
+      FBRDWMC = #{fbrdwmc,jdbcType=VARCHAR},
+      FBRGH = #{fbrgh,jdbcType=CHAR},
+      FBRXM = #{fbrxm,jdbcType=VARCHAR},
+      LXDM = #{lxdm,jdbcType=CHAR},
+      LXMC = #{lxmc,jdbcType=VARCHAR},
+      BT = #{bt,jdbcType=VARCHAR},
+      CJSJ = #{cjsj,jdbcType=TIMESTAMP},
+      ZHXGSJ = #{zhxgsj,jdbcType=TIMESTAMP},
+      SFSC = #{sfsc,jdbcType=CHAR},
+      GHSJ = #{ghsj,jdbcType=TIMESTAMP},
+      SFJYKJ = #{sfjykj,jdbcType=CHAR},
+      FJ = #{fj,jdbcType=VARCHAR},
+      ZLMC = #{zlmc,jdbcType=VARCHAR},
+      NR = #{nr,jdbcType=CLOB}
+    where BH = #{bh,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.start.boot.domain.Notice">
+    update YX_PC_TZGG
+    set FBRDWBM = #{fbrdwbm,jdbcType=CHAR},
+      FBRDWMC = #{fbrdwmc,jdbcType=VARCHAR},
+      FBRGH = #{fbrgh,jdbcType=CHAR},
+      FBRXM = #{fbrxm,jdbcType=VARCHAR},
+      LXDM = #{lxdm,jdbcType=CHAR},
+      LXMC = #{lxmc,jdbcType=VARCHAR},
+      BT = #{bt,jdbcType=VARCHAR},
+      CJSJ = #{cjsj,jdbcType=TIMESTAMP},
+      ZHXGSJ = #{zhxgsj,jdbcType=TIMESTAMP},
+      SFSC = #{sfsc,jdbcType=CHAR},
+      GHSJ = #{ghsj,jdbcType=TIMESTAMP},
+      SFJYKJ = #{sfjykj,jdbcType=CHAR},
+      FJ = #{fj,jdbcType=VARCHAR},
+      ZLMC = #{zlmc,jdbcType=VARCHAR}
+    where BH = #{bh,jdbcType=VARCHAR}
+  </update>
+</mapper>

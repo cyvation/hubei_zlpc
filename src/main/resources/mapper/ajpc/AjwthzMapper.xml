@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.AjwthzMapper">
+
+    <select id="getAjwthzList" resultType="com.start.boot.pojo.vo.AjpcwtxVo" parameterType="com.start.boot.query.QueryTable">
+        SELECT a.pcxflfbm,a.pcxflbm,a.pcxbm,p.pcxflmc pcxflfmc,a.pcxflmc,a.pcxmc,nvl(c.wts,0) wts from
+        (SELECT f.pcxflfbm, x.pcxflbm,f.pcxflmc,x.pcxbm,x.pcxmc from xt_pc_pcx x
+        LEFT JOIN xt_pc_pcxfl f ON x.pcxflbm=f.pcxflbm
+        WHERE x.pcmbbm='4200000080000002') a
+        LEFT JOIN xt_pc_pcxfl p ON a.pcxflfbm=p.pcxflbm
+        LEFT JOIN (
+        SELECT
+        pcxbm,
+        SUM(CASE
+        WHEN pcfs = '1'
+        AND pcjg = '1' THEN 1
+        WHEN pcfs = '2'
+        AND pcjg IS NOT NULL THEN 1
+        ELSE  0
+        END) wts
+        FROM
+        yx_pc_pcx x WHERE x.pcmbbm='4200000080000002'
+        GROUP BY x.pcxbm
+        ) c ON a.pcxbm=c.pcxbm
+        inner join yx_pc_jbxx jbxx on jbxx.pcflbm = p.pcflbm
+        where jbxx.sfsc != 'N'
+         ORDER BY a.pcxbm
+        <!--WHERE jbxx.pcjdbh = '011' AND jbxx.sfsc = 'N'-->
+        <!--<if test="dwbm !=null and dwbm!=''">-->
+           <!--AND jbxx.BPC_DWBM=#{dwbm}-->
+        <!--</if>-->
+        <!--<if test="pcflbm !=null and pcflbm!=''">-->
+            <!--AND jbxx.PCFLBM=#{pcflbm}-->
+        <!--</if>-->
+        <!--<if test="pcmbbm !=null and pcmbbm!=''">-->
+            <!--AND jbxx.PCMBBM=#{pcmbbm}-->
+        <!--</if>-->
+        <!--<if test="startDate !=null and startDate!=''">-->
+            <!--AND jbxx.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')-->
+        <!--</if>-->
+        <!--<if test="endDate !=null and endDate!=''">-->
+            <!--AND jbxx.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')-->
+        <!--</if>-->
+
+    </select>
+
+
+</mapper>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"  class="tjfx_echarts">
+<head>
+    <meta charset="UTF-8">
+    <title>年度问题性质分布图</title>
+</head>
+<body>
+<script type="text/javascript">
+    AddScript("text/javascript","script/statistics/wtxz_tjfx/wtxz_tjfx.js")
+</script>
+<div id="wtxz_top">
+    <div class="top_cx_content">
+        <div class="cx_box">
+            <p class="cx_text">办案日期：</p>
+            <div class="easyui-combobox" id="wtxz_barq"></div>
+        </div>
+        <div class="cx_box">
+            <p class="cx_text">评查方式：</p>
+            <div class="easyui-combobox" id="wtxz_pcfl"></div>
+        </div>
+        <div class="cx_box">
+            <p class="cx_text">评查结果：</p>
+            <input id="wtxz_pcjg" type="text">
+        </div>
+        <div class="btn" id="wtxz_cx" onclick="serch_btn()">查询</div>
+    </div>
+</div>
+<div id="wtxz_content">
+    <div id="wtxz_datagrid" style="width:70%;height:100%;float: left;">
+        <div id="wtxz_table" class="easyui-datagrid" style="border:0;width: 100%;height: 100%;float: left;"></div>
+    </div>
+    <div id="echart_pie" style="width:30%; height:100%;float:left">
+        <div id="wtxz_pie" style="height: 100%;width: 100%;"></div>
+    </div>
+</div>
+</body>
+</html>

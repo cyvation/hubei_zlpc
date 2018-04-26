@@ -1,0 +1,11 @@
+.datagrid-header,
+.datagrid-toolbar,
+.datagrid-pager,
+.datagrid-footer-inner {
+  border-color: #222;
+}
+.datagrid-header td,
+.datagrid-body td,
+.datagrid-footer td {
+  border-color: #222;
+}

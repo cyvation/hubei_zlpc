@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+                <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+        <mapper namespace="com.start.boot.dao.ajpc.ResMapper">
+
+    <!--获取左上角通知公告-->
+    <select id="getTzgg" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+          call pkg_account.proc_get_tzgg( #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_lxdm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_ppxx,mode=IN,jdbcType=VARCHAR},
+                                          #{p_fbsjbeg,mode=IN,javaType= java.sql.Date,jdbcType=TIME},
+                                          #{p_fbsjend,mode=IN,javaType= java.sql.Date,jdbcType=TIME},
+                                          #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                          #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                          #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=xxxxMap},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="xxxxMap" type="map" >
+        <result property="BH" column="BH"/>
+        <result property="FBRDWBM" column="FBRDWBM"/>
+        <result property="FBRDWMC" column="FBRDWMC"/>
+        <result property="FBRGH" column="FBRGH"/>
+        <result property="FBRXM" column="FBRXM"/>
+        <result property="LXDM" column="LXDM"/>
+        <result property="LXMC" column="LXMC"/>
+        <result property="BT" column="BT"/>
+        <result property="NR" column="NR" javaType="java.lang.String" jdbcType="CLOB"/>
+        <result property="CJSJ" column="CJSJ"/>
+        <result property="GHSJ" column="GHSJ"/>
+        <result property="SFJYKJ" column="SFJYKJ"/>
+    </resultMap>
+
+    <!--添加通知公告-->
+
+    <insert id="addTzgg" parameterType="map" statementType="CALLABLE">
+         <![CDATA[
+          call pkg_account.proc_add_tzgg(#{p_fbrdwbm,mode=IN,jdbcType=VARCHAR},
+                                         #{p_fbrdwmc,mode=IN,jdbcType=VARCHAR},
+                                         #{p_fbrgh,mode=IN,jdbcType=VARCHAR},
+                                         #{p_fbrxm,mode=IN,jdbcType=VARCHAR},
+                                         #{p_lxdm,mode=IN,jdbcType=VARCHAR},
+                                         #{p_lxmc,mode=IN,jdbcType=VARCHAR},
+                                         #{p_bt,mode=IN,jdbcType=VARCHAR},
+                                         #{p_nr,mode=IN,jdbcType=VARCHAR},
+                                         #{p_ghsj,mode=IN,javaType= java.sql.Date,jdbcType=TIME},
+                                         #{p_sfjykj,mode=IN,jdbcType=VARCHAR},
+                                         #{p_bh,mode=IN,jdbcType=VARCHAR},
+                                         #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+
+    </insert>
+
+    <!--更新通知公告-->
+    <update id="updTzgg" parameterType="map" statementType="CALLABLE">
+         <![CDATA[
+              call pkg_account.proc_upd_tzgg(#{p_bh,mode=IN,jdbcType=VARCHAR},
+                                       #{p_bt,mode=IN,jdbcType=VARCHAR},
+                                       #{p_nr,mode=IN,jdbcType=VARCHAR},
+                                       #{p_ghsj,mode=IN,javaType= java.sql.Date,jdbcType=TIME},
+                                       #{p_sfjykj,mode=IN,jdbcType=VARCHAR},
+                                       #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--删除通知公告表信息-->
+    <delete id="delTzgg" parameterType="map" statementType="CALLABLE">
+       <![CDATA[
+               call pkg_account.proc_del_tzgg(#{p_bh,mode=IN,jdbcType=VARCHAR},
+                                              #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </delete>
+
+
+
+</mapper>

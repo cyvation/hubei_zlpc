@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.Yx_Pc_PcxFlMapper">
+  <resultMap id="BaseResultMap" type="com.start.boot.domain.Yx_Pc_PcxFl">
+    <id column="PCSLBM" jdbcType="CHAR" property="pcslbm" />
+    <id column="PCXFLBM" jdbcType="CHAR" property="pcxflbm" />
+    <result column="PCXFLMC" jdbcType="VARCHAR" property="pcxflmc" />
+    <result column="PCJG" jdbcType="VARCHAR" property="pcjg" />
+    <result column="PCYJ" jdbcType="VARCHAR" property="pcyj" />
+    <result column="JLSJ" jdbcType="TIMESTAMP" property="jlsj" />
+    <result column="PCRDWBM" jdbcType="CHAR" property="pcrdwbm" />
+    <result column="PCRDWMC" jdbcType="VARCHAR" property="pcrdwmc" />
+    <result column="PCRGH" jdbcType="CHAR" property="pcrgh" />
+    <result column="PCRMC" jdbcType="VARCHAR" property="pcrmc" />
+    <result column="SM" jdbcType="VARCHAR" property="sm" />
+    <result column="PCXFLFBM" jdbcType="CHAR" property="pcxflfbm" />
+    <result column="PCMBBM" jdbcType="CHAR" property="pcmbbm" />
+    <result column="PCJLBM" jdbcType="CHAR" property="pcjlbm" />
+    <result column="XH" jdbcType="DECIMAL" property="xh" />
+    <result column="SFTJ" jdbcType="CHAR" property="sftj" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    PCSLBM, PCXFLBM, PCXFLMC, PCJG, PCYJ, JLSJ, PCRDWBM, PCRDWMC, PCRGH, PCRMC, SM, PCXFLFBM, 
+    PCMBBM, PCJLBM, XH, SFTJ
+  </sql>
+  <select id="selectByExample" parameterType="com.start.boot.domain.Yx_Pc_PcxFlExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YX_PC_PCXFL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.start.boot.domain.Yx_Pc_PcxFlKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from YX_PC_PCXFL
+    where PCSLBM = #{pcslbm,jdbcType=CHAR}
+      and PCXFLBM = #{pcxflbm,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.start.boot.domain.Yx_Pc_PcxFlKey">
+    delete from YX_PC_PCXFL
+    where PCSLBM = #{pcslbm,jdbcType=CHAR}
+      and PCXFLBM = #{pcxflbm,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.start.boot.domain.Yx_Pc_PcxFlExample">
+    delete from YX_PC_PCXFL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.start.boot.domain.Yx_Pc_PcxFl">
+    insert into YX_PC_PCXFL (PCSLBM, PCXFLBM, PCXFLMC, 
+      PCJG, PCYJ, JLSJ, 
+      PCRDWBM, PCRDWMC, PCRGH, 
+      PCRMC, SM, PCXFLFBM, PCMBBM, 
+      PCJLBM, XH, SFTJ)
+    values (#{pcslbm,jdbcType=CHAR}, #{pcxflbm,jdbcType=CHAR}, #{pcxflmc,jdbcType=VARCHAR}, 
+      #{pcjg,jdbcType=VARCHAR}, #{pcyj,jdbcType=VARCHAR}, #{jlsj,jdbcType=TIMESTAMP}, 
+      #{pcrdwbm,jdbcType=CHAR}, #{pcrdwmc,jdbcType=VARCHAR}, #{pcrgh,jdbcType=CHAR}, 
+      #{pcrmc,jdbcType=VARCHAR}, #{sm,jdbcType=VARCHAR}, #{pcxflfbm,jdbcType=CHAR}, #{pcmbbm,jdbcType=CHAR}, 
+      #{pcjlbm,jdbcType=CHAR}, #{xh,jdbcType=DECIMAL}, #{sftj,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.start.boot.domain.Yx_Pc_PcxFl">
+    insert into YX_PC_PCXFL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pcslbm != null">
+        PCSLBM,
+      </if>
+      <if test="pcxflbm != null">
+        PCXFLBM,
+      </if>
+      <if test="pcxflmc != null">
+        PCXFLMC,
+      </if>
+      <if test="pcjg != null">
+        PCJG,
+      </if>
+      <if test="pcyj != null">
+        PCYJ,
+      </if>
+      <if test="jlsj != null">
+        JLSJ,
+      </if>
+      <if test="pcrdwbm != null">
+        PCRDWBM,
+      </if>
+      <if test="pcrdwmc != null">
+        PCRDWMC,
+      </if>
+      <if test="pcrgh != null">
+        PCRGH,
+      </if>
+      <if test="pcrmc != null">
+        PCRMC,
+      </if>
+      <if test="sm != null">
+        SM,
+      </if>
+      <if test="pcxflfbm != null">
+        PCXFLFBM,
+      </if>
+      <if test="pcmbbm != null">
+        PCMBBM,
+      </if>
+      <if test="pcjlbm != null">
+        PCJLBM,
+      </if>
+      <if test="xh != null">
+        XH,
+      </if>
+      <if test="sftj != null">
+        SFTJ,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pcslbm != null">
+        #{pcslbm,jdbcType=CHAR},
+      </if>
+      <if test="pcxflbm != null">
+        #{pcxflbm,jdbcType=CHAR},
+      </if>
+      <if test="pcxflmc != null">
+        #{pcxflmc,jdbcType=VARCHAR},
+      </if>
+      <if test="pcjg != null">
+        #{pcjg,jdbcType=VARCHAR},
+      </if>
+      <if test="pcyj != null">
+        #{pcyj,jdbcType=VARCHAR},
+      </if>
+      <if test="jlsj != null">
+        #{jlsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pcrdwbm != null">
+        #{pcrdwbm,jdbcType=CHAR},
+      </if>
+      <if test="pcrdwmc != null">
+        #{pcrdwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="pcrgh != null">
+        #{pcrgh,jdbcType=CHAR},
+      </if>
+      <if test="pcrmc != null">
+        #{pcrmc,jdbcType=VARCHAR},
+      </if>
+      <if test="sm != null">
+        #{sm,jdbcType=VARCHAR},
+      </if>
+      <if test="pcxflfbm != null">
+        #{pcxflfbm,jdbcType=CHAR},
+      </if>
+      <if test="pcmbbm != null">
+        #{pcmbbm,jdbcType=CHAR},
+      </if>
+      <if test="pcjlbm != null">
+        #{pcjlbm,jdbcType=CHAR},
+      </if>
+      <if test="xh != null">
+        #{xh,jdbcType=DECIMAL},
+      </if>
+      <if test="sftj != null">
+        #{sftj,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.start.boot.domain.Yx_Pc_PcxFlExample" resultType="java.lang.Long">
+    select count(*) from YX_PC_PCXFL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update YX_PC_PCXFL
+    <set>
+      <if test="record.pcslbm != null">
+        PCSLBM = #{record.pcslbm,jdbcType=CHAR},
+      </if>
+      <if test="record.pcxflbm != null">
+        PCXFLBM = #{record.pcxflbm,jdbcType=CHAR},
+      </if>
+      <if test="record.pcxflmc != null">
+        PCXFLMC = #{record.pcxflmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pcjg != null">
+        PCJG = #{record.pcjg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pcyj != null">
+        PCYJ = #{record.pcyj,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jlsj != null">
+        JLSJ = #{record.jlsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pcrdwbm != null">
+        PCRDWBM = #{record.pcrdwbm,jdbcType=CHAR},
+      </if>
+      <if test="record.pcrdwmc != null">
+        PCRDWMC = #{record.pcrdwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pcrgh != null">
+        PCRGH = #{record.pcrgh,jdbcType=CHAR},
+      </if>
+      <if test="record.pcrmc != null">
+        PCRMC = #{record.pcrmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sm != null">
+        SM = #{record.sm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pcxflfbm != null">
+        PCXFLFBM = #{record.pcxflfbm,jdbcType=CHAR},
+      </if>
+      <if test="record.pcmbbm != null">
+        PCMBBM = #{record.pcmbbm,jdbcType=CHAR},
+      </if>
+      <if test="record.pcjlbm != null">
+        PCJLBM = #{record.pcjlbm,jdbcType=CHAR},
+      </if>
+      <if test="record.xh != null">
+        XH = #{record.xh,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sftj != null">
+        SFTJ = #{record.sftj,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update YX_PC_PCXFL
+    set PCSLBM = #{record.pcslbm,jdbcType=CHAR},
+      PCXFLBM = #{record.pcxflbm,jdbcType=CHAR},
+      PCXFLMC = #{record.pcxflmc,jdbcType=VARCHAR},
+      PCJG = #{record.pcjg,jdbcType=VARCHAR},
+      PCYJ = #{record.pcyj,jdbcType=VARCHAR},
+      JLSJ = #{record.jlsj,jdbcType=TIMESTAMP},
+      PCRDWBM = #{record.pcrdwbm,jdbcType=CHAR},
+      PCRDWMC = #{record.pcrdwmc,jdbcType=VARCHAR},
+      PCRGH = #{record.pcrgh,jdbcType=CHAR},
+      PCRMC = #{record.pcrmc,jdbcType=VARCHAR},
+      SM = #{record.sm,jdbcType=VARCHAR},
+      PCXFLFBM = #{record.pcxflfbm,jdbcType=CHAR},
+      PCMBBM = #{record.pcmbbm,jdbcType=CHAR},
+      PCJLBM = #{record.pcjlbm,jdbcType=CHAR},
+      XH = #{record.xh,jdbcType=DECIMAL},
+      SFTJ = #{record.sftj,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.start.boot.domain.Yx_Pc_PcxFl">
+    update YX_PC_PCXFL
+    <set>
+      <if test="pcxflmc != null">
+        PCXFLMC = #{pcxflmc,jdbcType=VARCHAR},
+      </if>
+      <if test="pcjg != null">
+        PCJG = #{pcjg,jdbcType=VARCHAR},
+      </if>
+      <if test="pcyj != null">
+        PCYJ = #{pcyj,jdbcType=VARCHAR},
+      </if>
+      <if test="jlsj != null">
+        JLSJ = #{jlsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pcrdwbm != null">
+        PCRDWBM = #{pcrdwbm,jdbcType=CHAR},
+      </if>
+      <if test="pcrdwmc != null">
+        PCRDWMC = #{pcrdwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="pcrgh != null">
+        PCRGH = #{pcrgh,jdbcType=CHAR},
+      </if>
+      <if test="pcrmc != null">
+        PCRMC = #{pcrmc,jdbcType=VARCHAR},
+      </if>
+      <if test="sm != null">
+        SM = #{sm,jdbcType=VARCHAR},
+      </if>
+      <if test="pcxflfbm != null">
+        PCXFLFBM = #{pcxflfbm,jdbcType=CHAR},
+      </if>
+      <if test="pcmbbm != null">
+        PCMBBM = #{pcmbbm,jdbcType=CHAR},
+      </if>
+      <if test="pcjlbm != null">
+        PCJLBM = #{pcjlbm,jdbcType=CHAR},
+      </if>
+      <if test="xh != null">
+        XH = #{xh,jdbcType=DECIMAL},
+      </if>
+      <if test="sftj != null">
+        SFTJ = #{sftj,jdbcType=CHAR},
+      </if>
+    </set>
+    where PCSLBM = #{pcslbm,jdbcType=CHAR}
+      and PCXFLBM = #{pcxflbm,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.start.boot.domain.Yx_Pc_PcxFl">
+    update YX_PC_PCXFL
+    set PCXFLMC = #{pcxflmc,jdbcType=VARCHAR},
+      PCJG = #{pcjg,jdbcType=VARCHAR},
+      PCYJ = #{pcyj,jdbcType=VARCHAR},
+      JLSJ = #{jlsj,jdbcType=TIMESTAMP},
+      PCRDWBM = #{pcrdwbm,jdbcType=CHAR},
+      PCRDWMC = #{pcrdwmc,jdbcType=VARCHAR},
+      PCRGH = #{pcrgh,jdbcType=CHAR},
+      PCRMC = #{pcrmc,jdbcType=VARCHAR},
+      SM = #{sm,jdbcType=VARCHAR},
+      PCXFLFBM = #{pcxflfbm,jdbcType=CHAR},
+      PCMBBM = #{pcmbbm,jdbcType=CHAR},
+      PCJLBM = #{pcjlbm,jdbcType=CHAR},
+      XH = #{xh,jdbcType=DECIMAL},
+      SFTJ = #{sftj,jdbcType=CHAR}
+    where PCSLBM = #{pcslbm,jdbcType=CHAR}
+      and PCXFLBM = #{pcxflbm,jdbcType=CHAR}
+  </update>
+  <select id="getCqPcx" parameterType="String" resultType="com.start.boot.pojo.dto.CqPcxFlDto">
+          SELECT
+          f3.pcxflbm f3flbm,
+          f3.pcxflmc f3flmc,
+          f2.pcxflbm f2flbm,
+          f2.pcxflmc f2flmc,
+          CASE
+      WHEN f1.pcxflbm IS NULL THEN
+          f2.pcxflbm
+      ELSE
+          f1.pcxflbm
+      END f1flbm,
+       NVL2 (f1.pcxflmc, f1.pcxflmc, '') f1flmc,
+       pcx.*
+      FROM
+          yx_pc_pcxfl f3
+      LEFT OUTER JOIN yx_pc_pcxfl f2 ON f2.pcslbm = #{pcslbm}
+      AND f2.pcxflfbm = f3.pcxflbm
+      LEFT OUTER JOIN yx_pc_pcxfl f1 ON f1.pcslbm = #{pcslbm}
+      AND f1.pcxflfbm = f2.pcxflbm
+      LEFT OUTER JOIN yx_pc_pcx pcx ON pcx.pcslbm = #{pcslbm}
+      AND pcx.pcxflbm = (
+          CASE
+          WHEN f1.pcxflbm IS NULL THEN
+              (
+                  CASE
+                  WHEN f2.pcxflbm IS NULL THEN
+                      f3.pcxflbm
+                  ELSE
+                      f2.pcxflbm
+                  END
+              )
+          ELSE
+              f1.pcxflbm
+          END
+      )
+      WHERE
+          f3.pcslbm = #{pcslbm}
+      AND pcx.pcslbm = #{pcslbm}
+      AND f3.pcxflfbm IS NULL
+      ORDER BY
+          f3.xh,
+          f2.xh,
+          f1.xh,
+          pcx.xh
+  </select>
+
+
+</mapper>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+                <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.start.boot.dao.ajpc.OfflineMapper">
+
+    <select id="getPcbz" parameterType="map" resultMap="pcbzMap">
+        select * from XT_PC_MB mb where sfqy='Y' and pcflbm=#{pcflbm} order by xh
+    </select>
+
+    <resultMap id="pcbzMap" type="Map">
+        <result property="id" column="PCMBBM"/>
+        <result property="text" column="PCMBMC"/>
+    </resultMap>
+    <select id="getAjmb" parameterType="map" resultMap="ajmbMap">
+      select ajlb.* from XT_PC_MB mb
+      join XT_DM_AJLBBM ajlb on ajlb.ywtx=mb.ywtx
+      where  mb.pcflbm=#{pcflbm} and mb.pcmbbm=#{pcmbbm}
+    </select>
+    <resultMap id="ajmbMap" type="Map">
+        <result property="id" column="AJLBBM"/>
+        <result property="text" column="AJLBMC"/>
+    </resultMap>
+    <select id="getPcTree" parameterType="map" resultMap="pcTreeMap">
+        select t.PCXFLBM, t.PCXFLMC, t.PCXFLFBM, t.PCMBBM, t.PCJLBM, t.XH, t.SFTJ, t.SM, t.MRZ, t.FLXTDM, t.FFLXTDM, t.YWTX, t.PCFLBM,
+       p.PCXBM, p.PCXMC, p.PCXFLBM PCXFLBMS, p.PCMBBM PCMBBMS, p.PCXLX, p.PCFS, p.PCJLBM PCJLBMS,p.FZ_GD, p.FZ_QSZ, p.FZ_JSZ, p.ZDPCCX, p.XH XHS, p.SFTJ SFTJS,
+       p.BZ, p.MRZ MRZS, p.FLXTDM FLXTDMS, p.FFLXTDM FFLXTDMS, p.YWTX YWTXS, p.PCFLBM PCFLBMS, p.XTDM
+        from XT_PC_PCXFL t
+        left join xt_pc_pcx p on p.pcxflbm = t.pcxflbm
+        where t.pcflbm=#{pcflbm} and t.pcmbbm=#{mbNo} ORDER BY t.pcxflbm,t.PCXFLFBM,p.pcxbm
+    </select>
+    <resultMap id="pcTreeMap" type="Map">
+    </resultMap>
+    <select id="getPcslBm" parameterType="map" resultMap="pcslBmMap">
+        select * from YX_PC_OFFLINE_JBXX where pcflbm=#{pcflbm} and pcdwbm=#{pcdwbm} order by pcslbm desc
+    </select>
+    <resultMap id="pcslBmMap" type="Map">
+    </resultMap>
+    <select id="getDwJc" parameterType="map" resultMap="DwJcMap">
+       select * from XT_ZZJG_DWBM t where dwbm=#{pcdwbm}
+    </select>
+    <resultMap id="DwJcMap" type="Map">
+    </resultMap>
+    <insert id="saveAnJian" parameterType="Map">
+
+     INSERT into YX_PC_OFFLINE_JBXX (PCSLBM, PCSAH, PCDWBM, PCFLBM,PCHDBM, BMSAH, TYSAH, AJMC, AJLB_BM,AJLB_MC,BPC_DWBM,BPC_DWMC,BPC_BMBM,BPC_BMMC,
+                  BPC_GH,BPC_MC,BPC_SLRQ,BPC_WCRQ,LCSLBH,PCJDBH,PCJDMS,SXR_DWBM,SXR_GH,FPDZ_FPR_DWBM,FPDZ_FPR_GH,FPDR_FPR_DWBM,
+                  FPDR_FPR_DWMC,FPDR_FPR_GH,FPDR_FPR_MC,PCZ_BM,PCZ_MC,PCR_DWBM,PCR_DWMC,PCR_GH,PCR_MC,PCMBBM,AJGLZT,PCJG,PCJL,PCBGBH,SM,SFSC,
+                  CJSJ,ZHXGSJ,SXGZBM,BPC_WCBZRQ,SXR_DWMC,SXR_MC,FPDZ_FPR_DWMC,FPDZ_FPR_MC,CLJG,WAY)
+      VALUES (#{pcslbm,jdbcType=CHAR},#{pcsah,jdbcType=VARCHAR} ,#{userdwbm,jdbcType=CHAR},#{pcflbm,jdbcType=CHAR},#{pcmb,jdbcType=CHAR},#{bmsah,jdbcType=CHAR},#{tysah,jdbcType=CHAR},#{ajmc,jdbcType=VARCHAR},#{ajmb,jdbcType=CHAR},#{ajslmc,jdbcType=CHAR},
+              #{pcdw,jdbcType=CHAR},#{pcdwmc,jdbcType=VARCHAR},#{cbbm,jdbcType=CHAR},#{cbbmmc,jdbcType=VARCHAR},#{cbrgh,jdbcType=CHAR},#{cbr,jdbcType=VARCHAR},to_date(#{date},'yyyy-mm-dd hh24:mi:ss'),
+              to_date(#{date},'yyyy-mm-dd hh24:mi:ss'),'01',#{pcjdbh,jdbcType=CHAR},#{pcjdms,jdbcType=VARCHAR},#{userdwbm,jdbcType=VARCHAR},#{usergh,jdbcType=CHAR},#{userdwbm,jdbcType=VARCHAR},#{usergh,jdbcType=CHAR},
+             #{userdwbm,jdbcType=CHAR},#{userdwmc,jdbcType=VARCHAR},#{usergh,jdbcType=CHAR}, #{usermc,jdbcType=VARCHAR},'001','默认分组', #{userdwbm,jdbcType=CHAR},#{userdwmc,jdbcType=VARCHAR},#{usergh,jdbcType=CHAR},#{usermc,jdbcType=VARCHAR},
+             #{pcmb,jdbcType=CHAR},'1','',#{pcjy,jdbcType=VARCHAR},'','','N',to_date(#{nowdate},'yyyy-mm-dd hh24:mi:ss'),to_date(#{nowdate},'yyyy-mm-dd hh24:mi:ss'),#{sxgz,jdbcType=CHAR},
+             to_date(#{date},'yyyy-mm-dd'),#{userdwmc,jdbcType=VARCHAR},#{usermc,jdbcType=VARCHAR},#{userdwmc,jdbcType=VARCHAR},#{usermc,jdbcType=VARCHAR},'',#{way,jdbcType=CHAR})
+    </insert>
+    <insert id="savePCFL" parameterType="com.start.boot.pojo.vo.Yx_Pc_PcxFlVo">
+        INSERT into YX_PC_OFFLINE_PCXFL (PCSLBM,PCXFLBM,PCXFLMC,PCJG,PCYJ,JLSJ,PCRDWBM,PCRDWMC,PCRGH,PCRMC,SM,PCXFLFBM,PCMBBM,PCJLBM,XH,SFTJ,WAY)
+        values (#{pcslbm ,jdbcType=CHAR},#{pcxflbm ,jdbcType=CHAR},#{pcxflmc ,jdbcType=VARCHAR} ,#{pcjg ,jdbcType=CHAR} ,'',#{jlsj},
+                #{pcrdwbm ,jdbcType=CHAR},#{pcrdwmc ,jdbcType=CHAR},#{pcrgh ,jdbcType=CHAR},#{pcrmc ,jdbcType=VARCHAR},'' , #{pcxflfbm ,jdbcType=CHAR},#{pcmbbm ,jdbcType=CHAR},#{pcjlbm ,jdbcType=CHAR},
+                #{xh ,jdbcType=CHAR}, #{sftj ,jdbcType=CHAR},'1' )
+    </insert>
+    <insert id="savePCX" parameterType="com.start.boot.domain.Yx_Pc_Pcx">
+        INSERT into YX_PC_OFFLINE_PCX (PCSLBM,PCXBM,PCXMC,PCXFLBM,PCMBBM,PCXLX,PCFS,PCJLBM,FZ_GD,FZ_QSZ,FZ_JSZ,ZDPCCX,XH,SFTJ,BZ,PCJG,PCYJ,JLSJ,PCRDWBM,PCRDWMC,PCRGH,PCRMC,SM,WAY)
+        values (#{pcslbm ,jdbcType=CHAR},#{pcxbm ,jdbcType=CHAR},#{pcxmc ,jdbcType=VARCHAR}, #{pcxflbm ,jdbcType=CHAR},#{pcmbbm ,jdbcType=CHAR}, #{pcxlx ,jdbcType=CHAR},
+        #{pcfs ,jdbcType=CHAR},#{pcjlbm ,jdbcType=CHAR},#{fz_gd ,jdbcType=CHAR},#{fz_qsz ,jdbcType=CHAR},#{fz_jsz ,jdbcType=CHAR},#{zdpccx ,jdbcType=CHAR},#{xh ,jdbcType=CHAR},
+        #{sftj ,jdbcType=CHAR},#{bz ,jdbcType=CHAR},#{pcjg ,jdbcType=CHAR},#{pcyj ,jdbcType=CHAR},#{jlsj},#{pcrdwbm ,jdbcType=CHAR},#{pcrdwmc ,jdbcType=CHAR},#{pcrgh ,jdbcType=CHAR},
+        #{pcrmc ,jdbcType=CHAR},#{sm ,jdbcType=VARCHAR},'1')
+    </insert>
+
+    <select id="loadOfflineList" parameterType="map" resultMap="offlineList">
+        select * from (
+        SELECT jb.pcslbm, jb.pcsah, jb.pcdwbm, jb.pcflbm, jb.pchdbm, jb.bmsah, jb.tysah, jb.ajmc, jb.ajlb_bm, jb.ajlb_mc, jb.bpc_dwbm, jb.bpc_dwmc,
+        jb.bpc_bmbm, jb.bpc_bmmc, jb.bpc_gh, jb.bpc_mc, jb.bpc_slrq, jb.pcjdbh, jb.pcjdms,
+        jb.fpdz_fpr_dwbm, jb.fpdz_fpr_gh, jb.pcz_bm, jb.pcz_mc, jb.pcr_dwbm, jb.pcr_dwmc,jb.bpc_wcrq,
+        jb.pcr_gh, jb.pcr_mc, jb.pcmbbm, jb.ajglzt, jb.pcjg, jb.pcjl, jb. pcbgbh, jb.cjsj , jb.zhxgsj, lb.pcflmc,rownum rn
+        FROM yx_pc_offline_jbxx jb
+        INNER join xt_pc_lb lb ON jb.pcflbm=lb.pcflbm
+        WHERE jb.sfsc = 'N'  AND jb.pcr_dwbm IN
+        <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        <if test="ajmc !=null and ajmc!='' ">
+            AND jb.ajmc like '%'||#{ajmc}||'%'
+        </if>
+        <if test="pcr !=null and pcr!='' ">
+            AND jb.pcr_mc = #{pcr}
+        </if>
+        <if test="bpcr !=null and bpcr!='' ">
+            AND jb.bpc_mc = #{bpcr}
+        </if>
+        AND jb.cjsj between to_date(#{begin},'yyyy-mm-dd') and to_date(#{end},'yyyy-mm-dd')
+        and rownum &lt;= #{row} ) a where rn>#{page}
+    </select>
+    <resultMap id="offlineList" type="Map">
+    </resultMap>
+    <select id="loadOfflineCount" parameterType="map" resultMap="offlineCount">
+        SELECT count(*) num
+        FROM yx_pc_offline_jbxx jb
+        INNER join xt_pc_lb lb ON jb.pcflbm=lb.pcflbm
+        WHERE jb.sfsc = 'N'
+        AND jb.pcr_dwbm IN  <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        <if test="ajmc !=null and ajmc!='' ">
+            AND jb.ajmc like '%'||#{ajmc}||'%'
+        </if>
+        <if test="pcr !=null and pcr!='' ">
+            AND jb.pcr_mc  = #{pcr}
+        </if>
+        <if test="bpcr !=null and bpcr!='' ">
+            AND jb.bpc_mc = #{bpcr}
+        </if>
+        AND jb.cjsj between to_date(#{begin},'yyyy-mm-dd') and to_date(#{end},'yyyy-mm-dd')
+    </select>
+    <resultMap id="offlineCount" type="Map">
+    </resultMap>
+    <select id="getPcflInfo" parameterType="map" resultMap="pcflInfoMap">
+         select distinct t.PCXFLBM, t.PCXFLMC, t.PCXFLFBM, t.PCMBBM,t.PCRDWBM, t.PCJLBM, t.XH, t.SFTJ, t.SM,  t.FLXTDM, t.FFLXTDM, t.YWTX, t.PCFLBM,t.PCSLBM,t.pcjg
+        from YX_PC_OFFLINE_PCXFL t
+        where t.pcslbm=#{pcslbm} AND t.pcrdwbm=#{dw} ORDER BY t.pcxflbm,t.PCXFLFBM
+    </select>
+    <resultMap id="pcflInfoMap" type="Map">
+    </resultMap>
+    <select id="getPcflxInfo" parameterType="map" resultMap="pcflxInfoMap">
+        select distinct p.PCXBM, p.PCSLBM PCSLBMS,P.PCRDWBM PCRDWBMS,
+        p.PCXMC, p.PCXFLBM PCXFLBMS, p.PCMBBM PCMBBMS, p.PCXLX, p.PCFS, p.PCJLBM PCJLBMS,p.FZ_GD, p.FZ_QSZ, p.FZ_JSZ, p.ZDPCCX, p.XH XHS, p.SFTJ SFTJS,
+        p.BZ,p.SM SMS, p.FLXTDM FLXTDMS, p.FFLXTDM FFLXTDMS, p.YWTX YWTXS, p.PCFLBM PCFLBMS, p.XTDM,p.pcjg pcjgs
+        from yx_pc_offline_pcx p
+        where p.pcslbm=#{pcslbm} AND p.pcrdwbm=#{dw} ORDER BY p.pcxbm
+    </select>
+    <resultMap id="pcflxInfoMap" type="Map">
+    </resultMap>
+    <select id="getPcAjInfo" parameterType="map" resultMap="pcAjInfo">
+        SELECT *
+        FROM yx_pc_offline_jbxx jb
+        WHERE jb.sfsc = 'N'
+        AND jb.pcr_dwbm = #{dwbm}
+          AND jb.pcslbm = #{pcslbm}
+    </select>
+    <resultMap id="pcAjInfo" type="Map">
+    </resultMap>
+
+    <update id="updatePCFL" parameterType="com.start.boot.pojo.vo.Yx_Pc_PcxFlVo" >
+        UPDATE YX_PC_OFFLINE_PCXFL
+        <set>
+               pcjg =#{pcjg,jdbcType=CHAR}
+        </set>
+        <where>
+            pcrdwbm = #{pcrdwbm,jdbcType=CHAR}
+            AND pcslbm = #{pcslbm,jdbcType=CHAR}
+            AND  pcxflbm = #{pcxflbm,jdbcType=CHAR}
+
+        </where>
+    </update>
+    <update id="updatePCX" parameterType="com.start.boot.domain.Yx_Pc_Pcx" >
+        UPDATE YX_PC_OFFLINE_PCX
+        <set>
+             pcjg =#{pcjg,jdbcType=CHAR},sm=#{sm,jdbcType=VARCHAR}
+        </set>
+        <where>
+            pcrdwbm = #{pcrdwbm,jdbcType=CHAR}
+            AND pcslbm = #{pcslbm,jdbcType=CHAR}
+            AND  pcxflbm = #{pcxflbm,jdbcType=CHAR}
+            AND  pcxbm = #{pcxbm,jdbcType=CHAR}
+        </where>
+    </update>
+    <update id="updatePcajjg" parameterType="map" >
+        UPDATE yx_pc_offline_jbxx
+        <set>
+            pcjl =#{pcjl,jdbcType=VARCHAR},BPC_SLRQ=to_date(#{date},'yyyy-mm-dd'),BPC_WCRQ=to_date(#{date},'yyyy-mm-dd'),
+            BPC_WCBZRQ=to_date(#{date},'yyyy-mm-dd'),bmsah=#{bmsah},tysah=#{tysah}
+        </set>
+        <where>
+            pcdwbm = #{dw,jdbcType=CHAR}
+            AND pcslbm = #{pcslbm,jdbcType=CHAR}
+        </where>
+    </update>
+    <update id="updatePcaj" parameterType="map" >
+        UPDATE yx_pc_offline_jbxx
+        <set>
+            sfsc ='Y'
+        </set>
+        <where>
+            pcdwbm = #{dw,jdbcType=CHAR}
+            AND pcslbm = #{pcslbm,jdbcType=CHAR}
+        </where>
+    </update>
+    <select id="isOnAj" parameterType="map" resultMap="isOnAj">
+       select * from YX_PC_OFFLINE_JBXX t where t.sfsc='N' and t.pcdwbm=#{pcdw} and t.ajmc=#{ajmc} and t.bpc_mc= #{cbr} and t.cjsj=to_date(#{date},'yyyy-mm-dd')
+    </select>
+    <resultMap id="isOnAj" type="Map">
+    </resultMap>
+</mapper>

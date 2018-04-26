@@ -1,0 +1,172 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+.pcblPcyl {
+	min-height: 80px;
+	border-bottom: 1px solid #8ac9e6;
+}
+.pcblPcyl>div{
+	float: left;
+	height: 35px;
+	line-height: 35px;
+	margin-right: 15px;
+}
+.pcylCon {
+	clear: both;
+	height: calc(100% - 90px);
+	margin-top: 10px;
+	overflow-y: auto;
+	border: 1px solid #8ac9e6;
+	/*background: #e9f1ff;*/
+}
+
+#win {
+	padding: 10px;
+	margin:0 auto;
+	background: #e0ecff;
+}
+
+#win table {
+	width: calc(100% - 2px);
+	border-collapse: collapse;
+	border: 0px solid #8ac9e6;
+	border-right: 0 !important;
+}
+
+#win .thead {
+	background: #ecf6fb;
+}
+
+#win td {
+	height: 30px;
+	line-height: 20px;
+	font-size: 12px;
+	padding: 10px;
+	border: none;
+	/*border-right: 1px solid #8ac9e6;*/
+}
+
+#win tr {
+	border-bottom: 1px solid #8ac9e6;
+}
+
+#win .thead td {
+	color: #006391;
+	white-space: nowrap !important;
+}
+
+/*#win .tbody td:nth-child(1) {*/
+/*white-space: nowrap !important;*/
+/*}*/
+
+#win .tbody tr:nth-child(2n) {
+	background: #fafafa;
+}
+
+#win .tbody tr:hover {
+	background: #fcf8e3;
+}
+#addColl{
+	padding-top: 20px;
+}
+.collName{
+	display: inline-block;
+	width: 70px;
+	text-align: right;
+	float: left;
+	line-height: 27px;
+	height: 30px;
+	font-size: 13px;
+}
+#addColl>p,#addColl>div{
+	width: 335px;
+	min-height: 30px;
+	margin: 10px auto;
+	/*background: red;*/
+}
+#addColl>p input[type='text']{
+	width: 260px !important;
+	border: 1px solid #0088CC !important;
+	border-radius: 5px;
+	height: 27px;
+	font-size: 13px;
+	padding-left: 5px;
+}
+#addColl>p textarea{
+	width: 260px !important;
+	border: 1px solid #0088CC;
+	border-radius: 5px;
+	height: 80px;
+	font-size: 13px;
+	padding:3px 5px;
+}
+.addCollBut{
+	width: 60px;
+	height: 25px;
+	float: right;
+	margin-right: 5px;
+	background: #0070A9;
+	text-align: center;
+	line-height: 25px;
+	color: #fff;
+	border-radius: 5px;
+}
+.addCollBut:hover{
+	background: #006391;
+}
+/*评查办理弹出框添加到收藏夹*/
+#pcWin_addColl>p,#pcWin_addColl>div{
+	width: 335px;
+	min-height: 30px;
+	margin: 10px auto;
+	/*background: red;*/
+}
+#pcWin_addColl>p input[type='text']{
+	width: 260px !important;
+	border: 1px solid #0088CC !important;
+	border-radius: 5px;
+	height: 27px;
+	font-size: 13px;
+	padding-left: 5px;
+}
+#pcWin_addColl>p textarea{
+	width: 260px !important;
+	border: 1px solid #0088CC;
+	border-radius: 5px;
+	height: 80px;
+	font-size: 13px;
+	padding:3px 5px;
+}
+.addCollBut{
+	width: 60px;
+	height: 25px;
+	float: right;
+	margin-right: 5px;
+	background: #0070A9;
+	text-align: center;
+	line-height: 25px;
+	color: #fff;
+	border-radius: 5px;
+}
+.addCollBut:hover{
+	background: #006391;
+}
+#pcWin_addColl{
+	padding-top: 20px;
+}
+
+/*      预览弹出层table样式更改，应为 important   太多了，所以只能用   important */
+
+/*#win table{*/
+	/*width: calc(100% - 2px);*/
+	/*border-collapse: collapse;*/
+	/*border: 1px solid #8ac9e6!important;*/
+	/*border-right: 1px solid #8ac9e6 !important;*/
+
+/*}*/
+/*#win td {*/
+	/*border-right: 1px solid #8ac9e6 !important;*/
+/*}*/

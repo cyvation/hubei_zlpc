@@ -1,0 +1,223 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>组织机构管理</title>
+</head>
+<body>
+    <!--页面JS加载，放在头部不能正确加载-->
+    <script type="text/javascript">
+        AddScript("text/javascript", "script/origanization/origanization/index.js");
+    </script>
+    
+    <!--组织机构管理-->
+    <div id="layout_org_main" class="easyui-layout" data-options="fit:'true'">
+        <!--单位部门角色管理树-->
+        <div id="layout_org_main_west" data-options="region:'west',title:'组织机构',border:false,split:true" style="width: 200px;">
+            <div id="Div1" style="width: calc(100% - 20px);height: calc(100% - 15px);margin:5px 10px 10px 10px;">
+                <input id="tree_org_dwbmjs_search" class="easyui-searchbox" style="width:100%;height:26px;"/>
+                <ul id="tree_org_dwbmjs" style="width: 100%;margin-top:5px;"></ul>
+            </div>
+        </div>
+        <!--节点功能管理-->
+        <div id="layout_org_main_center" data-options="region:'center',border:false" style="width: 98%; padding: 0 0 0 10px;">
+            <!--功能按钮列表-->
+            <div id="tool_org_manage" class="easyui-panel"
+                style="width:100%; padding: 8px 0px 8px 6px; margin-bottom: 0px; border:1px solid #b3cdf2;border-radius: 2px;margin-bottom:5px">
+                <input id="cbt_org_tool_manage_unit" class="easyui-combotree" style="width: 150px;height: 28px;" />
+                <a id="btn_org_tool_manage_add_dep" class="easyui-linkbutton" style="padding-left:25px">添加部门</a>
+                <a id="btn_org_tool_manage_edit_dep" class="easyui-linkbutton" style="padding-left:25px">编辑部门</a>
+                <a id="btn_org_tool_manage_delete_dep" class="easyui-linkbutton" style="padding-left:25px">删除部门</a>
+                <a id="btn_org_tool_manage_add_role" class="easyui-linkbutton" style="padding-left:25px">添加角色</a>
+                <a id="btn_org_tool_manage_edit_role" class="easyui-linkbutton" style="padding-left:25px">编辑角色</a>
+                <a id="btn_org_tool_manage_delete_role" class="easyui-linkbutton" style="padding-left:25px">删除角色</a>
+                <a id="btn_org_tool_manage_asign_role_right" class="easyui-linkbutton" style="padding-left:25px">角色权限</a>
+                <a id="btn_org_tool_manage_asign_unit_right" class="easyui-linkbutton" style="padding-left:25px">分配权限给下级院</a>
+            </div>
+            <!--人员管理-->
+            <div style="height:calc(100% - 51px)">
+                <div id="pnl_org_user_manage" style="border:0;height: 100%;" class="easyui-panel" title="人员信息" data-options="fit:true">
+                    <div id="tool_org_user_manage_search" class="easyui-toolbar" data-options="border:false" style="padding: 15px 0px 15px 8px;margin-bottom:5px;border-radius: 2px;border: 1px solid #b4cbf5;margin-top:2px">
+                        姓名 <input id="txt_org_user_manage_xm" class="easyui-textbox" style="width: 200px;height: 28px;" />&nbsp;
+                        工号 <input id="txt_org_user_manage_gh" class="easyui-textbox" style="width: 90px;height: 28px;" />&nbsp;
+                        工作证号 <input id="txt_org_user_manage_gzzh" class="easyui-textbox" style="width: 90px;height: 28px;" />
+                        <!--占位标签-->
+                        <label style="margin-left: 10px"></label>
+                        <a id="btn_org_user_manage_search" class="easyui-linkbutton" style="padding:0 20px;margin-right:10px">查询</a>
+                        <a id="btn_org_user_manage_add" class="easyui-linkbutton" style="padding-left:25px">添加人员</a>
+                    </div>
+                    <div id="pnl_org_user_manage_list" style="background: #f0f9ff;height:calc(100% - 60px);width: 100%;" class="easyui-panel" data-options="fit:true,border:false">
+                        <table id="grid_org_user_manage_list" border="0" style="background:#fff;height: 99%;width: 100%;">
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--弹出框：人员新增-->
+    <div id="win_org_user_manage_add" class="easyui-window" title="选择人员信息" style="width: 650px;height: 390px;" 
+        data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+        <div id="tool_win_org_user_add" class="easyui-toolbar" data-options="border:false" style="padding: 5px 0px 5px 8px">
+            <!--单位:<input id="cbt_win_org_user_add_unit" class="easyui-combotree" style="width:150px"/>-->
+            姓名：<input id="txt_win_org_user_add_xm" class="easyui-textbox" style="width: 150px" />&nbsp; 
+            <!--工号：<input id="txt_win_org_user_add_gh" class="easyui-textbox" style="width: 90px" />-->
+            <!--占位标签-->
+            <label style="margin-left: 5px"></label>
+            <a id="btn_win_org_user_add_search" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a> 
+            <a id="btn_win_org_user_add_add" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a>
+        </div>
+        <div id="pnl_win_org_user_add_list" class="easyui-panel" data-options="fit:true,border:false">
+            <table id="grid_win_org_user_add_list" border="0" style="height: 100%;width: 100%">
+            </table>
+        </div>
+    </div>
+
+    <!--弹出框：人员调岗-->
+    <div id="win_org_user_manage_edit" class="easyui-window" title="人员调岗" style="width: 420px; height: 220px;"
+        data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+        <table cellpadding="5" style="width: 100%;height: 130px;">
+            <tr>
+                <td style="width: 70px;text-align: right">姓名:</td>
+                <td style="width: 300px;"><input id="txt_win_org_user_edit_xm" class="easyui-textbox" style="width: 260px;" /></td>
+            </tr>
+            <tr>
+                <td style="width: 70px;text-align: right">部门:</td>
+                <td><input id="cbt_win_org_user_edit_bm" data-options="wincom:true" class="easyui-combotree" style="width: 260px;" /></td>
+            </tr>
+            <tr>
+                <td style="width: 70px;text-align: right">角色:</td>
+                <td><input id="cbx_win_org_user_edit_js" data-options="wincom:true"  class="easyui-combobox" style="width: 260px;" /></td>
+            </tr>
+        </table>
+        <div style="text-align: center; margin-bottom: 10px;">
+            <a id="btn_win_org_user_edit_confirm" class="easyui-linkbutton">确定</a>&nbsp; 
+            <a id="btn_win_org_user_edit_cancel" class="easyui-linkbutton">取消</a>
+        </div>
+    </div>
+    
+    <!--弹出框：部门信息编辑-->
+    <div id="win_org_dep_manage" class="easyui-window" title="部门信息" style="width: 420px; height: 320px; padding:15px 10px 10px 15px;"
+        data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+        <table cellpadding="5">
+            <tr>
+                <td style="width: 100px;">部门名称:</td>
+                <td style="width: 300px;"><input id="txt_win_org_dep_mange_bmmc" class="easyui-textbox" style="width: 260px;" /></td>
+            </tr>
+            <tr>
+                <td>部门简称:</td>
+                <td><input id="txt_win_org_dep_mange_bmjc" class="easyui-textbox" style="width: 260px;" /></td>
+            </tr>
+            <tr>
+                <td>部门序号:</td>
+                <td><input id="txt_win_org_dep_mange_bmxh" class="easyui-numberbox" style="width: 260px;" /></td>
+            </tr>
+            <tr>
+                <td>输入备注:</td>
+                <td>
+                    <input id="txt_win_org_dep_mange_bmbz" class="easyui-textbox" data-options="multiline:true" 
+                        style="width: 260px;height: 80px" />
+                </td>
+            </tr>
+        </table>
+        <div style="text-align: center; margin-top:10px; margin-bottom: 10px;">
+            <a id="btn_win_org_dep_mange_confirm" class="easyui-linkbutton">确定</a>&nbsp; 
+            <a id="btn_win_org_dep_mange_cancel" class="easyui-linkbutton">取消</a>
+        </div>
+    </div>
+    
+    <!--弹出框：角色信息编辑-->
+    <div id="win_org_role_mange" class="easyui-window" title="角色信息" style="width: 420px; height: 220px; padding:15px 10px 10px 15px;"
+        data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+        <table cellpadding="5">
+            <tr>
+                <td style="width: 100px;">角色名称:</td>
+                <td style="width: 300px;"><input id="txt_win_org_role_mange_jsmc" class="easyui-textbox" style="width: 260px;" /></td>
+            </tr>
+            <tr>
+                <td>所属部门:</td>
+                <td><input id="txt_win_org_role_mange_ssbm" class="easyui-textbox" style="width: 260px;" /></td>
+            </tr>
+            <tr>
+                <td>角色序号:</td>
+                <td><input id="txt_win_org_role_mange_jsxh" class="easyui-numberbox" style="width: 260px;" /></td>
+            </tr>
+        </table>
+        <div style="text-align: center; margin-top:10px; margin-bottom: 10px;">
+            <a id="btn_win_org_role_mange_confirm" class="easyui-linkbutton">确定</a>&nbsp; 
+            <a id="btn_win_org_role_mange_cancel" class="easyui-linkbutton">取消</a>
+        </div>
+    </div>
+    
+    <!--弹出框：角色功能权限分配-->
+    <div id="win_org_role_right" class="easyui-window" title="设置角色权限" style="width: 760px; height: 500px;"
+        data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+        <div id="tool_win_org_role_right" class="easyui-toolbar" data-options="border:false" style="padding: 5px 0px 5px 8px">
+            <a id="btn_win_org_role_right_asign" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">分配权限</a>
+        </div>
+        <div id="pnl_win_org_role_right_list" class="easyui-panel" data-options="fit:true,border:false">
+            <table id="grid_win_org_role_right_list" border="0" data-options="fit:true">
+            </table>
+        </div>
+    </div>
+
+    <!--弹出框：下级单位功能权限分配-->
+    <div id="win_org_unit_right" class="easyui-window" title="分配权限给下级院" style="width: 760px;
+        height: 500px;" data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+        <div class="easyui-layout" data-options="fit:'true',border:true">
+            <!--单位列表-->
+            <div id="layout_win_org_unit_right_west" data-options="region:'west',split:true,title:'',border:true"
+                style="width: 250px; padding: 10px; border-top:0px;border-left:0px; border-bottom:0px;">
+                <ul id="tree_win_org_unit_right" class="easyui-tree">
+                </ul>
+            </div>
+            <!--单位功能权限列表-->
+            <div data-options="region:'center',border:false" style="width: 100%; padding:0px 0px 0px 0px;">
+                <div id="pnl_win_org_unit_right_list" class="easyui-panel" title="" data-options="fit:true"
+                    style="border-top:0px; border-bottom:0px; border-right:0px;">
+                    <div id="tool_win_org_unit_right_list" class="easyui-toolbar" data-options="border:false" style="padding: 5px 0px 5px 8px">
+                        <a id="btn_win_org_unit_right_asign" class="easyui-linkbutton" data-options="iconCls:'icon-add'">分配</a>
+                    </div>
+                    <table id="grid_win_org_unit_right_list" border="0" data-options="fit:true">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--功能参数赋予框-->
+    <div id="win_origanization_jsgnfp_gncs" class="easyui-window" title="功能参数编辑" style="width:500px;height:300px"
+         data-options="closed:true,collapsible:false,shadow:false,maximizable:false,minimizable:false,modal:true,cache:false,resizable:true">
+
+
+        <div style="width: 100%;padding: 20px;height:calc(100% - 50px);">
+            <div style="width: 100%;float: left;height: 30%;">
+                <p style="float: left;width: 80px;text-align: right">功能名称：</p>
+                <div style="float:left;width:calc(100% - 100px);">
+                    <input style="width: 97%;" id="origination_gnmc" class="easyui-textbox" data-options="editable:false "/>
+                </div>
+            </div>
+            <!--<tr style="margin-bottom: 10px">-->
+                <!--<td>功能编码：</td>-->
+                <!--<td><span id="origination_gnbm" class="easyui-textbox" data-options="readonly:true "/></td>-->
+            <!--</tr>-->
+            <div style="width: 100%;float: left;height: 70%;">
+                <p style="float: left;width: 80px;line-height: 100px;text-align: right">功能参数：</p>
+                <div style="float:left;width:calc(100% - 100px);height: 100%;">
+                    <input id="origination_gncs" class="easyui-textbox " data-options="multiline:true" style="width:100%;height: 100%;"/>
+                </div>
+            </div>
+        </div>
+
+
+        <div style="text-align:center;width: 100%;height:50px;float: left">
+            <button id="btn_origanization_jsgnfp_gncs_confirm" class="ZXpc_pcfa_2" style="background-color: #258EEA;">修改
+            </button>
+            <button id="btn_origanization_jsgnfp_gncs_cancle" class="ZXpc_pcfa_2" style="background-color: #258EEA;">取消</button>
+        </div>
+
+    </div>
+
+
+     
+</body>
+</html>

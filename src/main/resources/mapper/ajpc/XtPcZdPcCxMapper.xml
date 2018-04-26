@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.XtPcZdPcCxMapper">
+  <resultMap id="BaseResultMap" type="com.start.boot.domain.XtPcZdPcCx">
+    <id column="ZDPC_CXBM" jdbcType="VARCHAR" property="zdpcCxbm" />
+    <result column="ZDPC_CXMC" jdbcType="VARCHAR" property="zdpcCxmc" />
+    <result column="ZDPC_CXSM" jdbcType="VARCHAR" property="zdpcCxsm" />
+    <result column="ZDPC_CX" jdbcType="VARCHAR" property="zdpcCx" />
+    <result column="ZDPC_CXCS" jdbcType="VARCHAR" property="zdpcCxcs" />
+    <result column="PCFLBM" jdbcType="CHAR" property="pcflbm" />
+    <result column="DWBM" jdbcType="CHAR" property="dwbm" />
+    <result column="SM" jdbcType="VARCHAR" property="sm" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ZDPC_CXBM, ZDPC_CXMC, ZDPC_CXSM, ZDPC_CX, ZDPC_CXCS, PCFLBM, DWBM, SM
+  </sql>
+  <select id="selectByExample" parameterType="com.start.boot.domain.XtPcZdPcCxExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from XT_PC_ZDPCCX
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from XT_PC_ZDPCCX
+    where ZDPC_CXBM = #{zdpcCxbm,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from XT_PC_ZDPCCX
+    where ZDPC_CXBM = #{zdpcCxbm,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.start.boot.domain.XtPcZdPcCxExample">
+    delete from XT_PC_ZDPCCX
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.start.boot.domain.XtPcZdPcCx">
+    insert into XT_PC_ZDPCCX (ZDPC_CXBM, ZDPC_CXMC, ZDPC_CXSM, 
+      ZDPC_CX, ZDPC_CXCS, PCFLBM, 
+      DWBM, SM)
+    values (#{zdpcCxbm,jdbcType=VARCHAR}, #{zdpcCxmc,jdbcType=VARCHAR}, #{zdpcCxsm,jdbcType=VARCHAR}, 
+      #{zdpcCx,jdbcType=VARCHAR}, #{zdpcCxcs,jdbcType=VARCHAR}, #{pcflbm,jdbcType=CHAR}, 
+      #{dwbm,jdbcType=CHAR}, #{sm,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.start.boot.domain.XtPcZdPcCx">
+    insert into XT_PC_ZDPCCX
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="zdpcCxbm != null">
+        ZDPC_CXBM,
+      </if>
+      <if test="zdpcCxmc != null">
+        ZDPC_CXMC,
+      </if>
+      <if test="zdpcCxsm != null">
+        ZDPC_CXSM,
+      </if>
+      <if test="zdpcCx != null">
+        ZDPC_CX,
+      </if>
+      <if test="zdpcCxcs != null">
+        ZDPC_CXCS,
+      </if>
+      <if test="pcflbm != null">
+        PCFLBM,
+      </if>
+      <if test="dwbm != null">
+        DWBM,
+      </if>
+      <if test="sm != null">
+        SM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="zdpcCxbm != null">
+        #{zdpcCxbm,jdbcType=VARCHAR},
+      </if>
+      <if test="zdpcCxmc != null">
+        #{zdpcCxmc,jdbcType=VARCHAR},
+      </if>
+      <if test="zdpcCxsm != null">
+        #{zdpcCxsm,jdbcType=VARCHAR},
+      </if>
+      <if test="zdpcCx != null">
+        #{zdpcCx,jdbcType=VARCHAR},
+      </if>
+      <if test="zdpcCxcs != null">
+        #{zdpcCxcs,jdbcType=VARCHAR},
+      </if>
+      <if test="pcflbm != null">
+        #{pcflbm,jdbcType=CHAR},
+      </if>
+      <if test="dwbm != null">
+        #{dwbm,jdbcType=CHAR},
+      </if>
+      <if test="sm != null">
+        #{sm,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.start.boot.domain.XtPcZdPcCxExample" resultType="java.lang.Long">
+    select count(*) from XT_PC_ZDPCCX
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update XT_PC_ZDPCCX
+    <set>
+      <if test="record.zdpcCxbm != null">
+        ZDPC_CXBM = #{record.zdpcCxbm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zdpcCxmc != null">
+        ZDPC_CXMC = #{record.zdpcCxmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zdpcCxsm != null">
+        ZDPC_CXSM = #{record.zdpcCxsm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zdpcCx != null">
+        ZDPC_CX = #{record.zdpcCx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zdpcCxcs != null">
+        ZDPC_CXCS = #{record.zdpcCxcs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pcflbm != null">
+        PCFLBM = #{record.pcflbm,jdbcType=CHAR},
+      </if>
+      <if test="record.dwbm != null">
+        DWBM = #{record.dwbm,jdbcType=CHAR},
+      </if>
+      <if test="record.sm != null">
+        SM = #{record.sm,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update XT_PC_ZDPCCX
+    set ZDPC_CXBM = #{record.zdpcCxbm,jdbcType=VARCHAR},
+      ZDPC_CXMC = #{record.zdpcCxmc,jdbcType=VARCHAR},
+      ZDPC_CXSM = #{record.zdpcCxsm,jdbcType=VARCHAR},
+      ZDPC_CX = #{record.zdpcCx,jdbcType=VARCHAR},
+      ZDPC_CXCS = #{record.zdpcCxcs,jdbcType=VARCHAR},
+      PCFLBM = #{record.pcflbm,jdbcType=CHAR},
+      DWBM = #{record.dwbm,jdbcType=CHAR},
+      SM = #{record.sm,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.start.boot.domain.XtPcZdPcCx">
+    update XT_PC_ZDPCCX
+    <set>
+      <if test="zdpcCxmc != null">
+        ZDPC_CXMC = #{zdpcCxmc,jdbcType=VARCHAR},
+      </if>
+      <if test="zdpcCxsm != null">
+        ZDPC_CXSM = #{zdpcCxsm,jdbcType=VARCHAR},
+      </if>
+      <if test="zdpcCx != null">
+        ZDPC_CX = #{zdpcCx,jdbcType=VARCHAR},
+      </if>
+      <if test="zdpcCxcs != null">
+        ZDPC_CXCS = #{zdpcCxcs,jdbcType=VARCHAR},
+      </if>
+      <if test="pcflbm != null">
+        PCFLBM = #{pcflbm,jdbcType=CHAR},
+      </if>
+      <if test="dwbm != null">
+        DWBM = #{dwbm,jdbcType=CHAR},
+      </if>
+      <if test="sm != null">
+        SM = #{sm,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ZDPC_CXBM = #{zdpcCxbm,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.start.boot.domain.XtPcZdPcCx">
+    update XT_PC_ZDPCCX
+    set ZDPC_CXMC = #{zdpcCxmc,jdbcType=VARCHAR},
+      ZDPC_CXSM = #{zdpcCxsm,jdbcType=VARCHAR},
+      ZDPC_CX = #{zdpcCx,jdbcType=VARCHAR},
+      ZDPC_CXCS = #{zdpcCxcs,jdbcType=VARCHAR},
+      PCFLBM = #{pcflbm,jdbcType=CHAR},
+      DWBM = #{dwbm,jdbcType=CHAR},
+      SM = #{sm,jdbcType=VARCHAR}
+    where ZDPC_CXBM = #{zdpcCxbm,jdbcType=VARCHAR}
+  </update>
+</mapper>

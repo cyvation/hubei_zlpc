@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+                <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+        <mapper namespace="com.start.boot.dao.ajpc.FilterMapper">
+
+    <!--获取筛选规则列表-->
+    <select id="getSxgz" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call pkg_pcsx.proc_get_sxgz(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_pcflbm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_sslb,mode=IN,jdbcType=VARCHAR},
+                                            #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=sxgzMap},
+                                            #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="sxgzMap" type="map"></resultMap>
+
+    <!--获取筛选规则列表（监控里用）-->
+    <select id="getSxgzMonitor" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call pkg_pcsx.proc_get_sxgz_monitor(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                                    #{p_pcflbm,mode=IN,jdbcType=VARCHAR},
+                                                    #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=sxgzMap},
+                                                    #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="sxgzMapMonitor" type="map"></resultMap>
+
+
+
+    <!--获取评查活动绑定的筛选规则列表-->
+    <select id="getHdsxgz" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call pkg_pcsx.proc_get_hdsxgz(#{p_pcdwbm,mode=IN,jdbcType=VARCHAR},
+                                              #{p_pcflbm,mode=IN,jdbcType=VARCHAR},
+                                              #{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                              #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=pchdsxgzMap},
+                                              #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+
+    <resultMap id="pchdsxgzMap" type="map"></resultMap>
+
+    <!--随机评查案件筛选（自定义）-->
+    <select id="getSjsx" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+          call pkg_pcsx.proc_get_sjsx(  #{p_pcdwbm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_pcflbm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_gzdwbm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_sxgzbm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_cbdwbm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_cbbmbm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_ajlb,mode=IN,jdbcType=VARCHAR},
+                                        #{p_bmsah,mode=IN,jdbcType=VARCHAR},
+                                        #{p_ajmc,mode=IN,jdbcType=VARCHAR},
+                                        #{p_cbrxm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_ay,mode=IN,jdbcType=VARCHAR},
+                                        #{p_slrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_slrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_bjrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_bjrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_wcrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_wcrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_gdrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_gdrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_gzrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_gzrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_zdycxtj,mode=IN,jdbcType=VARCHAR},
+                                        #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                        #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                        #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                        #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sjsxMap},
+                                        #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="sjsxMap" type="map"></resultMap>
+
+    <!--随机评查案件筛选（部门）-->
+    <select id="get_sjsx_bm" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+          call pkg_pcsx.proc_get_sjsx_bm(#{p_pcdwbm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_pcflbm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_sxgzbm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_cbdwbm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_slrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_slrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_bjrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_bjrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_wcrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_wcrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_gdrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_gdrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_gzrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_gzrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_zdycxtj,mode=IN,jdbcType=VARCHAR},
+                                        #{p_cursor_cols,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=colsMap},
+                                        #{p_cursor_rows,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=rowsMap},
+                                        #{p_cursor_data,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=dataMap},
+                                        #{p_errmsg,mode=OUT,jdbcType=VARCHAR} )
+        ]]>
+    </select>
+    <resultMap id="colsMap" type="map"/>
+    <resultMap id="rowsMap" type="map"/>
+    <resultMap id="dataMap" type="map"/>
+
+
+    <!--随机评查案件筛选（检察官）-->
+    <select id="get_sjsx_jcg" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+          call pkg_pcsx.proc_get_sjsx_jcg(#{p_pcdwbm, mode=IN, jdbcType=VARCHAR},
+                                        #{p_pcflbm, mode=IN, jdbcType=VARCHAR},
+                                        #{p_pchdbm, mode=IN, jdbcType=VARCHAR},
+                                        #{p_sxgzbm, mode=IN, jdbcType=VARCHAR},
+                                        #{p_cbdwbm, mode=IN, jdbcType=VARCHAR},
+                                        #{p_cbbm, mode=IN, jdbcType=VARCHAR},
+                                        #{p_cbr, mode=IN, jdbcType=VARCHAR},
+                                        #{p_slrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_slrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_bjrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_bjrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_wcrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_wcrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_gdrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_gdrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_gzrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_gzrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_zdycxtj, mode=IN, jdbcType=VARCHAR},
+                                        #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                        #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                        #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                        #{p_cursor_cols, mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=colsJcMap},
+                                        #{p_cursor_rows, mode=OUT, jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=rowsJcMap},
+                                        #{p_cursor_data, mode=OUT, jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=dataJcMap},
+                                        #{p_errmsg, mode=OUT, jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="colsJcMap" type="map"></resultMap>
+    <resultMap id="rowsJcMap" type="map"></resultMap>
+    <resultMap id="dataJcMap" type="map"></resultMap>
+
+    <!--评查监控-->
+    <select id="getPcjk" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+          call pkg_pcsx.proc_get_pcjklist(#{p_dwbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_bmbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_gh, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pcdwbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pcflbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_sxgzbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pcy, mode=IN, jdbcType=VARCHAR},
+                                          #{p_cbr, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pcjl, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pczt, mode=IN, jdbcType=VARCHAR},
+                                          #{p_wcrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                          #{p_wcrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                          #{p_type, mode=IN, jdbcType=VARCHAR},
+                                          #{p_ajmc, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                          #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                          #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=pcjkMap},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="pcjkMap" type="map"></resultMap>
+
+
+    <!--获取评查结论列表-->
+    <select id="getPcjl" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call pkg_default.proc_get_pcjl(#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=pcjlMap},
+                                               #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="pcjlMap" type="map"></resultMap>
+
+    <!--获取评查状态列表-->
+    <select id="getPczt" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call pkg_default.proc_get_pczt(#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=pcztMap},
+                                               #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="pcztMap" type="map"></resultMap>
+
+    <!--评查案件筛选列（随机/重点）1.部门总表，未评查案件列表-->
+    <select id="getBmwpcList" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+          call pkg_pcsx.proc_get_bmsxlist(#{p_dwbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_bmbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_gzbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pcflbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pchdbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_gzrqbng,mode=IN,javaType=java.sql.Date,jdbcType=TIME},
+                                          #{p_gzrqend,mode=IN,javaType=java.sql.Date,jdbcType=TIME},
+                                          #{p_type,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                          #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                          #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=bmwpcMap},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="bmwpcMap" type="map"></resultMap>
+
+    <!--评查案件筛选列（随机/重点）检察官总表-->
+    <select id="getCbrwpcList" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+          call pkg_pcsx.proc_get_cbrsxlist(#{p_dwbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_cbrgh, mode=IN, jdbcType=VARCHAR},
+                                          #{p_gzbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pcflbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pchdbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_gzrqbng,mode=IN,javaType=java.sql.Date,jdbcType=TIME},
+                                          #{p_gzrqend,mode=IN,javaType=java.sql.Date,jdbcType=TIME},
+                                          #{p_type,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                          #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                          #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=cbrwpcMap},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="cbrwpcMap" type="map"></resultMap>
+
+    <!--随机、重点评查-->
+    <update id="uptSjpcsx" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_upd_sjsx( #{p_pcflbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_bmsah,mode=IN,jdbcType=VARCHAR},
+                                           #{p_sxgzbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_pcmbbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_bpc_wcbzrq,mode=IN,javaType=java.sql.Date,jdbcType=TIME},
+                                           #{p_pcdwbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_dpc_dwbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_czr_dwbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_czr_dwmc,mode=IN,jdbcType=VARCHAR},
+                                           #{p_czr_gh,mode=IN,jdbcType=VARCHAR},
+                                           #{p_czr_mc,mode=IN,jdbcType=VARCHAR},
+                                           #{p_pcr_dwbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_pcr_dwmc,mode=IN,jdbcType=VARCHAR},
+                                           #{p_pcr_gh,mode=IN,jdbcType=VARCHAR},
+                                           #{p_pcr_mc,mode=IN,jdbcType=VARCHAR},
+                                           #{p_pcslbm,mode=OUT,jdbcType=VARCHAR,javaType=String},
+                                           #{p_pcsah,mode=OUT,jdbcType=VARCHAR,javaType=String},
+                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--专项评查-->
+    <update id="uptZxpcsx" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_upd_zxsx( #{p_pcflbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_bmsah,mode=IN,jdbcType=VARCHAR},
+                                           #{p_sxgzbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_pcmbbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_bpc_wcbzrq,mode=IN,javaType=java.sql.Date,jdbcType=TIME},
+                                           #{p_pcdwbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_dpc_dwbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_czr_dwbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_czr_dwmc,mode=IN,jdbcType=VARCHAR},
+                                           #{p_czr_gh,mode=IN,jdbcType=VARCHAR},
+                                           #{p_czr_mc,mode=IN,jdbcType=VARCHAR},
+                                           #{p_pcslbm,mode=OUT,jdbcType=VARCHAR,javaType=String},
+                                           #{p_pcsah,mode=OUT,jdbcType=VARCHAR,javaType=String},
+                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+
+    <!--获取部门编码-->
+    <select id="getBmList" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcsx.proc_get_bmbm(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pcflbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=bmListMap,javaType=java.sql.ResultSet},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+
+    <resultMap id="bmListMap" type="map">
+
+    </resultMap>
+
+    <!--获取部门编码-->
+    <select id="getAllBm" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcsx.proc_get_allbm(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=allbmMap,javaType=java.sql.ResultSet},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+
+    <resultMap id="allbmMap" type="map">
+    </resultMap>
+    
+    <select id="getPcbmj" parameterType="map" statementType="CALLABLE">
+            <![CDATA[
+              call pkg_pcsx.proc_get_mbbmj(#{p_pcflbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gzbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=pcmbjMap,javaType=java.sql.ResultSet},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+             ]]>
+    </select>
+    
+    <resultMap id="pcmbjMap" type="map"></resultMap>
+
+    <!--根据部门受案号查询案件信息-->
+    <select id="getAjxxByBmsah" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT dw.dwmc FROM yx_pc_jbxx aj
+        INNER JOIN xt_zzjg_dwbm dw ON aj.sxr_dwbm = dw.dwbm
+         WHERE  aj.sfsc = 'N'
+        <if test="bmsah !=null and bmsah!=''">
+            AND aj.bmsah=#{bmsah}
+        </if>
+    </select>
+    
+</mapper>

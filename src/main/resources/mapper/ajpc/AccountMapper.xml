@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.AccountMapper">
+
+    <resultMap id="userMap" type="com.start.boot.domain.User">
+        <result property="DWBM" column="DWBM"/>
+        <result property="DWMC" column="DWMC"/>
+        <result property="GH" column="GH"/>
+        <result property="MC" column="MC"/>
+        <result property="BMBM" column="BMBM"/>
+        <result property="SFLX" column="SFLX"/>
+        <result property="TSXX" column="TSXX"/>
+        <result property="BMBM" column="BMBM"/>
+    </resultMap>
+
+
+    <!--调用存储过程实现用户登陆(传入参数：单位编码+用户名+口令；输出：用户)-->
+
+    <select id="userLogin" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+
+           CALL pkg_account.proc_login(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                    #{p_user,mode=IN,jdbcType=VARCHAR},
+                                    #{p_passwd,mode=IN,jdbcType=VARCHAR},
+                                    #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=userMap,javaType=java.sql.ResultSet},
+                                    #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+
+        ]]>
+    </select>
+
+
+    <!--调用存储过程获取人员功能权限(输入：单位编码+工号+身份类型;输出：)-->
+    <select id="getFunction" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+
+          call pkg_account.proc_get_gnbyry(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_rygh,mode=IN,jdbcType=VARCHAR},
+                                           #{p_sflx,mode=IN,jdbcType=VARCHAR},
+                                           #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=pMap},
+                                           #{p_cursor_fl,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=gnflMap},
+                                           #{p_cursor_gn,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=funcMap},
+                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+
+        ]]>
+    </select>
+
+    <resultMap id="pMap" type="java.lang.Object"></resultMap>
+
+    <!--功能分类映射-->
+    <resultMap id="gnflMap" type="com.start.boot.domain.FunctionFl">
+        <!--<result property="flbm" column="flbm"/>-->
+        <!--<result property="flmc" column="flmc"/>-->
+        <!--<result property="fflbm" column="fflbm"/>-->
+        <!--<result property="flxh" column="flxh"/>-->
+        <!--<result property="dwbm" column="dwbm"/>-->
+        <!--<result property="sfsc" column="sfsc" />-->
+        <!--<result property="icon" column="icon"/>-->
+    </resultMap>
+
+    <!--功能映射-->
+    <resultMap id="funcMap" type="com.start.boot.domain.Function">
+        <!--<result property="gnbm" column="gnbm" />-->
+        <!--<result property="gnmc" column="gnmc" />-->
+        <!--<result property="flbm" column="flbm" />-->
+        <!--<result property="gncxj" column="gncxj" />-->
+        <!--<result property="gnct" column="gnct" />-->
+        <!--<result property="gnsm" column="gnsm" />-->
+        <!--<result property="gnxh" column="gnxh" />-->
+        <!--<result property="gnxsmc" column="gnxsmc" />-->
+        <!--<result property="gncs" column="gncs" />-->
+        <!--<result property="dwbm" column="dwbm" />-->
+        <!--<result property="cscs" column="cscs" />-->
+        <!--<result property="sfsc" column="sfsc" />-->
+        <!--<result property="sfmtck" column="sfmtck" />-->
+        <!--<result property="icon" column="icon" />-->
+    </resultMap>
+
+    <!--获取左上角通知公告-->
+    <select id="getTzgg" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+
+          call pkg_account.proc_get_tzgg( #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_lxdm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_ppxx,mode=IN,jdbcType=VARCHAR},
+                                          #{p_fbsjbeg,mode=IN,javaType= java.sql.Date,jdbcType=TIME},
+                                          #{p_fbsjend,mode=IN,javaType= java.sql.Date,jdbcType=TIME},
+                                          #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                          #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                          #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=tzggMap},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+
+        ]]>
+    </select>
+    <resultMap id="tzggMap" type="map">
+        <result property="BH" column="BH"/>
+        <result property="FBRDWBM" column="FBRDWBM"/>
+        <result property="FBRDWMC" column="FBRDWMC"/>
+        <result property="FBRGH" column="FBRGH"/>
+        <result property="FBRXM" column="FBRXM"/>
+        <result property="LXDM" column="LXDM"/>
+        <result property="LXMC" column="LXMC"/>
+        <result property="BT" column="BT"/>
+        <result property="NR" column="NR" javaType="java.lang.String" jdbcType="CLOB"/>
+        <result property="CJSJ" column="CJSJ"/>
+        <result property="GHSJ" column="GHSJ"/>
+        <result property="SFJYKJ" column="SFJYKJ"/>
+    </resultMap>
+
+    <!--查询人员快捷菜单信息-->
+    <select id="getKjcd" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+
+          call pkg_account.proc_get_kjcd( #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=KjcdMap},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+
+        ]]>
+    </select>
+    <resultMap id="KjcdMap" type="map"></resultMap>
+
+
+    <!--新增人员快捷菜单信息-->
+    <select id="addKjcd" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+
+          call pkg_account.proc_add_kjcd( #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gnbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_xh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+
+        ]]>
+    </select>
+
+    <!--删除人员快捷菜单信息-->
+    <select id="delKjcd" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+
+          call pkg_account.proc_del_kjcd( #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gnbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+
+        ]]>
+    </select>
+
+    <!--获取未读消息数量-->
+    <select id="getXxsl" parameterType="map" statementType="CALLABLE">
+         <![CDATA[
+
+          call pkg_account.proc_get_xxsl( #{p_jsrdwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_jsrgh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+
+        ]]>
+    </select>
+
+    <!--获取消息列表-->
+    <select id="getXxlb" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+
+          call pkg_account.proc_get_xxlb( #{p_jsrdwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_jsrgh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_xxlx,mode=IN,jdbcType=VARCHAR},
+                                          #{p_xxzt,mode=IN,jdbcType=VARCHAR},
+                                          #{p_keyword,mode=IN,jdbcType=VARCHAR},
+                                          #{p_fsrqbeg,mode=IN,javaType= java.sql.Date,jdbcType=TIME},
+                                          #{p_fsrqend,mode=IN,javaType= java.sql.Date,jdbcType=TIME},
+                                          #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                          #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                          #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=xxlbMap},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+
+        ]]>
+    </select>
+    <resultMap id="xxlbMap" type="map"/>
+
+    <!--新增消息记录-->
+    <insert id="addXxjl" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+
+          call pkg_account.proc_add_xxjl( #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_jsrdwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_jsrgh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_xxlx,mode=IN,jdbcType=VARCHAR},
+                                          #{p_xxbt,mode=IN,jdbcType=VARCHAR},
+                                          #{p_xxnr,mode=IN,jdbcType=VARCHAR},
+                                          #{p_glbmsah,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+
+        ]]>
+    </insert>
+
+    <!--修改消息内容-->
+    <update id="updXxlb" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+
+          call pkg_account.proc_upd_xxzt( #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_xxxh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+
+        ]]>
+
+    </update>
+
+    <!--修改密码-->
+    <update id="updatePassword" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+
+          call pkg_account.proc_update_password( #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                              #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                              #{p_oldpwd,mode=IN,jdbcType=VARCHAR},
+                                              #{p_newpwd,mode=IN,jdbcType=VARCHAR},
+                                              #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+
+        ]]>
+    </update>
+
+    <!--获取待办任务数量-->
+    <select id="getTaskCount" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+
+          call pkg_account.proc_get_dbrwsl( #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gnbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+
+        ]]>
+    </select>
+    <!--获取人员角色编码-->
+    <select id="getJsbm" parameterType="map" statementType="CALLABLE">
+       <![CDATA[
+          call pkg_account.proc_get_jsbm( #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=JsbmMap},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+
+        ]]>
+    </select>
+    <resultMap id="JsbmMap" type="com.start.boot.domain.Jsbm"></resultMap>
+
+    <!--借助CA认证登陆-->
+    <select id="signByCaid" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+
+           CALL pkg_account.proc_ca_login(#{p_caid,mode=IN,jdbcType=VARCHAR},
+                                         #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=userMap2,javaType=java.sql.ResultSet},
+                                         #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+
+        ]]>
+    </select>
+
+    <resultMap id="userMap2" type="com.start.boot.domain.User"></resultMap>
+
+
+    <!--获取用户功能对应的功能参数-->
+    <select id="getGncsByDwbm" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+
+            call pkg_account.proc_get_gncs(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_jsbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gnbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=userGncs,javaType=java.sql.ResultSet},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+
+    <resultMap id="userGncs" type="map">
+    </resultMap>
+
+</mapper>

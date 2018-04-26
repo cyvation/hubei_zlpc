@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.start.boot.dao.ajpc.HandleMapper">
+
+
+    <!--获取评查案件列表-->
+    <select id="get_pclist" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_get_pclist(#{p_pcrdwbm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_pcrgh,mode=IN,jdbcType=VARCHAR},
+                                            #{p_keyword,mode=IN,jdbcType=VARCHAR},
+                                            #{p_pczt,mode=IN,jdbcType=VARCHAR},
+                                            #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                            #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                            #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                            #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=getPcajListMap},
+                                            #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="getPcajListMap" type="map"></resultMap>
+
+    <!--获取评查活动列表-->
+    <select id="getPchdList" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_get_pchdlist(#{p_cjrdwbm,mode=IN,jdbcType=VARCHAR},
+                                              #{p_cjrgh,mode=IN,jdbcType=VARCHAR},
+                                              #{p_keyword,mode=IN,jdbcType=VARCHAR},
+                                              #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                              #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                              #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                              #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=getPchdListMap},
+                                              #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="getPchdListMap" type="map"></resultMap>
+
+    <!--评查审批案件列表-->
+    <select id="get_splst" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_get_splst(#{p_sprdwbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_sprgh,mode=IN,jdbcType=VARCHAR},
+                                           #{p_keyword,mode=IN,jdbcType=VARCHAR},
+                                           #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                           #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                           #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                           #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=splstMap},
+                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="splstMap" type="map"></resultMap>
+
+    <!--评查审批案件列表-->
+    <select id="get_spxx" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_zdsxgz.proc_get_spyjbybm(#{p_spwjbm,mode=IN,jdbcType=VARCHAR},
+                                                #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=spxxMap},
+                                                #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="spxxMap" type="map"></resultMap>
+
+    <!--承办人反馈列表-->
+    <select id="get_cbrfklist" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_get_cbrfklist(#{p_bpc_dwbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_bpc_gh,mode=IN,jdbcType=VARCHAR},
+                                               #{p_keyword,mode=IN,jdbcType=VARCHAR},
+                                               #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                               #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                               #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                               #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=cbrfkMap},
+                                               #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="cbrfkMap" type="map"></resultMap>
+
+    <!--承办部门反馈列表-->
+    <select id="get_cbbmfklist" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_get_cbbmfklist(#{p_bpc_dwbm,mode=IN,jdbcType=VARCHAR},
+                                                #{p_bpc_gh,mode=IN,jdbcType=VARCHAR},
+                                                #{p_keyword,mode=IN,jdbcType=VARCHAR},
+                                                #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                                #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                                #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                                #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=cbbmfkMap},
+                                                #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="cbbmfkMap" type="map"></resultMap>
+
+    <!--评查卷宗列表-->
+    <select id="getDocFiles" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_get_pcjzlist(#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+                                              #{p_pcflbm, mode=IN, jdbcType=VARCHAR},
+                                              #{p_pchdbm, mode=IN, jdbcType=VARCHAR},
+                                              #{p_dwbm, mode=IN, jdbcType=VARCHAR},
+                                              #{p_gh, mode=IN, jdbcType=VARCHAR},
+                                              #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=pcjzMap},
+                                              #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="pcjzMap" type="map"></resultMap>
+
+    <!--评查案件确认-->
+    <select id="uptDealAjqr" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_deal_ajqr(#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_czrdwbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrdwmc, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrgh, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrxm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=pcajMap},
+                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="pcajMap" type="map"></resultMap>
+
+    <!--发送评查审批-->
+    <update id="uptSendPcsp" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_send_pcsp(#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_pcflbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_pchdbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_bmsah, mode=IN, jdbcType=VARCHAR},
+                                           #{p_ssrdwbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_ssrdwmc, mode=IN, jdbcType=VARCHAR},
+                                           #{p_ssrgh, mode=IN, jdbcType=VARCHAR},
+                                           #{p_ssrxm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_sprdwbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_sprdwmc, mode=IN, jdbcType=VARCHAR},
+                                           #{p_sprgh, mode=IN, jdbcType=VARCHAR},
+                                           #{p_sprxm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_spjsbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_spjsmc, mode=IN, jdbcType=VARCHAR},
+                                           #{p_pcspbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--评查案件审批-->
+    <update id="uptDealPcsp" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_deal_pcsp(#{p_pcspbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_sprdwbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_sprdwmc, mode=IN, jdbcType=VARCHAR},
+                                           #{p_sprgh, mode=IN, jdbcType=VARCHAR},
+                                           #{p_sprxm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_spjl, mode=IN, jdbcType=VARCHAR},
+                                           #{p_spyj, mode=IN, jdbcType=VARCHAR},
+                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--发送评查反馈-->
+    <update id="uptSendPcfk" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_send_pcfk(#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_pcflbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_pchdbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_bmsah, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrdwbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrdwmc, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrgh, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrxm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--承办人反馈-->
+    <update id="uptDealPcfk" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_deal_pcfk(#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_pcflbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_pchdbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_bmsah, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrdwbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrdwmc, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrgh, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrxm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_sfyy, mode=IN, jdbcType=VARCHAR},
+                                           #{p_sprdwbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_sprgh, mode=IN, jdbcType=VARCHAR},
+                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--部门反馈-->
+    <update id="uptDealBmfk" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_deal_bmfk(#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_pcflbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_pchdbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_bmsah, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrdwbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrdwmc, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrgh, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrxm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--评查结束-->
+    <update id="uptDealPcjs" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_deal_pcjs(#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_pcflbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_pchdbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_bmsah, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrdwbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrdwmc, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrgh, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrxm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--新增评查意见信息-->
+    <insert id="addPcyj" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_add_pcyj(#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_pcyjlx, mode=IN, jdbcType=VARCHAR},
+                                           #{p_pcyjjl, mode=IN, jdbcType=VARCHAR},
+                                           #{p_pcyj, mode=IN, jdbcType=VARCHAR},
+                                           #{p_tcrdwbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_tcrdwmc, mode=IN, jdbcType=VARCHAR},
+                                           #{p_tcrgh, mode=IN, jdbcType=VARCHAR},
+                                           #{p_tcrmc, mode=IN, jdbcType=VARCHAR},
+                                           #{p_pcyjbh, mode=OUT, jdbcType=VARCHAR},
+                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </insert>
+
+    <!--已办已审核已反馈-->
+    <select id="get_pcyblist"  parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+            call pkg_pcbl.proc_get_pcyblist(#{p_dwbm, mode=IN ,  jdbcType=VARCHAR},
+                                            #{p_gh, mode=IN ,  jdbcType=VARCHAR},
+                                            #{p_type, mode=IN ,  jdbcType=VARCHAR},
+                                            #{p_name, mode=IN , jdbcType=VARCHAR},
+                                            #{p_pagesize, mode=IN , jdbcType=VARCHAR},
+                                            #{p_pageindex,mode=IN , jdbcType=VARCHAR},
+                                            #{p_bng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                            #{p_end, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                            #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                            #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=getPcyblistMap},
+                                            #{p_errmsg, mode=OUT, jdbcType=VARCHAR })
+                  ]]>
+    </select>
+    <resultMap id="getPcyblistMap" type="map"></resultMap>
+
+    <!--撤回评查审批-->
+    <update id="cancelApprove" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_cancel_pcsp(#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_pcflbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_pchdbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_pcspbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrdwbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrdwmc, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrgh, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrxm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--退回评查送审-->
+    <update id="backApprove" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_back_pcsp(#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_pcflbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_pchdbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_pcspbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrdwbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrdwmc, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrgh, mode=IN, jdbcType=VARCHAR},
+                                           #{p_czrxm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--获取业务部门负责人-->
+    <insert id="getYwbmfzr" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_get_ywbmfzr(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                            #{p_spjsbm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_cursor, mode=OUT, jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=getYwbmfzrMap},
+                                            #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </insert>
+
+    <resultMap id="getYwbmfzrMap" type="map"/>
+</mapper>

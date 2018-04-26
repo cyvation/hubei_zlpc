@@ -1,0 +1,13 @@
+
+.combo-panel{
+    background: #ffffff !important;
+    border-color: #dadada !important;
+
+   height: 200px !important;
+    overflow: auto;
+
+
+}
+.combo-arrow{
+    background: url("../image/home/arrow-d.png") no-repeat center;
+}

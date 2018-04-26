@@ -1,0 +1,193 @@
+*{
+    font-family: 微软雅黑;
+    margin: 0;
+    padding: 0;
+}
+.tolong{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background:url("../image/login/bg.png") no-repeat 100% 100% ;
+
+}
+.tolong_com{
+    width: 1000px;
+    height: 520px;
+    margin: 8% auto;
+    background: url("../image/login/kuang.png")  no-repeat;
+    background-size: contain;
+}
+.tolong_cen{
+    width: 400px;
+    height: 315px;
+    float: right;
+    margin-top: 170px;
+    margin-right: 128px;
+    overflow: hidden;
+}
+.tolong_ils{
+    width:350px;
+    height: 40px;
+    border: 1px solid #A1C9E6;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+    margin-top: 20px;
+    background-color: #fff;
+}
+.tolong_ils>input{
+    float: left;
+    width: 300px;
+    height: 100%;
+    outline: none;
+    border: 0;
+}
+.qb{
+    background-color: #D8571E;
+    line-height: 40px;
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+
+}
+.qb:hover{
+    background:  #e16b38;
+
+}
+.jzdjys{
+    background: #B4B4B4;
+    border: 1px solid #B4B4B4;
+}
+@media screen and (max-width: 1600px){
+    .tolong_com{
+        margin: 4% auto;
+    }
+}
+.tolong_ils .combo{
+    border-color: rgba(0,0,0,0);
+    background-color: rgba(0,0,0,0);
+}
+.tolong_ils .combo-arrow{
+    background-color:rgba(0,0,0,0);
+}
+.tolong_ils .combo-arrow:hover{
+    background-color:rgba(0,0,0,0);
+}
+.tolong_ils .panel-header,.panel-body{
+    border-color: #A1C9E6 !important;
+}
+#yhmcw,#mmcw{
+    height: 20px;
+    color: red;
+    font-size: 14px;
+    width: 350px;
+}
+.textbox .textbox-text{
+    font-size: 14px !important;
+    margin-left: 1px!important;
+}
+#winUpdPwd .textbox .textbox-text{
+    font-size: 14px !important;
+    margin-left: 1px!important;
+    height: 24px!important;
+}
+.tree-title{
+    font-size: 14px !important;
+}
+/*证书ID样式*/
+#login_div{
+    width: 800px;
+    position: relative;
+    left: 0;
+    -webkit-transition: all .5s ;
+    -moz-transition: all .5s ;
+    -ms-transition: all .5s ;
+    -o-transition: all .5s ;
+    transition: all .5s ;
+}
+.dlys_div{
+    width: 100px;
+    float: left;
+    position: relative;
+
+}
+.dlys_div>span.radio_span{
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    position: absolute;
+    top: 2px;
+    background: url("../image/login/anniu1.png") no-repeat;
+}
+.dlys_div>span.radio_checked{
+    background: url("../image/login/anniu2.png") no-repeat;
+}
+.dlys_div>input[type="radio"]{
+    opacity: 0;
+    width: 100%;
+    height: 20px;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+.dl_span{
+    position: absolute;
+    top: 0;
+    left: 20px;
+}
+.login_andl{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    cursor: no-drop;
+}
+
+/*      2018,1,23 日（写字体）更改          */
+.tolong_com_wzt{
+    width: 1000px;
+    height: 520px;
+    margin: 8% auto;
+    background: url("../image/login/kuang1.png")  no-repeat;
+    background-size: contain;
+    position: relative;
+}
+.div_ziname_zty{
+    position: absolute;
+    bottom: 82px;
+    width: 333px;
+}
+.div_ziname_zty span.span_ztjgmc{
+    display: inline-block;
+    width: 100%;
+    font-size: 40px;
+    color: #1F6699;
+    text-align: center;
+}
+.div_ziname_zty span.span_ztxtmc{
+    display: inline-block;
+    width: 100%;
+    font-size: 38px;
+    color: #1F6699;
+    font-weight: bold;
+    text-align: center;
+}
+.tolong_xbjt{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: url(../image/login/bg_login.png) no-repeat 100% 100%;
+    /*user-select: none;*/
+    cursor: context-menu;
+}
+/*        2018.1.30  1024分辨率                */
+@media screen and (min-width: 1024px) and (max-width:1150px) {
+    .tolong_com_wzt{
+        zoom: 0.9;
+    }
+}

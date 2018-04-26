@@ -1,0 +1,42 @@
+.window{
+	padding:0 0 0 0 !important;
+    border:0px !important;
+}
+.window-body{
+    border: 0 !important;
+}
+.window-header{
+    height: 40px !important;
+    padding:0 0 0 0 !important;
+    background: #1e579e !important;
+}
+.window-header .panel-title{
+    font-size: 16px;
+    line-height: 40px;
+    margin-left: 10px;
+    color: #FFFFFF;
+    height: 40px;
+    font-weight: lighter;
+}
+.window-header .panel-tool-close{
+	background:url("../image/home/close_tanchuang.png") no-repeat center;
+    margin:0 5px;
+}
+/*.window-header .panel-tool-max{*/
+    /*background:url("../image/home/fangda.png") no-repeat center;*/
+    /*margin-right: 5px;*/
+/*}*/
+/*.window-header .panel-tool-huanyuan{*/
+    /*background:url("../image/home/huanyuan.png") no-repeat center;*/
+    /*margin-right: 5px;*/
+/*}*/
+/*.window-header .panel-tool .panel-tool-max:hover{*/
+    /*background: #164A96 url("../image/home/fangda.png") no-repeat center!important;*/
+/*}*/
+/*.window-header .panel-tool .panel-tool-huanyuan:hover{*/
+    /*background: #164A96 url("../image/home/huanyuan.png") no-repeat center!important;*/
+/*}*/
+
+.window-header .panel-tool .panel-tool-close:hover{
+    background: url("../image/home/close_tanchuang.png") no-repeat center !important;
+}

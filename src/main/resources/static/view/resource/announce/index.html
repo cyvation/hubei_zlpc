@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>通知公告</title>
+</head>
+<body>
+    <!--页面JS加载，放在头部不能正确加载-->
+    <script type="text/javascript">
+        AddScript("text/javascript", "script/resource/announce/index.js");
+    </script>
+    
+
+    <!--通知公告列表-->
+    <div id="divTzggSearch" style="padding:5px 0 5px 10px;border: none" >
+            关键字 <input id="keyword_announce" class="easyui-textbox" style="width:180px;height: 28px;" />
+		    创建时间
+             <!--<input id="s_dateTzggCJSJBgn" class="Wdate" onclick="WdatePicker({isShowClear:true,dateFmt:'yyyy年MM月dd日',maxDate:'#F{$dp.$D(\'s_dateTzggCJSJEnd\');}'})"-->
+                       <!--style="width:150px;height:30px;cursor: pointer; border:1px solid #c1c1c1;border-radius: 5px"/>~-->
+                <!--<input id="s_dateTzggCJSJEnd" class="Wdate" onclick="WdatePicker({isShowClear:true,dateFmt:'yyyy年MM月dd日',minDate:'#F{$dp.$D(\'s_dateTzggCJSJBgn\');}',maxDate:'%y-%M-%d'})"-->
+                       <!--style="width:150px;height:30px;cursor: pointer; border:1px solid #c1c1c1;border-radius: 5px"/></td>-->
+                <input id="s_dateTzggCJSJBgn" class="easyui-datebox" style="width:180px;height: 28px;cursor: pointer; border-color: #95B8E7"/>&nbsp;~
+                <input id="s_dateTzggCJSJEnd" class="easyui-datebox" style="width:180px;height: 28px;cursor: pointer; border-color: #95B8E7"/>&nbsp;
+            <a id="btnTzggSearch" class="easyui-linkbutton" style="padding: 0 15px;background:#327cbb;color: #ffffff;">查询</a>&nbsp;
+            <a id="btnTzggAssign" class="easyui-linkbutton" style="padding: 0 15px">发布通知公告</a>
+    <!--</div>
+        <table id="gridTzggList" border="0" ></table>
+    </div>-->
+    </div>
+
+    <div id="layout_tzgg" class="easyui-layout" data-options="fit:true">
+        <div id="panel_tzgg" class="easyui-panel" data-options="fit:true,border:true" style="border: none">
+            <table id="gridTzggList" >
+            </table>
+        </div>
+    </div>
+
+
+    <!--编辑弹出窗-->
+    <div id="winTzggAssign" class="easyui-window" title="通知公告" style="width:850px; height:480px;"
+         data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,cache:false">
+        <div style="margin-top:15px; margin-left:40px"><span id="lblTzggAJSL"></span></div>
+        <div style=" margin-top:15px; margin-bottom:15px;margin-left: 10px">
+            <table class="winTzggAssign_table">
+                <tr style="margin-bottom: 10px">
+                    <td style="text-align: right;width:105px;">标题：</td>
+                    <td><input id="txtTzggBT" class="easyui-textbox" style="width:700px;" /></td>
+                    <td><span style="text-align:left;color:Red">*</span></td>
+                </tr>
+                <tr style="margin-bottom: 10px">
+                    <td style="text-align: right">公告有效时间：</td>
+                    <td>
+                        <div id="gg_time" style="float: left;margin-right: 20px" >
+                        <input id="date_tzgg" type="text" class="easyui-datebox" data-options="wincom:true" style="width: 200px">
+                        </div>
+                        <span>是否共享：</span>
+                        <input id="gx" type="radio"  value="Y" checked="checked"  name="sfjykj_tzgg"/>是
+                        <input id="bgx" type="radio"  value="N" name="sfjykj_tzgg"/>否
+                    </td>
+                    <td><span style="text-align:left;color:Red">*</span></td>
+                </tr>
+                <tr style="margin-bottom: 10px;">
+                    <td style="text-align: right">公告附件：</td>
+                    <td>
+                        <form id="fileUpTZ" enctype="multipart/form-data" method="post" style="">
+                            <div style="width: 220px;height: 26px;float: left;">
+                                <input id="tzgg_zlmc" name="zlmc" class="easyui-textbox" style="float:left;width: 200px;height: 26px;"/>
+                            </div>
+                            <div style="width: 150px;height: 26px;float: left;">
+                                <a href="javascript:;" id="b-upload" style="height: 20px">
+                                    <input type="file" name="file" id="tzgg_upload_file">点击这里选择文件
+                                </a>
+                                <span style="display: none" id="tzgg_span_file">
+                                    <input type="text" id="tzgg_file_count"/>
+                                </span>
+                            </div>
+                            <div style="width: 200px;height: 26px;float: left;" >
+                                <a id="tzgg_cancle_upload" class="easyui-linkbutton">取消附件</a>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                <tr style="margin-bottom: 10px">
+                    <td style="text-align: right">内容：</td>
+                    <td><input id="txt_tzgg_nr" class="easyui-textbox " data-options="multiline:true" style="width:700px;height: 260px"/></td>
+                    <td><!--<span style="text-align:left;color:Red">*</span>--></td>
+                </tr>
+            </table>
+        </div>
+        <div style="text-align:center;">
+            <a id="btnTzggConfirm" class="easyui-linkbutton">发布</a>&nbsp;
+            <a id="btnTzggCancel" class="easyui-linkbutton">取消</a>
+        </div>
+    </div>
+
+    <!--通知公告详细信息-->
+    <div id="divTzggCaseDetail">
+    </div>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>评查办理</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    AddScript("text/javascript","script/evaluate/handle/onescreen.js")
+</script>
+<div id="btn_switch_to_splitscreen" onclick="switch_to_splitscreen()"
+     style="position: absolute;top: 31px;right: 36px;z-index:2222;background: url('image/home/bm.png')no-repeat center;width: 16px;height: 16px;cursor: pointer">
+</div>
+
+<div style="width: 100%;height: 100%;">
+    <div id="pacbl" class="easyui-tabs" data-options="fit:true">
+        <div title="案件信息" data-options="fit:true" style="padding: 5px">
+            <div id="pacbl_box_left" style="width: 300px;height: 100%;float: left">
+                <div id="pacbl_ajxx_left" class="easyui-panel" data-options="fit:true">
+                    <div class="pacbl_ajxx_left_box">
+                        <div id="pacbl_ajxx_left_top" class="easyui-panel" style="width: 100%;  border: 1px solid #dadada"  data-options="fit:true">
+                            <input id="cc" class="easyui-combobox" name="dept" data-options="valueField:'id',textField:'text',url:'get_data.php'" style="width: 100%;height: 30px;border: 1px solid #333"/>
+                            <ul id="pacbl_ajxx_tree" class="easyui-tree" data-options="lines:true,animate:true">
+                                <li>
+                                    <span>Folder</span>
+                                    <ul>
+                                        <li>
+                                            <span>Sub Folder 1</span>
+                                            <ul>
+                                                <li>
+                                                    <span><a href="#">File 11</a></span>
+                                                </li>
+                                                <li>
+                                                    <span>File 12</span>
+                                                </li>
+                                                <li>
+                                                    <span>File 13</span>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <span>File 2</span>
+                                        </li>
+                                        <li>
+                                            <span>File 3</span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span>File21</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="pacbl_ajxx_left_box">
+
+                        <div id="pacbl_ajxx_left_bottom" class="easyui-panel" style="width: 100%;"  data-options="fit:true">
+
+                            <div id="pacbl_ajxx_Tabs" class="easyui-tabs" data-options="fit:true">
+                                <div title="案卡">
+                                    <ul class="pacbl_ajxx_tabs_ul">
+                                        <li class="pacbl_ajxx_tabs_li">
+                                            审查起诉受理情况
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div title="过程信息">
+                                    tab2
+                                </div>
+                                <div title="流程监控">
+                                    tab3
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="pacbl_box_right" style="height: 100%;width:calc(100% - 302px);float: left">
+                <div id="pacbl_ajxx_right" class="easyui-panel" style="border: 1px solid #dadada;overflow: hidden;" data-options="fit:true">
+                    <!--<iframe src="word.docx" width="100%" height="100%" frameborder="0"></iframe>-->
+                </div>
+            </div>
+        </div>
+        <div title="评查信息" style="padding:15px 15px 5px 15px" href="./view/evaluate/handle/evalinfo.html">
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.XtZzjgDwbmMapper">
+  <resultMap id="BaseResultMap" type="com.start.boot.domain.XtZzjgDwbm">
+    <id column="DWBM" jdbcType="CHAR" property="dwbm" />
+    <result column="DWMC" jdbcType="VARCHAR" property="dwmc" />
+    <result column="FDWBM" jdbcType="CHAR" property="fdwbm" />
+    <result column="DWJB" jdbcType="CHAR" property="dwjb" />
+    <result column="SFSC" jdbcType="CHAR" property="sfsc" />
+    <result column="DWJC" jdbcType="VARCHAR" property="dwjc" />
+    <result column="DWSX" jdbcType="CHAR" property="dwsx" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    DWBM, DWMC, FDWBM, DWJB, SFSC, DWJC, DWSX
+  </sql>
+  <select id="selectByExample" parameterType="com.start.boot.domain.XtZzjgDwbmExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from XT_ZZJG_DWBM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from XT_ZZJG_DWBM
+    where DWBM = #{dwbm,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from XT_ZZJG_DWBM
+    where DWBM = #{dwbm,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.start.boot.domain.XtZzjgDwbmExample">
+    delete from XT_ZZJG_DWBM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.start.boot.domain.XtZzjgDwbm">
+    insert into XT_ZZJG_DWBM (DWBM, DWMC, FDWBM, 
+      DWJB, SFSC, DWJC, DWSX
+      )
+    values (#{dwbm,jdbcType=CHAR}, #{dwmc,jdbcType=VARCHAR}, #{fdwbm,jdbcType=CHAR}, 
+      #{dwjb,jdbcType=CHAR}, #{sfsc,jdbcType=CHAR}, #{dwjc,jdbcType=VARCHAR}, #{dwsx,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.start.boot.domain.XtZzjgDwbm">
+    insert into XT_ZZJG_DWBM
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dwbm != null">
+        DWBM,
+      </if>
+      <if test="dwmc != null">
+        DWMC,
+      </if>
+      <if test="fdwbm != null">
+        FDWBM,
+      </if>
+      <if test="dwjb != null">
+        DWJB,
+      </if>
+      <if test="sfsc != null">
+        SFSC,
+      </if>
+      <if test="dwjc != null">
+        DWJC,
+      </if>
+      <if test="dwsx != null">
+        DWSX,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dwbm != null">
+        #{dwbm,jdbcType=CHAR},
+      </if>
+      <if test="dwmc != null">
+        #{dwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="fdwbm != null">
+        #{fdwbm,jdbcType=CHAR},
+      </if>
+      <if test="dwjb != null">
+        #{dwjb,jdbcType=CHAR},
+      </if>
+      <if test="sfsc != null">
+        #{sfsc,jdbcType=CHAR},
+      </if>
+      <if test="dwjc != null">
+        #{dwjc,jdbcType=VARCHAR},
+      </if>
+      <if test="dwsx != null">
+        #{dwsx,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.start.boot.domain.XtZzjgDwbmExample" resultType="java.lang.Long">
+    select count(*) from XT_ZZJG_DWBM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update XT_ZZJG_DWBM
+    <set>
+      <if test="record.dwbm != null">
+        DWBM = #{record.dwbm,jdbcType=CHAR},
+      </if>
+      <if test="record.dwmc != null">
+        DWMC = #{record.dwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fdwbm != null">
+        FDWBM = #{record.fdwbm,jdbcType=CHAR},
+      </if>
+      <if test="record.dwjb != null">
+        DWJB = #{record.dwjb,jdbcType=CHAR},
+      </if>
+      <if test="record.sfsc != null">
+        SFSC = #{record.sfsc,jdbcType=CHAR},
+      </if>
+      <if test="record.dwjc != null">
+        DWJC = #{record.dwjc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dwsx != null">
+        DWSX = #{record.dwsx,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update XT_ZZJG_DWBM
+    set DWBM = #{record.dwbm,jdbcType=CHAR},
+      DWMC = #{record.dwmc,jdbcType=VARCHAR},
+      FDWBM = #{record.fdwbm,jdbcType=CHAR},
+      DWJB = #{record.dwjb,jdbcType=CHAR},
+      SFSC = #{record.sfsc,jdbcType=CHAR},
+      DWJC = #{record.dwjc,jdbcType=VARCHAR},
+      DWSX = #{record.dwsx,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.start.boot.domain.XtZzjgDwbm">
+    update XT_ZZJG_DWBM
+    <set>
+      <if test="dwmc != null">
+        DWMC = #{dwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="fdwbm != null">
+        FDWBM = #{fdwbm,jdbcType=CHAR},
+      </if>
+      <if test="dwjb != null">
+        DWJB = #{dwjb,jdbcType=CHAR},
+      </if>
+      <if test="sfsc != null">
+        SFSC = #{sfsc,jdbcType=CHAR},
+      </if>
+      <if test="dwjc != null">
+        DWJC = #{dwjc,jdbcType=VARCHAR},
+      </if>
+      <if test="dwsx != null">
+        DWSX = #{dwsx,jdbcType=CHAR},
+      </if>
+    </set>
+    where DWBM = #{dwbm,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.start.boot.domain.XtZzjgDwbm">
+    update XT_ZZJG_DWBM
+    set DWMC = #{dwmc,jdbcType=VARCHAR},
+      FDWBM = #{fdwbm,jdbcType=CHAR},
+      DWJB = #{dwjb,jdbcType=CHAR},
+      SFSC = #{sfsc,jdbcType=CHAR},
+      DWJC = #{dwjc,jdbcType=VARCHAR},
+      DWSX = #{dwsx,jdbcType=CHAR}
+    where DWBM = #{dwbm,jdbcType=CHAR}
+  </update>
+  <select id="getDwbmTreeList" resultType="com.start.boot.domain.XtZzjgDwbm">
+    select *
+    from XT_ZZJG_DWBM
+    start with DWBM =#{dwbm}
+    connect by prior DWBM=FDWBM
+  </select>
+</mapper>

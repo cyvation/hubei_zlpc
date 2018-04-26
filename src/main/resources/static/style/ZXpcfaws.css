@@ -1,0 +1,235 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.ZXpcfaws{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    font-family: 微软雅黑;
+    background-color: #F0F9FF;
+    width: 100%;
+    height: 100%;
+    min-height: 550px;
+}
+.ZXpcfaws_url{
+    width: 100%;
+    height: 40px;
+    background-color: #DDEEF8;
+    color: #616A6F;
+    font-size: 14px;
+}
+.ZXpcfaws_bd{
+    border: 1px solid #BBC9EC;
+    width:96%;
+    margin-left: 2%;
+    background-color: #fff;
+    margin-top: 20px;
+    border-radius:3px;
+}
+.ZXpcfaws_top{
+    background-color: #D0E6F8;
+    height: 40px;
+    width: 100%;
+    border-bottom: 1px solid #BBC9EC;
+}
+.ZXpcfaws_top_en{
+    width: 120px;
+    height: 38px;
+    background-color: #fff;
+    color: #0D4574;
+    text-align: center;
+    line-height: 40px;
+    font-size: 14px;
+    border-top: 3px solid #2588E0;
+    font-weight: bold;
+    border-radius: 3px;
+    border-right: 1px solid #BBC9EC;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    float: left;
+}
+.ZXpcfaws_top_tow{
+    width: 120px;
+    height: 38px;
+    color: #5F6C75;
+    text-align: center;
+    line-height: 40px;
+    font-size: 14px;
+    float: left;
+}
+.ZXpcfaws_top_three{
+    float: right;
+    width: 100px;
+    height: 30px;
+    background-color: #1C90E3;
+    color: #fff;
+    border: 1px solid #1C90E3;
+    border-radius: 5px;
+    margin: 5px 10px 0 0;
+}
+.ZXpcfaws_tj{
+    width: 96%;
+    height: 50px;
+    border-bottom: 1px solid #B0CEF0;
+    margin-left: 2%;
+}
+.ZXpcfaws_tj_1{
+    width: 120px;
+    float: left;
+    font-weight: bold;
+    border-bottom: 3px solid #2287E0;
+    margin-top: 18px;
+    height: 30px;
+    font-size: 14px;
+}
+.ZXpcfaws_xz{
+    width: 96%;
+    height: 160px;
+    margin-left: 2%;
+}
+
+
+.ZXpcfaws_sj{
+    width: 96%;
+    height: 45px;
+    margin-left: 2%;
+    margin-top: 10px;
+    background-color: #fff;
+}
+.ZXpcfaws_sj_2{
+    width: 75px;
+    height: 30px;
+    color: #fff;
+    background-color: #248DE9;
+    border: 0;
+    border-radius:5px;
+    margin-left: 20px;
+    font-size: 14px;
+    outline: none;
+}
+.ZXpcfaws_sj_1{
+    width: 105px;
+    height: 30px;
+    border: 1px solid #2688DF;
+    background-color: #fff;
+    display: inline-block;
+    margin-left: 20px;
+    border-radius:5px;
+    outline: none;
+}
+
+.ZXpcfaws_sj_all{
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    color: #858585;
+}
+.ZXpcfaws_sj_all_1{
+    width: 25%;
+    height:32px;
+    float: left;
+    margin-top: 10px;
+}
+
+.ZXpcfaws_sj_all_1>input{
+    width: 50%;
+    height: 30px;
+    border-radius:2px;
+    border: 1px solid #c1c1c1;
+}
+.ZXpcfaws_sj_all_2{
+    width: 24%;
+    height: 100%;
+    float: left;
+}
+.ZXpcfaws_sj_all_2>input{
+    width: 50%;
+    height: 30px;
+    border-radius:2px;
+    border: 1px solid #c1c1c1;
+}
+.ZXpcfaws_content{
+    width: 96%;
+    height: calc(100% - 360px);
+    border: 1px solid #B0CEF0;
+    margin-left: 2%;
+    margin-top: 20px;
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+#mmp>div>div>div>div>div>div>table tr td{
+    border: 0 !important;
+}
+#mmps>div>div>div>div>div>div>table tr td{
+    border: 0 !important;
+}
+.datagrid-btable>tbody>tr{
+    border-bottom:1px solid #DEDEDE !important;
+}
+.datagrid-row {
+    /*height: 30px !important;*/
+}
+tbody>tr{
+    width: 100% !important;
+}
+tbody{
+    width: 100%;
+    height: 35px;
+}
+.datagrid-btable{
+    width: 100%;
+}
+.datagrid-header{
+    border-top: 1px solid #DEDEDE !important;
+}
+.datagrid-header-row{
+    height: 35px !important;
+    color: #2B6993 !important;
+}
+.datagrid-htable{
+    height: 30px !important;
+}
+.datagrid-row-selected {
+    background: #FEFFD3 !important;
+    color: #000 !important;
+}
+#wwd>.ZXpc_pcfa_sj_all_1>.textbox {
+    float: left;
+
+}
+.ZXpcfaws_2{
+    width: 80px;
+    height: 30px;
+    color: #fff;
+    background-color: #10B1F1;
+    border: 0;
+    border-radius:5px;
+    font-size: 14px;
+    outline: none;
+    margin-left: 10px;
+}
+.ZXpcfaws_bottom{
+    width: 100%;
+    height: 50px;
+    background-color: #D8EAF8;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.ZXpcfaws_bottom_1{
+    color: #fff;
+    float: right;
+    margin-right: 2%;
+    background-color: #258EEA;
+    width: 90px;
+    height: 32px;
+    border: 1px solid #258EEA;
+    border-radius:5px;
+    margin-top: 10px;
+}
+
+

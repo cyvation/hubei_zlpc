@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    AddScript("text/javascript", "script/origanization/user/index.js");
+</script>
+<div id="pnl_org_user" class="easyui-panel" data-options="fit:true,border:true">
+    <div id="div_user_search" data-options="border:false" style="padding:10px 0px 10px 8px;">
+        单位 <input id="cbt_user_search_dw" class="easyui-combotree" style="height: 28px;width: 150px"/>
+        姓名 <input id="txt_user_search_xm" class="easyui-textbox" style="width: 200px; height: 28px"/>
+        工号 <input id="txt_user_search_gh" class="easyui-textbox" style="width: 200px; height: 28px"/>
+        <label style="margin-left: 10px">
+        </label>
+        <!--占位标签-->
+        <a id="btn_user_search" class="easyui-linkbutton" style="padding: 0 20px;background: #1e90f1;color: #ffffff;">查询</a>
+        <a id="btn_user_add" class="easyui-linkbutton" style="padding-left: 25px;margin-left: 10px"> 新增</a>
+        <a id="btn_user_sync" class="easyui-linkbutton" style="padding-left: 25px;margin-left: 10px"> 同步</a>
+    </div>
+    <table id="dg_org_user" border="0">
+    </table>
+</div>
+
+<div id="win_org_user_manage" class="easyui-window" style="width: 540px; height: 250px; "
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+    <table cellpadding="5" style="width: 100%;height: calc(100% - 43px);">
+        <tr>
+            <td style="text-align: right;">
+                单位:
+            </td>
+            <td>
+                <input id="cbt_win_user_dw" data-options="wincom:true" class="easyui-combotree" style="width: 150px; height: 22px"/>
+            </td>
+
+            <td style="text-align: right;">
+                登录别名:
+            </td>
+            <td>
+                <input id="txt_win_user_dlbm" class="easyui-textbox" style="width: 150px; height: 22px"/>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">
+                名称:
+            </td>
+            <td>
+                <input id="txt_win_user_mc" class="easyui-textbox" style="width: 150px; height: 22px"/>
+            </td>
+            <td style="text-align: right;">
+                移动电话:
+            </td>
+            <td>
+                <input id="txt_win_user_yddhhm" class="easyui-textbox" style="width: 150px; height: 22px"/>
+            </td>
+            <!--<td style="text-align: right;display: none;">-->
+                <!--登陆IP:-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<input id="txt_win_user_dlip" class="easyui-textbox" style="display: none;width: 150px; height: 22px"/>-->
+            <!--</td>-->
+        </tr>
+        <tr>
+            <td style="text-align: right;">
+                工作证号:
+            </td>
+            <td>
+                <input id="txt_win_user_gzzh" class="easyui-textbox" style="width: 150px; height: 22px"/>
+            </td>
+            <td style="text-align: right;">
+                CAID号:
+            </td>
+            <td>
+                <input id="txt_win_user_caid" class="easyui-textbox" style="width: 150px; height: 22px"/>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">
+                性别:
+            </td>
+            <td>
+                <input type="radio" name="txt_win_user_xb" value="1" checked/>男
+                <input type="radio" name="txt_win_user_xb" value="0"/>女
+            </td>
+            <td style="text-align: right;">
+                是否临时人员:
+            </td>
+            <td>
+                <input type="radio" name="txt_win_user_sflsry" value="1"/>是
+                <input type="radio" name="txt_win_user_sflsry" value="0" checked/>否
+            </td>
+        </tr>
+        <tr>
+
+            <td style="text-align: right;">
+                电子邮箱:
+            </td>
+            <td>
+                <input id="txt_win_user_dzyx" class="easyui-textbox" style="width: 150px; height: 22px"/>
+            </td>
+        </tr>
+    </table>
+    <div style="display: none">
+        <input type="text" style="margin-right: 100px" id="txt_win_user_dwbm" class="easyui-textbox "/>
+        <input type="text" id="txt_win_user_gh" class="easyui-textbox" />
+    </div>
+    <div style="text-align: center; padding: 5px">
+        <a id="btn_win_org_user_manage_confirm" style="margin-right: 50px;" class="easyui-linkbutton">确定</a>
+        <a id="btn_win_org_user_manage_cancel" style="margin-left: 50px;" class="easyui-linkbutton">取消</a>
+    </div>
+</div>
+    <!--弹出框：人员新增-->
+    <div id="win_org_user_manage_sync" class="easyui-window" title="统一业务新增人员" style="width: 650px;height: 390px;"
+         data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+        <div id="tool_win_org_user_sync" class="easyui-toolbar" data-options="border:false" style="padding: 5px 0px 5px 8px">
+            <!--单位:<input id="cbt_win_org_user_add_unit" class="easyui-combotree" style="width:150px"/>-->
+            姓名：<input id="txt_win_org_user_sync_xm" class="easyui-textbox" style="width: 150px" />&nbsp;
+            <!--工号：<input id="txt_win_org_user_add_gh" class="easyui-textbox" style="width: 90px" />-->
+            <!--占位标签-->
+            <label style="margin-left: 5px"></label>
+            <a id="btn_win_org_user_sync_search" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+            <a id="btn_win_org_user_sync_add" class="easyui-linkbutton" data-options="iconCls:'icon-add'">确认同步</a>
+        </div>
+        <div id="pnl_win_org_user_sync_list" style="height: 100%;width: 100%;">
+            <table id="grid_win_org_user_sync_list" style="height: 100%;width: 100%;" border="0">
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+.easyui-linkbutton{
+    background: #d7edfb;
+    border: 1px solid #2888df;
+    border-radius: 4px;
+}
+.easyui-linkbutton:hover{
+    background:#2888df;
+    color: #FFFFFF;
+}

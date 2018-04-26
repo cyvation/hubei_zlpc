@@ -1,0 +1,37 @@
+
+.gaxx_title{
+    color: #fff;
+    background: #2588e3;
+    font-size: 23px;
+}
+.dv-table{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.dv-table tr {
+    height: 28px;
+}
+
+.dv-table .dv-label{
+    width: 120px;
+text-align: center;
+}
+.pacbl_ajxx_tabs_ul li:hover{
+    background: #2588e3;
+
+}
+.pacbl_ajxx_tabs_ul li:hover a{
+    color: #ffffff;
+
+}
+.pacbl_ajxx_tabs_ul li a{
+    color: black;
+}
+.pcbl .panel-tool{
+    margin-top: -13px;
+    height: 26px;
+}
+ .pcbl .panel-tool .layout-button-left{
+     margin-top: 6px;
+
+ }

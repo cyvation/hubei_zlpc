@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>重点评查</title>
+</head>
+<body>
+<!--页面JS加载，放在头部不能正确加载-->
+<script type="text/javascript">
+	AddScript("text/javascript", "script/evaluate/build/keypoint.js");
+</script>
+
+<div class="ZDpc_bm">
+	<!-- 导航栏 -->
+    <div class="ZDpc_bm_tj">
+        <div class="ZDpc_bm_tj_1" style="margin-top: 2px;">评查案件筛选</div>
+        <div class="ZDpc_bm_tj_2" id="btn_eval_build_kp_chart" style="display: none">总表</div>
+        <div class="ZDpc_bm_tj_2 ZDpc_bm_tj_2_click" id="btn_eval_build_kp_custom">案件筛选 </div>
+    </div>
+
+    <!-- 总表界面 -->
+    <div id="page_eval_build_kp_chart">
+        <div class="ZDpc_bm_sj">
+            <div id="cbt_eval_build_kp_chart_pcdw_div" style="float: left;display: none">
+                <span style="display: inline-block;color: #666666; margin: 16px 20px;">评查单位</span>
+                <input id="cbt_eval_build_kp_chart_pcdw" class="easyui-combotree" style="height: 28px;width:200px;">
+            </div>
+            <span>评查模板</span>
+            <input id="cbt_eval_build_kp_chart_pcmb" class="easyui-combotree" style="width:200px;height: 28px;" />
+            <span style="display: inline-block;color: #666666; margin:16px 20px;">完成日期</span>
+            <input id="date_eval_build_kp_chart_begin" class="easyui-datebox" style="height: 30px;width:200px;">
+            <span style="margin: 0 10px 0 10px">~ </span>
+            <input id="date_eval_build_kp_chart_end" class="easyui-datebox" style="height: 30px;width:200px;">
+            <button id="btn_eval_build_kp_chart_search" class="ZDpc_bm_sj_2">查询</button>
+            <button id="btn_eval_build_kp_chart_export" class="ZDpc_bm_sj_1" style="background-color: #248DE9;color: #fff;">
+                <img src="image/home/excel.png" style="float:left;margin-left: 8px">
+                <div>导出Excel</div>
+            </button>
+        </div>
+        <div class="pcajsx_content" style="height: calc(100% - 110px);">
+            <div class="pcajsx_content_1">
+                <div id="table_eval_build_kp_chart"></div>
+            </div>
+        </div>
+        <div id="win_eval_build_kp_dept_filter" class="easyui-window" title="未评查案件列表"
+             data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,cache:false,resizable:true,width:1000,height:600">
+            <table id="table_eval_build_kp_dept_filter"></table>
+        </div>
+    </div>
+    
+    <!-- 自定义查询界面 -->
+    <div id="page_eval_build_kp_custom">
+        <div class="pcajsx_zdy_sj">
+            <div class="pcajsx_zdy_sj_all">
+                <div id="cbt_eval_build_kp_custom_pcdw_div" class="pcajsx_zdy_sj_all_1">
+                    <span>评查单位</span>
+                    <input id="cbt_eval_build_kp_custom_pcdw" class="easyui-combotree" style="height: 28px;width:200px;">
+                </div>
+                <div class="pcajsx_zdy_sj_all_1">
+                <span>评查模板</span>
+                    <input id="cbt_eval_build_kp_custom_pcmb" class="easyui-combotree" style="width:200px;height: 28px;" />
+                </div>
+                <div class="pcajsx_zdy_sj_all_1">
+                    <span>筛选规则</span>
+        			<input id="cbt_eval_build_kp_custom_sxgz" class="easyui-combotree" style="width:200px;height: 30px;" />
+                </div>
+
+                <div class="pcajsx_zdy_sj_all_1">
+                    <span>承办检察官</span>
+                    <input id="txt_eval_build_kp_custom_cbjcg" class="easyui-textbox"  style="width:200px;height: 28px;"/>
+                </div>
+                <div class="pcajsx_zdy_sj_all_1" style="width: 22%">
+
+                    <span>完成时间</span>
+                    <input id="date_eval_build_kp_custom_begin" class="easyui-datebox" style="height: 30px;width:35%;"/>
+                    <span style=" width: 20px;display: inline-block; text-align: center;">~ </span>
+                    <input id="date_eval_build_kp_custom_end" class="easyui-datebox" style="height: 30px;width:35%;"/>
+                </div>
+
+            </div>
+            <div  class="pcajsx_zdy_sj_all">
+
+                <div class="pcajsx_zdy_sj_all_1" style="display: none;">
+                    <span>承办部门</span>
+                    <input id="cbt_eval_build_kp_custom_cbbm" class="easyui-combotree"  style="width:200px;height: 28px;"/>
+                </div>
+
+                <div class="pcajsx_zdy_sj_all_1">
+                    <span >案件名称</span>
+                    <input id="txt_eval_build_kp_custom_ajmc" class="easyui-textbox"  style="width:200px;height: 30px;"/>
+                </div>
+
+                <div class="pcajsx_zdy_sj_all_1">
+                    <span>部门受案号</span>
+                    <input id="txt_eval_build_kp_custom_bmsah" class="easyui-textbox"  style="width:200px;height: 30px;"/>
+                </div>
+
+                <div class="pcajsx_zdy_sj_all_1">
+                    <button id="btn_eval_build_kp_custom_search" class="pcajsx_sj_2">查询</button>
+                    <button id="btn_eval_build_kp_custom_search_advance" class="pcajsx_sj_2" style="background-color: #10B1F1;margin-left: 10px; display: none;">高级查询</button>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="pcajsx_content_tree" style="height: calc(100% - 150px);">
+            <div class="pcajsx_content_1">
+                <div id="table_eval_build_kp_custom"></div>
+            </div>
+        </div>
+    </div>
+
+    <!--案件详细信息-->
+    <div id="win_eval_build_kp_caseinfo">
+    </div>
+
+    <!--模板选择-->
+    <div id="win_eval_build_keypoint_mbbm" class="easyui-window" title="模板类型" style="width:500px;height:400px"
+         data-options="closed:true,collapsible:false,shadow:false,maximizable:false,minimizable:false,modal:true,cache:false,resizable:true">
+        <div id="div_eval_keypoint_mb" style="width:100%;height:calc(100% - 50px);float: left;overflow: hidden; ">
+            <!--模板列表-->
+            <table id="table_build_keypoint_mb" border="0" style="width: 100%;height: 100%;"></table>
+        </div>
+        <div style="text-align:center;margin: 10px 0;width: 100%;height: 30px;float: left">
+            <button id="btn_eval_build_keypoint_mb_confirm" class="ZXpc_pcfa_2" style="background-color: #258EEA;">确定
+            </button>
+            <button id="btn_eval_build_keypoint_mb_cancle" class="ZXpc_pcfa_2" style="background-color: #258EEA;">取消</button>
+        </div>
+    </div>
+
+    <!--高级查询弹框-->
+    <div id="window_gjcx_kp" class="easyui-window" title="高级查询" data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+
+    </div>
+
+    <!--选规则、选模板-->
+    <div id="win_eval_build_keypoint_gzmb" class="easyui-window" title="模板类型" style="width:500px;height:350px"
+         data-options="closed:true,collapsible:false,shadow:false,maximizable:false,minimizable:false,modal:true,cache:false,resizable:true">
+        <!--  //规则-->
+        <div id="div_eval_keypoint_gzmb" style="width:100%;padding: 80px 80px 20px 80px;float: left;overflow: hidden; ">
+            <p style="float: left;width:60px;text-align: right;margin-right: 5px;height: 28px;line-height: 28px">案件类别</p>
+            <input id="cbt_eval_bulid_sp_sxgzRand_kp" data-options="wincom:true" class="easyui-combotree" style="width: 260px;height: 28px;float: left;">
+        </div>
+
+        <div id="div_eval_keypoint_mbmb" style="width:100%;padding: 20px 80px 50px 80px;float: left;overflow: hidden; ">
+            <p style="float: left;width: 60px;text-align: right;margin-right: 5px;height: 28px;line-height: 28px">评查模板</p>
+            <input id="cbt_eval_bulid_sp_sxgzRand_mb_kp" data-options="wincom:true"  class="easyui-combotree" style="width: 260px;height: 28px;float: left;">
+        </div>
+
+        <div style="text-align:center;margin: 10px 0;width: 100%;height: 30px;float: left">
+            <button id="btn_eval_build_keypoint_mb_confirm_gzmb" class="ZXpc_pcfa_2" style="background-color: #258EEA;">确定
+            </button>
+            <button id="btn_eval_build_keypoint_mb_cancle_gzmb" class="ZXpc_pcfa_2" style="background-color: #258EEA;">取消</button>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

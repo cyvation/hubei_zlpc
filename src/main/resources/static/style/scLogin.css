@@ -1,0 +1,141 @@
+*{
+    font-family: 微软雅黑;
+    margin: 0;
+    padding: 0;
+}
+#sc_login_top{
+    width:100%;
+    height:calc((100% - 576px) / 2);
+    background:url("../image/scLogin/logo.png") no-repeat 4% 52%;
+    background-size:25%;
+}
+#sc_login_center{
+    width:100%;
+    height:576px;
+    background:url("../image/scLogin/bg_02.jpg") no-repeat 100% 100%;
+    -webkit-background-size:100% 100%;
+    background-size:100% 100%;
+}
+#sc_login_foot{
+    width:100%;
+    height:calc((100% - 576px) / 2);
+    background-color: #fff;
+}
+#sc_login_box{
+    width: 470px;
+    height: 576px;
+    float: right;
+    margin-right: 15%;
+    background:url("../image/scLogin/login-bg.png") no-repeat 100% 100%;
+    background-size:100% 98%;
+}
+
+.login_cen{
+    width: 360px;
+    height: 360px;
+    float: right;
+    margin-top: 100px;
+    background: url(../image/scLogin/txt_03.png) no-repeat 0 0;
+    background-size: 50%;
+    padding-top: 62px;
+}
+
+.login_ils{
+    width:  286px;
+    height: 42px;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    margin-top: 25px;
+    background-color: #f1f1f1;
+}
+.login_ils>input{
+    float: left;
+    width: 249px;
+    height:100%;
+    /*height: 94%;*/
+    /*margin-top:2px;*/
+    outline: none;
+    border: 0;
+    color: #888;
+    background-color: #f1f1f1;
+}
+.qb{
+    background-color: #2276D1;
+    line-height: 48px;
+    text-align: center;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 20px;
+    width:286px;
+}
+.qb:hover{
+    background:  #0f5db1;
+
+}
+@media screen and (max-width: 1600px){
+    .tolong_com{
+        margin: 4% auto;
+    }
+}
+.login_ils .combo{
+    border-color: rgba(0,0,0,0);
+    background-color: rgba(0,0,0,0);
+}
+.login_ils .combo-arrow{
+    background-color:rgba(0,0,0,0);
+}
+.login_ils .combo-arrow:hover{
+    background-color:rgba(0,0,0,0);
+}
+.login_ils .panel-header,.panel-body{
+    border-color: #ccc !important;
+}
+#yhmcw,#mmcw{
+    height: 26px;
+    color: red;
+    font-size: 14px;
+    width: 350px;
+}
+.textbox .textbox-text{
+    font-size: 14px !important;
+    background-color: #f1f1f1;
+}
+.tree-title{
+    font-size: 14px !important;
+}
+#remember{
+    height: 55px;
+    width: 100%;
+}
+.xz_pic{
+    float: left;
+    margin-top: 32px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+#remember_text{
+    float: left;
+    height: 55px;
+    line-height: 80px;
+    font-size: 14px;
+}
+@media screen and (max-width: 1600px){
+
+    #sc_login_top{
+        zoom:0.7;
+    }
+    #sc_login_center{
+        zoom:0.7;
+    }
+    #sc_login_foot{
+        zoom:0.7;
+    }
+    .panel.combo-p{
+        zoom:0.7;
+    }
+}
+#sc_login_center .combo-arrow {
+    background: url(../image/scLogin/xiala.png) no-repeat center center!important;
+}

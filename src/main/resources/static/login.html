@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案件质量评查专题分析系统</title>
+    <link href="style/hb_zlpc/Tolong.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="plugin/jquery-easyui-1.4.1/themes/bootstrap/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="plugin/jquery-easyui-1.4.1/themes/icon.css" />
+    <script src="plugin/jquery-easyui-1.4.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="plugin/jquery-easyui-1.4.1/jquery.easyui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="plugin/jquery-easyui-1.4.1/locale/easyui-lang-zh_TW.js" type="text/javascript"></script>
+    <!--工具-->
+    <script type="text/javascript" src="plugin/Main.js"></script>
+    <script type="text/javascript" src="plugin/utils/common.js"></script>
+    <script type="text/javascript" src="script/login.js"></script>
+</head>
+<style>
+    .dragresize-br {
+        right: 0px;
+        cursor: se-resize;
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-bottom: 10px solid #0b93d5;
+        z-index: 99999;
+    }
+</style>
+
+<body>
+<div class="tolong tolong_xbjt" onselectstart="return false">
+    <div class="tolong_com tolong_com_wzt">
+        <div class="tolong_cen">
+            <div style="width: 352px;float: left;">
+                <div class="tolong_ils">
+                    <div class="tolong_img" >
+                        <img  style="margin-top: 11px;" src="image/hb_zlpc/1.png">
+                    </div>
+                    <input id="input_login_dwbm"  style="width: 82.5%;height: 99%;border: 0">
+                </div>
+                <div class="tolong_ils" tex>
+                    <div class="tolong_img" >
+                        <img style="margin-top: 11px;" src="image/hb_zlpc/2.png">
+                    </div>
+                    <input placeholder="请输入用户名" id="input_login_username" >
+                </div>
+                <div id="yhmcw"></div>
+                <div class="tolong_ils" style="margin-top: 0px">
+                    <div class="tolong_img" >
+                        <img style="margin-top: 11px;" src="image/hb_zlpc/3.png">
+                    </div>
+                    <input type="password" placeholder="请输入密码" id="input_login_password">
+                </div>
+                <div id="mmcw"></div>
+            </div>
+            <div style="clear: left;">
+                <div class="tolong_ils qb" style="margin-top: 235px; cursor: pointer;" id="login_go">
+                    登录
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="divBrowserInfo" style="text-align:center; margin-top:-120px; display: none">
+         <span style="color: red">您所使用的浏览器不支持系统部分功能。请使客户端或专用浏览器进入该系统，
+            <a href="view/Browser/案件质量评查专题分析系统客户端.exe" style="font-size:18px;color:red;">点这里下载</a>
+         </span>
+    </div>
+</div>
+</body>
+</html>

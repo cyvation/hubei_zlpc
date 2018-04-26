@@ -1,0 +1,187 @@
+
+.combo-p{
+    height: 300px !important;
+}
+.panel-body{
+
+    background: #f0f9ff;
+}
+.panel-body .panel-body{
+    background: #ffffff;
+}
+.datagrid-header{
+
+    background: #ebf1f1 !important;
+    border-bottom: 1px solid #DBDDDC;
+    border-top: 1px solid #E5E9E9;
+}
+.datagrid-view2 .panel-body {
+    background: #ffffff;
+}
+table .datagrid-row{
+    background: #ffffff;
+
+}
+.datagrid-header td.datagrid-header-over{
+    background: #ebf1f1 !important;
+}
+
+table .datagrid-header-row{
+    height: 40px !important;
+    font-weight: bold;
+}
+table .datagrid-row:nth-child(even){
+    background: #f9f9f9;
+}
+table .datagrid-row:hover{
+    background: #ffffd3;
+}
+table  .datagrid-row-over{
+    color: #333 !important;
+
+}
+table .datagrid-row-selected{
+    color: #333 !important;
+    background: #dbeffc !important ;
+}
+
+table tbody  .datagrid-row td{
+    border: 1px solid #dcdcd2;
+}
+.datagrid-body td, .datagrid-footer td{
+    border-width: 0 0 1px 0 !important;
+    border-style: solid !important;
+}
+.datagrid-header td{
+    border: 0;
+    color: #457696!important;
+}
+.datebox .combo-arrow{
+    background-image: url(../image/home/time_01.jpg) !important;
+}
+.combo-arrow{
+    background-color: rgba(0,0,0,0);
+}
+.combo-arrow:hover{
+    background-color: rgba(0,0,0,0);
+}
+
+
+/*
+
+.datagrid-header-inner{
+    width: calc(100% - 4px)!important;
+    background: #ebf1f1;
+}*/
+/*.datagrid-htable{
+    width: 100%;
+}
+.datagrid-btable{
+    width: 100%;
+}*/
+.datagrid-pager{
+
+    border: 0!important;
+    background: #fff;
+}
+.window .easyui-window{
+    background: #FFFFFF !important;
+}
+.window-mask{
+	background: rgba(0,0,0,0.6);
+}
+.textbox{
+	    border: 1px solid #c1c1c1;
+}
+.datagrid-toolbar{
+	background:#fff;
+}
+.layout-split-west{
+	border-right:10px solid #f0f9fe !important;
+}
+.layout-panel .panel-header{
+    padding:9px 5px;
+    /*width: calc(100% - 2px) !important;*/
+}
+.layout-expand .panel-header{
+      /*width: calc(100% - 2px) !important;*/
+  }
+#layout_org_main .layout-panel-west{
+	border:1px solid #b4cdf5!important;
+}
+#layout_org_main_center{
+	background:#f0f9ff;
+}
+#tool_org_manage .easyui-linkbutton{
+	margin-left:15px;
+}
+#layout_org_main_center .panel-header{
+	padding:0;
+	height:28px;
+	background:#f0f9ff;
+    border-left:1px solid rgba(0,0,0,0) !important ;
+    border-top:1px solid rgba(0,0,0,0) !important ;
+    border-right:1px solid rgba(0,0,0,0) !important ;
+    border-bottom: 1px solid #b0cef0 !important;
+    margin-bottom:5px;
+}
+#layout_org_main_center .panel-header .panel-title{
+    font-size: 14px;
+    color: #000;
+    float: left;
+    border-bottom: 3px solid #2388e0;
+    height:25px;
+    padding:0 15px 0 0;
+
+}
+#pnl_org_user_manage_list .panel-body{
+	background:#f0f9ff;
+	padding-bottom:1px !important;
+
+}
+#pnl_org_user_manage_list .datagrid-view{
+	background:#fff !important;
+    height: calc(100% - 95px) !important;
+}
+#pnl_org_user_manage_list .datagrid-pager{
+
+}
+.datagrid-row-collapse{
+    background: url(../image/index/jian.png) no-repeat center;
+}
+.datagrid-row-expand{
+    background: url(../image/index/jia.png) no-repeat center;
+}
+.datagrid-header .datagrid-cell span{
+	font-size:14px;
+}
+.datagrid-group{
+	height:40px !important;
+}
+.window-mask{
+	width:100% !important;
+	height:100% !important;
+}
+/*.datagrid-view1{
+	width:30px !important;
+}*/
+.textbox .textbox-text{
+	font-size: 14px !important;
+}
+.pcajsx_content_1 .datagrid-header-row .datagrid-cell{
+    padding: 3px 4px !important;
+    white-space:normal !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

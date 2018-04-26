@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+                <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.start.boot.dao.ajpc.OriganizationMapper">
+
+    <!--调用存储过程,获取本院及所有下级院单位编码,传入本单位编码-->
+    <select id="getDwbm" parameterType="map"  statementType="CALLABLE">
+        <![CDATA[
+            call pkg_zzjg.proc_get_dwbm(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=bmbmMap,javaType=java.sql.ResultSet},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+
+    <resultMap id="bmbmMap" type="Map">
+        <!--<result property="BM" column="BM"/>-->
+        <!--<result property="MC" column="MC"/>-->
+        <!--<result property="FBM" column="FBM"/>-->
+    </resultMap>
+
+    <!--获取该单位下单位部门角色信息，输入单位编码，返回结果集-->
+    <select id="getDwBmJsInfoByDwBm" parameterType="map" statementType="CALLABLE" >
+        <![CDATA[
+            call pkg_zzjg.proc_get_dwbmjs(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=jsMap,javaType=java.sql.ResultSet},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+
+        <resultMap id="jsMap" type="map">
+            <!--<result property="MC" column="MC"/>-->
+            <!--<result property="BM" column="BM"/>-->
+            <!--<result property="FBM" column="FBM"/>-->
+            <!--<result property="XH" column="XH"/>-->
+            <!--<result property="ICON" column="ICON"/>-->
+        </resultMap>
+
+    <!--新增/更新部门-->
+    <insert id="addBmInfo" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[
+            call pkg_zzjg.proc_add_bminfo(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_bmbm,mode=INOUT,jdbcType=VARCHAR},
+                                          #{p_bmmc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_bmjc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_bmxh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_bz,mode=IN,jdbcType=VARCHAR},
+                                          #{p_fbmbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </insert>
+
+    <!--获取部门信息-->
+    <select id="getBmInfo" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_zzjg.proc_get_bmInfo(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_bmbm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=bmInfoMap,javaType=java.sql.ResultSet},
+                                             #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+
+    <resultMap id="bmInfoMap" type="com.start.boot.domain.Bmbm">
+        <!--<result property="BMMC" column="BMMC"/>-->
+        <!--<result property="BMJC" column="BMJC"/>-->
+        <!--<result property="BZ" column="BZ"/>-->
+    </resultMap>
+
+
+    <!--删除部门信息-->
+    <delete id="deleteBmInfo" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+               call pkg_zzjg.proc_delete_bminfo(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_bmbm,mode=IN,jdbcType=VARCHAR},
+                                             #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </delete>
+
+    <!--新添/编辑角色-->
+    <insert id="addJsInfo" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call pkg_zzjg.proc_add_jsinfo(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                                #{p_bmbm,mode=IN,jdbcType=VARCHAR},
+                                                #{p_jsbm,mode=IN,jdbcType=VARCHAR},
+                                                #{p_jsmc,mode=IN,jdbcType=VARCHAR},
+                                                #{p_jsxh,mode=IN,jdbcType=VARCHAR},
+                                                #{p_spjsbm,mode=IN,jdbcType=VARCHAR},
+                                                #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </insert>
+
+    <!--获取角色序号-->
+    <select id="getJsxh" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_zzjg.proc_get_jsxh(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_bmbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_jsbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=JsInfo,javaType=java.sql.ResultSet},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+
+        ]]>
+    </select>
+
+    <resultMap id="JsInfo" type="com.start.boot.domain.Jsbm">
+        <!--<result property="jsxh" column="JSXH"/>-->
+    </resultMap>
+
+    <!--删除角色-->
+    <delete id="deleteJsInfo" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call pkg_zzjg.proc_delete_jsinfo(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                                 #{p_bmbm,mode=IN,jdbcType=VARCHAR},
+                                                 #{p_jsbm,mode=IN,jdbcType=VARCHAR},
+                                                 #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </delete>
+
+
+    <!--添加角色功能权限-->
+    <insert id="addJsgnfp" parameterType="map" statementType="CALLABLE">
+         <![CDATA[
+                call pkg_zzjg.proc_add_jsgnfp(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                                       #{p_bmbm,mode=IN,jdbcType=VARCHAR},
+                                                       #{p_jsbm,mode=IN,jdbcType=VARCHAR},
+                                                       #{p_gnbmj,mode=IN,jdbcType=VARCHAR},
+                                                       #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </insert>
+
+
+
+    <!--获取角色功能权限列表-->
+    <select id="getJsGnqx" parameterType="map" statementType="CALLABLE">
+          <![CDATA[
+                call pkg_zzjg.proc_get_jsgnqx(#{p_dwbm,mode=IN},
+                                                       #{p_bmbm,mode=IN,jdbcType=VARCHAR},
+                                                       #{p_jsbm,mode=IN,jdbcType=VARCHAR},
+                                                       #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=jsgnMap,javaType=java.sql.ResultSet},
+                                                       #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+
+    <resultMap id="jsgnMap" type="map" >
+        <!--<result property="GNMC" column="GNMC"/>-->
+        <!--<result property="GNCS" column="GNCS" jdbcType="CLOB" typeHandler="org.apache.ibatis.type.ClobTypeHandler"/>-->
+        <!--<result property="GNSM" column="GNSM"/>-->
+        <!--<result property="GNCT" column="GNCT"/>-->
+        <!--<result property="GNXH" column="GNXH"/>-->
+        <!--<result property="GNXSMC" column="GNXSMC"/>-->
+        <!--<result property="GNBM" column="GNBM"/>-->
+        <!--<result property="PARENTID" column="PARENTID"/>-->
+        <!--<result property="JSGN" column="JSGN"/>-->
+        <!--<result property="TYPE" column="TYPE"/>-->
+        <!--<result property="FLMC" column="FLMC"/>-->
+    </resultMap>
+    
+    
+    <!--单位权限分配.删除-->
+    <insert id="removeDwGnQx" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+               call pkg_zzjg.proc_del_dwgnqx(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                             #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </insert>
+
+    <!--单位权限分配.添加-->
+    <insert id="addDwGnQx" parameterType="map" statementType="CALLABLE">
+            <![CDATA[
+               call pkg_zzjg.proc_add_dwgnqx(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                             #{p_gnbm,mode=IN,jdbcType=VARCHAR},
+                                             #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+             ]]>
+    </insert>
+
+    <!--获取人员信息-->
+    <select id="getRyInfo" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+               call   pkg_zzjg.proc_get_ryinfobydwbm(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                                     #{p_bmbm,mode=IN,jdbcType=VARCHAR},
+                                                     #{p_jsbm,mode=IN,jdbcType=VARCHAR},
+                                                     #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                                     #{p_gzzh,mode=IN,jdbcType=VARCHAR},
+                                                     #{p_xm,mode=IN,jdbcType=VARCHAR},
+                                                     #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                                     #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                                     #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                                     #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=ryInfoMap,javaType=java.sql.ResultSet},
+                                                     #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+
+    <resultMap id="ryInfoMap" type="map">
+        <!--<result property="GH" column="GH"/>-->
+        <!--<result property="MC" column="MC"/>-->
+        <!--<result property="DLBM" column="DLBM"/>-->
+        <!--<result property="GZZH" column="GZZH"/>-->
+        <!--<result property="BMMC" column="BMMC"/>-->
+        <!--<result property="JSMC" column="JSMC"/>-->
+        <!--<result property="YDDHHM" column="YDDHHM"/>-->
+        <!--<result property="xb" column="xb"/>-->
+        <!--<result property="SFLSRY" column="SFLSRY"/>-->
+        <!--<result property="DZYJ" column="DZYJ"/>-->
+        <!--<result property="CAID" column="CAID"/>-->
+        <!--<result property="SFTZ" column="SFTZ"/>-->
+        <!--<result property="SFSC" column="SFSC"/>-->
+        <!--<result property="BMBM" column="BMBM"/>-->
+        <!--<result property="JSBM" column="JSBM"/>-->
+        <!--<result property="BM" column="BM"/>-->
+        <!--<result property="FBM" column="FBM"/>-->
+    </resultMap>
+
+
+    <!--获取未分配人员信息-->
+    <select id="getWfpRyInfo" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+               call   pkg_zzjg.proc_get_wfpryinfo(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                                 #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                                 #{p_xm,mode=IN,jdbcType=VARCHAR},
+                                                 #{p_jsbm,mode=IN,jdbcType=VARCHAR},
+                                                 #{p_bmbm,mode=IN,jdbcType=VARCHAR},
+                                                 #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                                 #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                                 #{p_count,mode=OUT,javaType=Integer,jdbcType=NUMERIC},
+                                                 #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=WfpRyMap,javaType=java.sql.ResultSet},
+                                                 #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+
+    <resultMap id="WfpRyMap" type="map">
+        <!--<result property="DWBM" column="DWBM"/>-->
+        <!--<result property="GH" column="GH"/>-->
+        <!--<result property="MC" column="MC"/>-->
+        <!--<result property="DLBM" column="DLBM"/>-->
+        <!--<result property="YDDHHM" column="YDDHHM"/>-->
+        <!--<result property="DZYJ" column="DZYJ"/>-->
+        <!--<result property="GZZH" column="GZZH"/>-->
+        <!--<result property="YDWBM" column="YDWBM"/>-->
+        <!--<result property="YDWMC" column="YDWMC"/>-->
+        <!--<result property="SFLSRY" column="SFLSRY"/>-->
+        <!--<result property="SFTZ" column="SFTZ"/>-->
+        <!--<result property="ZP" column="ZP"/>-->
+        <!--<result property="SFSC" column="SFSC"/>-->
+        <!--<result property="XB" column="XB"/>-->
+        <!--<result property="CAID" column="CAID"/>-->
+        <!--<result property="DWMC" column="DWMC"/>-->
+    </resultMap>
+
+
+    <!--获取功能列表-->
+    <select id="getAllGN" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+
+                call pkg_zzjg.proc_get_allgnqx(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_xzdwbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_djdwbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=gnMap,javaType=java.sql.ResultSet},
+                                               #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+
+    <resultMap id="gnMap" type="map">
+        <!--<result property="zt" column="zt"/>
+        <result property="GNBM" column="GNBM"/>
+        <result property="GNMC" column="GNMC"/>
+        <result property="FLBM" column="FLBM"/>
+        <result property="FLMC" column="FLMC"/>-->
+    </resultMap>
+
+    <!--添加人员分配-->
+    <insert id="addRYJSFP" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+            call pkg_zzjg.proc_add_ryjsfp(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_bmbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_jsbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_ydwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_ydwmc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_ybmbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_ybmmc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_yjsbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_yjsmc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </insert>
+
+    <!--人员调岗.移除-->
+    <delete id="removeJob" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+
+            call pkg_zzjg.proc_remove_job(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_bmbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_jsbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </delete>
+
+    <!--人员调岗.调岗-->
+    <insert id="transJob" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+
+            call pkg_zzjg.proc_remove_job(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_bmbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_jsbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </insert>
+
+    <!--获取角色通过单位编码-->
+    <select id="getJSInfoByDwBm" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+            call pkg_zzjg.proc_get_jsbydwbm(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_bmbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=ddMap,javaType=java.sql.ResultSet},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+
+    <resultMap id="ddMap" type="map">
+        <!--<result property="BM" column="BM"/>-->
+        <!--<result property="MC" column="MC"/>-->
+    </resultMap>
+
+    <!--获取部门编码-->
+    <select id="getBMBM" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_zzjg.proc_get_bmbm(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=bmMap,javaType=java.sql.ResultSet},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+
+    <resultMap id="bmMap" type="map">
+        <!--<result property="BM" column="BM"/>
+        <result property="FBM" column="FBM"/>
+        <result property="MC" column="MC"/>-->
+    </resultMap>
+
+    <!--获取功能参数-->
+    <select id="getGncs" parameterType="com.start.boot.domain.Jsgnfp"  resultMap="GnMap" >
+        SELECT gn.GNMC,fp.GNCS from XT_QX_JSGNFP fp
+                        inner join xt_qx_gndy gn
+                        on  fp.gnbm = gn.gnbm
+        WHERE fp.DWBM = #{dwbm,jdbcType=VARCHAR}
+          AND fp.JSBM = #{jsbm, jdbcType=VARCHAR}
+          AND fp.GNBM = #{gnbm, jdbcType=VARCHAR}
+          AND fp.BMBM = #{bmbm, jdbcType=VARCHAR}
+    </select>
+
+    <resultMap id="GnMap" type="map">
+        <result property="GNMC" column="GNMC"/>
+        <result property="GNCS" column="GNCS" jdbcType="CLOB" typeHandler="org.apache.ibatis.type.ClobTypeHandler"/>
+    </resultMap>
+
+    <!--更新功能参数-->
+    <update id="updateGncs" parameterType="com.start.boot.domain.Jsgnfp" >
+        UPDATE XT_QX_JSGNFP
+        <set>
+            <if test="gncs !=null">
+                GNCS =#{gncs,jdbcType=CLOB}
+            </if>
+        </set>
+        <where>
+                DWBM = #{dwbm,jdbcType=VARCHAR}
+            AND JSBM = #{jsbm, jdbcType=VARCHAR}
+            AND  GNBM = #{gnbm, jdbcType=VARCHAR}
+            AND BMBM = #{bmbm, jdbcType=VARCHAR}
+
+        </where>
+
+    </update>
+
+
+</mapper>

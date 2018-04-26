@@ -1,0 +1,101 @@
+*{
+    padding: 0;
+    margin:0;
+    font-family:"微软雅黑";
+}
+html,body{
+    height:100%;
+}
+/*查询条件*/
+#pcaj_top{
+    width:100%;
+    height:85px;
+    margin: 0;
+    /*background: blue;*/
+}
+.top_cx_title{
+    height:30px;
+    border-bottom:1px solid #d3e5f9;
+    width:100%;
+    color: #4b4d51;
+}
+.top_cx_title p{
+    display: inline-block;
+    height:29px;
+    border-bottom:2px solid #4c9de9;
+}
+/*查询条件样式*/
+.top_cx_content{
+    margin-top:20px;
+    padding:15px 10px;
+    border:1px solid #d3e5f9;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.cx_box{
+    width:30%;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+}
+.cx_text{
+    float: left;
+}
+#pcaj_pcdw,#pcaj_pcfs,#pcaj_barq{
+    float: left;
+    width:60%;
+}
+/*主体内容样式*/
+#pcaj_content{
+    margin:10px 0 0 0;
+    height:calc(100% - 132px);
+    width:100%;
+    /*background: #000;*/
+    border:1px solid #d3e5f9;
+    border-radius:5px;
+}
+/*查询按钮*/
+.btn{
+    width: 80px;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+    background-color: #10B1F1;
+    border: 0;
+    border-radius: 5px;
+    font-size: 14px;
+    outline: none;
+    margin-right: 10px;
+    /* margin-top: 5px; */
+    cursor: pointer;
+    float: right;
+}
+.btn:hover{
+    background: #0377c0;
+}
+@media screen and (min-width: 1201px) and (max-width:1300px) {
+    #echart1,#echart2{
+        zoom:normal!important;
+    }
+}
+@media screen and (min-width: 1300px) and (max-width:1370px) {
+    #echart1,#echart2{
+        zoom:1.41!important;
+    }
+}
+@media screen and (min-width: 1370px) and (max-width: 1440px) {
+    #echart1,#echart2{
+        zoom:normal!important;
+    }
+}
+@media screen and (min-width: 1441px) and (max-width:1610px){
+    #echart1,#echart2{
+        zoom:normal!important;
+    }
+}
+@media screen and (min-width: 1611px) and (max-width:1919px){
+    #echart1,#echart2{
+        zoom:normal!important;
+    }
+}

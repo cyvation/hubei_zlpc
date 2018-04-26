@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.XtPcLbMapper">
+  <resultMap id="BaseResultMap" type="com.start.boot.domain.XtPcLb">
+    <id column="PCFLBM" jdbcType="CHAR" property="pcflbm" />
+    <result column="PCFLMC" jdbcType="VARCHAR" property="pcflmc" />
+    <result column="LCMBBM" jdbcType="CHAR" property="lcmbbm" />
+    <result column="SFDMB" jdbcType="CHAR" property="sfdmb" />
+    <result column="SFPCFP" jdbcType="CHAR" property="sfpcfp" />
+    <result column="SFPZQD" jdbcType="CHAR" property="sfpzqd" />
+    <result column="SFPZSS" jdbcType="CHAR" property="sfpzss" />
+    <result column="SFPZFY" jdbcType="CHAR" property="sfpzfy" />
+    <result column="SFPZSXGZ" jdbcType="CHAR" property="sfpzsxgz" />
+    <result column="SFBDAJLB" jdbcType="CHAR" property="sfbdajlb" />
+    <result column="SFZAPC" jdbcType="CHAR" property="sfzapc" />
+    <result column="URL" jdbcType="VARCHAR" property="url" />
+    <result column="SM" jdbcType="VARCHAR" property="sm" />
+    <result column="SFQY" jdbcType="CHAR" property="sfqy" />
+    <result column="URL_SM" jdbcType="VARCHAR" property="urlSm" />
+    <result column="PCAHJC" jdbcType="VARCHAR" property="pcahjc" />
+    <result column="SFSXGZDX" jdbcType="CHAR" property="sfsxgzdx" />
+    <result column="SFJS" jdbcType="CHAR" property="sfjs" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    PCFLBM, PCFLMC, LCMBBM, SFDMB, SFPCFP, SFPZQD, SFPZSS, SFPZFY, SFPZSXGZ, SFBDAJLB, 
+    SFZAPC, URL, SM, SFQY, URL_SM, PCAHJC, SFSXGZDX, SFJS
+  </sql>
+  <select id="selectByExample" parameterType="com.start.boot.domain.XtPcLbExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from XT_PC_LB
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from XT_PC_LB
+    where PCFLBM = #{pcflbm,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from XT_PC_LB
+    where PCFLBM = #{pcflbm,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.start.boot.domain.XtPcLbExample">
+    delete from XT_PC_LB
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.start.boot.domain.XtPcLb">
+    insert into XT_PC_LB (PCFLBM, PCFLMC, LCMBBM, 
+      SFDMB, SFPCFP, SFPZQD, SFPZSS, 
+      SFPZFY, SFPZSXGZ, SFBDAJLB, 
+      SFZAPC, URL, SM, SFQY, 
+      URL_SM, PCAHJC, SFSXGZDX, 
+      SFJS)
+    values (#{pcflbm,jdbcType=CHAR}, #{pcflmc,jdbcType=VARCHAR}, #{lcmbbm,jdbcType=CHAR}, 
+      #{sfdmb,jdbcType=CHAR}, #{sfpcfp,jdbcType=CHAR}, #{sfpzqd,jdbcType=CHAR}, #{sfpzss,jdbcType=CHAR}, 
+      #{sfpzfy,jdbcType=CHAR}, #{sfpzsxgz,jdbcType=CHAR}, #{sfbdajlb,jdbcType=CHAR}, 
+      #{sfzapc,jdbcType=CHAR}, #{url,jdbcType=VARCHAR}, #{sm,jdbcType=VARCHAR}, #{sfqy,jdbcType=CHAR}, 
+      #{urlSm,jdbcType=VARCHAR}, #{pcahjc,jdbcType=VARCHAR}, #{sfsxgzdx,jdbcType=CHAR}, 
+      #{sfjs,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.start.boot.domain.XtPcLb">
+    insert into XT_PC_LB
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pcflbm != null">
+        PCFLBM,
+      </if>
+      <if test="pcflmc != null">
+        PCFLMC,
+      </if>
+      <if test="lcmbbm != null">
+        LCMBBM,
+      </if>
+      <if test="sfdmb != null">
+        SFDMB,
+      </if>
+      <if test="sfpcfp != null">
+        SFPCFP,
+      </if>
+      <if test="sfpzqd != null">
+        SFPZQD,
+      </if>
+      <if test="sfpzss != null">
+        SFPZSS,
+      </if>
+      <if test="sfpzfy != null">
+        SFPZFY,
+      </if>
+      <if test="sfpzsxgz != null">
+        SFPZSXGZ,
+      </if>
+      <if test="sfbdajlb != null">
+        SFBDAJLB,
+      </if>
+      <if test="sfzapc != null">
+        SFZAPC,
+      </if>
+      <if test="url != null">
+        URL,
+      </if>
+      <if test="sm != null">
+        SM,
+      </if>
+      <if test="sfqy != null">
+        SFQY,
+      </if>
+      <if test="urlSm != null">
+        URL_SM,
+      </if>
+      <if test="pcahjc != null">
+        PCAHJC,
+      </if>
+      <if test="sfsxgzdx != null">
+        SFSXGZDX,
+      </if>
+      <if test="sfjs != null">
+        SFJS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pcflbm != null">
+        #{pcflbm,jdbcType=CHAR},
+      </if>
+      <if test="pcflmc != null">
+        #{pcflmc,jdbcType=VARCHAR},
+      </if>
+      <if test="lcmbbm != null">
+        #{lcmbbm,jdbcType=CHAR},
+      </if>
+      <if test="sfdmb != null">
+        #{sfdmb,jdbcType=CHAR},
+      </if>
+      <if test="sfpcfp != null">
+        #{sfpcfp,jdbcType=CHAR},
+      </if>
+      <if test="sfpzqd != null">
+        #{sfpzqd,jdbcType=CHAR},
+      </if>
+      <if test="sfpzss != null">
+        #{sfpzss,jdbcType=CHAR},
+      </if>
+      <if test="sfpzfy != null">
+        #{sfpzfy,jdbcType=CHAR},
+      </if>
+      <if test="sfpzsxgz != null">
+        #{sfpzsxgz,jdbcType=CHAR},
+      </if>
+      <if test="sfbdajlb != null">
+        #{sfbdajlb,jdbcType=CHAR},
+      </if>
+      <if test="sfzapc != null">
+        #{sfzapc,jdbcType=CHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="sm != null">
+        #{sm,jdbcType=VARCHAR},
+      </if>
+      <if test="sfqy != null">
+        #{sfqy,jdbcType=CHAR},
+      </if>
+      <if test="urlSm != null">
+        #{urlSm,jdbcType=VARCHAR},
+      </if>
+      <if test="pcahjc != null">
+        #{pcahjc,jdbcType=VARCHAR},
+      </if>
+      <if test="sfsxgzdx != null">
+        #{sfsxgzdx,jdbcType=CHAR},
+      </if>
+      <if test="sfjs != null">
+        #{sfjs,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.start.boot.domain.XtPcLbExample" resultType="java.lang.Long">
+    select count(*) from XT_PC_LB
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update XT_PC_LB
+    <set>
+      <if test="record.pcflbm != null">
+        PCFLBM = #{record.pcflbm,jdbcType=CHAR},
+      </if>
+      <if test="record.pcflmc != null">
+        PCFLMC = #{record.pcflmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lcmbbm != null">
+        LCMBBM = #{record.lcmbbm,jdbcType=CHAR},
+      </if>
+      <if test="record.sfdmb != null">
+        SFDMB = #{record.sfdmb,jdbcType=CHAR},
+      </if>
+      <if test="record.sfpcfp != null">
+        SFPCFP = #{record.sfpcfp,jdbcType=CHAR},
+      </if>
+      <if test="record.sfpzqd != null">
+        SFPZQD = #{record.sfpzqd,jdbcType=CHAR},
+      </if>
+      <if test="record.sfpzss != null">
+        SFPZSS = #{record.sfpzss,jdbcType=CHAR},
+      </if>
+      <if test="record.sfpzfy != null">
+        SFPZFY = #{record.sfpzfy,jdbcType=CHAR},
+      </if>
+      <if test="record.sfpzsxgz != null">
+        SFPZSXGZ = #{record.sfpzsxgz,jdbcType=CHAR},
+      </if>
+      <if test="record.sfbdajlb != null">
+        SFBDAJLB = #{record.sfbdajlb,jdbcType=CHAR},
+      </if>
+      <if test="record.sfzapc != null">
+        SFZAPC = #{record.sfzapc,jdbcType=CHAR},
+      </if>
+      <if test="record.url != null">
+        URL = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sm != null">
+        SM = #{record.sm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfqy != null">
+        SFQY = #{record.sfqy,jdbcType=CHAR},
+      </if>
+      <if test="record.urlSm != null">
+        URL_SM = #{record.urlSm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pcahjc != null">
+        PCAHJC = #{record.pcahjc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfsxgzdx != null">
+        SFSXGZDX = #{record.sfsxgzdx,jdbcType=CHAR},
+      </if>
+      <if test="record.sfjs != null">
+        SFJS = #{record.sfjs,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update XT_PC_LB
+    set PCFLBM = #{record.pcflbm,jdbcType=CHAR},
+      PCFLMC = #{record.pcflmc,jdbcType=VARCHAR},
+      LCMBBM = #{record.lcmbbm,jdbcType=CHAR},
+      SFDMB = #{record.sfdmb,jdbcType=CHAR},
+      SFPCFP = #{record.sfpcfp,jdbcType=CHAR},
+      SFPZQD = #{record.sfpzqd,jdbcType=CHAR},
+      SFPZSS = #{record.sfpzss,jdbcType=CHAR},
+      SFPZFY = #{record.sfpzfy,jdbcType=CHAR},
+      SFPZSXGZ = #{record.sfpzsxgz,jdbcType=CHAR},
+      SFBDAJLB = #{record.sfbdajlb,jdbcType=CHAR},
+      SFZAPC = #{record.sfzapc,jdbcType=CHAR},
+      URL = #{record.url,jdbcType=VARCHAR},
+      SM = #{record.sm,jdbcType=VARCHAR},
+      SFQY = #{record.sfqy,jdbcType=CHAR},
+      URL_SM = #{record.urlSm,jdbcType=VARCHAR},
+      PCAHJC = #{record.pcahjc,jdbcType=VARCHAR},
+      SFSXGZDX = #{record.sfsxgzdx,jdbcType=CHAR},
+      SFJS = #{record.sfjs,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.start.boot.domain.XtPcLb">
+    update XT_PC_LB
+    <set>
+      <if test="pcflmc != null">
+        PCFLMC = #{pcflmc,jdbcType=VARCHAR},
+      </if>
+      <if test="lcmbbm != null">
+        LCMBBM = #{lcmbbm,jdbcType=CHAR},
+      </if>
+      <if test="sfdmb != null">
+        SFDMB = #{sfdmb,jdbcType=CHAR},
+      </if>
+      <if test="sfpcfp != null">
+        SFPCFP = #{sfpcfp,jdbcType=CHAR},
+      </if>
+      <if test="sfpzqd != null">
+        SFPZQD = #{sfpzqd,jdbcType=CHAR},
+      </if>
+      <if test="sfpzss != null">
+        SFPZSS = #{sfpzss,jdbcType=CHAR},
+      </if>
+      <if test="sfpzfy != null">
+        SFPZFY = #{sfpzfy,jdbcType=CHAR},
+      </if>
+      <if test="sfpzsxgz != null">
+        SFPZSXGZ = #{sfpzsxgz,jdbcType=CHAR},
+      </if>
+      <if test="sfbdajlb != null">
+        SFBDAJLB = #{sfbdajlb,jdbcType=CHAR},
+      </if>
+      <if test="sfzapc != null">
+        SFZAPC = #{sfzapc,jdbcType=CHAR},
+      </if>
+      <if test="url != null">
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="sm != null">
+        SM = #{sm,jdbcType=VARCHAR},
+      </if>
+      <if test="sfqy != null">
+        SFQY = #{sfqy,jdbcType=CHAR},
+      </if>
+      <if test="urlSm != null">
+        URL_SM = #{urlSm,jdbcType=VARCHAR},
+      </if>
+      <if test="pcahjc != null">
+        PCAHJC = #{pcahjc,jdbcType=VARCHAR},
+      </if>
+      <if test="sfsxgzdx != null">
+        SFSXGZDX = #{sfsxgzdx,jdbcType=CHAR},
+      </if>
+      <if test="sfjs != null">
+        SFJS = #{sfjs,jdbcType=CHAR},
+      </if>
+    </set>
+    where PCFLBM = #{pcflbm,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.start.boot.domain.XtPcLb">
+    update XT_PC_LB
+    set PCFLMC = #{pcflmc,jdbcType=VARCHAR},
+      LCMBBM = #{lcmbbm,jdbcType=CHAR},
+      SFDMB = #{sfdmb,jdbcType=CHAR},
+      SFPCFP = #{sfpcfp,jdbcType=CHAR},
+      SFPZQD = #{sfpzqd,jdbcType=CHAR},
+      SFPZSS = #{sfpzss,jdbcType=CHAR},
+      SFPZFY = #{sfpzfy,jdbcType=CHAR},
+      SFPZSXGZ = #{sfpzsxgz,jdbcType=CHAR},
+      SFBDAJLB = #{sfbdajlb,jdbcType=CHAR},
+      SFZAPC = #{sfzapc,jdbcType=CHAR},
+      URL = #{url,jdbcType=VARCHAR},
+      SM = #{sm,jdbcType=VARCHAR},
+      SFQY = #{sfqy,jdbcType=CHAR},
+      URL_SM = #{urlSm,jdbcType=VARCHAR},
+      PCAHJC = #{pcahjc,jdbcType=VARCHAR},
+      SFSXGZDX = #{sfsxgzdx,jdbcType=CHAR},
+      SFJS = #{sfjs,jdbcType=CHAR}
+    where PCFLBM = #{pcflbm,jdbcType=CHAR}
+  </update>
+</mapper>

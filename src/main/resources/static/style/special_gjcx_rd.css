@@ -1,0 +1,205 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+#rd_lay_left{
+    width:35%;
+    float: left;
+    height:100%;
+    position: relative;
+    padding: 10px;
+}
+#rd_gjcx_tiaojian{
+    height: calc(100% - 135px);
+    width: 100%;
+    margin: 0 auto;
+    /* padding: 10px 25px 10px 30px; */
+    padding-top:10px;
+    overflow: auto;
+}
+#rd_lay_leftTop{
+    height: 40px;
+    width: 95%;
+    margin: 0 auto;
+    line-height: 40px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    background: #ebf1f1;
+    margin-top: 10px;
+}
+#rd_lay_leftTop .rd_tj_box_sf,
+#rd_lay_leftTop .rd_tj_box_ysf,
+#rd_lay_leftTop .rd_tj_box_value{
+    height:38px;
+}
+.rd_tj_row{
+    overflow: hidden;
+    width: 100%;
+    padding-bottom: 5px;
+}
+.rd_tj_box_sf,.rd_tj_box_sf_fixed{
+    width: 27%;
+    height: 24px;
+    float: left;
+}
+.rd_tj_box_ysf,.rd_tj_box_ysf_fixed{
+    width: 18%;
+    height: 24px;
+    float: left;
+}
+.rd_tj_box_value,.rd_tj_box_value_fixed{
+    width: 47%;
+    height: 24px;
+    float: left;
+}
+.rd_tj_box_action{
+    width: 8%;
+    height: 24px;
+    float: left;
+}
+.rd_sf,.rd_ysf{
+    width:95%;
+}
+.rd_sf_value{
+    width:95%;
+}
+
+.rd_tiaojian_btn{
+    width: 22px;
+    height: 22px;
+    background-color: #fff;
+    border: 1px solid #d1d1d1;
+    color: #d1d1d1;
+    cursor: pointer;
+    font-size: 14px;
+    float: right;
+    text-align: center;
+    margin-right: 2px;
+    moz-user-select: none;
+    -moz-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.rd_tiaojian_btn:hover{
+    background: red;
+    color: #fff;
+}
+.rd_tiaojian_add{
+    margin-right: 5px;
+}
+.rd_sf_value{
+    height: 26px;
+    border: 1px solid #c1c1c1;
+    border-radius: 2px;
+}
+.rd_cent_btn{
+    width: 77px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 3px;
+    background-color: #258EEA;
+    border: 1px solid #258EEA;
+    color: #fff;
+    margin-top: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    float: left;
+    text-align: center;
+}
+.rd_cent_btn:hover{
+    background: #fff;
+    color: #258EEA;
+}
+.rd_cent_add{
+    margin-right: 20px;
+}
+
+/*高级查询数据展示部分*/
+#rd_gjcx_center{
+    width:65%;
+    height:100%;
+    float: left;
+    padding:10px 10px 10px 0;
+}
+/*//修改滚动条默认样式*/
+div::-webkit-scrollbar {
+    width: 6px;/*y轴滚动条宽度*/
+    height: 6px/*x轴滚动条高度*/;
+}
+div::-webkit-scrollbar-track-piece {/*内部轨道*/
+    background-color: #ddf0ff;
+    -webkit-border-radius: 4px;
+}
+div::-webkit-scrollbar-thumb{/*滚动条*/
+    background-color: #47a0d7;
+    height: 50px;
+    -webkit-border-radius: 4px;
+}
+
+/*     2018-2-8   新增修改带图片按钮                */
+
+.gjcx_mode_but{
+    height: 30px;
+    border: 1px solid #258EEA;
+    float: left;
+    border-radius: 3px;
+    /*text-align: center;*/
+    line-height: 30px;
+    cursor: pointer;
+    color: #258EEA;
+    margin-right: 20px;
+    moz-user-select: none;
+    -moz-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.gjcx_mode_but:hover{
+    color: #fff;
+}
+.gjcx_mode_but_cx{
+    height: 30px;
+    border: 1px solid #258EEA;
+    float: left;
+    border-radius: 3px;
+    /*text-align: center;*/
+    line-height: 30px;
+    cursor: pointer;
+    color: #fff;
+    margin-right: 0px;
+    padding-left: 43px;
+    moz-user-select: none;
+    -moz-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.yl{
+    background: url(../image/pdf/1_05.png) no-repeat 24px 7px #ddd;
+    cursor: no-drop;
+    border: 1px solid #ddd;
+    color: #fff;
+}
+.cxtj{
+    background: url(../image/pdf/1_09.png) no-repeat 18px 6px;
+}
+.cx{
+    background: url(../image/pdf/1_05.png) no-repeat 24px 7px #258EEA;
+}
+.yl:hover{
+    background: url(../image/pdf/1_05.png) no-repeat 24px 7px #ddd;
+    cursor: no-drop;
+}
+.cxtj:hover{
+    background: url(../image/pdf/1_03.png) no-repeat 18px 6px #258EEA;;
+}
+.cx:hover{
+    background: url(../image/pdf/1_05.png) no-repeat 24px 7px #2588E3;;
+}

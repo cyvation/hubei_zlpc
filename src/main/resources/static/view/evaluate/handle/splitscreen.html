@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>评查办理</title>
+</head>
+<body>
+<link rel="stylesheet" type="text/css" href="style/ajzl.css" />
+<script type="text/javascript">
+    AddScript("text/javascript","script/evaluate/handle/splitscreen.js")
+    AddScript("text/javascript","script/evaluate/handle/pcblButton.js")
+</script>
+
+<!--<div id="btn_switch_to_onescreen" onclick="switch_to_onescreen()"
+     style="position: absolute;top: 10px;right: 10px;z-index:2222;background: url('image/home/bm.png')no-repeat center;width: 16px;height: 16px;cursor: pointer">
+</div>-->
+<style>
+    .select_option {
+        padding: 2px 4px;
+    }
+    .pcbl>div>.panel:nth-child(2)>div>.panel-tool{
+        margin-top: -16px;
+        height: 32px;
+        padding-right: 6px;
+    }
+    .select_option label {
+        height: inherit;
+        line-height: inherit;
+
+    }
+
+    .select_option input {
+        background: #ffffff;
+        position: relative;
+        top: 2px;
+    }
+
+    .select_option input[type='checkbox'] {
+        border: none;
+
+    }
+
+    input[type='text'] {
+        /*border: none;*/
+        width: 96%;
+        border: 1px solid #c1cfda;
+    }
+    .select_option  input[type='text'] {
+
+        width: 100%;
+    }
+    #divDoc embed{
+        z-index: -99!important;
+    }
+    #divDoc{
+        z-index: -99!important;
+    }
+.GG_panel-header{
+    background: #D8EAF6;
+    height: 40px;
+    padding: 0!important;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-color: #DCE4F2;
+    border-right: 1px solid #DCE4F2;
+}
+    .GG_panel-header>.panel-title{
+        width: 100px;
+        font-size: 14px;
+        background: #fff;
+        height: 41px;
+        border-top: 3px solid #2889DE;
+        text-align: center;
+        line-height: 36px;
+        color: #305774;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+    .GG_panel-body{
+        border-color: #DCE4F2!important;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+    .GG_panel-header .textbox{
+        margin-right: 20px;
+    }
+   .GG_panel-header .textbox input.textbox{
+       color: #305774;
+   }
+    .GG_panel-header .panel-tool a:hover{
+        background-color: #D8EAF6;
+    }
+    .pcbl .layout-expand-west>.panel-header{
+        height: 40px;
+        border: 1px solid #DCE4F2;
+        background-color: #D8EAF6;
+        border-top-left-radius: 3px;
+    }
+    .pcbl .layout-expand-west>.panel-body{
+        border: 1px solid #DCE4F2!important;
+        background-color: #D8EAF6;
+        border-bottom-left-radius: 3px;
+    }
+    .pcbl .panel-header .panel-tool a:hover{
+
+    }
+    /*#mm_eval_handle_btnlist .pcbl_pcxx_top_box{*/
+        /*width: 100%;*/
+        /*border-radius: 0;*/
+        /*text-align: center;*/
+        /*background: #fff;*/
+        /*border:none;*/
+        /*border-bottom: 1px dotted #ccc;*/
+        /*color: #91cafe;*/
+        /*!* margin: auto; *!*/
+        /*line-height: 21px;*/
+        /*margin-left: 5px;*/
+    /*}*/
+   #mm_eval_handle_btnlist .pcbl_pcxx_but{
+       width: 100%;
+       border-radius: 0;
+       /* text-align: center; */
+       background-color: #fff;
+       border: none;
+       border-bottom: 1px dotted #ccc;
+       color: #1E579E;
+       /* margin: auto; */
+       /* line-height: 21px; */
+       /* padding: inherit; */
+       /* margin-left: 5px; */
+    }
+    /*#mm_eval_handle_btnlist .pcbl_pcxx_top_box:hover{*/
+        /*background:#22A5F8;*/
+        /*color: #fff;*/
+    /*}*/
+    #mm_eval_handle_btnlist .pcbl_pcxx_but:hover{
+        background-color:#22A5F8;
+        color: #fff;
+        /*background-image: url(../image/index/star.png);*/
+    }
+    #mm_eval_handle_btnlist .menu-line{
+        border: none;
+    }
+    #mb_eval_handle_btn_more .icon-edit{
+        background: url(./image/cqe/func/more_ico_01.png) no-repeat center center;
+    }
+    #mb_eval_handle_btn_more{
+        cursor: pointer;
+    }
+    @media (min-width: 1460px) {
+        #mb_eval_handle_btn_more{
+            cursor: pointer;
+            display: none!important;
+        }
+    }
+    #mm_eval_handle_btnlist{
+        left: 1790px!important;
+    }
+</style>
+<div id="view_evaluate_handle_qhhq" onclick="switch_to_tabsPcbl()" style="position: absolute;
+    top: 4px;
+    right: 5px;
+    z-index: 2222;
+    background: url(image/home/bm.png)no-repeat center;
+    width: 30px;
+    height: 30px;
+    /* height: 20px; */
+    cursor: pointer;
+    background-size: contain;">
+</div>
+<div class="pcbl">
+    <div class="easyui-layout" id="ly_eval_handle"  data-options="fit:true" >
+        <!--案件信息-->
+        <div id="ajxxdiv" data-options="region:'west',split:true,tools:'#ajxxtool',headerCls:'GG_panel-header',bodyCls:'GG_panel-body'"  title="案件信息" href="./view/evaluate/handle/caseinfo.html" style="width: 820px;box-sizing: border-box">
+        </div>
+        <!--评查信息-->
+        <div id="pcxx" data-options="region:'center',tools:'#pcjg',headerCls:'GG_panel-header',bodyCls:'GG_panel-body'" title="评查信息" href="./view/evaluate/handle/evalinfo.html" style="box-sizing: border-box">
+        </div>
+    </div>
+</div>
+<div id="ajxxtool">
+    <input id="cbt_case_info_bmsahs" class="easyui-combotree" style="margin-right: 20px; width: 200px;" />
+</div>
+<div class="pcbl_pcxx_top" id="pcjg">
+    <div id='pcblBut' style="height: 30px;padding-right: 30px">
+        <a  id="mb_eval_handle_btn_more" class="easyui-menubutton" data-options="menu:'#mm_eval_handle_btnlist',iconCls:'icon-edit',wincom:true" style="display: none;float: right;  width: 28px;height: 27px; margin-top: 3px;border: 1px solid #248CEB;border-radius: 3px;opacity: 1;padding: 0; " title="更多"></a>
+        <div id="mm_eval_handle_btnlist" style="width:140px;">
+        </div>
+    </div></div>
+</body>
+</html>

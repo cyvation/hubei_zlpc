@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>评查审批</title>
+</head>
+<body>
+	<!--页面JS加载，放在头部不能正确加载-->
+	<script type="text/javascript">
+		AddScript("text/javascript", "script/evaluate/approval/index.js");
+	</script>
+
+	<!--案件列表-->
+	<div id="div_approve_list" class="easyui-panel" style="margin-top: 0px"
+		data-options="fit:true,border:false">
+		<!--工具栏-->
+		<div id="tool_eval_handle_grid_list" style="padding: 5px;">
+			<div
+				style="height: 30px; border-radius: 2px; border: 0px solid #c1c1c1;">
+				<span>案件名称</span> <input id="txt_eval_approval_grid_ajmc" type="text"
+					style="width: 220px; height: 28px;">
+					<button id="btn_eval_approval_grid_search" class="ZXpc_pcfa_2"
+						style="background-color: #258EEA;">查询</button>
+			</div>
+		</div>
+		<table id="grid_approve_list" border="0"></table>
+	</div>
+
+</body>
+</html>

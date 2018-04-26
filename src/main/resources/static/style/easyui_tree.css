@@ -1,0 +1,12 @@
+/* 自定义可展开的选项的打开状态图标*/
+.tree-folder-open{
+    background: url("../image/home/1.png") no-repeat;
+}
+/* 自定义可展开的选项的关闭状态图标*/
+.tree-file{
+    background: url("../image/home/bg.png") no-repeat;
+}
+/* 自定义不可展开的图标*/
+.tree-folder{
+    background:url("../image/home/2.png")no-repeat;
+}

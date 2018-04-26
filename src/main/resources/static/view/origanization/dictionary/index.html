@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    AddScript("text/javascript", "script/origanization/dictionary/index.js");
+</script>
+<div id="layout_dic_main" class="easyui-layout" data-options="fit:'true'">
+    <div id="layout_dic_west" data-options="region:'west',split:true,title:'主分类'" style="width: 200px;
+            padding: 10px;">
+        <ul id="tree_dic_father_info" class="easyui-tree"> <!--tree_dic_father_info-->
+        </ul>
+    </div>
+    <div data-options="region:'center',title:'子分类'" style="width: 100%;">
+        <div id="layout_dic_center" class="easyui-panel" data-options="fit:true,border:false">
+            <table id="tgd_dic_son_info"  data-options=" idField:'dm',border:false "><!--tgd_dic_son_info-->
+            </table>
+        </div>
+    </div>
+</div>
+<div id="win_add_dic_son"><!--win_add_dic_son-->
+    <!--新增子分类-->
+    <table cellspacing="5" style="width: 400px; margin: 0 auto; height: 300px;">
+        <tr>
+            <td class="ralign">
+                分类代码：
+            </td>
+            <td>
+                <input id="dm_sjzd" class="easyui-textbox" style="width: 280px; " />
+            </td>
+        </tr>
+        <tr>
+            <td class="ralign">
+                分类名称：
+            </td>
+            <td>
+                <input id="mc_sjzd" class="easyui-textbox" style="width: 280px " />
+            </td>
+        </tr>
+        <tr>
+            <td class="ralign">
+                父代码：
+            </td>
+            <td>
+                <input id="fdm_sjzd" class="easyui-textbox" style="width: 280px " />
+            </td>
+        </tr>
+        <tr>
+            <td class="ralign">
+                所属类别代码：
+            </td>
+            <td>
+                <input id="sslbdm_sjzd" class="easyui-textbox" style="width: 280px " />
+            </td>
+        </tr>
+        <tr>
+            <td class="ralign">
+                所属类别名称：
+            </td>
+            <td>
+                <input id="sslbmc_sjzd" class="easyui-textbox" style="width: 280px " />
+            </td>
+        </tr>
+        <tr>
+            <td class="ralign">
+                分类序号：
+            </td>
+            <td>
+                <input id="xh_sjzd" class="easyui-numberbox" data-options="min:0,max:1000,precision:0,value:999"
+                       style="width: 140px " />
+            </td>
+        </tr>
+        <tr>
+            <td class="ralign">
+                分类说明：
+            </td>
+            <td>
+                <input id="sm_sjzd" class="easyui-textbox" data-options="multiline:true"
+                       style="width: 280px; height: 120px; vertical-align: top;" />
+            </td>
+        </tr>
+    </table>
+    <div style="width: 150px; margin: 0 auto;">
+        <a id="btn_dic_son_edit_confirm" class="easyui-linkbutton" iconcls="icon-ok" >确定</a>
+        <a id="btn_dic_son_edit_cancel" class="easyui-linkbutton" iconcls="icon-cancel" >取消</a>
+    </div>
+</div>
+
+
+<!--<div id="win_add_dic_father">&lt;!&ndash;win_add_dic_father&ndash;&gt;-->
+    <!--&lt;!&ndash;新增父分类&ndash;&gt;-->
+    <!--<table cellspacing="5" style="width: 400px; margin: 0 auto; height: 300px;">-->
+        <!--<tr>-->
+            <!--<td class="ralign">-->
+                <!--主分类代码：-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<input id="dm_father" class="easyui-textbox" style="width: 280px;  "  />-->
+            <!--</td>-->
+        <!--</tr>-->
+
+        <!--<tr>-->
+            <!--<td class="ralign">-->
+                <!--主分类名称：-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<input id="mc_father" class="easyui-textbox" style="width: 280px;  " />-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--<tr id="zfldm">-->
+            <!--<td class="ralign" >-->
+                <!--子分类代码：-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<input id="dm_son" class="easyui-textbox" style="width: 280px;  " />-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--<tr id="zflmc">-->
+            <!--<td class="ralign">-->
+                <!--子分类名称：-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<input id="mc_son" class="easyui-textbox" style="width: 280px;  " />-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--<tr id="zflxh">-->
+            <!--<td class="ralign">-->
+                <!--子分类序号：-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<input id="xh_son" class="easyui-numberbox" data-options="min:0,max:1000,precision:0,value:999"-->
+                       <!--style="width: 140px;  " />-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--<tr id="zflsm">-->
+            <!--<td class="ralign">-->
+                <!--子分类说明：-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<input id="sm_son" class="easyui-textbox" data-options="multiline:true"-->
+                       <!--style="width: 280px; height: 120px; vertical-align: top;" />-->
+            <!--</td>-->
+        <!--</tr>-->
+    <!--</table>-->
+    <!--<div style="width: 150px; margin: 0 auto;">-->
+        <!--<a id="btn_dic_father_edit_confirm" class="easyui-linkbutton" iconcls="icon-ok" >确定</a>-->
+        <!--<a id="btn_dic_father_edit_cancel" class="easyui-linkbutton" iconcls="icon-cancel" >取消</a>-->
+    <!--</div>-->
+<!--</div>-->
+</body>
+</html>

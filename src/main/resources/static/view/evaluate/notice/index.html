@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>评查通知</title>
+</head>
+<body>
+<script type="text/javascript">
+    AddScript("text/javascript", "script/evaluate/notice/index.js");
+</script>
+<div id="div_notice_list" class="easyui-panel" style="margin-top:0px" data-options="fit:true,border:false">
+    <!--工具栏-->
+    <div id="tool_notice_list" style="padding: 5px;" >
+        <div style="height: 30px; border-radius:2px; border: 0px solid #c1c1c1;">
+            <span >案件名称</span>
+            <input id="txt_notice_ajmc" type="text" style="width:220px;height: 28px;">
+            <button id="btn_notice_search" class="ZXpc_pcfa_2" style="background-color: #258EEA;">查询</button>
+        </div>
+    </div>
+    <!--案件列表-->
+    <table id="grid_notice_list" border="0"></table>
+</div>
+
+</body>
+</html>

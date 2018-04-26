@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.ZdpccxMapper">
+
+    <resultMap id="resultMap" type="map"></resultMap>
+    <select id="getZdpccxResult" parameterType="map" statementType="CALLABLE">
+           CALL ${cx}(
+                 #{p_bmsah,mode=IN,jdbcType=VARCHAR},
+                 #{p_pclbbm,mode=IN,jdbcType=CHAR},
+                 #{p_pcslbm,mode=IN,jdbcType=CHAR},
+                 #{p_pcxbm,mode=IN,jdbcType=CHAR},
+                 #{p_pcxmc,mode=IN,jdbcType=VARCHAR},
+                 #{p_pcxzf,mode=IN,jdbcType=NUMERIC},
+                 #{p_mxkf,mode=IN,jdbcType=NUMERIC},
+
+                 <if test="p_char1 !=null">
+                       #{p_char1,mode=IN,jdbcType=VARCHAR},
+                 </if>
+                 <if test="p_char1 !=null">
+                    #{p_char2,mode=IN,jdbcType=VARCHAR},
+                 </if>
+                <if test="p_char1 !=null">
+                  #{p_char3,mode=IN,jdbcType=VARCHAR},
+                </if>
+                <if test="p_char1 !=null">
+                 #{p_char4,mode=IN,jdbcType=VARCHAR},
+                </if>
+                <if test="p_char1 !=null">
+                 #{p_char5,mode=IN,jdbcType=VARCHAR},
+                </if>
+                 #{p_result,mode=OUT,jdbcType=VARCHAR},
+                 #{p_errmsg,mode=OUT,jdbcType=VARCHAR},
+                 #{p_pcxfz,mode=OUT,jdbcType=NUMERIC}
+             )
+    </select>
+
+
+</mapper>

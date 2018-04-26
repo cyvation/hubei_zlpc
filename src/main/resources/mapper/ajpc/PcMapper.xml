@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.start.boot.dao.ajpc.PcMapper">
+
+    <!--获取评查分类列表-->
+    <select id="getPcfl" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call pkg_pcgl.proc_get_pcfl(#{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=pcflMap},
+                                            #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+
+    <resultMap id="pcflMap" type="map"></resultMap>
+
+    <!--获取评查库人员-->
+    <select id="getPckry" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call pkg_pcgl.proc_get_ryklist(#{p_rykdwbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_dwbm_ry,mode=IN,jdbcType=VARCHAR},
+                                               #{p_pcy_mc,mode=IN,jdbcType=VARCHAR},
+                                               #{p_ywbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                               #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                               #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                               #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=pcKryMap},
+                                               #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="pcKryMap" type="map"></resultMap>
+
+    <!--获取组织机构和评查库人员-->
+    <select id="getZzjgry" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call pkg_pcgl.proc_get_ryinfo(#{p_rykdwbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_ywbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_jsmc,mode=IN,jdbcType=VARCHAR},
+                                               #{p_mc,mode=IN,jdbcType=VARCHAR},
+                                               #{p_type,mode=IN,jdbcType=VARCHAR},
+                                               #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                               #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                               #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                               #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=pcKryMap},
+                                               #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="getZzjgry" type="map"></resultMap>
+
+    <!--删除人员库列表人员-->
+    <delete id="del_rykry" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_del_rykry(#{p_ryk_dwbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_ywbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                               #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </delete>
+
+    <!--从组织机构中提取人员到人员库的人员列表-->
+    <insert id="add_pcryk" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_add_pcryk(#{p_ryk_dwbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                               #{p_bmbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_bmmc,mode=IN,jdbcType=VARCHAR},
+                                               #{p_jsbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_jsmc,mode=IN,jdbcType=VARCHAR},
+                                               #{p_ywbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </insert>
+
+    <!--获取评查活动列表-->
+    <select id="getPchd" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call pkg_pcgl.proc_get_pchd(#{p_pcdwbm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_pcflbm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=pchdMap},
+                                            #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="pchdMap" type="map"></resultMap>
+
+    <!--添加评查活动-->
+    <select id="addPchd" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_add_pchd(#{p_pcdwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pchdmc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pcflbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_sxgzbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_sfss,mode=IN,jdbcType=VARCHAR},
+                                          #{p_sffy,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pckssj,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pcjssj,mode=IN,jdbcType=VARCHAR},
+                                          #{p_cjrdwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_cjrgh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_cjrmc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_sm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pcmbj,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pchdbm,mode=OUT,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+
+    <!--修改评查活动-->
+    <update id="updPchd" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_upd_pchd(#{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pchdmc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_sxgzbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_sfss,mode=IN,jdbcType=VARCHAR},
+                                          #{p_sffy,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pckssj,mode=IN,javaType=java.sql.Date,jdbcType=TIME},
+                                          #{p_pcjssj,mode=IN,javaType=java.sql.Date,jdbcType=TIME},
+                                          #{p_sm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pcmbj,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--删除评查活动-->
+    <delete id="delPchd" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_del_pchd(#{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+
+    </delete>
+
+    <!--新增评查分组-->
+    <insert id="addPcfz" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_add_pcfz(#{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pczmc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_sm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pczbm,mode=OUT,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+
+    </insert>
+
+    <!--修改评查分组-->
+    <update id="updPcfz" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_upd_pcfz(#{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pczbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pczmc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_sm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--校验评查组是否已分配有评查案件-->
+    <insert id="valPcfz" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_val_pcfz(#{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pczbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_tsxx,mode=OUT,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+
+    </insert>
+
+
+    <!--删除评查分组-->
+    <delete id="delPcfz" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_del_pcfz(#{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pczbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </delete>
+
+    <!--新增评查小组人员-->
+    <insert id="addXzry" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_add_xzry(#{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pczbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_jsbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_sm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </insert>
+
+    <!--修改评查小组人员信息-->
+    <update id="updXzry" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_upd_xzry(#{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pczbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_jsbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_sm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--校验评查员是否已分配有评查案件-->
+    <insert id="valXzry" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_val_xzry(#{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pczbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_tsxx,mode=OUT,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </insert>
+
+    <!--删除评查小组人员-->
+    <insert id="delXzry" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_del_xzry(#{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pczbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </insert>
+
+    <!--获取评查库所有人员-->
+    <select id="getPckryAll" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call pkg_pcgl.proc_get_pckry(#{p_dwbm_ryk,mode=IN,jdbcType=VARCHAR},
+                                               #{p_dwbm_ry,mode=IN,jdbcType=VARCHAR},
+                                               #{p_ywbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=pcKryAllMap},
+                                               #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="pcKryAllMap" type="map"></resultMap>
+
+    <!--新增评查案件-->
+    <insert id="addPcaj" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pclc.proc_add_jbxx(#{p_pcdwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pcflbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pcmbbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_sxgzbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_bpc_wcbzrq,mode=IN,javaType=java.sql.Date,jdbcType=TIME},
+                                          #{p_dpc_bmsah,mode=IN,jdbcType=VARCHAR},
+                                          #{p_dpc_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_czr_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_czr_dwmc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_czr_gh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_czr_mc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pcslbm,mode=OUT,jdbcType=VARCHAR},
+                                          #{p_pcsah,mode=OUT,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </insert>
+
+    <!--分配评查组-->
+    <update id="assignPcz" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pclc.proc_add_fpdz(#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pcflbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pcmbbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_bmsah,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pczbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pczmc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_czr_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_czr_dwmc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_czr_gh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_czr_mc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--分配评查员-->
+    <update id="assignPcr" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pclc.proc_add_fpdr(#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pcflbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pcmbbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_bmsah,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pcr_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pcr_dwmc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pcr_gh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pcr_mc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_czr_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_czr_dwmc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_czr_gh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_czr_mc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--添加评查卷宗文件-->
+    <insert id="addJzwj" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_add_jzwj(#{p_fjzwjbh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pczybm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_wjlx,mode=IN,jdbcType=VARCHAR},
+                                          #{p_wsmbbh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_jzmlh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gxlx,mode=IN,jdbcType=VARCHAR},
+                                          #{p_wjmc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_wscflj,mode=IN,jdbcType=VARCHAR},
+                                          #{p_wjkzm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_nzrdwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_nzrdwmc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_nzrgh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_nzrxm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_jzwjbh,mode=OUT,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+
+    </insert>
+
+    <!--修改卷宗文件-->
+    <update id="updJzwj" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_upd_jzwj(#{p_jzwjbh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gxlx,mode=IN,jdbcType=VARCHAR},
+                                          #{p_wjmc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--删除卷宗文件-->
+    <delete id="delJzwj" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_del_jzwj(#{p_jzwjbh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+
+    </delete>
+
+    <!--删除卷宗文件（通过评查资源编码）-->
+    <delete id="delJzwjByPczybm" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_del_jzwj_bypczybm(#{p_pczybm,mode=IN,jdbcType=VARCHAR},
+                                                   #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+
+    </delete>
+
+    <!--添加评查卷宗文件-->
+    <select id="getPcfaws" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_get_pcfawj(#{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pcflbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_pcfalj,mode=OUT,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+
+    </select>
+
+    <!--获取评查案件列表-->
+    <select id="getPcaj" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_get_pcaj(#{p_pcflbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_ajmc, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pcrmc, mode=IN, jdbcType=VARCHAR},
+                                          #{p_dwbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pckssj, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                          #{p_pcjssj, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                          #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                          #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                          #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=getPcajMap},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="getPcajMap" type="map"></resultMap>
+
+    <!--删除评查案件-->
+    <update id="delPcaj" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_update_pcajsc(#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+                                                #{p_pcflbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--获取评查组-->
+    <select id="getPcz" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_get_pcz(#{p_pchdbm, mode=IN, jdbcType=VARCHAR},
+                                         #{p_pcflbm, mode=IN, jdbcType=VARCHAR},
+                                         #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=getPczMap},
+                                         #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="getPczMap" type="map"></resultMap>
+
+    <!--获取评查人信息-->
+    <select id="getPczry" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_get_pczry(#{p_pczbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=getPczryMap},
+                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="getPczryMap" type="map"></resultMap>
+
+    <!--变更评查人-->
+    <update id="updPcr" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_update_bgpcr(#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+                                              #{p_fpdz_fpr_dwbm, mode=IN, jdbcType=VARCHAR},
+                                              #{p_fpdz_fpr_gh, mode=IN, jdbcType=VARCHAR},
+                                              #{p_fpdz_fpr_dwmc, mode=IN, jdbcType=VARCHAR},
+                                              #{p_fpdz_fpr_mc, mode=IN, jdbcType=VARCHAR},
+                                              #{p_fpdr_fpr_dwbm, mode=IN, jdbcType=VARCHAR},
+                                              #{p_fpdr_fpr_dwmc, mode=IN, jdbcType=VARCHAR},
+                                              #{p_fpdr_fpr_gh, mode=IN, jdbcType=VARCHAR},
+                                              #{p_fpdr_fpr_mc, mode=IN, jdbcType=VARCHAR},
+                                              #{p_pcz_bm, mode=IN, jdbcType=VARCHAR},
+                                              #{p_pcz_mc, mode=IN, jdbcType=VARCHAR},
+                                              #{p_pcr_dwbm, mode=IN, jdbcType=VARCHAR},
+                                              #{p_pcr_dwmc, mode=IN, jdbcType=VARCHAR},
+                                              #{p_pcr_gh, mode=IN, jdbcType=VARCHAR},
+                                              #{p_pcr_mc, mode=IN, jdbcType=VARCHAR},
+                                              #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--获取活动审批，送审接收人员（案管负责人）-->
+    <select id="getHdsp" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_get_hdspr(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                           #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=getHdspMap},
+                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="getHdspMap" type="map"></resultMap>
+
+    <!--评查方案送审-->
+    <insert id="addPcfaps" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_add_pcfasp(#{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_ssrgh,mode=IN,jdbcType=VARCHAR},
+                                            #{p_ssrxm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_ssrdwbm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_ssrdwmc,mode=IN,jdbcType=VARCHAR},
+                                            #{p_sprdwbm, mode=IN, jdbcType=VARCHAR},
+                                            #{p_sprdwmc, mode=IN, jdbcType=VARCHAR},
+                                            #{p_sprgh, mode=IN, jdbcType=VARCHAR},
+                                            #{p_sprxm, mode=IN, jdbcType=VARCHAR},
+                                            #{p_pcspbm, mode=IN, jdbcType=VARCHAR},
+                                            #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </insert>
+
+    <!--评查方案审批-->
+    <update id="uptDealFasp" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_deal_fasp(#{p_pcspbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_sprdwbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_sprdwmc, mode=IN, jdbcType=VARCHAR},
+                                           #{p_sprgh,mode=IN,jdbcType=VARCHAR},
+                                           #{p_sprxm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_spjl, mode=IN, jdbcType=VARCHAR},
+                                           #{p_spyj,mode=IN,jdbcType=VARCHAR},
+                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--启动评查活动-->
+    <update id="startPchd" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_start_pchd(#{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_qdr_dwbm, mode=IN, jdbcType=VARCHAR},
+                                            #{p_qdr_gh, mode=IN, jdbcType=VARCHAR},
+                                            #{p_qdr_mc,mode=IN,jdbcType=VARCHAR},
+                                            #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--结束评查活动-->
+    <update id="finishPchd" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_finish_pchd(#{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                             #{p_jsr_dwbm, mode=IN, jdbcType=VARCHAR},
+                                             #{p_jsr_gh, mode=IN, jdbcType=VARCHAR},
+                                             #{p_jsr_mc,mode=IN,jdbcType=VARCHAR},
+                                             #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--获取活动状态-->
+    <select id="getHdztBM" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcgl.proc_get_hdzt(#{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=getHdztBMMap},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="getHdztBMMap" type="com.start.boot.domain.Param_Pchdzt" >
+        <result property="pchdbm" column="PCHDBM"/>
+        <result property="hdzt_bm" column="HDZT_BM"/>
+        <result property="hdzt_ms" column="HDZT_MS"/>
+        <result property="spjl" column="SPJL"/>
+        <result property="ssrdwbm" column="SSRDWBM"/>
+        <result property="ssrgh" column="SSRGH"/>
+        <result property="sprdwbm" column="SPRDWBM"/>
+        <result property="sprgh" column="SPRGH"/>
+        <result property="pcspbm" column="PCSPBM"/>
+        <result property="sfqd" column="SFQD"/>
+        <result property="sfjs" column="SFJS"/>
+        <result property="qdr_dwbm" column="QDR_DWBM"/>
+        <result property="qdr_gh" column="QDR_GH"/>
+        <result property="jsr_dwbm" column="JSR_DWBM"/>
+        <result property="jsr_gh" column="JSR_GH"/>
+    </resultMap>
+
+    <!--获取评查审批送审接收人员-->
+    <insert id="getPcsp" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcbl.proc_get_pcspr(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                            #{p_spjsbm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_pchdbm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_pcflbm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_cursor, mode=OUT, jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=getPcspMap},
+                                            #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </insert>
+
+    <resultMap id="getPcspMap" type="map"/>
+    <!--获取角色名称-->
+    <select id="getJsmc" parameterType="java.util.Map" resultMap="jsmcMap">
+        SELECT jsmc,rownum jsbm FROM (
+             SELECT jsmc FROM xt_qx_jsbm@tyyw_link.net WHERE dwbm LIKE '42%' GROUP BY jsmc ORDER BY jsmc)
+    </select>
+    <resultMap id="jsmcMap" type="java.util.Map" >
+    </resultMap>
+
+</mapper>

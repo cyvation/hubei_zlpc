@@ -1,0 +1,136 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.pcajsx_zdy{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    font-family: Î¢ÈíÑÅºÚ;
+    background-color: #F0F9FF;
+    width: 100%;
+    height: 100%;
+}
+.pcajsx_zdy_url{
+    width: 100%;
+    height: 40px;
+    background-color: #DDEEF8;
+    color: #616A6F;
+    font-size: 14px;
+}
+.pcajsx_zdy_tj{
+    width: 96%;
+    height: 50px;
+    border-bottom: 1px solid #B0CEF0;
+    margin-left: 2%;
+}
+.pcajsx_zdy_tj_1{
+    width: 105px;
+    float: left;
+    font-weight: bold;
+    border-bottom: 3px solid #2287E0;
+    text-align: center;
+    margin-top: 18px;
+    height: 30px;
+}
+.pcajsx_zdy_tj_2{
+    font-size: 14px;
+    width: 70px;
+    height: 25px;
+    background-color: #B9DFF6;
+    text-align: center;
+    line-height: 25px;
+    color: #3970B1;
+    float: left;
+    margin: 16px 0 0 20px;
+    border-radius: 5px;
+}
+.pcajsx_zdy_sj{
+    width: calc(100% - 2px);
+    height: 100px;
+    border: 1px solid #B0CEF0;
+    margin-top: 20px;
+    background-color: #fff;
+}
+.pcajsx_zdy_sj_all{
+    width: 97%;
+    height: 35px;
+    margin-left: 1.5%;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #858585;
+}
+.pcajsx_zdy_sj_all_1{
+    width: 24%;
+    height: 100%;
+    float: left;
+}
+.pcajsx_zdy_sj_all_1>input{
+    width: 50%;
+    height: 30px;
+    border-radius:2px;
+    border: 1px solid #c1c1c1;
+}
+.textbox {
+    border-radius: 2px !important;
+}
+.pcajsx_sj_2{
+    width: 80px;
+    height: 30px;
+    color: #fff;
+    background-color: #248DE9;
+    border: 0;
+    border-radius:5px;
+    font-size: 14px;
+    outline: none;
+}
+
+
+
+.pcajsx_zdy_content{
+    width: calc(100% - 2px);
+    height: calc(100% - 275px);
+    border: 1px solid #B0CEF0;
+    margin-left: 0;
+    margin-top: 20px;
+    background-color: #fff;
+}
+.datagrid-view2 table tr td{
+    border: 0 !important;
+}
+.datagrid-btable>tbody>tr{
+    border-bottom:1px solid #DEDEDE !important;
+}
+.datagrid-row {
+    height: 30px !important;
+}
+tbody>tr{
+    width: 100% !important;
+}
+tbody{
+    width: 100%;
+    height: 35px;
+}
+.datagrid-btable{
+    width: 100%;
+}
+.datagrid-header{
+    height: 35px !important;
+    border-top: 1px solid #DEDEDE !important;
+}
+.datagrid-header-row{
+    height: 35px !important;
+    color: #2B6993 !important;
+}
+.datagrid-htable{
+    height: 30px !important;
+}
+
+
+
+
+
+
+

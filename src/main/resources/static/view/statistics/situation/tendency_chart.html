@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" class="tjfx_echarts">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body class="easyui-layout">
+<style>
+    #massAnalysis{
+        width: 100%;
+        height: 100%;
+    }
+    .div_massAnalysis_body {
+        width: 100%;
+        height: 40px;
+        border-bottom: 1px solid #B4CFF3;
+        margin-bottom: 15px;
+    }
+
+    .span_massAnalysis_title {
+        float: left;
+        display: inline-block;
+        height: 100%;
+        line-height: 50px;
+        border-bottom: 3px solid #2388E2;
+        padding: 0 10px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .span_massAnalysis_seek {
+        /*margin-top: 10px;*/
+        display: inline-block;
+        /*float: right*/
+    }
+
+    .div_massAnalysis_left_top {
+        width: calc(50% - 7px);
+        float: left;
+        margin-right: 7px;
+        height: 50%;
+        margin-bottom: 15px;
+    }
+
+    .div_massAnalysis_right_top {
+        width: calc(50% - 7px);
+        float: left;
+        margin-left: 7px;
+        height: 50%;
+        margin-bottom: 15px;
+    }
+
+    .div_massAnalysis_left_bottom {
+        width: calc(70% - 7px);
+        float: left;
+        margin-right: 7px;
+        height: calc(50% - 70px);
+    }
+
+    .div_massAnalysis_right_bottom {
+        width: calc(30% - 7px);
+        float: left;
+        margin-left: 7px;
+        height: calc(50% - 70px);
+    }
+
+    .div_zlwtfbt_xcaj {
+        width: calc(50% - 1px);
+        height: 100%;
+        border-right: 1px solid #ECECEC;
+        float: left;
+    }
+
+    .div_zlwtfbt_bfhaj {
+        width: 50%;
+        height: 100%;
+        float: left;
+    }
+    #massAnalysis .panel-header{
+        height: 40px;
+        background: #D8EAF8;
+        font-size: 16px;
+    }
+    #massAnalysis .panel-header .panel-title{
+        margin-top: 3px;
+        font-size: 16px;
+    }
+    #massAnalysis .tabs .tabs-title{
+        font-size: 16px;
+
+    }
+    #massAnalysis .tabs .tabs-selected .tabs-title{
+        color: #0E2D5F;
+    }
+
+    #massAnalysis .tabs li.tabs-selected a.tabs-inner{
+        border-top: 3px solid #1E8EE1;
+        background: #fff;
+    }
+    #massAnalysis .tabs li{
+        margin-right: 0;
+    }
+    #massAnalysis .tabs li a.tabs-inner{
+        background: #D8EAF8;
+        color: #000;
+        border-radius: 0;
+        height: 37px !important;
+        line-height: 37px !important;
+        border-bottom: 1px solid rgba(0,0,0,0) !important;
+        padding: 0 40px!important;
+    }
+    #massAnalysis .tabs li.tabs-selected a.tabs-inner{
+        height: 40px !important;
+        line-height: 40px !important;
+        border-bottom: 1px solid #fff;
+
+    }
+    #massAnalysis .tabs li.tabs-first a.tabs-inner{
+        border-left: none !important;
+    }
+    #massAnalysis .panel-header, .panel-body{
+        border-color: #B0CEF2;
+    }
+    #massAnalysis .layout-panel .panel-header{
+        padding: 9px 15px;
+    }
+
+    #massAnalysis .panel-header .panel-tool{
+        height: 26px;
+        margin-top: -13px;
+    }
+    #transmit div{
+        margin-left: 50px;
+        margin-top: 20px;
+    }
+    #transmit div input[type="checkbox"]{
+        margin-right: 10px;
+        margin-top: 4px;
+        float: left;
+        width: 15px;
+        height: 15px;
+    }
+    #transmit div span{
+        font-size: 16px;
+    }
+
+
+
+</style>
+<script type="text/javascript",>
+    AddScript("text/javascript","script/statistics/situation/index.js")
+</script>
+
+<!--<div id="pcaj_top">-->
+<!--<div class="top_cx_content">-->
+<!--<div class="cx_box">-->
+<!--<p class="cx_text">单位：</p>-->
+<!--<div class="easyui-combotree" id="cbt_situation_pcaj_dw"></div>-->
+<!--</div>-->
+<!--<div class="cx_box">-->
+<!--<p class="cx_text">日期：</p>-->
+<!--<div class="easyui-datebox" id="cbt_situation_btfx_start"></div>-->
+<!--<span style="display: inline-block; text-align: center;"> ~ </span>-->
+<!--<div class="easyui-datebox" id="cbt_situation_btfx_end"></div>-->
+<!--</div>-->
+<!--<div class="cx_box">-->
+<!--<p class="cx_text">结果等次：</p>-->
+<!--<div class="easyui-combobox" id="cbt_situation_btfx_jgdc"></div>-->
+<!--</div>-->
+<!--<div class="cx_box">-->
+<!--<p class="cx_text">评查方式：</p>-->
+<!--<div class="easyui-combobox" id="cbt_situation_btfx_pcfs"></div>-->
+<!--</div>-->
+
+<!--<div class="btn" id="cbt_situation_btfx_fx" >分析</div>  &lt;!&ndash;onclick="init_pie_zlwtfbt()"&ndash;&gt;-->
+<!--</div>-->
+<!--</div>-->
+<!--<div id="pcaj_content">-->
+
+<!--<div style="width: 100%;height: 60%">-->
+<!--<div id="echarts_load_flaw_case" style="height: 100%;width: 33.3%;float:left;"> &lt;!&ndash;质量问题分布图-瑕疵案件&ndash;&gt;-->
+
+<!--</div>-->
+<!--<div id="echarts_load_unqualified_case" style="height: 100%;width: 33.3%;float:left;"> &lt;!&ndash;质量问题分布图-不合格案件&ndash;&gt;-->
+
+<!--</div>-->
+<!--<div id="echarts_map_ajzlndqut" style="height: 100%;width: 33.3%;float:left;"> &lt;!&ndash;地图&ndash;&gt;-->
+
+<!--</div>-->
+<!--</div>-->
+<!--<div style="height: 40%;width: 100%">-->
+<!--<div id="echarts_axis_ajzlndqut" style="height: 100%;width: 33.3%;float:left;"> &lt;!&ndash;地图-排名&ndash;&gt;-->
+
+<!--</div>-->
+<!--<div id="echarts_axis_jcgbazlpm" style="height: 100%;width: 33.3%;float:left;"> &lt;!&ndash;检察官办案质量排名柱状图&ndash;&gt;-->
+
+<!--</div>-->
+<!--<div id="echarts_axis_bmbazlpm" style="height: 100%;width: 33.3%;float:left;"> &lt;!&ndash;部门办案质量排名饼图&ndash;&gt;-->
+
+<!--</div>-->
+<!--</div>-->
+
+
+<!--</div>-->
+
+<!--datagrid-->
+<div id="win_situ_build_rd_dept_filter" class="easyui-window" title="列表"
+     data-options="closed:true,collapsible:false,shadow:false,maximizable:false,minimizable:false,modal:true,cache:false,resizable:true,width:1000,height:600">
+    <table id="table_situ_build_rd_dept_filter" ></table>
+</div>
+
+<!--导出数据-->
+<div id="transmit" class="easyui-window" title="导出数据" style="width: 400px;height: 345px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+    <div>
+        <input type="radio" value="1" name="radio"><span>地图</span>
+    </div>
+    <div>
+        <input type="radio" value="2" name="radio"><span>排名</span>
+    </div>
+    <div>
+        <input type="radio" value="3" name="radio"><span>检察官办案质量排名</span>
+    </div>
+    <div>
+        <input type="radio" value="4" name="radio"><span>质量问题分布图(不合格案件)</span>
+    </div>
+    <div>
+        <input type="radio" value="5" name="radio"><span>质量问题分布图(瑕疵案件)</span>
+    </div>
+    <div>
+        <input type="radio" value="6" name="radio"><span>部门办案质量排名</span>
+    </div>
+    <div style="float: right;margin-right: 20px;"><a class="easyui-linkbutton l-btn l-btn-small" style="padding: 0 10px" group="" id="export_excel_btn"><span class="l-btn-left"><span class="l-btn-text">确定</span></span></a></div>
+</div>
+
+<div id="massAnalysis">
+
+    <div class="div_massAnalysis_body">
+
+        <span class="span_massAnalysis_seek">
+          <span class="" style="float: left;margin-right: 0px; width:280px;">      <!-- 2018.1.30 日修改宽度，在小屏的情况下错位 -->
+                <p class="cx_text"  style="color: #6E6F6E;margin-top: 5px;">单位：</p>
+                <div class="easyui-combotree" id="cbt_situation_pcaj_dw" style="height: 30px;"></div>
+            </span>
+            <span class="" style="float: left;margin-right: 40px;">
+                <p class="cx_text"  style="color: #6E6F6E;margin-top: 5px;">日期：</p>
+                <span class="easyui-datebox" id="cbt_situation_btfx_start" style="height: 30px;"></span>
+                <span style="display: inline-block; text-align: center;"> ~ </span>
+                <span class="easyui-datebox" id="cbt_situation_btfx_end" style="height: 30px;"></span>
+            </span>
+
+
+            <div class="btn" id="transmit_Excel" style=" margin-left: 10px;">导出Excel</div>
+            <div class="btn" id="cbt_situation_btfx_fx" style=" margin-left: 20px;">分析</div>  <!--onclick="init_pie_zlwtfbt()"-->
+    </span>
+    </div>
+    <div class="easyui-layout div_massAnalysis_left_top">
+        <div id="tt" class="easyui-tabs" data-options="region:'center',selected:0" style="border: none;border: 1px solid #B0CEF2;">
+            <div title="地图" >
+                <div id="echarts_map_ajzlndqut" style="width: 100%;height: 100%;"></div>
+            </div>
+            <div title="排名">
+                <div id="echarts_axis_ajzlndqut" style="width: 100%;height: 100%;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="easyui-layout div_massAnalysis_right_top">
+        <div data-options="region:'center',title:'检察官办案质量排名',tools:'#div_massAnalysis_jgdc'" style="height: 100%;">
+            <div id="echarts_axis_jcgbazlpm" style="width: 100%;height: 100%;"></div>
+        </div>
+    </div>
+    <div class="easyui-layout div_massAnalysis_left_bottom">
+        <div data-options="region:'center',title:'质量问题分布图'">
+
+            <div class="div_zlwtfbt_xcaj">
+                <div id="echarts_load_flaw_case" style="width: 100%;height: 100%;"></div>
+            </div>
+            <div class="div_zlwtfbt_bfhaj">
+                <div id="echarts_load_unqualified_case" style="width: 100%;height: 100%;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="easyui-layout div_massAnalysis_right_bottom">
+        <div data-options="region:'center',title:'部门办案质量排名',tools:'#div_massAnalysis_jgdc1'">
+            <div id="echarts_axis_bmbazlpm" style="width: 100%;height: 100%;"></div>
+        </div>
+    </div>
+    <div class="cx_box" id="div_massAnalysis_jgdc">
+        <p class="cx_text" style="color: #6E6F6E;margin-top: 5px;">结果等次：</p>
+        <div class="easyui-combobox" id="cbt_situation_btfx_jgdc"></div>
+    </div>
+    <div class="cx_box" id="div_massAnalysis_jgdc1">
+        <p class="cx_text"  style="color: #6E6F6E;margin-top: 5px;">结果等次：</p>
+        <div class="easyui-combobox" id="cbt_situation_btfx_jgdc1"></div>
+    </div>
+    <!--<div class="cx_box">-->
+    <!--<p class="cx_text">评查方式：</p>-->
+    <!--<div class="easyui-combobox" id="cbt_situation_btfx_pcfs"></div>-->
+    <!--</div>-->
+
+</div>
+</body>
+</html>

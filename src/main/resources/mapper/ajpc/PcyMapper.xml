@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+                <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+        <mapper namespace="com.start.boot.dao.ajpc.PcyMapper">
+
+    <!--获取评查分类列表-->
+    <select id="getPcyByPchdbmAndpchdbm" resultType="com.start.boot.domain.Param_Pcy">
+     SELECT dy.pchdbm PCHDBM, dy.pczbm PCZBM, dy.dwbm DWBM, dy.gh GH, dy.jsbm JSBM, ry.mc MC, DECODE(dy.jsbm, '102', '组长', '组员') JSMC, dw.dwmc DWMC
+      FROM yx_pc_xzrydy dy
+     INNER JOIN xt_zzjg_rybm ry
+        ON ry.dwbm = dy.dwbm
+       AND ry.gh = dy.gh
+     INNER JOIN xt_zzjg_dwbm dw
+        ON dy.dwbm = dw.dwbm
+     WHERE dy.pchdbm = #{pchdbm}
+       AND dy.pczbm = #{pczbm}
+    </select>
+    <select id="getPcyInfo" resultType="map">
+        SELECT
+	dy.pchdbm PCHDBM,
+	dy.pczbm PCZBM,
+	dy.dwbm DWBM,
+	dy.gh GH,
+	dy.jsbm JSBM,
+	ry.mc MC,
+	fz.pczmc PCZMC, DECODE (
+		dy.jsbm,
+		'102',
+		'组长',
+		'组员'
+	) JSMC,
+	dw.dwmc DWMC
+    FROM
+        yx_pc_xzrydy dy
+    INNER JOIN xt_zzjg_rybm ry ON ry.dwbm = dy.dwbm
+    AND ry.gh = dy.gh
+    INNER JOIN xt_zzjg_dwbm dw ON dy.dwbm = dw.dwbm
+    INNER JOIN YX_PC_FZ fz ON fz.pczbm = dy.pczbm
+    AND dy.pchdbm=fz.pchdbm
+    WHERE
+	dy.pchdbm = #{pchdbm}
+
+    </select>
+    
+    
+</mapper>

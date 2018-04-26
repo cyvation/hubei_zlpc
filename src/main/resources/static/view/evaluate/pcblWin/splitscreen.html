@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>评查办理</title>
+</head>
+<body>
+<link rel="stylesheet" type="text/css" href="style/ajzl.css" />
+<script type="text/javascript">
+    AddScript("text/javascript","script/evaluate/pcblWin/splitscreen.js")
+</script>
+
+<style>
+    .select_option {
+        padding: 2px 4px;
+    }
+    .pcbl>div>.panel:nth-child(2)>div>.panel-tool{
+        margin-top: -16px;
+        height: 32px;
+        padding-right: 6px;
+    }
+    .select_option label {
+        height: inherit;
+        line-height: inherit;
+
+    }
+
+    .select_option input {
+        background: #ffffff;
+        position: relative;
+        top: 2px;
+    }
+
+    .select_option input[type='checkbox'] {
+        border: none;
+
+    }
+
+    input[type='text'] {
+        /*border: none;*/
+        width: 96%;
+        border: 1px solid #c1cfda;
+    }
+    .select_option  input[type='text'] {
+
+        width: 100%;
+    }
+    #divDoc embed{
+        z-index: -99!important;
+    }
+    #divDoc{
+        z-index: -99!important;
+    }
+    .pcbl_pcxx_but{
+        background: #d7edfb;
+        border: 1px solid #2888df;
+        border-radius: 4px;
+        float: left;
+        margin-right: 5px;
+        height: 27px;
+        line-height: 27px;
+        box-sizing: border-box;
+        padding: 0 8px;
+        margin-top: 3px;
+        padding-left: 26px;
+        cursor: pointer;
+    }
+    .pcbl_pcxx_but:hover{
+        background-color:#2588e3 ;
+        color: #fff;
+    }
+    .ajxxWinCcn .layout-split-west{
+        border-right: 0 !important;
+    }
+</style>
+<div class="pcbl">
+    <div id="pcWinpan" class="easyui-layout"  data-options="fit:true" >
+        <!--案件信息-->
+        <div id="pcWin_ajxxdiv" data-options="region:'west',split:true,tools:'#pcWin_ajxxtool'" title="案件信息" href="./view/evaluate/pcblWin/caseinfo.html" style="width: 820px;box-sizing: border-box">
+        </div>
+        <!--评查信息-->
+        <div id="pcWin_pcxx" data-options="region:'center',tools:'#pcWin_pcjg'" title="评查信息" href="./view/evaluate/pcblWin/evalinfo.html" style="box-sizing: border-box">
+        </div>
+    </div>
+</div>
+<div id="pcWin_ajxxtool">
+    <input id="pcWin_cbt_case_info_bmsahs" class="easyui-combotree" style="margin-right: 20px; width: 200px;" />
+</div>
+<div class="pcbl_pcxx_top" id="pcWin_pcjg">
+    <div class="pcbl_pcxx_top_box" id="pcWin_pcbl_pcxx_top_pcyl">评查预览</div>
+  <div class="pcbl_pcxx_but" id="pcWin_pcbl_pcxx_top_addscj" style="display: none">添加到收藏夹</div>
+</div>
+</body>
+</html>

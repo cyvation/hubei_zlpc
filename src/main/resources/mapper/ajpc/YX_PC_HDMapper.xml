@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.YX_PC_HDMapper">
+  <resultMap id="BaseResultMap" type="com.start.boot.domain.YX_PC_HD">
+    <id column="PCHDBM" jdbcType="CHAR" property="PCHDBM" />
+    <result column="PCHDMC" jdbcType="VARCHAR" property="PCHDMC" />
+    <result column="PCDWBM" jdbcType="CHAR" property="PCDWBM" />
+    <result column="PCFLBM" jdbcType="CHAR" property="PCFLBM" />
+    <result column="SFSS" jdbcType="CHAR" property="SFSS" />
+    <result column="SFFY" jdbcType="CHAR" property="SFFY" />
+    <result column="PCKSSJ" jdbcType="TIMESTAMP" property="PCKSSJ" />
+    <result column="PCJSSJ" jdbcType="TIMESTAMP" property="PCJSSJ" />
+    <result column="XH" jdbcType="DECIMAL" property="XH" />
+    <result column="CJRDWBM" jdbcType="CHAR" property="CJRDWBM" />
+    <result column="CJRGH" jdbcType="CHAR" property="CJRGH" />
+    <result column="CJRMC" jdbcType="VARCHAR" property="CJRMC" />
+    <result column="CJSJ" jdbcType="TIMESTAMP" property="CJSJ" />
+    <result column="SFQD" jdbcType="CHAR" property="SFQD" />
+    <result column="QDR_DWBM" jdbcType="CHAR" property="QDRDWBM" />
+    <result column="QDR_GH" jdbcType="CHAR" property="QDRGH" />
+    <result column="QDR_MC" jdbcType="VARCHAR" property="QDRMC" />
+    <result column="QD_SJ" jdbcType="TIMESTAMP" property="QDSJ" />
+    <result column="SFJS" jdbcType="CHAR" property="SFJS" />
+    <result column="JSR_DWBM" jdbcType="CHAR" property="JSRDWBM" />
+    <result column="JSR_GH" jdbcType="CHAR" property="JSRGH" />
+    <result column="JSR_MC" jdbcType="VARCHAR" property="JSRMC" />
+    <result column="JS_SJ" jdbcType="TIMESTAMP" property="JSSJ" />
+    <result column="SM" jdbcType="VARCHAR" property="SM" />
+    <result column="PCMBJ" jdbcType="VARCHAR" property="PCMBJ" />
+    <result column="SFSC" jdbcType="CHAR" property="SFSC" />
+    <result column="SXGZJ" jdbcType="VARCHAR" property="SXGZJ" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    PCHDBM, PCHDMC, PCDWBM, PCFLBM, SFSS, SFFY, PCKSSJ, PCJSSJ, XH, CJRDWBM, CJRGH, CJRMC,
+    CJSJ, SFQD, QDR_DWBM, QDR_GH, QDR_MC, QD_SJ, SFJS, JSR_DWBM, JSR_GH, JSR_MC, JS_SJ,
+    SM, PCMBJ, SFSC, SXGZJ
+  </sql>
+  <select id="selectByExample" parameterType="com.start.boot.domain.YX_PC_HDExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from (select h.*,lb.sfhdxs from YX_PC_HD h left join xt_pc_lb lb on h.pcflbm = lb.pcflbm)  YX_PC_HD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from YX_PC_HD
+    where PCHDBM = #{pchdbm,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from YX_PC_HD
+    where PCHDBM = #{pchdbm,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.start.boot.domain.YX_PC_HDExample">
+    delete from YX_PC_HD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.start.boot.domain.YX_PC_HD">
+    insert into YX_PC_HD (PCHDBM, PCHDMC, PCDWBM,
+      PCFLBM, SFSS, SFFY, PCKSSJ,
+      PCJSSJ, XH, CJRDWBM,
+      CJRGH, CJRMC, CJSJ,
+      SFQD, QDR_DWBM, QDR_GH, QDR_MC,
+      QD_SJ, SFJS, JSR_DWBM, JSR_GH,
+      JSR_MC, JS_SJ, SM,
+      PCMBJ, SFSC, SXGZJ)
+    values (#{pchdbm,jdbcType=CHAR}, #{pchdmc,jdbcType=VARCHAR}, #{pcdwbm,jdbcType=CHAR},
+      #{pcflbm,jdbcType=CHAR}, #{sfss,jdbcType=CHAR}, #{sffy,jdbcType=CHAR}, #{pckssj,jdbcType=TIMESTAMP},
+      #{pcjssj,jdbcType=TIMESTAMP}, #{xh,jdbcType=DECIMAL}, #{cjrdwbm,jdbcType=CHAR},
+      #{cjrgh,jdbcType=CHAR}, #{cjrmc,jdbcType=VARCHAR}, #{cjsj,jdbcType=TIMESTAMP},
+      #{sfqd,jdbcType=CHAR}, #{qdrDwbm,jdbcType=CHAR}, #{qdrGh,jdbcType=CHAR}, #{qdrMc,jdbcType=VARCHAR},
+      #{qdSj,jdbcType=TIMESTAMP}, #{sfjs,jdbcType=CHAR}, #{jsrDwbm,jdbcType=CHAR}, #{jsrGh,jdbcType=CHAR},
+      #{jsrMc,jdbcType=VARCHAR}, #{jsSj,jdbcType=TIMESTAMP}, #{sm,jdbcType=VARCHAR},
+      #{pcmbj,jdbcType=VARCHAR}, #{sfsc,jdbcType=CHAR}, #{sxgzj,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.start.boot.domain.YX_PC_HD">
+    insert into YX_PC_HD
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pchdbm != null">
+        PCHDBM,
+      </if>
+      <if test="pchdmc != null">
+        PCHDMC,
+      </if>
+      <if test="pcdwbm != null">
+        PCDWBM,
+      </if>
+      <if test="pcflbm != null">
+        PCFLBM,
+      </if>
+      <if test="sfss != null">
+        SFSS,
+      </if>
+      <if test="sffy != null">
+        SFFY,
+      </if>
+      <if test="pckssj != null">
+        PCKSSJ,
+      </if>
+      <if test="pcjssj != null">
+        PCJSSJ,
+      </if>
+      <if test="xh != null">
+        XH,
+      </if>
+      <if test="cjrdwbm != null">
+        CJRDWBM,
+      </if>
+      <if test="cjrgh != null">
+        CJRGH,
+      </if>
+      <if test="cjrmc != null">
+        CJRMC,
+      </if>
+      <if test="cjsj != null">
+        CJSJ,
+      </if>
+      <if test="sfqd != null">
+        SFQD,
+      </if>
+      <if test="qdrDwbm != null">
+        QDR_DWBM,
+      </if>
+      <if test="qdrGh != null">
+        QDR_GH,
+      </if>
+      <if test="qdrMc != null">
+        QDR_MC,
+      </if>
+      <if test="qdSj != null">
+        QD_SJ,
+      </if>
+      <if test="sfjs != null">
+        SFJS,
+      </if>
+      <if test="jsrDwbm != null">
+        JSR_DWBM,
+      </if>
+      <if test="jsrGh != null">
+        JSR_GH,
+      </if>
+      <if test="jsrMc != null">
+        JSR_MC,
+      </if>
+      <if test="jsSj != null">
+        JS_SJ,
+      </if>
+      <if test="sm != null">
+        SM,
+      </if>
+      <if test="pcmbj != null">
+        PCMBJ,
+      </if>
+      <if test="sfsc != null">
+        SFSC,
+      </if>
+      <if test="sxgzj != null">
+        SXGZJ,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pchdbm != null">
+        #{pchdbm,jdbcType=CHAR},
+      </if>
+      <if test="pchdmc != null">
+        #{pchdmc,jdbcType=VARCHAR},
+      </if>
+      <if test="pcdwbm != null">
+        #{pcdwbm,jdbcType=CHAR},
+      </if>
+      <if test="pcflbm != null">
+        #{pcflbm,jdbcType=CHAR},
+      </if>
+      <if test="sfss != null">
+        #{sfss,jdbcType=CHAR},
+      </if>
+      <if test="sffy != null">
+        #{sffy,jdbcType=CHAR},
+      </if>
+      <if test="pckssj != null">
+        #{pckssj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pcjssj != null">
+        #{pcjssj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="xh != null">
+        #{xh,jdbcType=DECIMAL},
+      </if>
+      <if test="cjrdwbm != null">
+        #{cjrdwbm,jdbcType=CHAR},
+      </if>
+      <if test="cjrgh != null">
+        #{cjrgh,jdbcType=CHAR},
+      </if>
+      <if test="cjrmc != null">
+        #{cjrmc,jdbcType=VARCHAR},
+      </if>
+      <if test="cjsj != null">
+        #{cjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sfqd != null">
+        #{sfqd,jdbcType=CHAR},
+      </if>
+      <if test="qdrDwbm != null">
+        #{qdrDwbm,jdbcType=CHAR},
+      </if>
+      <if test="qdrGh != null">
+        #{qdrGh,jdbcType=CHAR},
+      </if>
+      <if test="qdrMc != null">
+        #{qdrMc,jdbcType=VARCHAR},
+      </if>
+      <if test="qdSj != null">
+        #{qdSj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sfjs != null">
+        #{sfjs,jdbcType=CHAR},
+      </if>
+      <if test="jsrDwbm != null">
+        #{jsrDwbm,jdbcType=CHAR},
+      </if>
+      <if test="jsrGh != null">
+        #{jsrGh,jdbcType=CHAR},
+      </if>
+      <if test="jsrMc != null">
+        #{jsrMc,jdbcType=VARCHAR},
+      </if>
+      <if test="jsSj != null">
+        #{jsSj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sm != null">
+        #{sm,jdbcType=VARCHAR},
+      </if>
+      <if test="pcmbj != null">
+        #{pcmbj,jdbcType=VARCHAR},
+      </if>
+      <if test="sfsc != null">
+        #{sfsc,jdbcType=CHAR},
+      </if>
+      <if test="sxgzj != null">
+        #{sxgzj,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.start.boot.domain.YX_PC_HDExample" resultType="java.lang.Long">
+    select count(*) from YX_PC_HD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update YX_PC_HD
+    <set>
+      <if test="record.pchdbm != null">
+        PCHDBM = #{record.pchdbm,jdbcType=CHAR},
+      </if>
+      <if test="record.pchdmc != null">
+        PCHDMC = #{record.pchdmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pcdwbm != null">
+        PCDWBM = #{record.pcdwbm,jdbcType=CHAR},
+      </if>
+      <if test="record.pcflbm != null">
+        PCFLBM = #{record.pcflbm,jdbcType=CHAR},
+      </if>
+      <if test="record.sfss != null">
+        SFSS = #{record.sfss,jdbcType=CHAR},
+      </if>
+      <if test="record.sffy != null">
+        SFFY = #{record.sffy,jdbcType=CHAR},
+      </if>
+      <if test="record.pckssj != null">
+        PCKSSJ = #{record.pckssj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pcjssj != null">
+        PCJSSJ = #{record.pcjssj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.xh != null">
+        XH = #{record.xh,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cjrdwbm != null">
+        CJRDWBM = #{record.cjrdwbm,jdbcType=CHAR},
+      </if>
+      <if test="record.cjrgh != null">
+        CJRGH = #{record.cjrgh,jdbcType=CHAR},
+      </if>
+      <if test="record.cjrmc != null">
+        CJRMC = #{record.cjrmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cjsj != null">
+        CJSJ = #{record.cjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sfqd != null">
+        SFQD = #{record.sfqd,jdbcType=CHAR},
+      </if>
+      <if test="record.qdrDwbm != null">
+        QDR_DWBM = #{record.qdrDwbm,jdbcType=CHAR},
+      </if>
+      <if test="record.qdrGh != null">
+        QDR_GH = #{record.qdrGh,jdbcType=CHAR},
+      </if>
+      <if test="record.qdrMc != null">
+        QDR_MC = #{record.qdrMc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qdSj != null">
+        QD_SJ = #{record.qdSj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sfjs != null">
+        SFJS = #{record.sfjs,jdbcType=CHAR},
+      </if>
+      <if test="record.jsrDwbm != null">
+        JSR_DWBM = #{record.jsrDwbm,jdbcType=CHAR},
+      </if>
+      <if test="record.jsrGh != null">
+        JSR_GH = #{record.jsrGh,jdbcType=CHAR},
+      </if>
+      <if test="record.jsrMc != null">
+        JSR_MC = #{record.jsrMc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jsSj != null">
+        JS_SJ = #{record.jsSj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sm != null">
+        SM = #{record.sm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pcmbj != null">
+        PCMBJ = #{record.pcmbj,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfsc != null">
+        SFSC = #{record.sfsc,jdbcType=CHAR},
+      </if>
+      <if test="record.sxgzj != null">
+        SXGZJ = #{record.sxgzj,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update YX_PC_HD
+    set PCHDBM = #{record.pchdbm,jdbcType=CHAR},
+      PCHDMC = #{record.pchdmc,jdbcType=VARCHAR},
+      PCDWBM = #{record.pcdwbm,jdbcType=CHAR},
+      PCFLBM = #{record.pcflbm,jdbcType=CHAR},
+      SFSS = #{record.sfss,jdbcType=CHAR},
+      SFFY = #{record.sffy,jdbcType=CHAR},
+      PCKSSJ = #{record.pckssj,jdbcType=TIMESTAMP},
+      PCJSSJ = #{record.pcjssj,jdbcType=TIMESTAMP},
+      XH = #{record.xh,jdbcType=DECIMAL},
+      CJRDWBM = #{record.cjrdwbm,jdbcType=CHAR},
+      CJRGH = #{record.cjrgh,jdbcType=CHAR},
+      CJRMC = #{record.cjrmc,jdbcType=VARCHAR},
+      CJSJ = #{record.cjsj,jdbcType=TIMESTAMP},
+      SFQD = #{record.sfqd,jdbcType=CHAR},
+      QDR_DWBM = #{record.qdrDwbm,jdbcType=CHAR},
+      QDR_GH = #{record.qdrGh,jdbcType=CHAR},
+      QDR_MC = #{record.qdrMc,jdbcType=VARCHAR},
+      QD_SJ = #{record.qdSj,jdbcType=TIMESTAMP},
+      SFJS = #{record.sfjs,jdbcType=CHAR},
+      JSR_DWBM = #{record.jsrDwbm,jdbcType=CHAR},
+      JSR_GH = #{record.jsrGh,jdbcType=CHAR},
+      JSR_MC = #{record.jsrMc,jdbcType=VARCHAR},
+      JS_SJ = #{record.jsSj,jdbcType=TIMESTAMP},
+      SM = #{record.sm,jdbcType=VARCHAR},
+      PCMBJ = #{record.pcmbj,jdbcType=VARCHAR},
+      SFSC = #{record.sfsc,jdbcType=CHAR},
+      SXGZJ = #{record.sxgzj,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.start.boot.domain.YX_PC_HD">
+    update YX_PC_HD
+    <set>
+      <if test="pchdmc != null">
+        PCHDMC = #{pchdmc,jdbcType=VARCHAR},
+      </if>
+      <if test="pcdwbm != null">
+        PCDWBM = #{pcdwbm,jdbcType=CHAR},
+      </if>
+      <if test="pcflbm != null">
+        PCFLBM = #{pcflbm,jdbcType=CHAR},
+      </if>
+      <if test="sfss != null">
+        SFSS = #{sfss,jdbcType=CHAR},
+      </if>
+      <if test="sffy != null">
+        SFFY = #{sffy,jdbcType=CHAR},
+      </if>
+      <if test="pckssj != null">
+        PCKSSJ = #{pckssj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pcjssj != null">
+        PCJSSJ = #{pcjssj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="xh != null">
+        XH = #{xh,jdbcType=DECIMAL},
+      </if>
+      <if test="cjrdwbm != null">
+        CJRDWBM = #{cjrdwbm,jdbcType=CHAR},
+      </if>
+      <if test="cjrgh != null">
+        CJRGH = #{cjrgh,jdbcType=CHAR},
+      </if>
+      <if test="cjrmc != null">
+        CJRMC = #{cjrmc,jdbcType=VARCHAR},
+      </if>
+      <if test="cjsj != null">
+        CJSJ = #{cjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sfqd != null">
+        SFQD = #{sfqd,jdbcType=CHAR},
+      </if>
+      <if test="qdrDwbm != null">
+        QDR_DWBM = #{qdrDwbm,jdbcType=CHAR},
+      </if>
+      <if test="qdrGh != null">
+        QDR_GH = #{qdrGh,jdbcType=CHAR},
+      </if>
+      <if test="qdrMc != null">
+        QDR_MC = #{qdrMc,jdbcType=VARCHAR},
+      </if>
+      <if test="qdSj != null">
+        QD_SJ = #{qdSj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sfjs != null">
+        SFJS = #{sfjs,jdbcType=CHAR},
+      </if>
+      <if test="jsrDwbm != null">
+        JSR_DWBM = #{jsrDwbm,jdbcType=CHAR},
+      </if>
+      <if test="jsrGh != null">
+        JSR_GH = #{jsrGh,jdbcType=CHAR},
+      </if>
+      <if test="jsrMc != null">
+        JSR_MC = #{jsrMc,jdbcType=VARCHAR},
+      </if>
+      <if test="jsSj != null">
+        JS_SJ = #{jsSj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sm != null">
+        SM = #{sm,jdbcType=VARCHAR},
+      </if>
+      <if test="pcmbj != null">
+        PCMBJ = #{pcmbj,jdbcType=VARCHAR},
+      </if>
+      <if test="sfsc != null">
+        SFSC = #{sfsc,jdbcType=CHAR},
+      </if>
+      <if test="sxgzj != null">
+        SXGZJ = #{sxgzj,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PCHDBM = #{pchdbm,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.start.boot.domain.YX_PC_HD">
+    update YX_PC_HD
+    set PCHDMC = #{pchdmc,jdbcType=VARCHAR},
+      PCDWBM = #{pcdwbm,jdbcType=CHAR},
+      PCFLBM = #{pcflbm,jdbcType=CHAR},
+      SFSS = #{sfss,jdbcType=CHAR},
+      SFFY = #{sffy,jdbcType=CHAR},
+      PCKSSJ = #{pckssj,jdbcType=TIMESTAMP},
+      PCJSSJ = #{pcjssj,jdbcType=TIMESTAMP},
+      XH = #{xh,jdbcType=DECIMAL},
+      CJRDWBM = #{cjrdwbm,jdbcType=CHAR},
+      CJRGH = #{cjrgh,jdbcType=CHAR},
+      CJRMC = #{cjrmc,jdbcType=VARCHAR},
+      CJSJ = #{cjsj,jdbcType=TIMESTAMP},
+      SFQD = #{sfqd,jdbcType=CHAR},
+      QDR_DWBM = #{qdrDwbm,jdbcType=CHAR},
+      QDR_GH = #{qdrGh,jdbcType=CHAR},
+      QDR_MC = #{qdrMc,jdbcType=VARCHAR},
+      QD_SJ = #{qdSj,jdbcType=TIMESTAMP},
+      SFJS = #{sfjs,jdbcType=CHAR},
+      JSR_DWBM = #{jsrDwbm,jdbcType=CHAR},
+      JSR_GH = #{jsrGh,jdbcType=CHAR},
+      JSR_MC = #{jsrMc,jdbcType=VARCHAR},
+      JS_SJ = #{jsSj,jdbcType=TIMESTAMP},
+      SM = #{sm,jdbcType=VARCHAR},
+      PCMBJ = #{pcmbj,jdbcType=VARCHAR},
+      SFSC = #{sfsc,jdbcType=CHAR},
+      SXGZJ = #{sxgzj,jdbcType=VARCHAR}
+    where PCHDBM = #{pchdbm,jdbcType=CHAR}
+  </update>
+</mapper>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>混合评查</title>
+
+</head>
+<body>
+<script type="text/javascript">
+    AddScript("text/javascript", "script/evaluate/build/blend.js");
+    AddScript("text/javascript", "script/document/ntkoofficecontrol_pcfa.js");
+    AddScript("text/javascript", "script/document/JScriptDoc.js");
+</script>
+<div id="ZXpc_pcfa_tabs" class="ZXpc_pcfa_tabs">
+    <ul>
+        <li class="active" onclick="load_eval_build_biaodan()">表单</li>
+        <li id="tab_eval_build_wenshu" onclick="load_eval_build_wenshu()">文书</li>
+        <button id="btn_evaluate_build_sp_end" class="ZXpc_pcfa_tabs_btn1" style="display: none">评查结束</button>
+        <button id="btn_evaluate_build_sp_start" class="ZXpc_pcfa_tabs_btn1" style="display: none">评查启动</button>
+        <button id="btn_evaluate_build_sp_examine" class="ZXpc_pcfa_tabs_btn1" style="display: none" >审批</button>
+        <button id="btn_evaluate_build_sp_approve" class="ZXpc_pcfa_tabs_btn1" style="display: none">送审</button>
+        <button id="btn_evaluate_build_sp_generate" class="ZXpc_pcfa_tabs_btn2" style="display: none">生成评查方案</button>
+        <button id="btn_evaluate_build_sp_spyj" class="ZXpc_pcfa_tabs_btn1" style="display: none" >审批意见</button>
+    </ul>
+    <form runat="server" style="z-index: -99; height: 100%;">
+        <div id="div_pcfa_doc" class="ZXpc_pcfa_tabs_content">
+        </div>
+    </form>
+</div>
+<div class="ZXpc_pcfa">
+    <div class="ZXpc_pcfa_tj" style="height: 35px">
+        <div class="ZXpc_pcfa_tj_1" style="margin-top: 5px;">评查方案</div>
+        <button id="btn_save_eval_build_sp_info" class="ZXpc_pcfa_tj_3" style="display: none; margin-top: 0px;">保存</button>
+        <div class="ZXpc_pcfa_but_1"></div>
+    </div>
+    <div id="ZXpc_pcfa_tot" style="overflow: hidden;height: 50px;">
+        <div class="ZXpc_pcfa_sj" >
+            <div class="ZXpc_pcfa_sj_all" id="wwd">
+                <div class="ZXpc_pcfa_sj_all_1">
+                    <div style="float: left">评查活动名称</div>
+                    <input id="txt_eval_build_sp_pchdmc" class="easyui-textbox" style="width:258px;height: 28px">
+                </div>
+                <div class="ZXpc_pcfa_sj_all_1">
+                    <div>评查模板</div>
+                    <input id="cbt_eval_bulid_sp_pcmb"  class="easyui-combotree" style="width: 48%;height: 28px;">
+                </div>
+                <div class="ZXpc_pcfa_sj_all_1" style="width: 40%">
+                    <div>备注</div>
+                    <input id="txt_eval_build_sp_bz" class="easyui-textbox"style="width:72%;height: 28px">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ZXpc_pcfa_tj">
+        <div class="ZXpc_pcfa_tj_1">评查小组</div>
+        <button class="ZXpc_pcfa_tj_2" onclick="alert_win_eval_build_sp_pcz()">新建</button>
+        <div class="ZXpc_pcfa_but"></div>
+        <!--评查组弹窗-->
+        <div id="win_eval_build_sp_pcz" class="easyui-window" title="评查组" style="width:700px; height:405px;position: relative;"
+             data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+            <div style="background: #ffffff;padding: 10px;overflow: hidden;height: calc(100%);">
+                <div class="ZXpc_pcfa_sj_all_1" style="width: 50%">
+                    <div style="float: left">名称</div>
+                    <input id="txt_win_eval_build_sp_pcz_mc" class="easyui-textbox" style="width:250px;height: 28px">
+                </div>
+                <div class="ZXpc_pcfa_sj_all_1"  style="width: 50%">
+                    <div style="margin-left: 17px">备注</div>
+                    <input id="txt_win_eval_build_sp_pcz_bz" class="easyui-textbox" style="width:270px;height: 28px">
+                </div>
+                <div class="window_kjrk_content_tj_box">
+                    <div class="window_kjrk_content_tj_title">
+                        <div style="float: left;padding-top: 8px;">人员库</div>
+                        <div style="float: right; margin-right: 17px; width: 200px;font-size: 12px; margin-top: 5px;">
+                            <input id="window_kjrk_content_tj_dw" data-options="wincom:true" class="easyui-combotree" style="width: 100%;height: 27px;">
+                        </div>
+                    </div>
+                    <div id="window_kjrk_content_ktj_ul" style="margin-top: 35px; height: 240px;">
+                        <table id="table_eval_build_sp_pcz_ryk" border="0" style="height: 100%"></table>
+                    </div>
+                </div>
+                <div id="window_kjrk_content_tj_button" style="width: 48px">
+                    <button id="btn_win_eval_build_sp_pcz_add" class="window_kjrk_button" style="margin-top: 123px">添加</button>
+                    <button id="btn_win_eval_build_sp_pcz_yc" class="window_kjrk_button">移除</button>
+                </div>
+                <div class="window_kjrk_content_tj_box" style="margin-right: 0">
+                    <div class="window_kjrk_content_tj_title">
+                        <div style="float: left;padding-top: 8px;">已添加</div>
+                    </div>
+                    <div id="window_kjrk_content_ytj_ul" style="margin-top: 35px; height: 240px;width:calc(100% + 9px);">
+                        <table id="table_eval_build_sp_pcz_ry" border="0" class="easyui-datagrid" style="height: 100%"></table>
+                    </div>
+                </div>
+                <div id="btn_eval_build_sp_pcz_confirm" style="float: right;margin-right: 8px;margin-top: 5px">
+                    <a class="easyui-linkbutton" style="padding: 0 10px">确定</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="div_eval_build_sp_pcz" class="ZXpc_pcfa_xz">
+    </div>
+    <div id="div_eval_build_sp_filter" class="ZXpc_pcfa_cen">
+        <div class="ZXpc_pcfa_tj">
+            <div class="ZXpc_pcfa_tj_1">案件筛选</div>
+        </div>
+        <div class="ZXpc_pcfa_sjs">
+            <div class="ZXpc_pcfa_sj_all">
+                <div class="ZXpc_pcfa_sj_all_2">
+                    <span>筛选规则</span>
+                    <input id="cbt_eval_bulid_sp_sxgz"  class="easyui-combotree" style="width: 50%;height: 28px;">
+                </div>
+                <div class="ZXpc_pcfa_sj_all_2">
+                    <div>案件名称</div>
+                    <input id="txt_eval_build_sp_ajmc" class="easyui-textbox"style="width:50%;height: 28px">
+                </div>
+                <div class="ZXpc_pcfa_sj_all_2">
+                    <div>部门受案号</div>
+                    <input id="txt_eval_build_sp_bmsah" class="easyui-textbox"style="width:206px;height: 28px">
+                </div>
+                <div class="ZXpc_pcfa_sj_all_2" style="width: 28%">
+                    <div>完成日期</div>
+                    <input id="date_eval_build_sp_begin"  type="text" class="easyui-datebox" style="height: 28px;width:35%;">
+                    <span style=" width: 14px;display: inline-block;margin-right: 0px;">~ </span>
+                    <input id="date_eval_build_sp_end" type="text" class="easyui-datebox" style="height: 28px;width:35%;">
+                </div>
+            </div>
+            <div  class="ZXpc_pcfa_sj_all">
+                <div class="ZXpc_pcfa_sj_all_2">
+                    <div>承办单位</div>
+                    <input id="cbt_eval_bulid_sp_dwbm"  class="easyui-combotree" style="width: 50%;height: 28px;">
+                </div>
+                <div class="ZXpc_pcfa_sj_all_2">
+                    <div>承办部门</div>
+                    <input id="txt_eval_build_sp_cbbm" class="easyui-combotree"style="width:50%;height: 28px">
+                </div>
+                <div style="width: 52%" class="ZXpc_pcfa_sj_all_2">
+                    <div>承办检察官</div>
+                    <input id="txt_eval_build_sp_cbr" class="easyui-textbox" style="width: 23%;height: 29px" type="text">
+                    <button id="btn_eval_build_sp_search" class="ZXpc_pcfa_2" style="background-color: #258EEA;">查询</button>
+                    <button id="btn_eval_build_sp_search_advance" class="ZXpc_pcfa_2" style="display: none;">高级查询</button>
+                    <!--<button id="btn_eval_build_sp_filter" class="ZXpc_pcfa_2">筛选</button>-->
+                    <button id="btn_eval_build_sp_filtered" class="ZXpc_pcfa_2">已筛选</button>
+                </div>
+            </div>
+
+        </div>
+        <div id="div_table_eval_bulid_sp_filter" class="ZXpc_pcfa_content">
+            <div class="eayui-panel" data-options="fit:true" style="width:100%; height: 100%">
+                <table id="table_eval_bulid_sp_filter"></table>
+            </div>
+        </div>
+        <!--已筛选案件列表-->
+        <div id="win_eval_build_sp_filtered" style="display: none">
+            <table id="table_win_eval_bulid_sp_filtered"></table>
+        </div>
+    </div>
+    <div id="div_eval_build_sp_assign" class="ZXpc_pcfa_cen1">
+        <div class="ZXpc_pcfa_tj">
+            <div class="ZXpc_pcfa_tj_1">评查分配</div>
+            <button id="btn_eval_build_sp_assign" onclick="getFpsfList()" class="ZXpc_pcfa_tj_2">自动分配</button>
+            <button id="btn_eval_build_sp_assign_filter" class="ZXpc_pcfa_tj_2">筛选</button>
+        </div>
+        <div id="div_table_eval_bulid_sp_assign" class="ZXpc_pcfa_content1">
+            <!--<div style="width: 100%;margin-top: 15px;">
+                <div class="ZXpc_pcfa_contop">
+                   <span style="float:left;color: #888;line-height: 30px;margin-left: 10px;">案件分配情况</span>
+                    <div style="float: left;">
+                        <div class="ZXpc_pcfa_div">总数  :  </div><span class="ZXpc_pcfa_span">21</span>
+                        <div class="ZXpc_pcfa_div">吴鹏  :  </div><span class="ZXpc_pcfa_span">0件</span>
+                        <div class="ZXpc_pcfa_div">刘旭  :  </div><span class="ZXpc_pcfa_span">0件</span>
+                        <div class="ZXpc_pcfa_div">郑强  :  </div><span class="ZXpc_pcfa_span">0件</span>
+                    </div>
+                    <div style="width: 100%;height: 300px;">
+                        <table id="table_eval_bulid_sp_assign"></table>
+                    </div>
+                </div>
+            </div>
+            <table id="dg"></table>-->
+            <table id="table_eval_bulid_sp_assign"></table>
+        </div>
+        <!--自动分配-->
+        <div id="win_eval_build_sp_assign" class="easyui-window" title="自动分配" style="width:400px;height:300px;background:#fff"
+             data-options="closed:true,modal:true,collapsible:false,minimizable:false,maximizable:false">
+            <div class="pop_ups_win">
+                <div class="pop_ups_win_input" style="margin-top: 0">
+                    分配算法&nbsp;&nbsp;
+                    <input id="cbx_win_eval_build_sp_assign_fpsf" class="easyui-combobox" style="width: 250px;height: 28px;margin-left: 5px"
+                           data-options="wincom:true" />
+                </div>
+                <div class="pop_ups_win_input">
+                    <div style="float: left">描述信息</div>&nbsp;&nbsp;
+                    <input id="txt_win_eval_build_sp_assign_fpsf" class="easyui-textbox" data-options="multiline:true"
+                           style="width: 250px;height: 100px;border-color: #DADADA; " placeholder="描述"/>
+                </div>
+                <div id="btn_win_eval_build_sp_assign_confirm" style="padding: 8px 14px;background: #0690e8;border-radius: 4px;float: right;color: #FFFFFF;margin-right: 44px;margin-top: 30px;cursor: pointer">下一步</div>
+            </div>
+        </div>
+
+        <!--评查案件筛选-->
+        <div id="win_eval_build_sp_assign_filter" style="display: none">
+
+            <div id="tool_table_eval_bulid_sp_assign_filter" class="ZXpc_pcfa_sjs">
+                <div class="ZXpc_pcfa_sj_all">
+                    <div class="ZXpc_pcfa_sj_all_2">
+                        <span>筛选规则</span>
+                        <input id="cbt_eval_bulid_sp_assign_sxgz" data-options="wincom:true"  class="easyui-combotree" style="width: 70%;height: 28px;">
+                    </div>
+                    <div class="ZXpc_pcfa_sj_all_2">
+                        <span>部门受案号</span>
+                        <input id="txt_eval_build_sp_assign_bmsah" class="easyui-textbox"style="width:65%;height: 28px">
+                    </div>
+                    <div class="ZXpc_pcfa_sj_all_2">
+                        <span>承办单位</span>
+                        <input id="cbt_eval_bulid_sp_assign_dwbm" data-options="wincom:true"  class="easyui-combotree" style="width: 70%;height: 28px;">
+                    </div>
+                    <div class="ZXpc_pcfa_sj_all_2">
+                        <span>承办部门</span>
+                        <input id="txt_eval_build_sp_assign_cbbm"  data-options="wincom:true" class="easyui-combotree"style="width:70%;height: 28px">
+                    </div>
+
+                </div>
+                <div  class="ZXpc_pcfa_sj_all">
+
+                    <div class="ZXpc_pcfa_sj_all_2">
+                        <span>案件名称</span>
+                        <input id="txt_eval_build_sp_assign_ajmc" class="easyui-textbox"style="width:70%;height: 28px">
+                    </div>
+                    <div class="ZXpc_pcfa_sj_all_2">
+                        <span>承办检察官</span>
+                        <input id="txt_eval_build_sp_assign_cbr" class="easyui-textbox" style="width: 65%;height: 28px" type="text">
+                    </div>
+
+                    <div class="ZXpc_pcfa_sj_all_2" style="width: 31%">
+                        <span>完成日期</span>
+                        <input id="date_eval_build_sp_assign_begin"  data-options="wincom:true" class="easyui-datebox" style="height: 28px;width:33%;">
+                        <span style=" width: 14px;display: inline-block;margin-right: 0px;">~ </span>
+                        <input id="date_eval_build_sp_assign_end"  data-options="wincom:true" class="easyui-datebox" style="height: 28px;width:33%;">
+                    </div>
+                    <div class="ZXpc_pcfa_sj_all_2" style="width: 20%">
+                        <button id="btn_eval_build_sp_assign_search" class="ZXpc_pcfa_2" style="background-color: #258EEA;">查询</button>
+                        <!--<button id="btn_eval_build_sp_assign_search_advance" class="ZXpc_pcfa_2" onclick="win_gjcx_load()">高级查询</button>-->
+                    </div>
+                </div>
+            </div>
+
+            <table id="table_eval_bulid_sp_assign_filter" class="easyui-datagrid" style="height:80%;"></table>
+        </div>
+
+        <!--手动分配-->
+        <div id="win_eval_build_sp_assign_manual" class="easyui-window" title="手动分配" style="width:490px;height:400px;background:#fff"
+             data-options="closed:true,modal:true,collapsible:false,minimizable:false,maximizable:false">
+            <div style="padding: 20px;">
+                <div style="width: calc(100% - 18px); height: 270px; margin-top: 0px; border: 1px solid #c0cfdb; border-radius: 6px; overflow: auto;">
+                    <table id="table_win_eval_build_sp_assign_manual" border="0"></table>
+                </div>
+                <div id="btn_win_eval_build_sp_assign_manual_confirm" style="padding: 8px 14px;background: #0690e8;border-radius: 4px;float: right;color: #FFFFFF;margin-right: 15px;margin-top: 15px;cursor: pointer">确定</div>
+            </div>
+        </div>
+    </div>
+
+    <!--案件详细信息-->
+    <div id="win_eval_build_sp_caseinfo">
+    </div>
+
+</div>
+<div class="ZXpc_pcfa_bottom">
+    <button class="ZXpc_pcfa_bottom_1" id="view_evaluate_build_sp_assign">
+        下一步  >
+    </button>
+    <button class="ZXpc_pcfa_bottom_1" id="view_evaluate_build_sp_generate" style="display: none; width: 110px;">
+        生成评查方案
+    </button>
+</div>
+
+<!--送审弹出窗-->
+<div id="win_pcfa_sstoanfzr" class="easyui-window" title="审批人" style="width:460px; height:380px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+    <div id="divAgfzrDataList" style="margin-bottom:15px; width:440px; text-align:center; ">
+        <!--安管负责人列表-->
+        <table id="grid_win_pcfa_agfzr" border="0"></table>
+    </div>
+    <div style="text-align:center;">
+        <button id="btnFAConfirm" class="ZXpc_pcfa_2" style="background-color: #258EEA;">确定</button>
+        <button id="btnFACancle" class="ZXpc_pcfa_2" style="background-color: #258EEA;">取消</button>
+    </div>
+</div>
+
+<!--审批活动弹出窗-->
+<div id="window_hd_sp" class="easyui-window" title="活动审批" style="width:450px; height:300px;" data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+    <table cellpadding="5" style=" padding: 10px 0 0 15px;margin-bottom: 25px">
+        <tr style="margin-bottom: 60px">
+            <td>
+                审批结果：
+            </td>
+            <td style="height: 40px;">
+                <input class="spyj_btn" name="is_check_of_sp" type="radio" value="同意" />同意
+                <input class="spyj_btn" name="is_check_of_sp" type="radio" value="不同意" />不同意
+            </td>
+        </tr>
+        <tr style="margin-bottom: 5px">
+            <td>
+                审批意见：
+            </td>
+            <td>
+                <input id="txt_hd_sp_spjg"  class="easyui-textbox" data-options="multiline:true" style="width: 320px;height:120px"></input>
+            </td>
+            <td><span style="text-align:left;color:Red">*</span></td>
+        </tr>
+
+    </table>
+    <div style="text-align:center; margin-bottom:10px;margin-top: 20px">
+        <button id="btn_sp_bg_confirm" class="ZXpc_pcfa_2" style="background-color: #258EEA;">确定</button>
+        <button id="btn_sp_bg_cancel" class="ZXpc_pcfa_2" style="background-color: #258EEA;">取消</button>
+    </div>
+</div>
+<!--高级查询弹框-->
+<div id="window_gjcx" class="easyui-window" title="高级查询" data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+
+</div>
+
+<!--送审意见列表-->
+<div id="win_spyj_sstoanfzr" class="easyui-window" title="审批信息" style="width:650px; height:380px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+    <div id="div_spyj_grid" style="margin-bottom:15px; text-align:center; ">
+        <table id="grid_spxx_list" border="0"></table>
+    </div>
+</div>
+</body>
+</html>

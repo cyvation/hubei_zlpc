@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../../../plugin/jquery-easyui-1.4.1/themes/bootstrap/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="../../../plugin/jquery-easyui-1.4.1/themes/icon.css" />
+    <script src="../../../plugin/jquery-easyui-1.4.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../plugin/jquery-easyui-1.4.1/jquery.easyui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../plugin/jquery-easyui-1.4.1/locale/easyui-lang-zh_TW.js" type="text/javascript"></script>
+</head>
+<body>
+<form id="fileUploadPerson"  enctype="multipart/form-data" method="post" >
+    <label class="easyui-lable1">请指定文件名：</label><input  class="easyui-textbox" type="text" name="fileName">
+<p/>
+    <label class="easyui-lable1">选择文件：</label>  <input class="easyui-linkbutton" type="file" name="file">
+    <p/>
+    <input type="button"  class="easyui-button1" value="保存" onclick="fileUplpload()">
+</form>
+
+
+
+</body>
+<script type="application/javascript">
+
+    function getRootPath() {
+        var strFullPath = window.document.location.href;
+        var strPath = window.document.location.pathname;
+
+        var pos = strFullPath.indexOf(strPath);
+        var prePath = strFullPath.substring(0, pos);
+        var postPath = strPath.substring(0, strPath.substr(1).indexOf('/') + 1);
+        return (prePath + postPath);
+    }
+
+
+
+
+</script>
+</html>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.start.boot.dao.ajpc.ModuleFunctionMapper">
+
+
+    <!--获取功能定义树-->
+    <select id="GetGnflCombTree" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call PKG_MKGN.proc_get_gnfl_tree(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                                 #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=newGnflMap,javaType=java.sql.ResultSet},
+                                                 #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="newGnflMap" type="map"></resultMap>
+
+    <!--新增/更新功能分类-->
+    <update id="addOrUpdateGnfl" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call PKG_MKGN.proc_add_gnfl(#{p_flbm,mode=IN,jdbcType=VARCHAR},
+                                             #{p_flmc,mode=IN,jdbcType=VARCHAR},
+                                             #{p_fflbm,mode=IN,jdbcType=VARCHAR},
+                                             #{p_flxh,mode=IN,jdbcType=VARCHAR},
+                                             #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                             #{p_iconcls,mode=IN,jdbcType=VARCHAR},
+                                             #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--获取功能分类详情-->
+    <select id="GetGnflInfo" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call PKG_MKGN.proc_get_gnflinfo(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                                #{p_flbm,mode=IN,jdbcType=VARCHAR},
+                                                #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=gnflInfoMap,javaType=java.sql.ResultSet},
+                                                #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+
+        ]]>
+    </select>
+    <resultMap id="gnflInfoMap" type="com.start.boot.domain.FunctionFl">
+        <result column="FLBM" property="flbm"></result>
+        <result column="FLMC" property="flmc"></result>
+        <result column="FFLBM" property="fflbm"></result>
+        <result column="FFLMC" property="fflmc"></result>
+        <result column="FLXH" property="flxh"></result>
+        <result column="DWBM" property="dwbm"></result>
+        <result column="ICON" property="icon"></result>
+
+    </resultMap>
+
+    <!--删除功能分类信息-->
+    <delete id="DeleteGnfl" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+               call PKG_MKGN.proc_delete_gnfl(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                              #{p_flbm,mode=IN,jdbcType=VARCHAR},
+                                              #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                              #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </delete>
+
+    <!--获取功能定义列表-->
+    <select id="GetGndyList" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call PKG_MKGN.proc_get_gndy_list(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                                  #{p_flbm,mode=IN,jdbcType=VARCHAR},
+                                                  #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                                  #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                                  #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=gndyListMap,javaType=java.sql.ResultSet},
+                                                  #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                                  #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+
+        ]]>
+    </select>
+    <resultMap id="gndyListMap" type="map"></resultMap>
+
+    <!--新增/更新功能定义-->
+    <update id="AddGndy" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call PKG_MKGN.proc_add_gndy(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_flbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gnbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gnmc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gnxh,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gnct,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gnxsmc,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gnsm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gncxj,mode=IN,jdbcType=VARCHAR},
+                                          #{p_gncs,mode=IN,jdbcType=VARCHAR},
+                                          #{p_cscs,mode=IN,jdbcType=VARCHAR},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--删除功能定义信息-->
+    <delete id="DeleteGndy" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+               call PKG_MKGN.proc_delete_gndy(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                              #{p_gnbm,mode=IN,jdbcType=VARCHAR},
+                                              #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </delete>
+
+
+
+
+</mapper>

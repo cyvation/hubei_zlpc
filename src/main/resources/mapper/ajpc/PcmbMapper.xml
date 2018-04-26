@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+                <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+        <mapper namespace="com.start.boot.dao.ajpc.PcmbMapper">
+
+    <!--获取评查模板列表-->
+    <select id="getPcmb" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call pkg_pcgl.proc_get_pcmb(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_pcflbm,mode=IN,jdbcType=VARCHAR},
+                                            #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=pcmbMap},
+                                            #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <sql id="Base_Column_List">
+         PCMBBM, PCMBMC, DWBM, PCFLBM, PCMBNR, SFQY, CJSJ, XH, SM, PCMBLX, YWTX
+    </sql>
+
+
+    <!--根据评查模板编码获取评查模板列表-->
+    <select id="getPcmbByPcmbbm" parameterType="java.util.Map" resultMap="pcmbMap">
+        SELECT
+          <include refid="Base_Column_List" />
+         FROM xt_pc_mb
+        WHERE dwbm = #{dwbm, jdbcType=VARCHAR} AND
+              pcflbm = #{pcflbm, jdbcType=VARCHAR} AND
+              pcmbbm = #{pcmbbm, jdbcType=VARCHAR} AND
+              sfqy = 'Y'
+    </select>
+
+    <resultMap id="pcmbMap" type="map"></resultMap>
+
+</mapper>

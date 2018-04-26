@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>日志管理</title>
+</head>
+
+<body>
+<!--页面JS加载，放在头部不能正确加载-->
+<script type="text/javascript">
+    AddScript("text/javascript", "script/evaluate/scheme/index.js");
+</script>
+
+<div id="div_eval_pcfa_list" class="easyui-panel" style="margin-top:0px" data-options="fit:true,border:false">
+	<!--工具栏-->
+	<div id="tool_eval_pcfa_grid_list" style="padding: 5px;" >
+		<div style="height: 30px; border-radius:2px; border: 0px solid #c1c1c1;">
+			<span >活动名称</span>
+			<input id="txt_eval_pcfa_grid_ajmc" type="text" style="width:220px;height: 28px;">
+			<button id="btn_eval_pcfa_grid_search" class="ZXpc_pcfa_2" style="background-color: #258EEA;">查询</button>
+		</div>
+	</div>
+	<!--案件列表-->
+	<table id="table_eval_pcfa_table" class="easyui-datagrid" border="0"></table>
+</div>
+
+</body>
+</html>

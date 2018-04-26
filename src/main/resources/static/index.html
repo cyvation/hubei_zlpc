@@ -1,0 +1,370 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>湖北省检察机关案件质量评查专题分析系统</title>
+</head>
+<link rel="stylesheet" type="text/css" href="plugin/jquery-easyui-1.4.3/themes/bootstrap/easyui.css" />
+<link rel="stylesheet" type="text/css" href="plugin/jquery-easyui-1.4.3/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css" href="plugin/jquery-easyui-1.4.3/themes/icon.css" />
+<!--<script src="plugin/jquery-easyui-1.4.3/jquery.min.js" type="text/javascript" charset="utf-8"></script>-->
+
+<script src="plugin/jquery-1.8.3.js"></script>
+<script src="plugin/jquery-easyui-1.4.3/jquery.easyui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="plugin/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
+<script src="plugin/jquery-easyui-1.4.3/datagrid-groupview.js" type="text/javascript"></script>
+<script type="text/javascript" src="plugin/My97DatePicker/WdatePicker.js"></script>
+<link rel="stylesheet" href="style/easyui.css">
+<link rel="stylesheet" href="style/easyui_Tabs.css">
+<link rel="stylesheet" href="style/easyui_input.css">
+<link rel="stylesheet" href="style/easyui_tree.css">
+<link rel="stylesheet" href="style/easyui_window.css">
+<link rel="stylesheet" href="style/easyui-linkbutton.css">
+<link rel="stylesheet" href="style/index.css">
+<link rel="stylesheet" href="style/home.css">
+<link rel="stylesheet" href="style/pcajsx_jcg.css">
+<link rel="stylesheet" href="style/manages_manages.css">
+<link rel="stylesheet" href="style/pcajsx.css">
+<link rel="stylesheet" href="style/pcbl_pcxx.css">
+<link rel="stylesheet" href="style/pcbl.css">
+<link rel="stylesheet" href="style/Tolong.css">
+<link rel="stylesheet" href="style/wpcaj.css">
+<link rel="stylesheet" href="style/xjpc.css">
+<link rel="stylesheet" href="style/ZDpc_bm.css">
+<link rel="stylesheet" href="style/pcbl_switch.css">
+<link rel="stylesheet" href="style/ZXpc_pcfa.css">
+<link rel="stylesheet" href="style/ZXpcfabds.css">
+<link rel="stylesheet" href="style/ZXpcfaws.css">
+<link rel="stylesheet" href="style/ZXpchdjbxx.css">
+<link rel="stylesheet" href="style/ZXpcjk.css">
+<link rel="stylesheet" href="style/ZXpcjks.css">
+<link rel="stylesheet" href="style/ZXpclast.css">
+<link rel="stylesheet" href="style/casecard.css">
+<!--统计分析-->
+<link rel="stylesheet" href="style/statistics/casesearch/index_pcaj.css">
+<link rel="stylesheet" href="style/statistics/wtxz_tjfx/wtxz_tjfx.css">
+
+<link rel="stylesheet" type="text/css" href="style/ajzl.css" />
+<link rel="stylesheet" type="text/css" href="style/special_gjcx.css">
+<link rel="stylesheet" type="text/css" href="style/special_gjcx_rd.css">
+<link rel="stylesheet" type="text/css" href="style/special_gjcx_kd.css">
+<!--工具-->
+<script type="text/javascript" src="plugin/utils/common.js"></script>
+<script type="text/javascript" src="plugin/Main.js"></script>
+<script type="text/javascript" src="plugin/easyui-tree-extension.js"></script>
+<script type="text/javascript" src="plugin/pdfobject.js"></script>
+<script src="plugin/echarts.min.js"></script>
+<script src="plugin/base64.js"></script>
+<script type="text/javascript" src="script/statistics/EchartsUtils.js" ></script>
+<style>
+    .dragresize-br {
+        right: 0px;
+        cursor: se-resize;
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-bottom: 10px solid #0b93d5;
+        z-index: 999999;
+    }
+</style>
+<body>
+<div id="index_body">
+    <!--     2018,1,23 日（写字体）更改  新增加class    发之前要删除     -->
+    <div id="index_body_img" class="index_body_img index_body_img_xbjt">
+        <div id="index_top" style="cursor: context-menu" onselectstart="return false">
+            <div class="marquee" style="overflow: hidden">
+                <div class="div_marquee_xlb" onclick="goto_notice_function()"></div>
+                <marquee id="marqueetext" behavior="scroll" direction="" onmouseover="stop()" onmouseout="start()" style="margin-left: 40px;margin-top: 2px;width: calc(100% - 68px)">
+                </marquee>
+            </div>
+            <!--通知公告弹窗-->
+            <div id="marquee_window" style="display: none">
+                <div id="marquee_window_content" style="width: 100%;height: 100%;background: #ffffff">
+                    <div id="marqee_window_content_top">标题</div>
+                    <div style="width: 92%;overflow: hidden;margin: 0 auto;">
+                        <div id="marquee_window_usertime" style="float: right;">
+                            <div id="marquee_window_user" style="float: left;font-size: 12px;color: #7B7B7B;margin-top: 2px;"></div>
+                            <div id="marquee_window_time" style="float: left;font-size: 12px; color: #7B7B7B;margin-top: 2px;margin-left: 11px;margin-right: 11px;"></div>
+                        </div>
+                    </div>
+                    <div style="width: 92%;margin: 0 auto;height: 390px;">
+                        <input id="marqee_window_content_mainbody" class="easyui-textbox " data-options="multiline:true,readonly:true"
+                               style="width:830px;height:390px;padding:5px 10px 0 10px;border: 1px solid rgba(0,0,0,0) !important;"/>
+                    </div>
+                    <div id="tzgg_fj" style="border-radius:3px;width: 92%;height: 60px;margin: 0 auto;border: 1px solid #b4cfe6;">
+                        <div style="padding-left: 5px;color:#184496;width: 100%;height: 30px;line-height: 30px;background:#d8dede;border-bottom: 1px solid #b4cfe6">附件：</div>
+                        <div id="tzgg_fjload" style="padding:5px 20px;height: 30px;width: 100%;">
+                            <div style="float: left;font-size: 14px;"> 资料名称：</div>
+                            <div id="marquee_window_mc" href="#" style="float: left"></div>
+                            <a style="float:right;margin-left: 5px;" href="#"  onclick="seen_tzgg()">预览</a>
+                            <a style="float:right" href="#" id="marquee_window_href">下载</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--     2018,1,23 日（写字体）更改  新增加class    发之前要删除     -->
+            <div id="index_top_logo " class="index_top_logo index_top_logo_xbjt">
+                <div class="div_logo_qy">
+                    <span class="span_logo_qy"></span>
+                    <div>
+                        <!--<span id="span_unit_name_index" ></span>-->
+                        <span id="span_system_name_index" > </span>
+                    </div>
+                </div>
+            </div>
+            <div id="index_top_right">
+                <!--<div id="index_top_time">-->
+                <!--</div>-->
+                <div id="signOut" title="退出系统"></div>
+                <div id="index_right_xiaoxi" onclick="index_window_tzxx()">
+                    <div class="xiaoxi_text" id="index_msg_cnt"></div>
+                </div>
+
+                <div id="index_right_three" class="index_right_box">
+                    <span id="index_right_username" class="index_right_username">用户名</span>
+                    <div class="triangle"></div>
+                    <div id="yhxx">
+                        <ul>
+                            <li id="xgmm" onclick="yhxx_winUpdPwd()"><img src="image/index/0-2.jpg" alt="" style=" margin-right: 0px; margin-top: 6px;float: left;margin-left: 7px;">修改密码</li>
+
+                            <li id="wdsc"><img src="image/index/star.png" alt="" style="margin-right: 0px; margin-top: 6px;float: left;margin-left: 7px;" >我的收藏</li>
+                            <li id="wjxz"><img src="image/index/icon.png" alt="" style="margin-right: 0px; margin-top: 6px;float: left;margin-left: 7px;"><a href="view/Browser/操作手册.doc" >操作手册</a></li>
+                        </ul>
+                        <!--设置-修改密码窗口-->
+                        <div id="winUpdPwd" style="width:330px; height:220px;background: #ffffff">
+                            <table cellpadding="5" style="padding: 0 10px">
+                                <tr style="height: 30px;width: calc(100% - 20);">
+                                    <td style="width:100px;">用户 </td>
+                                    <td style="width:220px;"><input id="pwdUser" class="easyui-textbox" style="width: 200px;"/></td>
+                                </tr>
+                                <tr style="height: 30px">
+                                    <td>当前密码 </td>
+                                    <td><input id="pwdOldPwd" class="easyui-textbox" type="password" style="width: 200px;" /></td>
+                                </tr>
+                                <tr style="height: 30px">
+                                    <td>新密码 </td>
+                                    <td><input id="pwdNewPwd" class="easyui-textbox" type="password" style="width: 200px;" /></td>
+                                </tr>
+                                <tr style="height: 30px">
+                                    <td>确认新密码 </td>
+                                    <td><input id="pwdNewPwd2" class="easyui-textbox" type="password" style="width: 200px;" /></td>
+                                </tr>
+                            </table>
+                            <div style="text-align:center;margin-top: 6px">
+                                <a id="btnUpdPwdConfirm" class="easyui-linkbutton" >确定</a>&nbsp;
+                                <a id="btnUpdPwdCancel" class="easyui-linkbutton">取消</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a id="index_right_two" class="index_right_box" target="_">
+                    法律法规
+                </a>
+                <!--法律法规弹窗-->
+                <div id="index_window_flfg" class="easyui-window " style="width: 1000px;height: 600px"
+                     data-options="closed:true,title:'法律法规', collapsible:false, minimizable:false,maximizable:false,modal:true,resizable:true"  >
+                    <iframe  style="width: 100%;height: calc(100% - 5px)" id="iframe_flfg" frameborder="0px"></iframe>
+                </div>
+                <div id="index_right_one" class="index_right_box" >
+                    　案例库
+                </div>
+                <!--案件库弹窗-->
+                <div id="index_window_alk"  class="easyui-window " style="width: 1000px;height: 600px"
+                     data-options="closed:true,title:'案例库', collapsible:false, minimizable:false,maximizable:false,modal:true,resizable:true" >
+                    <iframe  style="width: 100%;height: 100%" id="iframe_alk" frameborder="0px"></iframe>
+                </div>
+                <!--我的收藏弹窗-->
+                <div id="index_window_wdsc" class="easyui-window" title="我的收藏" style="width:1000px; height:600px;position: relative;"
+                     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+                    <!--查询条件框-->
+                    <div id="wdsc_search_box">
+                        <div class="wdsc_demo">资料类型 <input id="search_zllx" class="easyui-combobox" data-options="wincom:true" style="width: 200px;height: 30px;"></div>
+                        <div class="wdsc_demo">资料名称 <input id="search_zlmc" class="easyui-textbox" style="width: 200px;height: 30px;"></div>
+                        <div id="wdsc_search_btn">查询</div>
+                        <div id="scAdd_btn">上传文件</div>
+                    </div>
+                    <div style="width: 100%;height: calc(100% - 50px)">
+                        <div id="datagrid_easyui_resource_person_list" style="width:100%;height:99%;"></div>
+                    </div>
+                    <!--上传文件-->
+                    <div id="index_submit_file" class="easyui-window" title="上传文件" style="width:500px; height:300px;"
+                         data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,cache:false">
+                        <form id="fileUploadPerson" enctype="multipart/form-data" method="post" style="">
+                            <div style="width: 400px;height: 31px;margin: 0 auto;margin-top:25px;">
+                                <p style="height: 30px;line-height:30px;width: 30%;text-align: right;float: left;">选择文件 </p>
+                                <!--<input type="file" name="file" id="person_upload_file">-->
+                                <a href="javascript:;" id="a-upload" style="height: 20px">
+                                    <input type="file" name="file" id="person_upload_file">点击这里选择文件
+                                </a>
+                            </div>
+                            <div style="width: 400px;height: 31px;margin: 0 auto;margin-top:25px;">
+                                <p style="height: 30px;line-height:30px;width: 30%;text-align: right;float: left;">资料名称 </p>
+                                <input id="wjsc_zlmc" name="zlmc" class="easyui-textbox" style="float:left;width: 60%;height: 30px;"/>
+                            </div>
+                            <div class="btn_box" style="height: 50px;line-height: 50px;width: 100%;">
+                                <input type="button" onclick="index_wind_fileUplpload()" value="上传">
+                                <input id="cancle_sc" type="button" onclick="" value="取消">
+                            </div>
+                        </form>
+                    </div>
+                    <!--编辑收藏内容-->
+                    <div id="index_update_person_window" class="easyui-window" title="编辑我的收藏" style="width:500px; height:300px;"
+                         data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,cache:false">
+                        <input id="cbt_win_person_id" style="display:none"/>
+                        <div style="width: 400px;height: 31px;margin: 0 auto;margin-top:25px;">
+                            <p style="height: 30px;line-height:30px;width: 30%;text-align: right;float: left;">文件名称 </p>
+                            <input id="cbt_win_person_zlmc" class="easyui-textbox" style="float:left;width: 60%;height: 30px;"/>
+                        </div>
+                        <div style="width: 400px;height: 31px;margin: 0 auto;margin-top:25px;">
+                            <p style="height: 30px;line-height:30px;width: 30%;text-align: right;float: left;">资料类型 </p>
+                            <input id="cbt_win_person_zllx" class="easyui-textbox" data-options="disabled:true" style="float:left;width: 60%;height: 30px;"/>
+                        </div>
+                        <div style="width: 400px;height: 31px;margin: 0 auto;margin-top:25px;">
+                            <p style="height: 30px;line-height:30px;width: 30%;text-align: right;float: left;">收藏时间 </p>
+                            <input id="cbt_win_person_cjsj" class="easyui-textbox"  data-options="disabled:true" style="float:left;width: 60%;height: 30px;"/>
+                        </div>
+                        <div class="btn_box" style="height: 50px;line-height: 50px;width: 100%;">
+                            <input type="button" value="确定" onclick="save_org_person_info()">
+                            <input type="button" value="取消" onclick="cancel_Update_person()">
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div id="index_content">
+            <div id="index_content_left" style="cursor: context-menu" onselectstart="return false">
+                <div id="gzzm_left" class="gncd">
+                    <div class="content_left_box">
+                        <img src="image/cqe/dic/desktop.png" style="margin-top: 20px; display: inline;" class="img_one">
+                        <img src="image/cqe/dic/desktop-.png" style="margin-top: 20px; display: none;" class="img_two">
+                        <div class="content_left_box_text" style="color: rgb(74, 155, 255);">工作桌面</div>
+                        <div style="width: 5px;height: 5px;position:relative" id="pcjk"></div>
+                    </div>
+                </div>
+                <div id="gncd_ping" class="gncd"></div>
+            </div>
+            <div id="index_content_center" style="box-sizing: border-box;">
+                <div id="index_content_center_top" style="cursor: context-menu" onselectstart="return false">
+                    <img src="image/home/add.png" style="float: left;margin: 10px 10px 0 2%;">
+                    <span id="index_content_title">质量评查</span>
+                    <button class="index_back" onclick="backgzzm_function()">返回工作桌面</button>
+                </div>
+                <div id="p_panel" style="position: relative;padding:12px;box-sizing: border-box;">
+                    <div id="p" style="border:0px solid rgba(0,0,0,0);box-sizing: border-box;overflow: hidden">
+                    </div>
+                </div>
+            </div>
+            <div id="index_content_right" style="cursor: context-menu" onselectstart="return false">
+                <div id="kjrk">
+                    <br>快<br>捷<br>入<br>口<br>
+                    <img src="image/index/arrow-l.png" style="margin-top: 10px" id="kjrk_one">
+                    <img src="image/index/arrow-r.png" style="margin-top: 10px;display: none" id="kjrk_two">
+                </div>
+                <div id="kjrk_content">
+                    <div id="kjrk_content_box">
+                        <ul></ul>
+                    </div>
+                    <div id="kjrk_content_tj">
+                        <!--快捷入口弹窗-->
+                        <div id="window_kjrk_content_tj" style="display: none">
+                            <div id="window_kjrk_content_tj_content" style="background: #ffffff;padding: 10px;overflow: hidden;height: calc(100% - 20px);">
+                                <div class="window_kjrk_content_tj_box">
+                                    <div class="window_kjrk_content_tj_title">可添加</div>
+                                    <div id="window_kjrk_content_ktj_ul">
+                                        <table id="table_kjrk_content_ktj" border="0"></table>
+                                    </div>
+                                </div>
+                                <div id="window_kjrk_content_tj_button">
+                                    <button id="window_kjrk_button_tj" class="window_kjrk_button" style="margin-top: 123px">添加</button>
+                                    <button id="window_kjrk_button_yc" class="window_kjrk_button">移除</button>
+                                </div>
+                                <div class="window_kjrk_content_tj_box" style="margin-right: 0">
+                                    <div class="window_kjrk_content_tj_title">已添加</div>
+                                    <div id="window_kjrk_content_ytj_ul">
+                                        <table id="table_kjrk_content_ytj" border="0"></table>
+                                    </div>
+                                </div>
+                                <div id="table_kjrk_qd">
+                                    <button>确定</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kjrk_content_tj" onclick="window_kjrk_content_tj()"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!--消息通知弹窗-->
+<div id="index_window_tzxx" title="消息通知" class="easyui-window" style="width: 800px;height:500px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true" onclose="bjwydByDwbmAndGh()">
+    <div id="index_window_tzxx_input" style="width: 100%;height: 31px;">
+        <ul>
+            <li>
+                状态
+                <select id="index_window_tzxx_select" data-options="wincom:true" class="easyui-combobox"style="width:60px;height:24px;">
+                    <option value="0">未读</option>
+                    <option value="1">已读</option>
+                </select>
+            </li>
+            <li>
+                关键字 <input id="txt_index_window_tzxx_keyword" class="easyui-textbox" style="width:70px;height:24px;">
+            </li>
+            <li>
+                时间 <input id="date_index_window_tzxx_beg" type="text" data-options="wincom:true" class="easyui-datebox" required="required" style="height:24px;width:105px">
+                ~
+                <input id="date_index_window_tzxx_end" type="text" data-options="wincom:true" class="easyui-datebox" required="required" style="height:24px;width:105px">
+            </li>
+            <li>
+                <a id="btn_xx_search"  onclick="load_index_window_tzxx_datagrid()" class="easyui-linkbutton" style="background: #327cbb;border: 0;color: #ffffff;padding: 0 10px">查询</a>
+                <!-- <a id="btn_xx_sihgn"   class="easyui-linkbutton" style="background: #327cbb;border: 0;color: #ffffff;padding: 0 10px" onclick="bjwyd()">标记为已读</a>-->
+            </li>
+        </ul>
+    </div>
+    <div style="width:100%;height:calc(100% - 31px);">
+        <table id="index_window_tzxx_datagrid" style="height:100%;width:100%;"></table>
+    </div>
+</div>
+<!--查看消息通知-->
+<div id="win_message_look" class="easyui-window" title="通知消息" style="width:600px; height:480px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,cache:false">
+    <div style="text-align:center; margin-top:15px; margin-bottom:15px; margin-left:40px;">
+        <table class="winTzggAssign_table">
+            <tr style="margin-bottom: 10px">
+                <td style="float: right">标题 </td>
+                <td><input id="txt_message_bt" class="easyui-textbox" style="width:400px;" readonly='true' /></td>
+                <td><span style="text-align:left;color:Red">*</span></td>
+            </tr>
+
+            <tr style="margin-bottom: 10px">
+                <td style="float: right">内容 </td>
+                <td><input id="txt_message_nr" class="easyui-textbox " data-options="multiline:true" style="width:400px;height: 280px" readonly='true' /></td>
+                <td><span style="text-align:left;color:Red">*</span></td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+<div id="pcblWin" style="overflow: hidden;">
+    <div></div>
+</div>
+<div id="ajxxWin" style="overflow: hidden;">
+    <div style="height: 100%;width: 100%;"></div>
+</div>
+
+<div id="win_index_skip"  class="easyui-window " style="width: 1210px;height: 700px;overflow: hidden;"
+     data-options="closed:true,title:'检察机关案件质量评查', collapsible:false, minimizable:false,maximizable:false,modal:true,resizable:true" >
+    <iframe  style="width: 100%;height: 100%;border: 0;" id="iframe_win_index_skip"></iframe>
+</div>
+<script src="script/index.js"></script>
+</body>
+</html>

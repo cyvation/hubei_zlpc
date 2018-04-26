@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.AdvancedQueryMapper">
+  <resultMap id="BaseResultMap" type="com.start.boot.domain.AdvancedQuery">
+    <id column="BH" jdbcType="VARCHAR" property="bh" />
+    <result column="DWBM" jdbcType="VARCHAR" property="dwbm" />
+    <result column="MC" jdbcType="VARCHAR" property="mc" />
+    <result column="LX" jdbcType="VARCHAR" property="lx" />
+    <result column="YSF" jdbcType="VARCHAR" property="ysf" />
+    <result column="CX" jdbcType="VARCHAR" property="cx" />
+    <result column="CS" jdbcType="VARCHAR" property="cs" />
+    <result column="SFCX" jdbcType="VARCHAR" property="sfcx" />
+    <result column="SFCS" jdbcType="VARCHAR" property="sfcs" />
+    <result column="SM" jdbcType="VARCHAR" property="sm" />
+    <result column="PARENT" jdbcType="VARCHAR" property="parent" />
+    <result column="SFSC" jdbcType="VARCHAR" property="sfsc" />
+    <result column="BM" jdbcType="VARCHAR" property="bm" />
+    <result column="GYZD" jdbcType="VARCHAR" property="gyzd" />
+    <result column="PCFLBM" jdbcType="VARCHAR" property="pcflbm" />
+    <result column="PX" jdbcType="VARCHAR" property="px" />
+    <result column="SFDX" jdbcType="VARCHAR" property="sfdx" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    BH, DWBM, MC, LX, YSF, CX, CS, SFCX, SFCS, SM, PARENT, SFSC, BM, GYZD, PCFLBM, PX, 
+    SFDX
+  </sql>
+  <select id="selectByExample" parameterType="com.start.boot.domain.AdvancedQueryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from XT_PC_GJCX
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from XT_PC_GJCX
+    where BH = #{bh,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from XT_PC_GJCX
+    where BH = #{bh,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.start.boot.domain.AdvancedQueryExample">
+    delete from XT_PC_GJCX
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.start.boot.domain.AdvancedQuery">
+    insert into XT_PC_GJCX (BH, DWBM, MC, 
+      LX, YSF, CX, CS, 
+      SFCX, SFCS, SM, PARENT, 
+      SFSC, BM, GYZD, PCFLBM, 
+      PX, SFDX)
+    values (#{bh,jdbcType=VARCHAR}, #{dwbm,jdbcType=VARCHAR}, #{mc,jdbcType=VARCHAR}, 
+      #{lx,jdbcType=VARCHAR}, #{ysf,jdbcType=VARCHAR}, #{cx,jdbcType=VARCHAR}, #{cs,jdbcType=VARCHAR}, 
+      #{sfcx,jdbcType=VARCHAR}, #{sfcs,jdbcType=VARCHAR}, #{sm,jdbcType=VARCHAR}, #{parent,jdbcType=VARCHAR}, 
+      #{sfsc,jdbcType=VARCHAR}, #{bm,jdbcType=VARCHAR}, #{gyzd,jdbcType=VARCHAR}, #{pcflbm,jdbcType=VARCHAR}, 
+      #{px,jdbcType=VARCHAR}, #{sfdx,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.start.boot.domain.AdvancedQuery">
+    insert into XT_PC_GJCX
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bh != null">
+        BH,
+      </if>
+      <if test="dwbm != null">
+        DWBM,
+      </if>
+      <if test="mc != null">
+        MC,
+      </if>
+      <if test="lx != null">
+        LX,
+      </if>
+      <if test="ysf != null">
+        YSF,
+      </if>
+      <if test="cx != null">
+        CX,
+      </if>
+      <if test="cs != null">
+        CS,
+      </if>
+      <if test="sfcx != null">
+        SFCX,
+      </if>
+      <if test="sfcs != null">
+        SFCS,
+      </if>
+      <if test="sm != null">
+        SM,
+      </if>
+      <if test="parent != null">
+        PARENT,
+      </if>
+      <if test="sfsc != null">
+        SFSC,
+      </if>
+      <if test="bm != null">
+        BM,
+      </if>
+      <if test="gyzd != null">
+        GYZD,
+      </if>
+      <if test="pcflbm != null">
+        PCFLBM,
+      </if>
+      <if test="px != null">
+        PX,
+      </if>
+      <if test="sfdx != null">
+        SFDX,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bh != null">
+        #{bh,jdbcType=VARCHAR},
+      </if>
+      <if test="dwbm != null">
+        #{dwbm,jdbcType=VARCHAR},
+      </if>
+      <if test="mc != null">
+        #{mc,jdbcType=VARCHAR},
+      </if>
+      <if test="lx != null">
+        #{lx,jdbcType=VARCHAR},
+      </if>
+      <if test="ysf != null">
+        #{ysf,jdbcType=VARCHAR},
+      </if>
+      <if test="cx != null">
+        #{cx,jdbcType=VARCHAR},
+      </if>
+      <if test="cs != null">
+        #{cs,jdbcType=VARCHAR},
+      </if>
+      <if test="sfcx != null">
+        #{sfcx,jdbcType=VARCHAR},
+      </if>
+      <if test="sfcs != null">
+        #{sfcs,jdbcType=VARCHAR},
+      </if>
+      <if test="sm != null">
+        #{sm,jdbcType=VARCHAR},
+      </if>
+      <if test="parent != null">
+        #{parent,jdbcType=VARCHAR},
+      </if>
+      <if test="sfsc != null">
+        #{sfsc,jdbcType=VARCHAR},
+      </if>
+      <if test="bm != null">
+        #{bm,jdbcType=VARCHAR},
+      </if>
+      <if test="gyzd != null">
+        #{gyzd,jdbcType=VARCHAR},
+      </if>
+      <if test="pcflbm != null">
+        #{pcflbm,jdbcType=VARCHAR},
+      </if>
+      <if test="px != null">
+        #{px,jdbcType=VARCHAR},
+      </if>
+      <if test="sfdx != null">
+        #{sfdx,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.start.boot.domain.AdvancedQueryExample" resultType="java.lang.Long">
+    select count(*) from XT_PC_GJCX
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update XT_PC_GJCX
+    <set>
+      <if test="record.bh != null">
+        BH = #{record.bh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dwbm != null">
+        DWBM = #{record.dwbm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mc != null">
+        MC = #{record.mc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lx != null">
+        LX = #{record.lx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ysf != null">
+        YSF = #{record.ysf,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cx != null">
+        CX = #{record.cx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cs != null">
+        CS = #{record.cs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfcx != null">
+        SFCX = #{record.sfcx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfcs != null">
+        SFCS = #{record.sfcs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sm != null">
+        SM = #{record.sm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parent != null">
+        PARENT = #{record.parent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfsc != null">
+        SFSC = #{record.sfsc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bm != null">
+        BM = #{record.bm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gyzd != null">
+        GYZD = #{record.gyzd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pcflbm != null">
+        PCFLBM = #{record.pcflbm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.px != null">
+        PX = #{record.px,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfdx != null">
+        SFDX = #{record.sfdx,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update XT_PC_GJCX
+    set BH = #{record.bh,jdbcType=VARCHAR},
+      DWBM = #{record.dwbm,jdbcType=VARCHAR},
+      MC = #{record.mc,jdbcType=VARCHAR},
+      LX = #{record.lx,jdbcType=VARCHAR},
+      YSF = #{record.ysf,jdbcType=VARCHAR},
+      CX = #{record.cx,jdbcType=VARCHAR},
+      CS = #{record.cs,jdbcType=VARCHAR},
+      SFCX = #{record.sfcx,jdbcType=VARCHAR},
+      SFCS = #{record.sfcs,jdbcType=VARCHAR},
+      SM = #{record.sm,jdbcType=VARCHAR},
+      PARENT = #{record.parent,jdbcType=VARCHAR},
+      SFSC = #{record.sfsc,jdbcType=VARCHAR},
+      BM = #{record.bm,jdbcType=VARCHAR},
+      GYZD = #{record.gyzd,jdbcType=VARCHAR},
+      PCFLBM = #{record.pcflbm,jdbcType=VARCHAR},
+      PX = #{record.px,jdbcType=VARCHAR},
+      SFDX = #{record.sfdx,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.start.boot.domain.AdvancedQuery">
+    update XT_PC_GJCX
+    <set>
+      <if test="dwbm != null">
+        DWBM = #{dwbm,jdbcType=VARCHAR},
+      </if>
+      <if test="mc != null">
+        MC = #{mc,jdbcType=VARCHAR},
+      </if>
+      <if test="lx != null">
+        LX = #{lx,jdbcType=VARCHAR},
+      </if>
+      <if test="ysf != null">
+        YSF = #{ysf,jdbcType=VARCHAR},
+      </if>
+      <if test="cx != null">
+        CX = #{cx,jdbcType=VARCHAR},
+      </if>
+      <if test="cs != null">
+        CS = #{cs,jdbcType=VARCHAR},
+      </if>
+      <if test="sfcx != null">
+        SFCX = #{sfcx,jdbcType=VARCHAR},
+      </if>
+      <if test="sfcs != null">
+        SFCS = #{sfcs,jdbcType=VARCHAR},
+      </if>
+      <if test="sm != null">
+        SM = #{sm,jdbcType=VARCHAR},
+      </if>
+      <if test="parent != null">
+        PARENT = #{parent,jdbcType=VARCHAR},
+      </if>
+      <if test="sfsc != null">
+        SFSC = #{sfsc,jdbcType=VARCHAR},
+      </if>
+      <if test="bm != null">
+        BM = #{bm,jdbcType=VARCHAR},
+      </if>
+      <if test="gyzd != null">
+        GYZD = #{gyzd,jdbcType=VARCHAR},
+      </if>
+      <if test="pcflbm != null">
+        PCFLBM = #{pcflbm,jdbcType=VARCHAR},
+      </if>
+      <if test="px != null">
+        PX = #{px,jdbcType=VARCHAR},
+      </if>
+      <if test="sfdx != null">
+        SFDX = #{sfdx,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BH = #{bh,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.start.boot.domain.AdvancedQuery">
+    update XT_PC_GJCX
+    set DWBM = #{dwbm,jdbcType=VARCHAR},
+      MC = #{mc,jdbcType=VARCHAR},
+      LX = #{lx,jdbcType=VARCHAR},
+      YSF = #{ysf,jdbcType=VARCHAR},
+      CX = #{cx,jdbcType=VARCHAR},
+      CS = #{cs,jdbcType=VARCHAR},
+      SFCX = #{sfcx,jdbcType=VARCHAR},
+      SFCS = #{sfcs,jdbcType=VARCHAR},
+      SM = #{sm,jdbcType=VARCHAR},
+      PARENT = #{parent,jdbcType=VARCHAR},
+      SFSC = #{sfsc,jdbcType=VARCHAR},
+      BM = #{bm,jdbcType=VARCHAR},
+      GYZD = #{gyzd,jdbcType=VARCHAR},
+      PCFLBM = #{pcflbm,jdbcType=VARCHAR},
+      PX = #{px,jdbcType=VARCHAR},
+      SFDX = #{sfdx,jdbcType=VARCHAR}
+    where BH = #{bh,jdbcType=VARCHAR}
+  </update>
+</mapper>

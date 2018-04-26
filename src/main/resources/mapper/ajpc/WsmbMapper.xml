@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.WsmbMapper">
+  <resultMap id="BaseResultMap" type="com.start.boot.domain.Wsmb">
+    <id column="WSMBBH" jdbcType="CHAR" property="wsmbbh" />
+    <result column="DWBM" jdbcType="CHAR" property="dwbm" />
+    <result column="PCFLBM" jdbcType="CHAR" property="pcflbm" />
+    <result column="WSMBMC" jdbcType="VARCHAR" property="wsmbmc" />
+    <result column="WSMBLB" jdbcType="CHAR" property="wsmblb" />
+    <result column="WSMBLJ" jdbcType="VARCHAR" property="wsmblj" />
+    <result column="WSPX" jdbcType="DECIMAL" property="wspx" />
+    <result column="SPBBM" jdbcType="VARCHAR" property="spbbm" />
+    <result column="SFGX" jdbcType="CHAR" property="sfgx" />
+    <result column="SM" jdbcType="VARCHAR" property="sm" />
+    <result column="JZMLH" jdbcType="VARCHAR" property="jzmlh" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.start.boot.domain.Wsmb">
+    <result column="WSMBNR" jdbcType="BLOB" property="wsmbnr" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    WSMBBH, DWBM, PCFLBM, WSMBMC, WSMBLB, WSMBLJ, WSPX, SPBBM, SFGX, SM, JZMLH
+  </sql>
+  <sql id="Blob_Column_List">
+    WSMBNR
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.start.boot.domain.WsmbExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from XT_PC_WSMB
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.start.boot.domain.WsmbExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from XT_PC_WSMB
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from XT_PC_WSMB
+    where WSMBBH = #{wsmbbh,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from XT_PC_WSMB
+    where WSMBBH = #{wsmbbh,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.start.boot.domain.WsmbExample">
+    delete from XT_PC_WSMB
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.start.boot.domain.Wsmb">
+    insert into XT_PC_WSMB (WSMBBH, DWBM, PCFLBM, 
+      WSMBMC, WSMBLB, WSMBLJ, 
+      WSPX, SPBBM, SFGX, SM, 
+      JZMLH, WSMBNR)
+    values (#{wsmbbh,jdbcType=CHAR}, #{dwbm,jdbcType=CHAR}, #{pcflbm,jdbcType=CHAR}, 
+      #{wsmbmc,jdbcType=VARCHAR}, #{wsmblb,jdbcType=CHAR}, #{wsmblj,jdbcType=VARCHAR}, 
+      #{wspx,jdbcType=DECIMAL}, #{spbbm,jdbcType=VARCHAR}, #{sfgx,jdbcType=CHAR}, #{sm,jdbcType=VARCHAR}, 
+      #{jzmlh,jdbcType=VARCHAR}, #{wsmbnr,jdbcType=BLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.start.boot.domain.Wsmb">
+    insert into XT_PC_WSMB
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="wsmbbh != null">
+        WSMBBH,
+      </if>
+      <if test="dwbm != null">
+        DWBM,
+      </if>
+      <if test="pcflbm != null">
+        PCFLBM,
+      </if>
+      <if test="wsmbmc != null">
+        WSMBMC,
+      </if>
+      <if test="wsmblb != null">
+        WSMBLB,
+      </if>
+      <if test="wsmblj != null">
+        WSMBLJ,
+      </if>
+      <if test="wspx != null">
+        WSPX,
+      </if>
+      <if test="spbbm != null">
+        SPBBM,
+      </if>
+      <if test="sfgx != null">
+        SFGX,
+      </if>
+      <if test="sm != null">
+        SM,
+      </if>
+      <if test="jzmlh != null">
+        JZMLH,
+      </if>
+      <if test="wsmbnr != null">
+        WSMBNR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="wsmbbh != null">
+        #{wsmbbh,jdbcType=CHAR},
+      </if>
+      <if test="dwbm != null">
+        #{dwbm,jdbcType=CHAR},
+      </if>
+      <if test="pcflbm != null">
+        #{pcflbm,jdbcType=CHAR},
+      </if>
+      <if test="wsmbmc != null">
+        #{wsmbmc,jdbcType=VARCHAR},
+      </if>
+      <if test="wsmblb != null">
+        #{wsmblb,jdbcType=CHAR},
+      </if>
+      <if test="wsmblj != null">
+        #{wsmblj,jdbcType=VARCHAR},
+      </if>
+      <if test="wspx != null">
+        #{wspx,jdbcType=DECIMAL},
+      </if>
+      <if test="spbbm != null">
+        #{spbbm,jdbcType=VARCHAR},
+      </if>
+      <if test="sfgx != null">
+        #{sfgx,jdbcType=CHAR},
+      </if>
+      <if test="sm != null">
+        #{sm,jdbcType=VARCHAR},
+      </if>
+      <if test="jzmlh != null">
+        #{jzmlh,jdbcType=VARCHAR},
+      </if>
+      <if test="wsmbnr != null">
+        #{wsmbnr,jdbcType=BLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.start.boot.domain.WsmbExample" resultType="java.lang.Long">
+    select count(*) from XT_PC_WSMB
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update XT_PC_WSMB
+    <set>
+      <if test="record.wsmbbh != null">
+        WSMBBH = #{record.wsmbbh,jdbcType=CHAR},
+      </if>
+      <if test="record.dwbm != null">
+        DWBM = #{record.dwbm,jdbcType=CHAR},
+      </if>
+      <if test="record.pcflbm != null">
+        PCFLBM = #{record.pcflbm,jdbcType=CHAR},
+      </if>
+      <if test="record.wsmbmc != null">
+        WSMBMC = #{record.wsmbmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wsmblb != null">
+        WSMBLB = #{record.wsmblb,jdbcType=CHAR},
+      </if>
+      <if test="record.wsmblj != null">
+        WSMBLJ = #{record.wsmblj,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wspx != null">
+        WSPX = #{record.wspx,jdbcType=DECIMAL},
+      </if>
+      <if test="record.spbbm != null">
+        SPBBM = #{record.spbbm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfgx != null">
+        SFGX = #{record.sfgx,jdbcType=CHAR},
+      </if>
+      <if test="record.sm != null">
+        SM = #{record.sm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jzmlh != null">
+        JZMLH = #{record.jzmlh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wsmbnr != null">
+        WSMBNR = #{record.wsmbnr,jdbcType=BLOB},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update XT_PC_WSMB
+    set WSMBBH = #{record.wsmbbh,jdbcType=CHAR},
+      DWBM = #{record.dwbm,jdbcType=CHAR},
+      PCFLBM = #{record.pcflbm,jdbcType=CHAR},
+      WSMBMC = #{record.wsmbmc,jdbcType=VARCHAR},
+      WSMBLB = #{record.wsmblb,jdbcType=CHAR},
+      WSMBLJ = #{record.wsmblj,jdbcType=VARCHAR},
+      WSPX = #{record.wspx,jdbcType=DECIMAL},
+      SPBBM = #{record.spbbm,jdbcType=VARCHAR},
+      SFGX = #{record.sfgx,jdbcType=CHAR},
+      SM = #{record.sm,jdbcType=VARCHAR},
+      JZMLH = #{record.jzmlh,jdbcType=VARCHAR},
+      WSMBNR = #{record.wsmbnr,jdbcType=BLOB}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update XT_PC_WSMB
+    set WSMBBH = #{record.wsmbbh,jdbcType=CHAR},
+      DWBM = #{record.dwbm,jdbcType=CHAR},
+      PCFLBM = #{record.pcflbm,jdbcType=CHAR},
+      WSMBMC = #{record.wsmbmc,jdbcType=VARCHAR},
+      WSMBLB = #{record.wsmblb,jdbcType=CHAR},
+      WSMBLJ = #{record.wsmblj,jdbcType=VARCHAR},
+      WSPX = #{record.wspx,jdbcType=DECIMAL},
+      SPBBM = #{record.spbbm,jdbcType=VARCHAR},
+      SFGX = #{record.sfgx,jdbcType=CHAR},
+      SM = #{record.sm,jdbcType=VARCHAR},
+      JZMLH = #{record.jzmlh,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.start.boot.domain.Wsmb">
+    update XT_PC_WSMB
+    <set>
+      <if test="dwbm != null">
+        DWBM = #{dwbm,jdbcType=CHAR},
+      </if>
+      <if test="pcflbm != null">
+        PCFLBM = #{pcflbm,jdbcType=CHAR},
+      </if>
+      <if test="wsmbmc != null">
+        WSMBMC = #{wsmbmc,jdbcType=VARCHAR},
+      </if>
+      <if test="wsmblb != null">
+        WSMBLB = #{wsmblb,jdbcType=CHAR},
+      </if>
+      <if test="wsmblj != null">
+        WSMBLJ = #{wsmblj,jdbcType=VARCHAR},
+      </if>
+      <if test="wspx != null">
+        WSPX = #{wspx,jdbcType=DECIMAL},
+      </if>
+      <if test="spbbm != null">
+        SPBBM = #{spbbm,jdbcType=VARCHAR},
+      </if>
+      <if test="sfgx != null">
+        SFGX = #{sfgx,jdbcType=CHAR},
+      </if>
+      <if test="sm != null">
+        SM = #{sm,jdbcType=VARCHAR},
+      </if>
+      <if test="jzmlh != null">
+        JZMLH = #{jzmlh,jdbcType=VARCHAR},
+      </if>
+      <if test="wsmbnr != null">
+        WSMBNR = #{wsmbnr,jdbcType=BLOB},
+      </if>
+    </set>
+    where WSMBBH = #{wsmbbh,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.start.boot.domain.Wsmb">
+    update XT_PC_WSMB
+    set DWBM = #{dwbm,jdbcType=CHAR},
+      PCFLBM = #{pcflbm,jdbcType=CHAR},
+      WSMBMC = #{wsmbmc,jdbcType=VARCHAR},
+      WSMBLB = #{wsmblb,jdbcType=CHAR},
+      WSMBLJ = #{wsmblj,jdbcType=VARCHAR},
+      WSPX = #{wspx,jdbcType=DECIMAL},
+      SPBBM = #{spbbm,jdbcType=VARCHAR},
+      SFGX = #{sfgx,jdbcType=CHAR},
+      SM = #{sm,jdbcType=VARCHAR},
+      JZMLH = #{jzmlh,jdbcType=VARCHAR},
+      WSMBNR = #{wsmbnr,jdbcType=BLOB}
+    where WSMBBH = #{wsmbbh,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.start.boot.domain.Wsmb">
+    update XT_PC_WSMB
+    set DWBM = #{dwbm,jdbcType=CHAR},
+      PCFLBM = #{pcflbm,jdbcType=CHAR},
+      WSMBMC = #{wsmbmc,jdbcType=VARCHAR},
+      WSMBLB = #{wsmblb,jdbcType=CHAR},
+      WSMBLJ = #{wsmblj,jdbcType=VARCHAR},
+      WSPX = #{wspx,jdbcType=DECIMAL},
+      SPBBM = #{spbbm,jdbcType=VARCHAR},
+      SFGX = #{sfgx,jdbcType=CHAR},
+      SM = #{sm,jdbcType=VARCHAR},
+      JZMLH = #{jzmlh,jdbcType=VARCHAR}
+    where WSMBBH = #{wsmbbh,jdbcType=CHAR}
+  </update>
+</mapper>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>承办部门反馈</title>
+</head>
+<body>
+<!--页面JS加载，放在头部不能正确加载-->
+<script type="text/javascript">
+    AddScript("text/javascript", "script/evaluate/dptfeedback/index.js");
+</script>
+<!--案件列表-->
+<div id="div_dptfeedback_list" class="easyui-panel" style="margin-top:0px" data-options="fit:true,border:false">
+    <div id="div_eval_handle_list" class="easyui-panel" style="margin-top:0px" data-options="fit:true,border:false">
+        <!--工具栏-->
+        <div id="tool_eval_handle_grid_list" style="padding: 5px;" >
+        <div style="height: 30px; border-radius:2px; border: 0px solid #c1c1c1;">
+            <span >案件名称</span>
+            <input id="txt_eval_handle_grid_ajmc" type="text" style="width:220px;height: 28px;">
+            <button id="btn_eval_handle_grid_search" class="ZXpc_pcfa_2" style="background-color: #258EEA;">查询</button>
+        </div>
+    </div>
+        <table id="grid_dptfeedback_list" border="0"></table>
+    </div>
+</div>
+
+</body>
+</html>

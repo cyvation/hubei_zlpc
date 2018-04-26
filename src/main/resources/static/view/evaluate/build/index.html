@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新建评查</title>
+</head>
+<body>
+<!--页面JS加载，放在头部不能正确加载-->
+<script type="text/javascript">
+	AddScript("text/javascript", "script/evaluate/build/index.js");
+</script>
+
+<!--新建评查弹窗-->
+<div id="pop_ups_win" class="easyui-window" title="新建评查" style="width:500px;height:260px;background:#fff"
+     data-options="closed:true,modal:true,collapsible:false,minimizable:false,maximizable:false">
+    <div class="pop_ups_win" style="width: 100%">
+        <div class="pop_ups_win_input" style="margin-top: 0">
+            评查方式&nbsp;&nbsp;
+        	<input id="cbt_win_eval_build_pcfl" data-options="wincom:true" class="easyui-combotree"  style="width: 348px;height: 30px;margin-left: 5px" />
+        </div>
+        <div id="btn_wind_eval_next" style="padding: 8px 14px;background: #0690e8;border-radius: 4px;float: right;color: #FFFFFF;margin-right: 45px;margin-top: 30px;cursor: pointer">下一步</div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    AddScript("text/javascript","script/evaluate/handle/tabsPcbl.js");
+</script>
+<style>
+    #tt_eval_handle .tabs li a.tabs-inner{
+        padding: 0 25px;
+        border: 1px solid #DCE4F2;
+        border-left: none;
+        border-top: none;
+    }
+    #tt .tabs li a.tabs-inner{
+        padding: 0 15px;
+        border: 1px solid #DCE4F2;
+        border-left: none;
+        border-top: none;
+    }
+    #tt_eval_handle .tabs li a.tabs-inner .tabs-title{
+        font-size: 14px;
+    }
+    #tt_eval_handle .tabs-header .tabs-wrap{
+        border: 1px solid #DCE4F2;
+        border-radius: 3px;
+    }
+    #tt_eval_handle .tabs-panels{
+        border: 1px solid #DCE4F2;
+        border-top: none;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+    #tt_eval_handle .tabs li.tabs-selected a.tabs-inner {
+        border-top: 3px solid #1E8EE1;
+    }
+    #tt_eval_handle .tabs li.tabs-selected a.tabs-inner{
+        border-bottom: 1px solid #ffffff;
+    }
+    #tt_eval_handle  .tabs-header{
+        border-radius: 3px;
+    }
+
+</style>
+<div id="view_evaluate_handle_qhhq" onclick="switch_to_splitscreen()" style="position: absolute;
+    top: 4px;
+    right: 5px;
+    z-index: 2222;
+    background: url(image/home/bm.png)no-repeat center;
+    width: 30px;
+    height: 30px;
+    /* height: 20px; */
+    cursor: pointer;
+    background-size: contain;">
+</div>
+
+<div id="tt_eval_handle" class="easyui-tabs" data-options="fit:true,selected:1,region:'center',tools:'#pcxxjg'" >
+
+    <!--<div title="案件信息" style="padding:15px" href="./view/evaluate/handle/tabsAjxx.html">-->
+    <div title="案件信息" style="padding:10px">
+
+    </div>
+    <div title="评查信息" data-options="" href="./view/evaluate/handle/tabsPcxx.html" >
+    </div>
+
+</div>
+<div class="pcbl_pcxx_top" id="pcxxjg" style=" border: none;background-color: #D8EAF8;top: 3px; margin-right: 10px;">
+    <div id='pcblBut' style="height: 30px;padding-right: 30px">
+        <!--<a  id="mb_eval_handle_btn_more" class="easyui-menubutton" data-options="menu:'#mm_eval_handle_btnlist',iconCls:'icon-edit',wincom:true" style="display: none;float: right;  width: 28px;height: 27px; margin-top: 3px;border: 1px solid #248CEB;border-radius: 3px;opacity: 1;padding: 0; " title="更多"></a>-->
+        <!--<div id="mm_eval_handle_btnlist" style="width:140px;">-->
+        <!--</div>-->
+    </div>
+</div>
+</body>
+</html>

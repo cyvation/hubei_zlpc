@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<link href="../css/ZXpczhfx.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.1/themes/bootstrap/easyui.css" />
+<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.1/themes/icon.css" />
+<script src="../jquery-easyui-1.4.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../jquery-easyui-1.4.1/jquery.easyui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../jquery-easyui-1.4.1/locale/easyui-lang-zh_TW.js" type="text/javascript"></script>
+<div class="ZXpczhfx">
+    <div class="ZXpczhfx_url">
+        <img style="float:left;margin: 10px 10px 0 2%;"src="../images/add.png">
+        <span style="line-height: 40px">专项评查 > 统计分析</span>
+        <span style="float:right;line-height: 40px;color: #225199;margin-right: 2%;font-weight: bold"> < 返回</span>
+    </div>
+    <div class="ZXpczhfx_all">
+        <div class="ZXpczhfx_top">
+            <div class="ZXpczhfx_top_1">
+                综合分析（按月）
+            </div>
+        </div>
+        <div class="ZXpczhfx_sj">
+            <div style="width: 25%;float:left;    line-height: 57px;">
+                <span style="float:left;margin-left: 10px;margin-right: 5px;">单位</span>
+                <select class="easyui-combobox" style="width:55%;height:30px;">
+                    <option value="aa">aitem1</option>
+                    <option>bitem2</option>
+                    <option>bitem3</option>
+                    <option>ditem4</option>
+                    <option>eitem5</option>
+                </select>
+            </div>
+            <div style="width: 40%;float:left; ">
+                <span style="display: inline-block;color: #666666;    margin: 20px 5px 0 0;float:left;">评查结束日期</span>
+                <input  type="text" class="easyui-datebox" style="height: 30px;width: 30%">  </input>
+                <a style="display: inline-block;float:left;margin: 23px 5px 0 5px;">~ </a>
+                <input  type="text" class="easyui-datebox" style="height: 30px;width: 30%">  </input>
+            </div>
+            <div style="width: 35%;float:left;    line-height: 57px;">
+                <span style="float:left;margin-left: 10px;margin-right: 5px;">评查方式与内容</span>
+                <select class="easyui-combobox" style="width:43%;height: 30px;">
+                    <option value="aa">aitem1</option>
+                    <option>bitem2</option>
+                    <option>bitem3</option>
+                    <option>ditem4</option>
+                    <option>eitem5</option>
+                </select>
+                <button class="ZXpczhfx_sj_2">分析</button>
+            </div>
+        </div>
+        <div class="ZXpczhfx_txs" style="margin-right: 1%">
+            <div style="width:100%;height: 100%" id="main">
+            </div>
+        </div>
+        <div class="ZXpczhfx_txs">
+            <table id="dg"></table>
+
+        </div>
+        <div class="ZXpczhfx_txs" style="margin-right: 1%">
+            <div style="width:100%;height: 100%" id="main2">
+            </div>
+        </div>
+        <div class="ZXpczhfx_txs">
+            <table id="dgg"></table>
+        </div>
+    </div>
+
+
+</div>
+   <script src="../echarts-2.2.7/build/dist/echarts-all.js"></script>
+   <script src="../js/ZXpczhfx.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.wpcaj{
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    font-family: 微软雅黑;
+    background-color: #F0F9FF;
+    width: 100%;
+    height: 100%;
+}
+.wpcaj_url{
+    width: 100%;
+    height: 40px;
+    background-color: #DDEEF8;
+    color: #616A6F;
+    font-size: 14px;
+}
+.wpcaj_tj{
+    width: 96%;
+    height: 50px;
+    border-bottom: 1px solid #B0CEF0;
+    margin-left: 2%;
+}
+.wpcaj_tj_1{
+    width: 105px;
+    float: left;
+    font-weight: bold;
+    border-bottom: 3px solid #2287E0;
+    text-align: center;
+    margin-top: 18px;
+    height: 30px;
+}
+.wpcaj_tj_2{
+    font-size: 14px;
+    width: 70px;
+    height: 25px;
+    background-color: #B9DFF6;
+    text-align: center;
+    line-height: 25px;
+    color: #3970B1;
+    float: left;
+    margin: 16px 0 0 20px;
+    border-radius: 5px;
+}
+.wpcaj_content{
+    width: 96%;
+    overflow: hidden;
+    border: 1px solid #B0CEF0;
+    margin-left: 2%;
+    margin-top: 20px;
+    background-color: #fff;
+    height: calc(100% - 134px);
+}
+.wpcaj_content_1{
+    margin: 20px 20px 0 20px;
+    width: calc(100% - 40px);
+
+}
+/*
+.datagrid-view2 table tr td{
+    border: 0 !important;
+}
+.datagrid-btable>tbody>tr{
+    border-bottom:1px solid #DEDEDE !important;
+}
+.datagrid-row {
+    height: 30px !important;
+}
+tbody>tr{
+    width: 100% !important;
+}
+tbody{
+    width: 100%;
+    height: 35px;
+}
+.datagrid-btable{
+    width: 100%;
+}
+.datagrid-header{
+    height: 35px !important;
+    border-top: 1px solid #DEDEDE !important;
+}
+.datagrid-header-row{
+    height: 35px !important;
+    color: #2B6993 !important;
+}
+.datagrid-htable{
+    height: 30px !important;
+}
+*/
+
+
+
+

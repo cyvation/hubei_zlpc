@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.DataDictionaryMapper">
+  <resultMap id="BaseResultMap" type="com.start.boot.domain.DataDictionary">
+    <id column="DM" jdbcType="CHAR" property="dm" />
+    <id column="LBBM" jdbcType="CHAR" property="lbbm" />
+    <result column="FDM" jdbcType="CHAR" property="fdm" />
+    <result column="MC" jdbcType="VARCHAR" property="mc" />
+    <result column="SM" jdbcType="VARCHAR" property="sm" />
+    <result column="SFSC" jdbcType="CHAR" property="sfsc" />
+  </resultMap>
+
+  <resultMap id="Dictionary" type="map">
+    <id column="DM" jdbcType="CHAR" property="dm" />
+    <id column="LBBM" jdbcType="CHAR" property="lbbm" />
+    <result column="FDM" jdbcType="CHAR" property="fdm" />
+    <result column="MC" jdbcType="VARCHAR" property="mc" />
+    <result column="SM" jdbcType="VARCHAR" property="sm" />
+    <result column="SFSC" jdbcType="CHAR" property="sfsc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    DM, LBBM, FDM, MC, SM, SFSC
+  </sql>
+
+  
+  <select id="selectByExample" parameterType="com.start.boot.domain.DataDictionaryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from XT_DM_FLDM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.start.boot.domain.DataDictionaryKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from XT_DM_FLDM
+    where DM = #{dm,jdbcType=CHAR}
+      and LBBM = #{lbbm,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.start.boot.domain.DataDictionaryKey">
+    delete from XT_DM_FLDM
+    where DM = #{dm,jdbcType=CHAR}
+      and LBBM = #{lbbm,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.start.boot.domain.DataDictionaryExample">
+    delete from XT_DM_FLDM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.start.boot.domain.DataDictionary">
+    insert into XT_DM_FLDM (DM, LBBM, FDM, MC, 
+      SM, SFSC)
+    values (#{dm,jdbcType=CHAR}, #{lbbm,jdbcType=CHAR}, #{fdm,jdbcType=CHAR}, #{mc,jdbcType=VARCHAR}, 
+      #{sm,jdbcType=VARCHAR}, #{sfsc,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.start.boot.domain.DataDictionary">
+    insert into XT_DM_FLDM
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dm != null">
+        DM,
+      </if>
+      <if test="lbbm != null">
+        LBBM,
+      </if>
+      <if test="fdm != null">
+        FDM,
+      </if>
+      <if test="mc != null">
+        MC,
+      </if>
+      <if test="sm != null">
+        SM,
+      </if>
+      <if test="sfsc != null">
+        SFSC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dm != null">
+        #{dm,jdbcType=CHAR},
+      </if>
+      <if test="lbbm != null">
+        #{lbbm,jdbcType=CHAR},
+      </if>
+      <if test="fdm != null">
+        #{fdm,jdbcType=CHAR},
+      </if>
+      <if test="mc != null">
+        #{mc,jdbcType=VARCHAR},
+      </if>
+      <if test="sm != null">
+        #{sm,jdbcType=VARCHAR},
+      </if>
+      <if test="sfsc != null">
+        #{sfsc,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.start.boot.domain.DataDictionaryExample" resultType="java.lang.Long">
+    select count(*) from XT_DM_FLDM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update XT_DM_FLDM
+    <set>
+      <if test="record.dm != null">
+        DM = #{record.dm,jdbcType=CHAR},
+      </if>
+      <if test="record.lbbm != null">
+        LBBM = #{record.lbbm,jdbcType=CHAR},
+      </if>
+      <if test="record.fdm != null">
+        FDM = #{record.fdm,jdbcType=CHAR},
+      </if>
+      <if test="record.mc != null">
+        MC = #{record.mc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sm != null">
+        SM = #{record.sm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfsc != null">
+        SFSC = #{record.sfsc,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update XT_DM_FLDM
+    set DM = #{record.dm,jdbcType=CHAR},
+      LBBM = #{record.lbbm,jdbcType=CHAR},
+      FDM = #{record.fdm,jdbcType=CHAR},
+      MC = #{record.mc,jdbcType=VARCHAR},
+      SM = #{record.sm,jdbcType=VARCHAR},
+      SFSC = #{record.sfsc,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.start.boot.domain.DataDictionary">
+    update XT_DM_FLDM
+    <set>
+      <if test="fdm != null">
+        FDM = #{fdm,jdbcType=CHAR},
+      </if>
+      <if test="mc != null">
+        MC = #{mc,jdbcType=VARCHAR},
+      </if>
+      <if test="sm != null">
+        SM = #{sm,jdbcType=VARCHAR},
+      </if>
+      <if test="sfsc != null">
+        SFSC = #{sfsc,jdbcType=CHAR},
+      </if>
+    </set>
+    where DM = #{dm,jdbcType=CHAR}
+      and LBBM = #{lbbm,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.start.boot.domain.DataDictionary">
+    update XT_DM_FLDM
+    set FDM = #{fdm,jdbcType=CHAR},
+      MC = #{mc,jdbcType=VARCHAR},
+      SM = #{sm,jdbcType=VARCHAR},
+      SFSC = #{sfsc,jdbcType=CHAR}
+    where DM = #{dm,jdbcType=CHAR}
+      and LBBM = #{lbbm,jdbcType=CHAR}
+  </update>
+
+
+<select id="getSjzdfl" resultMap="Fldmlb">
+   SELECT LB.*, '-1' AS FBM
+     FROM xt_dm_fldmlb LB
+</select>
+  <resultMap id="Fldmlb" type="map">
+    <result column="LBBM" property="lbbm"></result>
+    <result column="LBMC" property="lbmc"></result>
+    <result column="FBM" property="fbm"></result>
+  </resultMap>
+  
+  <select id="selectDictionaryByExample" parameterType="com.start.boot.domain.DataDictionaryExample" resultMap="Dictionary">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from XT_DM_FLDM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <update id="deleteFldm" parameterType="com.start.boot.domain.DataDictionary">
+  DELETE FROM XT_DM_FLDM WHERE DM = #{dm,jdbcType=CHAR} OR FDM = #{dm,jdbcType=CHAR}
+  </update>
+
+  <update id="updateSfscByPrimaryKey" parameterType="java.util.List">
+  UPDATE XT_DM_FLDM SET SFSC = #{sfsc,jdbcType=CHAR} WHERE DM = #{dm,jdbcType=CHAR}
+  </update>
+</mapper>

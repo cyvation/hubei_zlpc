@@ -1,0 +1,7 @@
+.textbox {
+  text-align:center;
+  vertical-align: middle;
+}
+.textbox .textbox-text {
+    text-align:center;
+}

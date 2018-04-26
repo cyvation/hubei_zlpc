@@ -1,0 +1,62 @@
+/*!*自定义选项卡背景的样式*!*/
+div[class='tabs-header tabs-header-noborder']{
+    height: 39px !important;
+    padding-top: 0px !important;
+    background: #D7EBF7;
+}
+
+div[class='tabs-header tabs-header-noborder'] .tabs-wrap .tabs{
+    height: 38px !important;
+    padding-left: 0 !important;
+}
+div[class='tabs-header tabs-header-noborder'] .tabs-wrap ul li a{
+    height: 34px !important;
+    line-height: 34px !important;
+}
+div[class='tabs-header tabs-header-noborder'] .tabs-wrap ul li .tabs-last{
+    line-height: 25px !important;
+}
+div[class='tabs-header tabs-header-noborder'] .tabs-wrap ul li .tabs-inner{
+    border-bottom: 1px solid #abceee !important;
+    border-top: 4px solid rgba(0,0,0,0) !important;
+    border-right: 1px solid rgba(0,0,0,0) !important;
+    border-left:1px solid rgba(0,0,0,0) !important;
+}
+div[class='tabs-header tabs-header-noborder'] .tabs-wrap ul .tabs-selected  .tabs-inner{
+    border-bottom: 1px solid #ffffff !important;
+    border-top: 4px solid #2888de !important;
+    border-right: 1px solid #abceee !important;
+    border-left:1px solid #abceee !important;
+}
+div[class='tabs-header tabs-header-noborder'] .tabs-wrap ul li{
+    margin: 0px 0px -1px 0px;
+}
+div[class='tabs-header tabs-header-noborder'] .tabs li a.tabs-inner{
+    padding: 0 50px !important;
+    border-radius: 0px !important;
+}
+div[class='tabs-header tabs-header-noborder'] .tabs-container .panel-body{
+    background: #ffffff;
+}
+
+div[class='tabs-header tabs-header-noborder'] .tabs .tabs-selected a.tabs-inner{
+    background: #ffffff !important;
+}
+div[class='tabs-header tabs-header-noborder'] .tabs li a.tabs-inner{
+    background: #D7EBF7 !important;
+}
+div[class='tabs-header tabs-header-noborder'] .tabs .tabs-selected a.tabs-inner:hover{
+    background: #ffffff !important;
+}
+div[class='tabs-header tabs-header-noborder'] .tabs li a.tabs-inner:hover{
+    background: #D7EBF7 !important;
+}
+div[class='tabs-header tabs-header-noborder'] .tabs li.tabs-selected a.tabs-inner{
+    color: #084c7b !important;
+}
+div[class='tabs-header tabs-header-noborder'] li .tabs-title{
+    font-size: 14px;
+}
+div[class='tabs-header tabs-header-noborder'] .pacbl_ajxx_left_box .tabs li a.tabs-inner{
+    padding: 0 16px !important;
+}

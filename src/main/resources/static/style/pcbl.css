@@ -1,0 +1,73 @@
+#pacbl_box_left{
+    float: left;
+    width: 300px;
+    height: calc(100% - 30px);
+
+}
+#pacbl_box_right{
+    float: left;
+    width: calc(100% - 300px);
+    height: calc(100% - 30px);
+}
+.pacbl_ajxx_left_box{
+    width: 100%;
+    height: 50%;
+
+}
+
+.pacbl_ajxx_tabs_ul li{
+    width: calc(100% - 26px);
+    padding: 5px 0;
+    background: #d8eaf8;
+    border-radius: 3px;
+    border: 1px solid #b8cced;
+    margin: 13px 0 0 13px;
+    text-indent: 5px;
+}
+
+#gaxx_jkList li{
+    width: calc(100% - 26px);
+    padding: 5px 0;
+    background: #d8eaf8;
+    border-radius: 3px;
+    border: 1px solid #b8cced;
+    margin: 13px 0 0 13px;
+    text-indent: 25px;
+}
+#gaxx_jkList li:hover{
+ background: #2588e3;
+    color: #fff;
+}
+.pacbl_ajxx_tabs_li{
+    cursor: pointer;
+}
+#tree_eval_doc_files li:hover{
+    background: #fff;
+}
+
+
+/*评查信息查看*/
+#pcWin_pacbl_box_left{
+    float: left;
+    width: 300px;
+    height: calc(100% - 30px);
+
+}
+#pcWin_pacbl_box_right{
+    float: left;
+    width: calc(100% - 300px);
+    height: calc(100% - 30px);
+}
+#pcWin_gaxx_jkList li{
+    width: calc(100% - 26px);
+    padding: 5px 0;
+    background: #d8eaf8;
+    border-radius: 3px;
+    border: 1px solid #b8cced;
+    margin: 13px 0 0 13px;
+    text-indent: 25px;
+}
+#pcWin_gaxx_jkList li:hover{
+    background: #2588e3;
+    color: #fff;
+}

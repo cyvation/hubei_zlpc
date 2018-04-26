@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.DbrwMapper">
+  <resultMap id="BaseResultMap" type="com.start.boot.domain.Dbrw">
+    <id column="GNBM" jdbcType="VARCHAR" property="gnbm" />
+    <result column="GNMC" jdbcType="VARCHAR" property="gnmc" />
+    <result column="VALIDATENAME" jdbcType="VARCHAR" property="validatename" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    GNBM, GNMC, VALIDATENAME
+  </sql>
+  <select id="selectByExample" parameterType="com.start.boot.domain.DbrwExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from XT_PC_DBRW
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from XT_PC_DBRW
+    where GNBM = #{gnbm,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from XT_PC_DBRW
+    where GNBM = #{gnbm,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.start.boot.domain.DbrwExample">
+    delete from XT_PC_DBRW
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.start.boot.domain.Dbrw">
+    insert into XT_PC_DBRW (GNBM, GNMC, VALIDATENAME
+      )
+    values (#{gnbm,jdbcType=VARCHAR}, #{gnmc,jdbcType=VARCHAR}, #{validatename,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.start.boot.domain.Dbrw">
+    insert into XT_PC_DBRW
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gnbm != null">
+        GNBM,
+      </if>
+      <if test="gnmc != null">
+        GNMC,
+      </if>
+      <if test="validatename != null">
+        VALIDATENAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gnbm != null">
+        #{gnbm,jdbcType=VARCHAR},
+      </if>
+      <if test="gnmc != null">
+        #{gnmc,jdbcType=VARCHAR},
+      </if>
+      <if test="validatename != null">
+        #{validatename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.start.boot.domain.DbrwExample" resultType="java.lang.Long">
+    select count(*) from XT_PC_DBRW
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update XT_PC_DBRW
+    <set>
+      <if test="record.gnbm != null">
+        GNBM = #{record.gnbm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gnmc != null">
+        GNMC = #{record.gnmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.validatename != null">
+        VALIDATENAME = #{record.validatename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update XT_PC_DBRW
+    set GNBM = #{record.gnbm,jdbcType=VARCHAR},
+      GNMC = #{record.gnmc,jdbcType=VARCHAR},
+      VALIDATENAME = #{record.validatename,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.start.boot.domain.Dbrw">
+    update XT_PC_DBRW
+    <set>
+      <if test="gnmc != null">
+        GNMC = #{gnmc,jdbcType=VARCHAR},
+      </if>
+      <if test="validatename != null">
+        VALIDATENAME = #{validatename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where GNBM = #{gnbm,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.start.boot.domain.Dbrw">
+    update XT_PC_DBRW
+    set GNMC = #{gnmc,jdbcType=VARCHAR},
+      VALIDATENAME = #{validatename,jdbcType=VARCHAR}
+    where GNBM = #{gnbm,jdbcType=VARCHAR}
+  </update>
+</mapper>

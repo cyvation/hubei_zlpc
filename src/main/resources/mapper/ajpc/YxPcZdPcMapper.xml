@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.YxPcZdPcMapper">
+  <resultMap id="BaseResultMap" type="com.start.boot.domain.YxPcZdPc">
+    <id column="PCSL_BM" jdbcType="CHAR" property="pcslBm" />
+    <id column="PCX_BM" jdbcType="CHAR" property="pcxBm" />
+    <result column="PCLB_BM" jdbcType="CHAR" property="pclbBm" />
+    <result column="PCX_MC" jdbcType="VARCHAR" property="pcxMc" />
+    <result column="PCX_FZ" jdbcType="DECIMAL" property="pcxFz" />
+    <result column="PCLY" jdbcType="VARCHAR" property="pcly" />
+    <result column="SM" jdbcType="VARCHAR" property="sm" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    PCSL_BM, PCX_BM, PCLB_BM, PCX_MC, PCX_FZ, PCLY, SM
+  </sql>
+  <select id="selectByExample" parameterType="com.start.boot.domain.YxPcZdPcExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YX_PC_ZDPC
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.start.boot.domain.YxPcZdPcKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from YX_PC_ZDPC
+    where PCSL_BM = #{pcslBm,jdbcType=CHAR}
+      and PCX_BM = #{pcxBm,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.start.boot.domain.YxPcZdPcKey">
+    delete from YX_PC_ZDPC
+    where PCSL_BM = #{pcslBm,jdbcType=CHAR}
+      and PCX_BM = #{pcxBm,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.start.boot.domain.YxPcZdPcExample">
+    delete from YX_PC_ZDPC
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.start.boot.domain.YxPcZdPc">
+    insert into YX_PC_ZDPC (PCSL_BM, PCX_BM, PCLB_BM, 
+      PCX_MC, PCX_FZ, PCLY, 
+      SM)
+    values (#{pcslBm,jdbcType=CHAR}, #{pcxBm,jdbcType=CHAR}, #{pclbBm,jdbcType=CHAR}, 
+      #{pcxMc,jdbcType=VARCHAR}, #{pcxFz,jdbcType=DECIMAL}, #{pcly,jdbcType=VARCHAR}, 
+      #{sm,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.start.boot.domain.YxPcZdPc">
+    insert into YX_PC_ZDPC
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pcslBm != null">
+        PCSL_BM,
+      </if>
+      <if test="pcxBm != null">
+        PCX_BM,
+      </if>
+      <if test="pclbBm != null">
+        PCLB_BM,
+      </if>
+      <if test="pcxMc != null">
+        PCX_MC,
+      </if>
+      <if test="pcxFz != null">
+        PCX_FZ,
+      </if>
+      <if test="pcly != null">
+        PCLY,
+      </if>
+      <if test="sm != null">
+        SM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pcslBm != null">
+        #{pcslBm,jdbcType=CHAR},
+      </if>
+      <if test="pcxBm != null">
+        #{pcxBm,jdbcType=CHAR},
+      </if>
+      <if test="pclbBm != null">
+        #{pclbBm,jdbcType=CHAR},
+      </if>
+      <if test="pcxMc != null">
+        #{pcxMc,jdbcType=VARCHAR},
+      </if>
+      <if test="pcxFz != null">
+        #{pcxFz,jdbcType=DECIMAL},
+      </if>
+      <if test="pcly != null">
+        #{pcly,jdbcType=VARCHAR},
+      </if>
+      <if test="sm != null">
+        #{sm,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.start.boot.domain.YxPcZdPcExample" resultType="java.lang.Long">
+    select count(*) from YX_PC_ZDPC
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update YX_PC_ZDPC
+    <set>
+      <if test="record.pcslBm != null">
+        PCSL_BM = #{record.pcslBm,jdbcType=CHAR},
+      </if>
+      <if test="record.pcxBm != null">
+        PCX_BM = #{record.pcxBm,jdbcType=CHAR},
+      </if>
+      <if test="record.pclbBm != null">
+        PCLB_BM = #{record.pclbBm,jdbcType=CHAR},
+      </if>
+      <if test="record.pcxMc != null">
+        PCX_MC = #{record.pcxMc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pcxFz != null">
+        PCX_FZ = #{record.pcxFz,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pcly != null">
+        PCLY = #{record.pcly,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sm != null">
+        SM = #{record.sm,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update YX_PC_ZDPC
+    set PCSL_BM = #{record.pcslBm,jdbcType=CHAR},
+      PCX_BM = #{record.pcxBm,jdbcType=CHAR},
+      PCLB_BM = #{record.pclbBm,jdbcType=CHAR},
+      PCX_MC = #{record.pcxMc,jdbcType=VARCHAR},
+      PCX_FZ = #{record.pcxFz,jdbcType=DECIMAL},
+      PCLY = #{record.pcly,jdbcType=VARCHAR},
+      SM = #{record.sm,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.start.boot.domain.YxPcZdPc">
+    update YX_PC_ZDPC
+    <set>
+      <if test="pclbBm != null">
+        PCLB_BM = #{pclbBm,jdbcType=CHAR},
+      </if>
+      <if test="pcxMc != null">
+        PCX_MC = #{pcxMc,jdbcType=VARCHAR},
+      </if>
+      <if test="pcxFz != null">
+        PCX_FZ = #{pcxFz,jdbcType=DECIMAL},
+      </if>
+      <if test="pcly != null">
+        PCLY = #{pcly,jdbcType=VARCHAR},
+      </if>
+      <if test="sm != null">
+        SM = #{sm,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PCSL_BM = #{pcslBm,jdbcType=CHAR}
+      and PCX_BM = #{pcxBm,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.start.boot.domain.YxPcZdPc">
+    update YX_PC_ZDPC
+    set PCLB_BM = #{pclbBm,jdbcType=CHAR},
+      PCX_MC = #{pcxMc,jdbcType=VARCHAR},
+      PCX_FZ = #{pcxFz,jdbcType=DECIMAL},
+      PCLY = #{pcly,jdbcType=VARCHAR},
+      SM = #{sm,jdbcType=VARCHAR}
+    where PCSL_BM = #{pcslBm,jdbcType=CHAR}
+      and PCX_BM = #{pcxBm,jdbcType=CHAR}
+  </update>
+</mapper>

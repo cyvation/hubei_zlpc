@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>已办</title>
+</head>
+<body>
+<style>
+    .radios{
+        float: left;
+        margin-left: 15px;
+    }
+    .radios .redio_click{
+        top:10px;
+    }
+    /*评查预览*/
+    #pcWin_win_offline {
+        padding: 10px;
+        margin:0 auto;
+        background: #e0ecff;
+    }
+
+    #pcWin_win_offline table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 0px solid #8ac9e6;
+        border-right: 0 !important;
+    }
+
+    #pcWin_win_offline .thead {
+        background: #ecf6fb;
+    }
+
+    #pcWin_win_offline td {
+        height: 30px;
+        line-height: 20px;
+        font-size: 12px;
+        padding: 10px;
+        border: none;
+        border-right: 1px solid #8ac9e6;
+    }
+
+    #pcWin_win_offline tr {
+        border-bottom: 1px solid #8ac9e6;
+    }
+
+    #pcWin_win_offline .thead td {
+        color: #006391;
+        white-space: nowrap !important;
+    }
+
+    /*#pcWin_win .tbody td:nth-child(1) {*/
+    /*white-space: nowrap !important;*/
+    /*}*/
+
+    #pcWin_win_offline .tbody tr:nth-child(2n) {
+        background: #fafafa;
+    }
+
+    #pcWin_win_offline .tbody tr:hover {
+        background: #fcf8e3;
+    }
+</style>
+<!--页面JS加载，放在头部不能正确加载-->
+<script type="text/javascript">
+    AddScript("text/javascript", "./script/evaluate/done/index.js");
+</script>
+
+<div id="tool_done_list" style="padding:5px 0px 5px 8px">
+    <!--已办类型：<input id="txt_done_type" class="easyui-combobox" data-options="
+                valueField: 'label',
+                textField: 'value',
+                editable:false,
+                data: [{
+                    label: '1',
+                    value: '已评查',
+                    selected:true
+                },{
+                    label: '2',
+                    value: '已审批'
+                },{
+                    label: '3',
+                    value: '已反馈'
+                }]" />-->
+    <div style="overflow: hidden;width: auto;padding-right:12px;float: left;height: 40px;background: #fff;margin-right: 2%;margin-top: 10px;margin-left: 15px;border-radius: 5px;line-height: 40px">
+        <div class="radios" id="ypc_radio"><div class="redio_click redio_click_no" data-value="1"></div>已评查</div>
+        <div class="radios" id="ysp_radio"><div class="redio_click" data-value="2"></div>已审批</div>
+        <div class="radios" id="yfk_radio"><div class="redio_click" data-value="3"></div>已反馈</div>
+        <div class="radios" id="xpc_radio"><div class="redio_click" data-value="4"></div>2013案件评查</div>
+    </div>
+    <span style="display: inline-block;color: #666666; margin: 15px 0px 15px 20px;height:30px">案件名称 </span>
+    <input id="txt_done_ajmc" class="easyui-textbox" style="width:150px;height: 28px;"/>
+    <!--占位标签-->
+    <!--   <label style="margin-left: 10px"></label>-->
+    <!--modified-->
+    <span style="display: inline-block;color: #666666; margin: 15px 0px 15px 20px;height:30px">评查日期 </span>
+    <input id="date_begin" class="easyui-datebox" style="height: 28px;width:200px;">
+    <span style="margin: 0 10px 0 10px">~ </span>
+    <input id="date_end" class="easyui-datebox" style="height: 28px;width:200px;">
+    <button id="btn_done_search" class="ZXpc_pcfa_2" style=" background-color: #258EEA;">查询</button>
+</div>
+
+<!--已办列表-->
+<div id="pnl_done_list" class="easyui-panel" data-options="fit:true"
+     style="border: 0; ">
+    <!--已评查/已审批案件，已审批报告-->
+    <div id="grid_done_list_pc_div">
+        <table id="grid_done_list_pc" border="0" style="display: none"></table>
+    </div>
+    <!--已审批方案-->
+    <div id="grid_done_list_fa_div">
+        <table id="grid_done_list_fa" border="0" style="display: none"></table>
+    </div>
+    <!--已反馈-->
+    <div id="grid_done_list_fk_div">
+        <table id="grid_done_list_fk" border="0" style="display: none"></table>
+    </div>
+    <!--2013案件评查-->
+    <div id="grid_done_list_offline_div">
+        <table id="grid_done_list_offline" border="0" style="display: none"></table>
+    </div>
+</div>
+<!--评查预览弹出框-->
+<div id="pcWin_win_offline" style="padding: 10px;">
+    <div class="pcblPcyl">
+        <div>评查案件：<span id="win_offline_ajmc"></span></div>
+        <div>承办检察官：<span id="win_offline_cbr"></span></div>
+        <div>评查员：<span id="win_offline_pcr"></span></div>
+        <div>评查案号：<span id="win_offline_pcsah"></span></div>
+        <div>评查时间：<span id="win_offline_pcsj"></span></div>
+        <div>案件完成日期：<span id="win_offline_ajsj"></span></div>
+        <!-- <div>案由：<span id="win_pcWin_lbl_eval_handle_eval_ay"></span></div>-->
+    </div>
+    <div class="pcylCon" id="pcWin_pcylCon_offline"></div>
+</div>
+</body>
+</html>

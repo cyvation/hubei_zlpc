@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>评查办理</title>
+</head>
+
+<body>
+
+<script type="text/javascript">
+    AddScript("text/javascript", "script/evaluate/pcblWin/evalinfo.js");
+    AddScript("text/javascript", "script/document/ntkoofficecontrol.js");
+    AddScript("text/javascript", "script/document/JScriptDoc.js");
+</script>
+
+<div class="pcxxRootNode">
+    <div id="pcWin_pcbl_pcxx_center_left">
+        <div class="pcbl_pcxx_cent" style="padding: 0 10px;">
+            <div class="center_left_box">
+                <div class="center_left_box_top"><img src="image/home/info.png"
+                                                      style="float: left;margin-top: 2px;margin-right: 5px">评查基本信息
+                </div>
+                <div class="pcjbxx">
+                    <div>评查案件：<span id="pcWin_lbl_eval_handle_eval_ajmc"></span></div>
+                    <div>承办检察官：<span id="pcWin_lbl_eval_handle_eval_cbr"></span></div>
+                    <div>评查员：<span id="pcWin_lbl_eval_handle_eval_pcr"></span></div>
+                    <div>评查案号：<span id="pcWin_lbl_eval_handle_eval_pcsah"></span></div>
+                    <div>评查时间：<span id="pcWin_lbl_eval_handle_eval_pcsj"></span></div>
+                    <div>案由：<span id="pcWin_lbl_eval_handle_eval_ay"></span></div>
+                </div>
+            </div>
+            <!--评查内容-->
+            <div class="center_left_box" id="pcWin_ZLPCNR_CONTAINTER">
+                <div class="center_left_box_top"><img src="image/home/22.png" style="float: left;margin-top: 2px;margin-right: 5px">评查内容
+                </div>
+            </div>
+            <!--评查结论-->
+            <div class="center_left_box">
+                <div class="center_left_box_top" ><img src="image/home/33.png" style="float: left;margin-top: 2px;margin-right: 5px">评查结论
+                </div>
+                <div class="pcjg_redio" id="pcWin_loadCljg" style="display: none;">
+                    <div class="pcjg_redio_text">处理结果：</div>
+                </div>
+                <div class="pcjg_redio" id="pcWin_loadPcjg">
+                    <div class="pcjg_redio_text">结果等次建议：</div>
+                </div>
+                <div class="pcjg_input">
+                    <div class="pcjg_redio_text">备注：</div>
+                    <textarea id="pcWin_txt_eval_info_pcjl_bz"
+                              style="width: calc(100% - 91px);height: 50px;resize: none;border: 1px solid #c1cfda; border-radius: 2px;"></textarea>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="pcWin_pcbl_pcxx_wdck" style="display: none;">
+        <!--报告控件显示-->
+        <div id="pcWin_div_eval_handle_file_area" class="pcbl_pcxx_cent" style="margin-top: 0px;height: 100%">
+        <form runat="server" style="z-index: -99; height: 100%;">
+            <div id="div_pcxx_doc" style="width: 100%; display: none"></div>
+            <div id="pcWin_divPdf" style="width: 100%; display: none"></div>
+        </form>
+        </div>
+
+    </div>
+
+    <div class="pcbl_pcxx_Width">
+        <div id="pcWin_pcbl_pcxx_center_right">
+            <div class="center_right_box center_right_box_click">
+                <div class="center_right_box_sj"></div>
+                评<br>查<br>案<br>卡
+            </div>
+            <div class="center_right_box ">
+                <div></div>
+                评<br>查<br>卷<br>宗
+            </div>
+        </div>
+        <div id="pcWin_evalinfo_position_one">
+            <div class="pcbl_ssdjsj_ys">
+                <div class="pcbl_ssys" id="pcbl_ssyjksj">解锁</div>
+            </div>
+            <ul id="pcWin_gaxx_jkList" class="pacbl_ajxx_tabs_ul1">
+                <li id="pcWin_btn_eval_info_pcak" class="pacbl_ajxx_tabs_li">
+                    评查案卡
+                </li>
+            </ul>
+        </div>
+        <div id="pcWin_evalinfo_position_two" style="">
+            <div class="pcbl_ssdjsj_ys">
+                <div id="pcbl_ssyjzsj" class="pcbl_ssys">解锁</div>
+            </div>
+            <div class="pacbl_ajxx_tabs_ul1">
+                <div class="evalinfo_position_two_mouse" style="margin-top: 10px;">
+                    <ul id="pcWin_tree_eval_doc_files" class="easyui-tree"
+                        style="padding: 10px 10px 10px 0;color:#000; margin-left: -6px;">
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--评查预览弹出框-->
+<div id="pcWin_win" style="padding: 10px;">
+    <div class="pcblPcyl">
+        <div>评查案件：<span id="win_pcWin_lbl_eval_handle_eval_ajmc"></span></div>
+        <div>承办检察官：<span id="win_pcWin_lbl_eval_handle_eval_cbr"></span></div>
+        <div>评查员：<span id="win_pcWin_lbl_eval_handle_eval_pcr"></span></div>
+        <div>评查案号：<span id="win_pcWin_lbl_eval_handle_eval_pcsah"></span></div>
+        <div>评查时间：<span id="win_pcWin_lbl_eval_handle_eval_pcsj"></span></div>
+        <div>案由：<span id="win_pcWin_lbl_eval_handle_eval_ay"></span></div>
+    </div>
+    <div class="pcylCon" id="pcWin_pcylCon"></div>
+</div>
+<!--添加到收藏夹弹出框-->
+<div id="pcWin_addColl">
+    <p>
+        <span class="collName">评查案件</span>
+        <input type="text" id="pcWin_collPcaj" value=""/>
+    </p>
+    <p>
+        <span class="collName">评查案号</span>
+        <input type="text" id="pcWin_collPcah" value=""/>
+    </p>
+    <p>
+        <span class="collName">备注</span>
+        <textarea name="" rows="" cols="" id='pcWin_collBz'></textarea>
+    </p>
+    <div>
+        <div class="addCollBut" id='pcWin_collBc'>确定</div>
+    </div>
+
+</div>
+
+</body>
+</html>

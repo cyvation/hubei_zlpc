@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>线下评查管理</title>
+</head>
+<body>
+<!--页面JS加载，放在头部不能正确加载-->
+<script type="text/javascript">
+    AddScript("text/javascript", "./script/manage/offline/index.js");
+</script>
+
+<div id="tool_offline_list" style="padding:5px 0px 5px 8px">
+    <span style="display: inline-block;color: #666666; margin: 15px 0px 15px 20px;height:30px">案件名称 </span>
+    <input id="txt_offline_ajmc" class="easyui-textbox" style="width:150px;height: 28px;"/>
+    <span style="display: inline-block;color: #666666; margin: 15px 0px 15px 20px;height:30px">评查人 </span>
+    <input id="txt_offline_pcr" class="easyui-textbox" style="width:150px;height: 28px;"/>
+    <span style="display: inline-block;color: #666666; margin: 15px 0px 15px 20px;height:30px">承办检察官 </span>
+    <input id="txt_offline_bpcr" class="easyui-textbox" style="width:150px;height: 28px;"/>
+    <span style="display: inline-block;color: #666666; margin: 15px 0px 15px 20px;height:30px">评查单位 </span>
+    <input id="cbt_offline_pcdw" type="text" style="height: 28px;width:200px;">
+    <span style="display: inline-block;color: #666666; margin: 15px 0px 15px 20px;height:30px">评查日期 </span>
+    <input id="date_offline_begin" class="easyui-datebox" style="height: 28px;width:200px;">
+    <span style="margin: 0 10px 0 10px">~ </span>
+    <input id="date_offline_end" class="easyui-datebox" style="height: 28px;width:200px;">
+    <button id="btn_offline_search" class="ZXpc_pcfa_2" style=" background-color: #258EEA;">查询</button>
+</div>
+
+<!--已办列表-->
+<div id="pnl_done_list" class="easyui-panel" data-options="fit:true"
+     style="border: 0; ">
+    <!--已评查/已审批案件，已审批报告-->
+    <div id="grid_done_list_pc_div" >
+        <table id="grid_done_list_pc"  border="0" style="display: none"></table>
+    </div>
+</div>
+<!--评查预览弹出框-->
+<div id="pcWin_win" style="padding: 10px;">
+    <div class="pcblPcyl">
+        <div>评查案件：<span id="win_pcWin_lbl_eval_handle_eval_ajmc"></span></div>
+        <div>承办检察官：<span id="win_pcWin_lbl_eval_handle_eval_cbr"></span></div>
+        <div>评查员：<span id="win_pcWin_lbl_eval_handle_eval_pcr"></span></div>
+        <div>评查案号：<span id="win_pcWin_lbl_eval_handle_eval_pcsah"></span></div>
+        <div>评查时间：<span id="win_pcWin_lbl_eval_handle_eval_pcsj"></span></div>
+        <div>案件完成日期：<span id="win_pcWin_lbl_eval_handle_eval_ajsj"></span></div>
+       <!-- <div>案由：<span id="win_pcWin_lbl_eval_handle_eval_ay"></span></div>-->
+    </div>
+    <div class="pcylCon" id="pcWin_pcylCon"></div>
+</div>
+</body>
+</html>

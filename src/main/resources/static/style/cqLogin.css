@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+input, select {
+    border: none;
+    padding: 0 5px;
+    border-radius:5px;
+    outline: none;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+/*大背景*/
+.container {
+    position: relative;
+    height: 100%;
+    background-color: rgb(8, 135, 212);
+}
+
+/*大背景*/
+
+.container .content {
+    position: absolute;
+    width: 1200px;
+    height: 625px;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background: url("../image/cqLogin/bj.png") no-repeat;
+    -webkit-background-size: 1200px 625px;
+    background-size: 1200px 625px;
+}
+
+/*用户登录*/
+.content > .info {
+    position: absolute;
+    bottom: 35px;
+    left: 150px;
+    width: 900px;
+}
+
+.content > .info > .title {
+    width: 249px;
+    height: 20px;
+    background: url('../image/cqLogin/zt.png') no-repeat;
+    -webkit-background-size: 249px 20px;
+    background-size: 249px 20px;
+}
+
+/*用户登录*/
+/*表单*/
+.content > .info > .form-wrapper {
+    margin-top: 18px;
+}
+
+.login_box
+{
+    float:left;
+    width:260px;
+}
+.p_text
+{
+    float:left;
+    height:32px;
+    line-height:32px;
+    color:#55B8F4;
+}
+
+.info > .form-wrapper #login_go{
+    border-radius: 5px;
+    line-height: 32px;
+    width: 120px;
+    height: 32px;
+    text-align: center;
+    color: #ffffff;
+    margin-right: 0;
+    background: #1C9BE9;
+    padding-left: 0;
+    cursor: pointer;
+    float:right;
+
+}
+.info > .form-wrapper  #login_go:hover{
+    background: #42ADEF;
+}
+
+
+
+/*表单*/

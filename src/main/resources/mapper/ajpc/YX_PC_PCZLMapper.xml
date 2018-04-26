@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.YX_PC_PCZLMapper">
+  <resultMap id="BaseResultMap" type="com.start.boot.domain.YX_PC_PCZL">
+    <id column="BH" jdbcType="VARCHAR" property="bh" />
+    <result column="ZLMC" jdbcType="VARCHAR" property="zlmc" />
+    <result column="ZLLX" jdbcType="DECIMAL" property="zllx" />
+    <result column="MSXX" jdbcType="VARCHAR" property="msxx" />
+    <result column="GLZY" jdbcType="VARCHAR" property="glzy" />
+    <result column="GXBM" jdbcType="VARCHAR" property="gxbm" />
+    <result column="TJZS" jdbcType="VARCHAR" property="tjzs" />
+    <result column="TJLY" jdbcType="VARCHAR" property="tjly" />
+    <result column="XH" jdbcType="DECIMAL" property="xh" />
+    <result column="DWBM" jdbcType="CHAR" property="dwbm" />
+    <result column="DWMC" jdbcType="VARCHAR" property="dwmc" />
+    <result column="GH" jdbcType="CHAR" property="gh" />
+    <result column="MC" jdbcType="VARCHAR" property="mc" />
+    <result column="SFSC" jdbcType="CHAR" property="sfsc" />
+    <result column="CJSJ" jdbcType="TIMESTAMP" property="cjsj" />
+    <result column="ZHXGSJ" jdbcType="TIMESTAMP" property="zhxgsj" />
+    <result column="BZ" jdbcType="VARCHAR" property="bz" />
+    <result column="AY" jdbcType="VARCHAR" property="ay" />
+  </resultMap>
+
+  <resultMap id="PczlMap" type="map">
+    <id column="BH" jdbcType="VARCHAR" property="bh" />
+    <result column="ZLMC" jdbcType="VARCHAR" property="zlmc" />
+    <result column="ZLLX" jdbcType="DECIMAL" property="zllx" />
+    <result column="MSXX" jdbcType="VARCHAR" property="msxx" />
+    <result column="GLZY" jdbcType="VARCHAR" property="glzy" />
+    <result column="GXBM" jdbcType="VARCHAR" property="gxbm" />
+    <result column="TJZS" jdbcType="VARCHAR" property="tjzs" />
+    <result column="TJLY" jdbcType="VARCHAR" property="tjly" />
+    <result column="XH" jdbcType="DECIMAL" property="xh" />
+    <result column="DWBM" jdbcType="CHAR" property="dwbm" />
+    <result column="DWMC" jdbcType="VARCHAR" property="dwmc" />
+    <result column="GH" jdbcType="CHAR" property="gh" />
+    <result column="MC" jdbcType="VARCHAR" property="mc" />
+    <result column="SFSC" jdbcType="CHAR" property="sfsc" />
+    <result column="CJSJ" jdbcType="TIMESTAMP" property="cjsj" />
+    <result column="ZHXGSJ" jdbcType="TIMESTAMP" property="zhxgsj" />
+    <result column="BZ" jdbcType="VARCHAR" property="bz" />
+    <result column="AY" jdbcType="VARCHAR" property="ay" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    BH, ZLMC, ZLLX, MSXX, GLZY, GXBM, TJZS, TJLY, XH, DWBM, DWMC, GH, MC, SFSC, CJSJ, 
+    ZHXGSJ, BZ, AY
+  </sql>
+  <select id="selectByExample" parameterType="com.start.boot.domain.YX_PC_PCZLExample" resultMap="PczlMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YX_PC_PCZL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from YX_PC_PCZL
+    where BH = #{bh,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from YX_PC_PCZL
+    where BH = #{bh,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.start.boot.domain.YX_PC_PCZLExample">
+    delete from YX_PC_PCZL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.start.boot.domain.YX_PC_PCZL">
+    insert into YX_PC_PCZL (BH, ZLMC, ZLLX, 
+      MSXX, GLZY, GXBM, TJZS, 
+      TJLY, XH, DWBM, DWMC, 
+      GH, MC, SFSC,
+      ZHXGSJ, BZ, AY)
+    values (#{bh,jdbcType=VARCHAR}, #{zlmc,jdbcType=VARCHAR}, #{zllx,jdbcType=DECIMAL}, 
+      #{msxx,jdbcType=VARCHAR}, #{glzy,jdbcType=VARCHAR}, #{gxbm,jdbcType=VARCHAR}, #{tjzs,jdbcType=VARCHAR}, 
+      #{tjly,jdbcType=VARCHAR}, #{xh,jdbcType=DECIMAL}, #{dwbm,jdbcType=CHAR}, #{dwmc,jdbcType=VARCHAR}, 
+      #{gh,jdbcType=CHAR}, #{mc,jdbcType=VARCHAR}, #{sfsc,jdbcType=CHAR},
+      #{zhxgsj,jdbcType=TIMESTAMP}, #{bz,jdbcType=VARCHAR}, #{ay,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.start.boot.domain.YX_PC_PCZL">
+    insert into YX_PC_PCZL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bh != null">
+        BH,
+      </if>
+      <if test="zlmc != null">
+        ZLMC,
+      </if>
+      <if test="zllx != null">
+        ZLLX,
+      </if>
+      <if test="msxx != null">
+        MSXX,
+      </if>
+      <if test="glzy != null">
+        GLZY,
+      </if>
+      <if test="gxbm != null">
+        GXBM,
+      </if>
+      <if test="tjzs != null">
+        TJZS,
+      </if>
+      <if test="tjly != null">
+        TJLY,
+      </if>
+      <if test="xh != null">
+        XH,
+      </if>
+      <if test="dwbm != null">
+        DWBM,
+      </if>
+      <if test="dwmc != null">
+        DWMC,
+      </if>
+      <if test="gh != null">
+        GH,
+      </if>
+      <if test="mc != null">
+        MC,
+      </if>
+      <if test="sfsc != null">
+        SFSC,
+      </if>
+      <if test="zhxgsj != null">
+        ZHXGSJ,
+      </if>
+      <if test="bz != null">
+        BZ,
+      </if>
+      <if test="ay != null">
+        AY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bh != null">
+        #{bh,jdbcType=VARCHAR},
+      </if>
+      <if test="zlmc != null">
+        #{zlmc,jdbcType=VARCHAR},
+      </if>
+      <if test="zllx != null">
+        #{zllx,jdbcType=DECIMAL},
+      </if>
+      <if test="msxx != null">
+        #{msxx,jdbcType=VARCHAR},
+      </if>
+      <if test="glzy != null">
+        #{glzy,jdbcType=VARCHAR},
+      </if>
+      <if test="gxbm != null">
+        #{gxbm,jdbcType=VARCHAR},
+      </if>
+      <if test="tjzs != null">
+        #{tjzs,jdbcType=VARCHAR},
+      </if>
+      <if test="tjly != null">
+        #{tjly,jdbcType=VARCHAR},
+      </if>
+      <if test="xh != null">
+        #{xh,jdbcType=DECIMAL},
+      </if>
+      <if test="dwbm != null">
+        #{dwbm,jdbcType=CHAR},
+      </if>
+      <if test="dwmc != null">
+        #{dwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="gh != null">
+        #{gh,jdbcType=CHAR},
+      </if>
+      <if test="mc != null">
+        #{mc,jdbcType=VARCHAR},
+      </if>
+      <if test="sfsc != null">
+        #{sfsc,jdbcType=CHAR},
+      </if>
+      <if test="zhxgsj != null">
+        #{zhxgsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bz != null">
+        #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="ay != null">
+        #{ay,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.start.boot.domain.YX_PC_PCZLExample" resultType="java.lang.Long">
+    select count(*) from YX_PC_PCZL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update YX_PC_PCZL
+    <set>
+      <if test="record.bh != null">
+        BH = #{record.bh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zlmc != null">
+        ZLMC = #{record.zlmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zllx != null">
+        ZLLX = #{record.zllx,jdbcType=DECIMAL},
+      </if>
+      <if test="record.msxx != null">
+        MSXX = #{record.msxx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.glzy != null">
+        GLZY = #{record.glzy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gxbm != null">
+        GXBM = #{record.gxbm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tjzs != null">
+        TJZS = #{record.tjzs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tjly != null">
+        TJLY = #{record.tjly,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xh != null">
+        XH = #{record.xh,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dwbm != null">
+        DWBM = #{record.dwbm,jdbcType=CHAR},
+      </if>
+      <if test="record.dwmc != null">
+        DWMC = #{record.dwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gh != null">
+        GH = #{record.gh,jdbcType=CHAR},
+      </if>
+      <if test="record.mc != null">
+        MC = #{record.mc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfsc != null">
+        SFSC = #{record.sfsc,jdbcType=CHAR},
+      </if>
+      <if test="record.zhxgsj != null">
+        ZHXGSJ = #{record.zhxgsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bz != null">
+        BZ = #{record.bz,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ay != null">
+        AY = #{record.ay,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update YX_PC_PCZL
+    set BH = #{record.bh,jdbcType=VARCHAR},
+      ZLMC = #{record.zlmc,jdbcType=VARCHAR},
+      ZLLX = #{record.zllx,jdbcType=DECIMAL},
+      MSXX = #{record.msxx,jdbcType=VARCHAR},
+      GLZY = #{record.glzy,jdbcType=VARCHAR},
+      GXBM = #{record.gxbm,jdbcType=VARCHAR},
+      TJZS = #{record.tjzs,jdbcType=VARCHAR},
+      TJLY = #{record.tjly,jdbcType=VARCHAR},
+      XH = #{record.xh,jdbcType=DECIMAL},
+      DWBM = #{record.dwbm,jdbcType=CHAR},
+      DWMC = #{record.dwmc,jdbcType=VARCHAR},
+      GH = #{record.gh,jdbcType=CHAR},
+      MC = #{record.mc,jdbcType=VARCHAR},
+      SFSC = #{record.sfsc,jdbcType=CHAR},
+      CJSJ = #{record.cjsj,jdbcType=TIMESTAMP},
+      ZHXGSJ = #{record.zhxgsj,jdbcType=TIMESTAMP},
+      BZ = #{record.bz,jdbcType=VARCHAR},
+      AY = #{record.ay,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.start.boot.domain.YX_PC_PCZL">
+    update YX_PC_PCZL
+    <set>
+      <if test="zlmc != null">
+        ZLMC = #{zlmc,jdbcType=VARCHAR},
+      </if>
+      <if test="zllx != null">
+        ZLLX = #{zllx,jdbcType=DECIMAL},
+      </if>
+      <if test="msxx != null">
+        MSXX = #{msxx,jdbcType=VARCHAR},
+      </if>
+      <if test="glzy != null">
+        GLZY = #{glzy,jdbcType=VARCHAR},
+      </if>
+      <if test="gxbm != null">
+        GXBM = #{gxbm,jdbcType=VARCHAR},
+      </if>
+      <if test="tjzs != null">
+        TJZS = #{tjzs,jdbcType=VARCHAR},
+      </if>
+      <if test="tjly != null">
+        TJLY = #{tjly,jdbcType=VARCHAR},
+      </if>
+      <if test="xh != null">
+        XH = #{xh,jdbcType=DECIMAL},
+      </if>
+      <if test="dwbm != null">
+        DWBM = #{dwbm,jdbcType=CHAR},
+      </if>
+      <if test="dwmc != null">
+        DWMC = #{dwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="gh != null">
+        GH = #{gh,jdbcType=CHAR},
+      </if>
+      <if test="mc != null">
+        MC = #{mc,jdbcType=VARCHAR},
+      </if>
+      <if test="sfsc != null">
+        SFSC = #{sfsc,jdbcType=CHAR},
+      </if>
+      <if test="cjsj != null">
+        CJSJ = #{cjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="zhxgsj != null">
+        ZHXGSJ = #{zhxgsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bz != null">
+        BZ = #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="ay != null">
+        AY = #{ay,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BH = #{bh,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.start.boot.domain.YX_PC_PCZL">
+    update YX_PC_PCZL
+    set ZLMC = #{zlmc,jdbcType=VARCHAR},
+      ZLLX = #{zllx,jdbcType=DECIMAL},
+      MSXX = #{msxx,jdbcType=VARCHAR},
+      GLZY = #{glzy,jdbcType=VARCHAR},
+      GXBM = #{gxbm,jdbcType=VARCHAR},
+      TJZS = #{tjzs,jdbcType=VARCHAR},
+      TJLY = #{tjly,jdbcType=VARCHAR},
+      XH = #{xh,jdbcType=DECIMAL},
+      DWBM = #{dwbm,jdbcType=CHAR},
+      DWMC = #{dwmc,jdbcType=VARCHAR},
+      GH = #{gh,jdbcType=CHAR},
+      MC = #{mc,jdbcType=VARCHAR},
+      SFSC = #{sfsc,jdbcType=CHAR},
+      CJSJ = #{cjsj,jdbcType=TIMESTAMP},
+      ZHXGSJ = #{zhxgsj,jdbcType=TIMESTAMP},
+      BZ = #{bz,jdbcType=VARCHAR},
+      AY = #{ay,jdbcType=VARCHAR}
+    where BH = #{bh,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

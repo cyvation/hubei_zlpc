@@ -1,0 +1,250 @@
+.icon-blank{
+	background:url('icons/blank.gif') no-repeat center center;
+}
+.icon-add{
+	background:url('icons/edit_add.png') no-repeat center center;
+}
+.icon-edit{
+	background:url('icons/pencil.png') no-repeat center center;
+}
+.icon-clear{
+	background:url('icons/clear.png') no-repeat center center;
+}
+.icon-remove{
+	background:url('icons/edit_remove.png') no-repeat center center;
+}
+.icon-save{
+	background:url('icons/filesave.png') no-repeat center center;
+}
+.icon-cut{
+	background:url('icons/cut.png') no-repeat center center;
+}
+.icon-ok{
+	background:url('icons/ok.png') no-repeat center center;
+}
+.icon-no{
+	background:url('icons/no.png') no-repeat center center;
+}
+.icon-cancel{
+	background:url('icons/cancel.png') no-repeat center center;
+}
+.icon-reload{
+	background:url('icons/reload.png') no-repeat center center;
+}
+.icon-search{
+	background:url('icons/search.png') no-repeat center center;
+}
+.icon-print{
+	background:url('icons/print.png') no-repeat center center;
+}
+.icon-help{
+	background:url('icons/help.png') no-repeat center center;
+}
+.icon-undo{
+	background:url('icons/undo.png') no-repeat center center;
+}
+.icon-redo{
+	background:url('icons/redo.png') no-repeat center center;
+}
+.icon-back{
+	background:url('icons/back.png') no-repeat center center;
+}
+.icon-sum{
+	background:url('icons/sum.png') no-repeat center center;
+}
+.icon-tip{
+	background:url('icons/tip.png') no-repeat center center;
+}
+.icon-filter{
+	background:url('icons/filter.png') no-repeat center center;
+}
+.icon-man{
+	background:url('icons/man.png') no-repeat center center;
+}
+.icon-lock{
+	background:url('icons/lock.png') no-repeat center center;
+}
+.icon-menu
+{
+    background:url('icons/04.png') no-repeat center center;
+}
+.icon-submenu
+{
+    background:url('icons/03.png') no-repeat center center;
+}
+.icon-folder {
+    background: url('icons/folder.png') no-repeat center center;
+}
+.icon-file {
+    background: url('icons/file.png') no-repeat center center;
+}
+.icon-mini-add{
+	background:url('icons/mini_add.png') no-repeat center center;
+}
+.icon-mini-edit{
+	background:url('icons/mini_edit.png') no-repeat center center;
+}
+.icon-mini-refresh{
+	background:url('icons/mini_refresh.png') no-repeat center center;
+}
+
+.icon-large-picture{
+	background:url('icons/large_picture.png') no-repeat center center;
+}
+.icon-large-clipart{
+	background:url('icons/large_clipart.png') no-repeat center center;
+}
+.icon-large-shapes{
+	background:url('icons/large_shapes.png') no-repeat center center;
+}
+.icon-large-smartart{
+	background:url('icons/large_smartart.png') no-repeat center center;
+}
+.icon-large-chart{
+	background:url('icons/large_chart.png') no-repeat center center;
+}
+/*自定义增加--开始--*/
+.icon-hamburg-user{
+    background:url('icons/user.png') no-repeat center center;
+}
+.icon-hamburg-sign-out{
+    background:url('icons/sign-out.png') no-repeat center center;
+}
+.icon-standard-map
+{
+    background:url('icons/map.png') no-repeat center center;
+}
+.icon-standard-cross
+{
+    background:url('icons/cross.png') no-repeat center center;
+}
+.icon-hamburg-home
+{
+    background:url('icons/home.png') no-repeat center center;
+}
+.icon-config
+{
+    background:url('icons/config.png') no-repeat center center;
+}
+.icon-sitemap
+{
+    background:url('icons/sitemap.png') no-repeat center center;
+}
+.icon-menupencil
+{
+    background:url('icons/menupencil.png') no-repeat center center;
+}
+.icon-customers
+{
+    background:url('icons/customers.png') no-repeat center center;
+}
+.icon-attibutes
+{
+    background:url('icons/attibutes.png') no-repeat center center;
+}
+.icon-arrow-rotate
+{
+    background:url('icons/arrow-rotate.png') no-repeat center center;
+}
+.icon-menu-ajsx
+{
+    background:url('icons/menu/menu_ajsx.png') no-repeat center center;
+}
+.icon-menu-cxgzpz
+{
+    background:url('icons/menu/menu_cxgzpz.png') no-repeat center center;
+}
+.icon-menu-db
+{
+    background:url('icons/menu/menu_db.png') no-repeat center center;
+}
+.icon-menu-pcgl
+{
+    background:url('icons/menu/menu_pcgl.png') no-repeat center center;
+}
+.icon-menu-jk
+{
+    background:url('icons/menu/menu_jk.png') no-repeat center center;
+}
+.icon-menu-tjfx
+{
+    background:url('icons/menu/menu_tjfx.png') no-repeat center center;
+}
+.icon-menu-xtpz
+{
+    background:url('icons/menu/menu_xtpz.png') no-repeat center center;
+}
+.icon-menu-yb
+{
+    background:url('icons/menu/menu_yb.png') no-repeat center center;
+}
+.icon-yhsc
+{
+    background:url('icons/zlpc/yhsc.png') no-repeat center center;
+}
+.icon-pclbcopy
+{
+    background:url('icons/zlpc/pclbcopy.png') no-repeat center center;
+}
+.icon-cddh
+{
+    background:url('icons/zlpc/cddh.png') no-repeat center center;
+}
+.icon-zzjg-dw {
+    background: url('icons/zzjg/dw.png') no-repeat center center;
+}
+.icon-zzjg-bm {
+    background: url('icons/zzjg/bm.png') no-repeat center center;
+}
+.icon-zzjg-js {
+    background: url('icons/zzjg/js.png') no-repeat center center;
+}
+.icon-zzjg-ry {
+    background: url('icons/zzjg/ry.png') no-repeat center center;
+}
+.icon-pcz {
+    background: url('icons/zlpc/pcz.png') no-repeat center center;
+}
+.icon-pclb-pcfl {
+    background: url('icons/pclb/pclb_pcfl.png') no-repeat center center;
+}
+.icon-pclb-pcpc {
+    background: url('icons/pclb/pclb_pcpc.png') no-repeat center center;
+}
+.icon-pclb-pclb {
+    background: url('icons/pclb/pclb_pclb.png') no-repeat center center;
+}
+.icon-pclbmb {
+    background: url('icons/zlpc/pclbmb.png') no-repeat center center;
+}
+.icon-showpc {
+    background: url('icons/zlpc/showpc.png') no-repeat center center;
+}
+.icon-hidepc {
+    background: url('icons/zlpc/hidepc.png') no-repeat center center;
+}
+.icon-next {
+    background: url('icons/next.png') no-repeat center center;
+}
+.icon-upload {
+    background: url('icons/upload.png') no-repeat center center;
+}
+.icon-download {
+    background: url('icons/download.png') no-repeat center center;
+}
+.icon-scan {
+    background: url('icons/scan.png') no-repeat center center;
+}
+.icon-warn {
+    background: url('icons/warn.png') no-repeat center center;
+}
+.icon-random {
+    background: url('icons/random.png') no-repeat center center;
+}
+.icon-change {
+    background: url('icons/change.png') no-repeat center center;
+}
+.icon-ajwthz {
+    background: url('icons/menu/tj_ajwthz.png') no-repeat center center;
+}
+/*自定义增加--结束--*/

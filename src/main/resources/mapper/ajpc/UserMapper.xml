@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.start.boot.dao.ajpc.UserMapper">
+
+
+    <!--获取单位树形下拉框-->
+    <select id="GetDwbmCombTree" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call pkg_zzjg.proc_get_dwbm(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=dwMap,javaType=java.sql.ResultSet},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="dwMap" type="map"></resultMap>
+
+    <!--获取新增人员列表-->
+    <select id="TyywNewUserList" parameterType="map" statementType="CALLABLE">
+         <![CDATA[
+             call pkg_zzjg.proc_get_tyyw_new_user_list(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                                      #{p_mc,mode=IN,jdbcType=VARCHAR},
+                                                      #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                                      #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                                      #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                                      #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=newUserMap,javaType=java.sql.ResultSet},
+                                                      #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+
+    <resultMap id="newUserMap" type="map"></resultMap>
+
+
+    <!--查询所有人员-->
+    <select id="GetUserList" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call pkg_zzjg.proc_get_user_list(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                                  #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                                  #{p_mc,mode=IN,jdbcType=VARCHAR},
+                                                  #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                                  #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                                  #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                                  #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=ryListMap,javaType=java.sql.ResultSet},
+                                                  #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+
+        ]]>
+    </select>
+        <resultMap id="ryListMap" type="map"></resultMap>
+
+
+    <!--新增人员-->
+    <insert id="AddUser" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+            call pkg_zzjg.proc_add_user(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                       #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                       #{p_dlbm,mode=IN,jdbcType=VARCHAR},
+                                       #{p_mc,mode=IN,jdbcType=VARCHAR},
+                                       #{p_kl,mode=IN,jdbcType=VARCHAR},
+                                       #{p_gzzh,mode=IN,jdbcType=VARCHAR},
+                                       #{p_yddhhm,mode=IN,jdbcType=VARCHAR},
+                                       #{p_dzyj,mode=IN,jdbcType=VARCHAR},
+                                       #{p_ydwbm,mode=IN,jdbcType=VARCHAR},
+                                       #{p_ydwmc,mode=IN,jdbcType=VARCHAR},
+                                       #{p_sflsry,mode=IN,jdbcType=VARCHAR},
+                                       #{p_sftz,mode=IN,jdbcType=VARCHAR},
+                                       #{p_sfsc,mode=IN,jdbcType=VARCHAR},
+                                       #{p_xb,mode=IN,jdbcType=VARCHAR},
+                                       #{p_caid,mode=IN,jdbcType=VARCHAR},
+                                       #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </insert>
+
+    <!--更新人员-->
+    <update id="UpdateUser" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_zzjg.proc_update_user(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                           #{p_dlbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_kl,mode=IN,jdbcType=VARCHAR},
+                                           #{p_mc,mode=IN,jdbcType=VARCHAR},
+                                           #{p_gzzh,mode=IN,jdbcType=VARCHAR},
+                                           #{p_yddhhm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_dzyj,mode=IN,jdbcType=VARCHAR},
+                                           #{p_xdwbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_ydwbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_ydwmc,mode=IN,jdbcType=VARCHAR},
+                                           #{p_sflsry,mode=IN,jdbcType=VARCHAR},
+                                           #{p_sftz,mode=IN,jdbcType=VARCHAR},
+                                           #{p_sfsc,mode=IN,jdbcType=VARCHAR},
+                                           #{p_xb,mode=IN,jdbcType=VARCHAR},
+                                           #{p_caid,mode=IN,jdbcType=VARCHAR},
+                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+    <!--通过工号获取用户-->
+    <select id="GetUserByGh" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call pkg_zzjg.proc_get_user_bygh(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                                 #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                                 #{p_cursor,mode=OUT,jdbcType=CURSOR,resultMap=RybmMap,javaType=java.sql.ResultSet},
+                                                 #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="RybmMap" type="com.start.boot.domain.Rybm">
+    </resultMap>
+
+    <!--删除用户-->
+    <delete id="DeleteUser" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+               call pkg_zzjg.proc_delete_user(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                             #{p_ghj,mode=IN,jdbcType=VARCHAR},
+                                             #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </delete>
+
+    <!--重置密码-->
+    <insert id="ResetUserPwd" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_zzjg.proc_reset_pwd(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                             #{p_ghj,mode=IN,jdbcType=VARCHAR},
+                                             #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </insert>
+
+    <!--同步人员-->
+    <update id="UserSync" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+                call pkg_zzjg.proc_user_sync(#{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                             #{p_gh,mode=IN,jdbcType=VARCHAR},
+                                             #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+</mapper>

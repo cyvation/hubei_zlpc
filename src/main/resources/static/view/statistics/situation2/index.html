@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" class="tjfx_echarts">
+<head>
+    <meta charset="UTF-8">
+    <title>评查基本情况二</title>
+</head>
+<body class="easyui-layout">
+<style>
+    #basicOperationCondition{
+        width: 100%;
+        height: 100%;
+    }
+    .div_basicOperationCondition_body {
+        width: 100%;
+        height: 40px;
+        border-bottom: 1px solid #B4CFF3;
+        margin-bottom: 15px;
+    }
+
+    .span_basicOperationCondition_title {
+        float: left;
+        display: inline-block;
+        height: 100%;
+        line-height: 50px;
+        border-bottom: 3px solid #2388E2;
+        padding: 0 10px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .span_basicOperationCondition_seek {
+        /*margin-top: 10px;*/
+        display: inline-block;
+        /*float: right*/
+    }
+
+    .div_basicOperationCondition_right_top {
+        width: calc(50% - 7px);
+        float: left;
+        margin-right: 7px;
+        height: calc(100% - 60px);
+        margin-bottom: 15px;
+    }
+
+    .div_basicOperationCondition_left_bottom {
+        width: calc(50% - 7px);
+        float: left;
+        margin-left: 7px;
+        margin-bottom: 15px;
+        height: calc(50% - 7px);
+    }
+
+    .div_basicOperationCondition_right_bottom {
+        width: calc(50% - 7px);
+        float: left;
+        margin-left: 7px;
+        height: calc(50% - 68px);
+    }
+
+    .div_zlwtfbt_xcaj {
+        width: 100%;
+        height: 100%;
+    }
+
+    #basicOperationCondition .panel-header{
+        height: 40px;
+        background: #D8EAF8;
+        font-size: 16px;
+    }
+    #basicOperationCondition .panel-header .panel-title{
+        margin-top: 3px;
+        font-size: 16px;
+    }
+    #basicOperationCondition .tabs .tabs-title{
+        font-size: 16px;
+        padding: 0 20px;
+    }
+    #basicOperationCondition .tabs .tabs-selected .tabs-title{
+        color: #0E2D5F;
+    }
+
+    #basicOperationCondition .tabs-header{
+        /*border: 1px solid #95B8E7!important;*/
+    }
+    #basicOperationCondition .tabs li.tabs-selected a.tabs-inner{
+        border-top: 3px solid #1E8EE1;
+        background: #fff;
+    }
+    #basicOperationCondition .tabs li{
+        margin-right: 0;
+    }
+    #basicOperationCondition .tabs li a.tabs-inner{
+        background: #D8EAF8;
+        color: #000;
+        /*border: none;*/
+        border-radius: 0;
+        height: 39px !important;
+        line-height: 39px !important;
+        border-right: 1px solid #D8EAF8;
+        border-top: 1px solid #D8EAF8;
+        border-bottom: 1px solid #D8EAF8;
+    }
+    #basicOperationCondition .tabs li.tabs-selected a.tabs-inner{
+        /*border: none;*/
+        height: 40px !important;
+        line-height: 40px !important;
+        border-bottom: 1px solid #fff;
+    }
+
+    #basicOperationCondition .panel-header, .panel-body{
+        border-color: #B0CEF2;
+    }
+    #basicOperationCondition .layout-panel .panel-header{
+        padding: 9px 15px;
+    }
+    #basicOperationCondition .tabs-header .tabs-wrap{
+        border-right: 1px solid #B0CEF2;
+    }
+    #basicOperationCondition .panel-header .panel-tool{
+        height: 26px;
+        margin-top: -13px;
+    }
+    #transmit2 div{
+        margin-left: 50px;
+        margin-top: 20px;
+    }
+    #transmit2 div input[type="checkbox"]{
+        margin-right: 10px;
+        margin-top: 4px;
+        float: left;
+        width: 15px;
+        height: 15px;
+    }
+    #transmit2 div span{
+        font-size: 16px;
+    }
+</style>
+<script type="text/javascript" ,>
+    AddScript("text/javascript", "script/statistics/situation2/index.js")
+</script>
+
+<!--<div id="pcaj_top">-->
+<!--<div class="top_cx_content">-->
+<!--<div class="cx_box">-->
+<!--<p class="cx_text">单位：</p>-->
+<!--<div class="easyui-combotree" id="cbt_situation_dw"></div>-->
+<!--</div>-->
+<!--<div class="cx_box">-->
+<!--<p class="cx_text">年度：</p>-->
+<!--<div class="easyui-combobox" id="cb_situation_year"></div>-->
+<!--</div>-->
+<!--<div class="btn" id="btn_situation2_search" onclick="btn_situation2_search()">查询</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div id="pcaj_content">-->
+<!--&lt;!&ndash;<div class="easyui-tabs" style="width:50%;height:100%;float: left;" id="tabs">&ndash;&gt;-->
+<!--<div style="height: 100%;width: 50%;float: left;" >-->
+<!--&lt;!&ndash;办案概况地图分布&ndash;&gt;-->
+<!--<div id="echart_situation_map" style="width:50%;height:100%;"></div>-->
+
+<!--<div id="echart_situation_sort" style="width: 50%;height: 100%;float: left;"></div>-->
+<!--</div>-->
+
+<!--<div style="height: 100%;width: 50%;float: left;">-->
+<!--&lt;!&ndash; 气泡图 未做&ndash;&gt;-->
+<!--<div id="echart_situation2_bar_line" style="width:100%; height:50%;"></div>-->
+<!--&lt;!&ndash;年度办案质量&ndash;&gt;-->
+<!--<div id="echart_year_quality_bar" style="width: 100%;height: 50%;float: left"></div>-->
+
+<!--</div>-->
+
+<!--</div>-->
+
+
+<div id="win_statistics_situatuion" class="easyui-window" title="列表"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,cache:false,resizable:true,width:1000,height:600">
+    <table id="table_win_statistics_situatuion"></table>
+</div>
+
+
+<div id="basicOperationCondition">
+
+    <div class="div_basicOperationCondition_body">
+        <!--<span class="span_basicOperationCondition_title"></span>-->
+        <span class="span_basicOperationCondition_seek">
+          <span class="" style="float: left;margin-right: 0px; width:280px;">    <!-- 2018.1.30 日修改宽度，在小屏的情况下错位 -->
+                <p class="cx_text"  style="color: #6E6F6E;margin-top: 5px;">单位：</p>
+                <div  class="easyui-combotree" id="cbt_situation_dw" style="height: 30px;"></div>
+            </span>
+            <span class="" style="float: left;margin-right: 40px;">
+                <p class="cx_text"  style="color: #6E6F6E;margin-top: 5px;">日期：</p>
+                <span class="easyui-datebox" id="cbt_situation_start" style="height: 30px;"></span>
+                <span style="display: inline-block; text-align: center;"> ~ </span>
+                <span class="easyui-datebox" id="cbt_situation_end" style="height: 30px;"></span>
+            </span>
+
+
+           <div class="btn" id="cbt_situation_transmit" style=" margin-left: 10px;">导出Excel</div>
+            <div class="btn" id="cbt_situation_search" onclick="btn_situation_search()" style=" margin-left: 20px;">查询</div>  <!--onclick="init_pie_zlwtfbt()"-->
+
+    </span>
+    </div>
+    <div class="easyui-layout div_basicOperationCondition_right_top">
+        <div data-options="region:'center',title:'地图'" style="height: 100%;">
+            <div id="echart_situation_map" style="width: 100%;height: 100%;"></div>
+        </div>
+    </div>
+    <div class="easyui-layout div_basicOperationCondition_left_bottom">
+        <div data-options="region:'center',title:'评查工作概况'">
+            <div class="div_zlwtfbt_xcaj">
+                <div id="echart_quality_scatter" style="width: 100%;height: 100%;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="easyui-layout div_basicOperationCondition_right_bottom">
+        <div data-options="region:'center',title:'评查成效概况',tools:'#div_basicOperationCondition_jgdc'">
+            <div id="echart_year_quality_bar" style="width: 100%;height: 100%;"></div>
+        </div>
+    </div>
+    <div class="cx_box" id="div_basicOperationCondition_jgdc">
+        <p class="cx_text" style="color: #6E6F6E;margin-top: 5px;">年度：</p>
+        <div class="easyui-combobox" id="cb_situation_year"></div>
+    </div>
+
+
+    <div id="transmit2" class="easyui-window" title="导出数据" style="width: 400px;height: 225px;"
+         data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+        <div>
+            <input type="radio" name="radio_situation_name" value="1"><span>地图</span>
+        </div>
+        <div>
+            <input type="radio" name="radio_situation_name" value="2"><span>评查工作概况</span>
+        </div>
+        <div>
+            <input type="radio" name="radio_situation_name" value="3"><span>评查成效概况</span>
+        </div>
+        <div style="float: right;margin-right: 20px;"><a class="easyui-linkbutton l-btn l-btn-small" style="padding: 0 10px" group="" id="export_excel_btn2"><span class="l-btn-left"><span class="l-btn-text">确定</span></span></a></div>
+    </div>
+</div>
+</body>
+</html>

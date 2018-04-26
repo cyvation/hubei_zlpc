@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+                <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+    <mapper namespace="com.start.boot.dao.ajpc.CaseInfoMapper">
+
+    <!--获取关联案件列表-->
+    <select id="getGlajs" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcaj.proc_get_glajs(#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+                                           #{p_bmsah,mode=IN,jdbcType=VARCHAR},
+                                           #{p_param,mode=IN,jdbcType=VARCHAR},
+                                           #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=glajMap},
+                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="glajMap" type="map"></resultMap>
+
+    <!--评查案件文书卷宗列表-->
+    <select id="getDocFiles" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcaj.proc_get_wsjzlist(#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+                                              #{p_bmsah,mode=IN,jdbcType=VARCHAR},
+                                              #{p_param,mode=IN,jdbcType=VARCHAR},
+                                              #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=wslbMap},
+                                              #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="wslbMap" type="map"></resultMap>
+
+    <!--评查案件电子卷宗列表-->
+    <select id="getDossierFiles" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pcaj.proc_get_dzjzlist(#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+                                              #{p_bmsah,mode=IN,jdbcType=VARCHAR},
+                                              #{p_param,mode=IN,jdbcType=VARCHAR},
+                                              #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=jzlbMap},
+                                              #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="jzlbMap" type="map"></resultMap>
+
+    <!--获取案件详细信息-->
+    <select id="getCaseInfo" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+          call pkg_pcaj.proc_get_ajjbxx(#{p_pcslbm,mode=IN,jdbcType=VARCHAR},
+                                          #{p_bmsah,mode=IN,jdbcType=VARCHAR},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=ResultSet,resultMap=ajxxMap},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="ajxxMap" type="com.start.boot.domain.Param_CaseInfo" >
+        <result property="BMSAH" column="BMSAH"/>
+        <result property="TYSAH" column="TYSAH"/>
+        <result property="SFSC" column="SFSC"/>
+        <result property="SFYGXTSJ" column="SFYGXTSJ"/>
+        <result property="CBDW_BM" column="CBDW_BM"/>
+        <result property="CBDW_MC" column="CBDW_MC"/>
+        <result property="FQDWBM" column="FQDWBM"/>
+        <result property="FQL" column="FQL"/>
+        <result property="CJSJ" column="CJSJ"/>
+        <result property="ZHXGSJ" column="ZHXGSJ"/>
+        <result property="SLRQ" column="SLRQ"/>
+        <result property="AJMC" column="AJMC"/>
+        <result property="AJLB_BM" column="AJLB_BM"/>
+        <result property="AJLB_MC" column="AJLB_MC"/>
+        <result property="ZCJG_DWDM" column="ZCJG_DWDM"/>
+        <result property="ZCJG_DWMC" column="ZCJG_DWMC"/>
+        <result property="YSDW_DWDM" column="YSDW_DWDM"/>
+        <result property="YSDW_DWMC" column="YSDW_DWMC"/>
+        <result property="YSWSWH" column="YSWSWH"/>
+        <result property="YSAY_AYDM" column="YSAY_AYDM"/>
+        <result property="YSAY_AYMC" column="YSAY_AYMC"/>
+        <result property="YSQTAY_AYDMS" column="YSQTAY_AYDMS"/>
+        <result property="YSQTAY_AYMCS" column="YSQTAY_AYMCS"/>
+        <result property="CBRGH" column="CBRGH"/>
+        <result property="CBR" column="CBR"/>
+        <result property="CBBM_BM" column="CBBM_BM"/>
+        <result property="CBBM_MC" column="CBBM_MC"/>
+        <result property="AJZT" column="AJZT"/>
+        <result property="SFSWAJ" column="SFSWAJ"/>
+        <result property="SFDBAJ" column="SFDBAJ"/>
+        <result property="ZXHD_MC" column="ZXHD_MC"/>
+        <result property="WCRQ" column="WCRQ"/>
+        <result property="GDRQ" column="GDRQ"/>
+        <result property="GDRGH" column="GDRGH"/>
+        <result property="GDR" column="GDR"/>
+        <result property="AQZY" column="AQZY"/>
+        <result property="DQJD" column="DQJD"/>
+        <result property="BLKSRQ" column="BLKSRQ"/>
+        <result property="BLTS" column="BLTS"/>
+        <result property="DQRQ" column="DQRQ"/>
+        <result property="BJRQ" column="BJRQ"/>
+        <result property="YJZT" column="YJZT"/>
+        <result property="JYYJZT" column="JYYJZT"/>
+        <result property="JYYJHCQXYRGS" column="JYYJHCQXYRGS"/>
+        <result property="LCSLBH" column="LCSLBH"/>
+        <result property="FXDJ" column="FXDJ"/>
+        <result property="SFGZAJ" column="SFGZAJ"/>
+        <result property="FZ" column="FZ"/>
+        <result property="YSYJ_DM" column="YSYJ_DM"/>
+        <result property="YSYJ_MC" column="YSYJ_MC"/>
+        <result property="SFJBAJ" column="SFJBAJ"/>
+        <result property="ZXHD_DM" column="ZXHD_DM"/>
+        <result property="DQYJJD" column="DQYJJD"/>
+        <result property="YASCSSJD_DM" column="YASCSSJD_DM"/>
+        <result property="YASCSSJD_MC" column="YASCSSJD_MC"/>
+        <result property="YSRJDH" column="YSRJDH"/>
+        <result property="AJLY_DM" column="AJLY_DM"/>
+        <result property="AJLY_MC" column="AJLY_MC"/>
+    </resultMap>
+
+</mapper>

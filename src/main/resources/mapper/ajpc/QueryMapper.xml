@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.QueryMapper">
+
+
+
+
+  <select id="query" resultType="com.start.boot.pojo.dto.CountDo">
+      SELECT
+	"COUNT" (*) count,
+	TO_CHAR (BPC_WCBZRQ, 'yyyy') year,
+	TO_CHAR (BPC_WCBZRQ, 'mm') month,
+	PCJL pcjg
+	FROM
+		YX_PC_JBXX
+	WHERE TO_CHAR (BPC_WCBZRQ, 'yyyy')=#{year}
+	and PCJL IS NOT NULL
+	<if test="pcflbm!=null and pcflbm!=''">
+	AND pcflbm=#{pcflbm}
+	</if>
+	GROUP BY
+		TO_CHAR (BPC_WCBZRQ, 'yyyy'),
+		TO_CHAR (BPC_WCBZRQ, 'mm'),
+		PCJL
+	  ORDER BY TO_CHAR (BPC_WCBZRQ, 'mm')
+  </select>
+
+	<select id="querySum" resultType="com.start.boot.pojo.dto.MonthDo">
+
+	SELECT TO_CHAR (BPC_WCBZRQ, 'mm') month , "COUNT"(1) sum
+	FROM
+		YX_PC_JBXX
+	WHERE TO_CHAR (BPC_WCBZRQ, 'yyyy')=#{year}
+		and PCJL IS NOT NULL
+		<if test="pcflbm!=null and pcflbm!='' ">
+			AND pcflbm=#{pcflbm}
+		</if>
+	GROUP BY
+		TO_CHAR (BPC_WCBZRQ, 'yyyy'),
+		TO_CHAR (BPC_WCBZRQ, 'mm')
+
+	</select>
+
+	<select id="getPljgType" resultType="string">
+			select  DISTINCT pcjl from YX_PC_JBXX WHERE pcjl IS NOT NULL
+	</select>
+
+
+	<resultMap id="BaseResultMap" type="map">
+
+    </resultMap>
+	<select id="getYearPcjgCount" resultType="com.start.boot.pojo.dto.CountDo">
+		SELECT
+		TO_CHAR (BPC_WCBZRQ, 'yyyy') year,
+		pcjl AS pcjg,
+		"COUNT" (1) count
+		FROM
+		YX_PC_JBXX
+		WHERE
+		TO_CHAR (BPC_WCBZRQ, 'yyyy') = #{year}
+		<if test="pcflbm!=null and pcflbm!=''">
+			AND pcflbm=#{pcflbm}
+		</if>
+		GROUP BY
+		TO_CHAR (BPC_WCBZRQ, 'yyyy'),
+		pcjl
+
+	</select>
+	<select id="getYearCountByYearAndPcflbm" resultType="int">
+		SELECT
+		"COUNT" (1) count
+		FROM
+		YX_PC_JBXX
+		WHERE
+		TO_CHAR (BPC_WCBZRQ, 'yyyy')= #{year}
+		<if test="pcflbm!=null and pcflbm!=''">
+			AND pcflbm=#{pcflbm}
+		</if>
+		GROUP BY
+		TO_CHAR (BPC_WCBZRQ, 'yyyy')
+	</select>
+
+
+	<select id="getPcyByPcxbm" resultType="com.start.boot.pojo.dto.PcxDto">
+		SELECT
+		"COUNT"(1) count
+		,PCXMC
+		FROM
+			YX_PC_PCX
+		WHERE
+		PCXBM IN (
+			#{pcxbmList}
+		)
+		and pcslbm in (#{pcslbmList})
+		AND PCJL!='0'
+		GROUP BY PCXMC
+
+	</select>
+
+	<select id="getPcslbmListByYear" resultType="string">
+		SELECT
+		  PCSLBM
+		FROM
+		  YX_PC_JBXX
+		WHERE
+		  TO_CHAR (BPC_WCBZRQ, 'yyyy')= #{year}
+	</select>
+
+	<select id="getPcslbmListByYearAndMonth" resultType="com.start.boot.pojo.dto.JbxxDto">
+		SELECT
+		TO_CHAR (BPC_WCBZRQ, 'mm') month,
+		PCSLBM
+		FROM
+		YX_PC_JBXX
+		WHERE
+		TO_CHAR (BPC_WCBZRQ, 'yyyy')= #{year}
+		GROUP BY
+		TO_CHAR (BPC_WCBZRQ, 'yyyy'),
+		TO_CHAR (BPC_WCBZRQ, 'mm'),
+		PCSLBM
+		ORDER BY 1 DESC
+	</select>
+
+    <select id="getAjzlLinesByYearAndPcflbm" resultMap="ChartLineWithGroup">
+	SELECT T1.PCJL TYPE,
+       T1.YEAR,
+       TO_NUMBER(T1.MONTH) || '月' MONTH,
+       T1.TIMES,
+       T2.COUNT,
+       ROUND((T1.TIMES / T2.COUNT), 2) * 100  VALUE
+  FROM ((SELECT COUNT(*) TIMES,
+                JB.PCJL,
+                TO_CHAR(JB.BPC_WCBZRQ, 'yyyy') YEAR,
+                TO_CHAR(JB.BPC_WCBZRQ, 'mm') MONTH
+           FROM YX_PC_JBXX JB
+          WHERE JB.PCJDBH = '011'
+            AND PCJL IS NOT NULL
+		<if test="pcflbm!=null and pcflbm!=''">
+			AND pcflbm=#{pcflbm}
+		</if>
+          GROUP BY JB.PCJL,
+                   TO_CHAR(JB.BPC_WCBZRQ, 'mm'),
+                   TO_CHAR(JB.BPC_WCBZRQ, 'yyyy')) T1 INNER JOIN
+        (SELECT COUNT(*) COUNT,
+                TO_CHAR(JB.BPC_WCBZRQ, 'yyyy') YEAR,
+                TO_CHAR(JB.BPC_WCBZRQ, 'mm') MONTH
+           FROM YX_PC_JBXX JB
+          WHERE JB.PCJDBH = '011'
+            AND PCJL IS NOT NULL
+		<if test="pcflbm!=null and pcflbm!=''">
+			AND pcflbm=#{pcflbm}
+		</if>
+          GROUP BY TO_CHAR(JB.BPC_WCBZRQ, 'yyyy'),
+                   TO_CHAR(JB.BPC_WCBZRQ, 'mm')) T2 ON
+        T1.YEAR = T2.YEAR AND T1.MONTH = T2.MONTH)
+ WHERE T1.YEAR = #{year} 
+ ORDER BY MONTH ASC
+	</select>
+    <resultMap id="ChartLineWithGroup" type="com.start.boot.domain.ChartWithGroup">
+		<result column="type" property="group"></result>
+	    <result column="month" property="name"></result>
+     	<result column="value" property="value"></result>
+</resultMap>
+	<select id="getAjzlPieByYearAndPcflbm" resultMap="ChartPieNOGroup">
+          SELECT  NVL(jb.pcjl,'其他') AS NAME,count(*) AS VALUE
+            FROM yx_pc_jbxx jb
+           WHERE jb.pcjdbh = '011'
+             AND TO_CHAR (BPC_WCBZRQ, 'yyyy')=#{year}
+		    <if test="pcflbm!=null and pcflbm!=''">AND pcflbm=#{pcflbm}</if>
+           GROUP BY jb.pcjl
+	</select>
+	<resultMap id="ChartPieNOGroup" type="com.start.boot.domain.ChartNOGroup">
+		<result column="NAME" property="name"></result>
+		<result column="VALUE" property="value"></result>
+	</resultMap>
+
+	
+	
+	<select id="shGetYearProblemAnalyze" parameterType="com.start.boot.query.YearProblemAnalyzeQuery" resultType="com.start.boot.pojo.dto.YearProblemAnalyzeDto">
+
+
+		SELECT
+		TO_CHAR (jb.BPC_WCBZRQ, 'yyyy') AS year ,
+		TO_CHAR (jb.BPC_WCBZRQ, 'mm') AS  month ,
+		"COUNT"(*) as count,
+		jb.pcjl AS pcjl
+		FROM
+		YX_PC_JBXX jb
+		WHERE
+		jb.BPC_DWBM = #{dwbm}
+		AND jb.pcjl IS  NOT  NULL
+		AND  jb.sfsc = 'N'
+		AND  jb.pcjdbh='011'
+		<if test="wcrqStart !=null">
+			AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{wcrqStart}, 'yyyy-mm-dd')
+		</if>
+		<if test="wcrqEnd !=null">
+			AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{wcrqEnd}, 'yyyy-mm-dd')
+		</if>
+		<if test="pcjl!=null">
+			AND  jb.pcjl=#{pcjl}
+		</if>
+		GROUP BY
+		TO_CHAR (jb.BPC_WCBZRQ, 'yyyy'),
+		TO_CHAR (jb.BPC_WCBZRQ, 'mm'),
+		jb.PCJL
+
+
+	</select>
+
+	<select id="shGetYearProblemAnalyzeResult" parameterType="com.start.boot.query.YearProblemAnalyzeQuery" resultType="com.start.boot.pojo.dto.YearProblemAnalyzeDto">
+		SELECT
+		TO_CHAR (jb.BPC_WCBZRQ, 'yyyy') AS year ,
+		TO_CHAR (jb.BPC_WCBZRQ, 'mm') AS  month ,
+		"COUNT"(*) as count,
+		jb.pcjl as pcjl
+		FROM
+		YX_PC_JBXX jb
+		WHERE
+		jb.BPC_DWBM = #{dwbm}
+		AND JB.BPC_WCBZRQ IS NOT null
+		AND jb.pcjl = #{pcjl}
+		<if test="wcrqStart !=null">
+			AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{wcrqStart}, 'yyyy-mm-dd')
+		</if>
+		<if test="wcrqEnd !=null">
+			AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{wcrqEnd}, 'yyyy-mm-dd')
+		</if>
+		GROUP BY
+		TO_CHAR (jb.BPC_WCBZRQ, 'yyyy'),
+		TO_CHAR (jb.BPC_WCBZRQ, 'mm'),
+		jb.PCJL
+		ORDER BY TO_CHAR (jb.BPC_WCBZRQ, 'yyyy'),
+		TO_CHAR (jb.BPC_WCBZRQ, 'mm') ASC
+	</select>
+
+
+	<select id="shGetYearProblemAnalyzeJbxx" parameterType="com.start.boot.query.YearProblemAnalyzeQuery" resultType="com.start.boot.domain.YX_PC_JBXX">
+		SELECT jb.*, jb.pcr_mc AS PCRMC,jb.ajlb_mc AS AJLBMC, jb.bpc_dwmc  AS BPCDWMC , jb.bpc_mc AS BPCMC
+		FROM
+			YX_PC_JBXX jb
+		WHERE
+			jb.BPC_DWBM = #{dwbm}
+		AND jb.PCJL = #{pcjl}
+		AND TO_CHAR (jb.BPC_WCBZRQ, 'yyyy') = #{year}
+		AND TO_CHAR (jb.BPC_WCBZRQ, 'mm') = #{month}
+		AND  jb.sfsc = 'N'
+		AND  jb.pcjdbh='011'
+	</select>
+	
+	
+	
+	<select id="shPcjbqkerGetYearMonthPcjlIsNotNull" parameterType="com.start.boot.query.ShPcjbqkerQuery" resultType="com.start.boot.pojo.dto.ShPcjbqkerMothDto">
+		SELECT
+			TO_CHAR (BPC_WCBZRQ, 'yyyy')as year,
+			TO_CHAR (BPC_WCBZRQ, 'mm')  as month
+		FROM
+			YX_PC_JBXX
+		WHERE
+			bpc_dwbm = #{dwbm}
+		AND 	TO_CHAR (BPC_WCBZRQ, 'yyyy')=#{year}
+		AND PCJL IS NOT NULL
+		GROUP BY
+			TO_CHAR (BPC_WCBZRQ, 'yyyy'),
+			TO_CHAR (BPC_WCBZRQ, 'mm')
+	</select>
+
+	<select id="shPcjbqkerGetYearMonthPcjlIsNull" parameterType="com.start.boot.query.ShPcjbqkerQuery" resultType="com.start.boot.pojo.dto.ShPcjbqkerMothDto">
+		SELECT
+		TO_CHAR (BPC_WCBZRQ, 'yyyy')as year,
+		TO_CHAR (BPC_WCBZRQ, 'mm')as month
+		FROM
+		YX_PC_JBXX
+		WHERE
+		bpc_dwbm = #{dwbm}
+		AND 	TO_CHAR (BPC_WCBZRQ, 'yyyy')=#{year}
+		AND PCJL IS  NULL
+		GROUP BY
+		TO_CHAR (BPC_WCBZRQ, 'yyyy'),
+		TO_CHAR (BPC_WCBZRQ, 'mm')
+	</select>
+
+
+	<select id="shPcjbqkerGetPcslbmPcjlIsNull" parameterType="com.start.boot.query.ShPcjbqkerQuery" resultType="com.start.boot.pojo.dto.ShPcjbqkerDto">
+		SELECT
+	 	PCSLBM as  pcslbm,
+	 	bmsah
+		FROM
+			YX_PC_JBXX
+		WHERE
+			bpc_dwbm = #{dwbm}
+		AND PCJL IS NULL
+		AND TO_CHAR (BPC_WCBZRQ, 'yyyy') = #{year}
+		AND TO_CHAR (BPC_WCBZRQ, 'mm')=#{month}
+	</select>
+
+
+
+	<select id="shPcjbqkerGetPcslbmPcjlIsNotNull" parameterType="com.start.boot.query.ShPcjbqkerQuery" resultType="com.start.boot.pojo.dto.ShPcjbqkerDto">
+		SELECT
+	 	PCSLBM as  pcslbm,
+	 	bmsah
+		FROM
+		YX_PC_JBXX
+		WHERE
+		bpc_dwbm = #{dwbm}
+		AND PCJL IS NOT NULL
+		AND TO_CHAR (BPC_WCBZRQ, 'yyyy') = #{year}
+		AND TO_CHAR (BPC_WCBZRQ, 'mm')=#{month}
+	</select>
+	
+	<select id="shYearProlbemNatureAnalyze" parameterType="com.start.boot.query.ShYPNAQuery" resultType="com.start.boot.pojo.dto.PcxDto">
+		SELECT
+		PCX.PCXMC,"COUNT"(1) as count
+		FROM
+		YX_PC_JBXX jb
+		RIGHT JOIN YX_PC_PCX pcx
+		ON jb.PCSLBM=PCX.PCSLBM
+		WHERE
+		jb.BPC_DWBM = #{dwbm}
+		AND JB.BPC_WCBZRQ IS NOT NULL
+		AND  jb.sfsc = 'N'
+		AND  jb.pcjdbh='011'
+		<if test="startDate !=null">
+			AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="endDate !=null">
+			AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="pcflbm !=null">
+			AND PCFLBM = #{pcflbm}
+		</if>
+		AND jb.PCJL =#{pcjl}
+		AND  pcx.pcxmc IS  NOT  NULL
+		GROUP BY
+		PCX.PCXMC ORDER BY count DESC
+
+	</select>
+
+	<select id="getAjjbxxYearProlbemNatureAnalyze" parameterType="com.start.boot.query.ShYPNAQuery" resultType="com.start.boot.domain.YX_PC_JBXX">
+		SELECT jb.*, jb.pcr_mc AS PCRMC,jb.ajlb_mc AS AJLBMC, jb.bpc_dwmc  AS BPCDWMC , jb.bpc_mc AS BPCMC
+	FROM
+		YX_PC_JBXX jb
+	LEFT JOIN YX_PC_PCX pcx ON jb.PCSLBM = pcx.PCSLBM
+	WHERE
+	jb.BPC_DWBM = #{dwbm}
+		AND  jb.sfsc = 'N'
+		AND  jb.pcjdbh='011'
+	<if test="startDate !=null">
+		AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+	</if>
+
+	<if test="endDate !=null">
+		AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+	</if>
+
+	<if test="pcflbm !=null">
+		AND PCFLBM = #{pcflbm}
+	</if>
+
+	<if test="pcjl !=null">
+	AND jb.PCJL=#{pcjl}
+	</if>
+	<if test="pcxmc !=null">
+	AND PCX.PCXMC = #{pcxmc}
+	</if>
+
+	</select>
+	
+	<select id="shPcjbqkerGetPcslbmPcjlIsNotNullJbxx" parameterType="com.start.boot.query.ShPcjbqkerQuery" resultType="com.start.boot.domain.YX_PC_JBXX">
+		SELECT jb.*, jb.pcr_mc AS PCRMC,jb.ajlb_mc AS AJLBMC, jb.bpc_dwmc  AS BPCDWMC , jb.bpc_mc AS BPCMC
+		FROM
+			YX_PC_JBXX jb
+		WHERE
+			bpc_dwbm = #{dwbm}
+		AND PCJL IS  NOT  NULL
+		AND  jb.sfsc = 'N'
+		AND  jb.pcjdbh = '011'
+		<if test="startDate !=null">
+			AND BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="endDate !=null">
+			AND BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		</if>
+	</select>
+
+	<select id="shPcjbqkerGetPcslbmPcjlIsNotNullSxjl" parameterType="com.start.boot.query.ShPcjbqkerQuery" resultType="com.start.boot.domain.YX_PC_JBXX">
+		SELECT sxjl.*,sxjl.cbrmc as bpc_mc,sxjl.ajmc as ajlb_mc,sxjl.dwmc as bpc_dwmc
+		FROM
+		YX_PC_SXJL sxjl
+		WHERE
+		sxjl.dwbm = #{dwbm}
+		<if test="startDate !=null">
+			AND  WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="endDate !=null">
+			AND  WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		</if>
+	</select>
+
+
+
+
+
+
+	<select id="shGetMapJbqk" resultType="int" parameterType="com.start.boot.query.ShYPNAQuery">
+		SELECT
+				"COUNT"(*)
+		FROM
+			YX_PC_JBXX jb
+		WHERE
+			jb.BPC_DWBM = #{dwbm}
+		AND jb.pcjl = #{pcjl}
+		AND jb.sfsc='N'
+		<if test="startDate !=null">
+			AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="endDate !=null">
+			AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		</if>
+		AND jb.PCJL IS NOT NULL
+	</select>
+
+	<select id="getMapVaulePcflbm" resultType="int" parameterType="com.start.boot.query.ShYPNAQuery">
+		SELECT
+				"COUNT"(*)
+		FROM
+			YX_PC_JBXX jb
+		WHERE
+			jb.BPC_DWBM = #{dwbm}
+		AND jb.pcflbm = #{pcflbm}
+		AND  jb.pcjdbh = '011'
+		<if test="startDate !=null">
+			AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="endDate !=null">
+			AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		</if>
+		AND  jb.sfsc = 'N'
+	</select>
+
+	<select id="getPersonPaiMinByPcjlAndRQ" parameterType="com.start.boot.query.ShYPNAQuery" resultType="com.start.boot.pojo.dto.PersonPaimin">
+		SELECT
+		RY.GH AS gh,
+		RY.mc AS mc,
+		"COUNT" (0) as count
+		FROM
+		XT_ZZJG_RYBM RY
+		INNER JOIN YX_PC_JBXX jb ON RY.GH = JB.BPC_GH
+		WHERE
+		jb.bpc_dwbm = #{dwbm}
+		AND JB.PCJL = #{pcjl}
+		AND  JB.sfsc = 'N'
+		AND  JB.pcjdbh = '011'
+		<if test="startDate !=null">
+			AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="endDate !=null">
+			AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		</if>
+		GROUP BY
+		RY.dwbm,
+		RY.GH,
+		RY.mc
+		ORDER BY 3 DESC
+	</select>
+
+	<select id="getPersonPaiMinByPcjlAndRQAjJbxx" parameterType="com.start.boot.query.ShYPNAQuery" resultType="com.start.boot.domain.YX_PC_JBXX">
+		SELECT jb.*, jb.pcr_mc AS PCRMC,jb.ajlb_mc AS AJLBMC, jb.bpc_dwmc  AS BPCDWMC , jb.bpc_mc AS BPCMC
+		FROM
+		XT_ZZJG_RYBM ry
+		INNER JOIN YX_PC_JBXX jb ON RY.GH = JB.BPC_GH
+		WHERE
+		jb.bpc_dwbm = #{dwbm}
+		AND JB.PCJL = #{pcjl}
+		AND  JB.sfsc = 'N'
+		AND  JB.pcjdbh = '011'
+		<if test="startDate !=null">
+			AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="endDate !=null">
+			AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		</if>
+		AND jb.BPC_GH = #{gh}
+
+
+	</select>
+
+	<select id="bmBanAjZhiLiangPaiMin" parameterType="com.start.boot.query.ShYPNAQuery" resultType="com.start.boot.pojo.dto.BmZlPm">
+		SELECT
+		JB.BPC_BMBM as bmbm,
+		jb.BPC_BMMC as bmmc,
+		"COUNT"(0) as count
+	FROM
+		XT_ZZJG_BMBM bm
+	INNER JOIN YX_PC_JBXX jb ON BM.DWBM = jb.BPC_DWBM
+	WHERE
+		jb.BPC_DWBM = #{dwbm}
+	AND PCJL =#{pcjl}
+		AND  JB.sfsc = 'N'
+		AND  JB.pcjdbh = '011'
+	<if test="startDate !=null">
+		AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+	</if>
+	<if test="endDate !=null">
+		AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+	</if>
+	GROUP BY
+	JB.BPC_BMBM,
+	jb.BPC_BMMC
+	</select>
+
+	<select id="bmBanAjZhiLiangPaiMinAjJbxx" parameterType="com.start.boot.query.ShYPNAQuery" resultType="com.start.boot.domain.YX_PC_JBXX">
+		SELECT jb.*, jb.pcr_mc AS PCRMC,jb.ajlb_mc AS AJLBMC, jb.bpc_dwmc  AS BPCDWMC , jb.bpc_mc AS BPCMC
+	FROM
+		YX_PC_JBXX jb
+	WHERE
+	jb.BPC_DWBM = #{dwbm}
+		AND  JB.sfsc = 'N'
+		AND  JB.pcjdbh = '011'
+	<if test="startDate !=null">
+		AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+	</if>
+	<if test="endDate !=null">
+		AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+	</if>
+	AND JB.PCJL = #{pcjl}
+	AND JB.BPC_BMBM = #{bmbm}
+	</select>
+
+	<select id="getWpc" resultType="int" parameterType="com.start.boot.query.ShYPNAQuery">
+		SELECT
+		"COUNT" (*)
+		FROM
+		YX_PC_SXJL sx
+		WHERE  dwbm=#{dwbm}
+        <if test="startDate !=null">
+            AND WCBZRQ  &gt; "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate !=null">
+            AND WCBZRQ &lt;="TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+
+	</select>
+
+	<select id="getYpc" resultType="int" parameterType="com.start.boot.query.ShYPNAQuery">
+	SELECT
+		"COUNT" (*)
+	FROM
+		YX_PC_JBXX
+	  WHERE
+		BPC_DWBM=#{dwbm}
+		<if test="startDate !=null">
+			AND  BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="endDate !=null">
+			AND  BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		</if>
+		and sfsc='N'
+	</select>
+	<select id="getPm" resultType="com.start.boot.pojo.dto.PmDto" parameterType="com.start.boot.query.ShYPNAQuery">
+		SELECT
+		jb.BPC_BMBM AS bmbm,
+		jb.BPC_BMMC AS dwmc,
+		"COUNT" (0) AS COUNT
+		FROM
+		YX_PC_JBXX jb
+		WHERE
+		PCJL IN (
+		'不合格案件',
+		'瑕疵案件'
+		)
+		AND jb.BPC_DWBM = #{dwbm}
+		<if test="startDate !=null">
+			AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="endDate !=null">
+			AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		</if>
+		GROUP BY
+		jb.BPC_BMBM,
+		jb.BPC_BMMC
+		ORDER BY
+		3 ASC
+	</select>
+	<select id="getPmAjJbxx" parameterType="com.start.boot.query.ShYPNAQuery" resultType="com.start.boot.domain.YX_PC_JBXX">
+		SELECT jb.*, jb.pcr_mc AS PCRMC,jb.ajlb_mc AS AJLBMC, jb.bpc_dwmc  AS BPCDWMC , jb.bpc_mc AS BPCMC
+		FROM
+			YX_PC_JBXX jb
+		WHERE
+			PCJL IN (
+				'不合格案件',
+				'瑕疵案件'
+			)
+		AND BPC_DWBM=#{dwbm}
+		AND bpc_bmbm=#{bmbm}
+		<if test="startDate !=null">
+			AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="endDate !=null">
+			AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		</if>
+
+	</select>
+	<select id="getMapAjJbxx" parameterType="com.start.boot.query.ShYPNAQuery" resultType="com.start.boot.domain.YX_PC_JBXX">
+		SELECT jb.*, jb.pcr_mc AS PCRMC,jb.ajlb_mc AS AJLBMC, jb.bpc_dwmc  AS BPCDWMC , jb.bpc_mc AS BPCMC
+		FROM
+			YX_PC_JBXX jb
+		WHERE
+		BPC_DWBM = #{dwbm}
+		AND jb.sfsc='N'
+		AND jb.pcjdbh='011'
+		<if test="pcjl != null">
+			AND PCJL = #{pcjl}
+		</if>
+		<if test="pcflbm != null">
+			AND PCFLBM = #{pcflbm}
+		</if>
+		<if test="startDate !=null">
+			AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="endDate !=null">
+			AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		</if>
+
+	</select>
+
+	<select id="getMapAjJbxxJbqk" parameterType="com.start.boot.query.ShYPNAQuery" resultType="com.start.boot.domain.YX_PC_JBXX">
+		SELECT jb.*, jb.pcr_mc AS PCRMC,jb.ajlb_mc AS AJLBMC, jb.bpc_dwmc  AS BPCDWMC , jb.bpc_mc AS BPCMC
+		FROM
+		YX_PC_JBXX jb
+		WHERE
+		BPC_DWBM = #{dwbm}
+		AND jb.sfsc='N'
+		<if test="pcjl != null">
+			AND PCJL = #{pcjl}
+		</if>
+		<if test="pcflbm != null">
+			AND PCFLBM = #{pcflbm}
+		</if>
+		<if test="startDate !=null">
+			AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="endDate !=null">
+			AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		</if>
+
+	</select>
+</mapper>

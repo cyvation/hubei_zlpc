@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" class="tjfx_echarts">
+<head>
+    <meta charset="UTF-8">
+    <title>table</title>
+</head>
+<body class="easyui-layout">
+<script type="text/javascript" ,>
+    AddScript("text/javascript", "script/statistics/analysis/table.js");
+</script>
+<style>
+    #easyui_table_yscx{
+        width: 100%;
+        height: calc(100% - 40px);
+        /*overflow: auto;*/
+    }
+    #easyui_table_yscx .datagrid-header-inner{
+        width: 100%;
+    }
+    #easyui_table_yscx .datagrid-header-inner table.datagrid-htable{
+        width: 100%;
+        background-color: #eaf2f0;
+    }
+    #easyui_table_yscx .datagrid-header .datagrid-cell{
+        margin: auto;
+    }
+
+    #easyui_table_yscx  .datagrid-view2 table.datagrid-htable tr td{
+        border: 1px solid #Dbdbdb !important;
+        border-right: 0 !important;
+        border-bottom: 0 !important;
+    }
+    #easyui_table_yscx  .datagrid-view2 table.datagrid-btable tr td{
+        border: 1px solid#Dbdbdb !important;
+        border-top: none !important;
+        border-right: none !important;
+
+    }
+    #easyui_table_yscx  .datagrid-view2 table tr:last-child  td{
+        border-bottom: 1px solid#Dbdbdb !important;
+    }
+    #easyui_table_yscx  table tbody  .datagrid-row{
+        border-bottom: none !important;
+    }
+    #easyui_table_yscx  table tbody  .datagrid-row td{
+        border: 1px solid#Dbdbdb;
+    }
+    #easyui_table_yscx  .datagrid-cell-group{
+        width: 100%!important;
+        height: 100%;
+    }
+    #easyui_table_yscx  .tolong_ils .panel-header, .panel-body{
+        border-color:#b1cff1 !important;
+        border-top: none;
+    }
+    #easyui_table_yscx  .datagrid-view2 table tr:nth-of-type(1) td{
+        border-top: 0 !important;
+    }
+    #easyui_table_yscx  .datagrid-header{
+        border-top:1px solid #b1cff1 !important;
+        border-bottom:1px solid #Dbdbdb !important;
+        background-color: #eaf2f0 !important;
+    }
+    #easyui_table_yscx  table .datagrid-header-row{
+        height: 18px !important;
+    }
+    #easyui_table_yscx  .datagrid-body .datagrid-cell{
+        margin: auto;
+    }
+    #easyui_table_yscx  .datagrid-header td{
+        color: #094c7b!important;
+    }
+</style>
+<div style="width: 100%;height: 30px;margin-bottom: 10px;">
+      <span class="" style="float: left;margin-right: 40px;">
+                <p class="cx_text"  style="color: #6E6F6E;margin-top: 5px;">日期：</p>
+                <span class="easyui-datebox" id="cbt_situation_start" style="height: 30px;"></span>
+                <span style="display: inline-block; text-align: center;"> ~ </span>
+                <span class="easyui-datebox" id="cbt_situation_end" style="height: 30px;"></span>
+                <span class="easyui-button" id="cx" style="height: 30px;"></span>
+     </span>
+    <button class="btn">查询</button>
+</div>
+
+<div id="easyui_table_yscx" >
+    <div style="width: 100%;" id="div_handle_table_yscx" class="easyui-panel" data-options="fit:true,border:true">
+        <table id="grid_handle_table_yscx"  border="0" data-options="fit:true" style="width: 100%;">
+        </table>
+    </div>
+</div>
+</body>
+</html>

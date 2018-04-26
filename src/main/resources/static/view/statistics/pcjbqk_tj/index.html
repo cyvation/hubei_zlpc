@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>随机评查</title>
+</head>
+<body style="height: 100%">
+<!--页面JS加载，放在头部不能正确加载-->
+<script type="text/javascript">
+    AddScript("text/javascript", "script/statistics/pcjbqk_tj/index.js");
+</script>
+
+<div class="pcajsx">
+    <!-- 导航栏 -->
+    <div class="pcajsx_tj">
+        <div class="pcajsx_tj_1" style="margin-top: 2px;">评查基本情况统计</div>
+        <div class="pcajsx_tj_2"  id="btn_eval_statistics_pcjbqk_total">总表</div>
+        <div class="pcajsx_tj_2" id="btn_eval_statistics_pcjbqk_category">案件类别</div>
+        <div class="pcajsx_tj_2" id="btn_eval_statistics_pcjbqk_problems">问题性质</div>
+        <div class="pcajsx_tj_2" id="btn_eval_statistics_pcjbqk_conclusion ">问题性质</div>
+    </div>
+
+    <!-- 总表 -->
+    <div id="page_eval_statistics_pcjbqk_total" >
+        <div class="pcajsx_sj">
+            <span style="display: inline-block;color: #666666; margin: 20px;">评查时间</span>
+            <input id="total_start" class="easyui-datebox" style="height: 32px;width:200px;">
+            <span style="margin: 0 10px 0 10px">~ </span>
+            <input id="total_end" class="easyui-datebox" style="height: 32px;width:200px;">
+            <button id="btn_eval_statistics_pcjbqk_total_search" class="pcajsx_sj_2">查询</button>
+        </div>
+        <div class="pcajsx_content">
+            <div class="pcajsx_content_1">
+                <div id="table_case_build_total"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 案件类别 -->
+    <div id="page_eval_statistics_pcjbqk_category" >
+        <div class="pcajsx_sj">
+            <span>分类</span>
+            <select id="category_fenlei" class="easyui-combobox" name="dept" style="width:200px;">
+                <option value="random">随机</option>
+                <option value="keypoint">重点</option>
+            </select>
+            <span style="display: inline-block;color: #666666; margin: 20px;">评查日期</span>
+            <input id="category_start" class="easyui-datebox" style="height: 32px;width:200px;">
+            <span style="margin: 0 10px 0 10px">~ </span>
+            <input id="category_end" class="easyui-datebox" style="height: 32px;width:200px;">
+            <button id="btn_eval_statistics_pcjbqk_category_search" class="pcajsx_sj_2">查询</button>
+        </div>
+        <div class="pcajsx_content">
+            <div class="pcajsx_content_1">
+                <div id="table_case_build_category"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 问题性质 -->
+    <div id="page_eval_statistics_pcjbqk_problems" >
+        <div class="pcajsx_sj">
+            <span>分类</span>
+            <select id="problems_fenlei" class="easyui-combobox"  style="width:200px;height: 30px">
+                <option value="random">随机</option>
+                <option value="keypoint">重点</option>
+            </select>
+            <span style="margin-left: 40px">统计方式:</span>
+            <select id="problems_fanshi" class="easyui-combobox"  style="width:200px;height: 30px">
+                <option value="dw">以单位统计</option>
+                <option value="type">以类别统计</option>
+            </select>
+            <span style="display: inline-block;color: #666666; margin: 20px;">评查时间</span>
+            <input id="problems_start" class="easyui-datebox" style="height: 32px;width:200px;">
+            <span style="margin: 0 10px 0 10px">~ </span>
+            <input id="problems_end" class="easyui-datebox" style="height: 32px;width:200px;">
+            <button id="btn_eval_statistics_pcjbqk_problems_search" class="pcajsx_sj_2">查询</button>
+        </div>
+        <div class="pcajsx_content">
+            <div class="pcajsx_content_1">
+                <div id="table_case_build_problems"></div>
+            </div>
+        </div>
+    </div>
+
+    <!--评查结论-->
+    <div id="page_eval_statistics_pcjbqk_conclusion" >
+        <div class="pcajsx_sj">
+            <span>分类</span>
+            <select id="conclusion_fenlei" class="easyui-combobox"  style="width:200px;height: 30px">
+                <option value="random">随机</option>
+                <option value="keypoint">重点</option>
+            </select>
+            <span style="margin-left: 40px">统计方式:</span>
+            <select id="conclusion_fanshi" class="easyui-combobox"  style="width:200px;height: 30px">
+                <option value="dw">以单位统计</option>
+                <option value="type">以类别统计</option>
+            </select>
+            <span style="display: inline-block;color: #666666; margin: 20px;">评查日期</span>
+            <input id="conclusion_start" class="easyui-datebox" style="height: 32px;width:200px;">
+            <span style="margin: 0 10px 0 10px">~ </span>
+            <input id="conclusion_end" class="easyui-datebox" style="height: 32px;width:200px;">
+            <button id="btn_eval_statistics_pcjbqk_conclusion_search" class="pcajsx_sj_2">查询</button>
+        </div>
+        <div class="pcajsx_content">
+            <div class="pcajsx_content_1">
+                <div id="table_case_build_conclusion"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

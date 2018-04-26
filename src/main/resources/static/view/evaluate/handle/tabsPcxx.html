@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>评查办理</title>
+</head>
+
+<body>
+
+<script type="text/javascript">
+    AddScript("text/javascript", "script/evaluate/handle/evalinfo.js");
+    AddScript("text/javascript", "script/document/ntkoofficecontrol.js");
+    AddScript("text/javascript", "script/document/JScriptDoc.js");
+    AddScript("text/javascript","script/evaluate/handle/pcblButton.js");
+</script>
+<style>
+    .pcxxRootNode {
+        height: calc(100% - 20px);
+        margin-top: 10px;
+    }
+</style>
+<!--<div class="pcbl_pcxx_top" id="pcjg" style="padding-left: 15px;margin-top: 9px">
+    <div id='pcblBut' style="height: 30px;">
+        &lt;!&ndash;<div class="pcbl_pcxx_top_box" id="pcbl_pcxx_top_pcyl">评查预览</div>&ndash;&gt;
+    </div>
+</div>-->
+<div class="pcxxRootNode">
+    <div id="pcbl_pcxx_center_left">
+        <div class="pcbl_pcxx_cent" style="padding: 0 10px;">
+            <div class="center_left_box">
+                <div class="center_left_box_top"><img src="image/home/info.png"
+                                                      style="float: left;margin-top: 2px;margin-right: 5px">评查基本信息
+                </div>
+                <div class="pcjbxx">
+                    <div>评查案件：<span id="lbl_eval_handle_eval_ajmc"></span></div>
+                    <div>承办检察官：<span id="lbl_eval_handle_eval_cbr"></span></div>
+                    <div>评查员：<span id="lbl_eval_handle_eval_pcr"></span></div>
+                    <div>评查案号：<span id="lbl_eval_handle_eval_pcsah"></span></div>
+                    <div>评查时间：<span id="lbl_eval_handle_eval_pcsj"></span></div>
+                    <div>案由：<span id="lbl_eval_handle_eval_ay"></span></div>
+                </div>
+            </div>
+            <!----------------------------------------------------------------------------------------------------------------------->
+            <div class="center_left_box" id="ZLPCNR_CONTAINTER">
+                <!--<div class="zlpc-box">-->
+                <div class="center_left_box_top"><img src="image/home/22.png"
+                                                      style="float: left;margin-top: 2px;margin-right: 5px">评查内容
+                </div>
+            </div>
+            <!----------------------------------------------------------------------------------------------------------------------->
+            <div class="center_left_box">
+                <div class="center_left_box_top"><img src="image/home/33.png"
+                                                      style="float: left;margin-top: 2px;margin-right: 5px">评查结论
+                </div>
+                <div class="pcjg_redio" id="loadCljg" style="display:none;">
+                    <div class="pcjg_redio_text">处理结果：</div>
+                </div>
+                <div class="pcjg_redio" id="loadPcjg">
+                    <div class="pcjg_redio_text">结果等次建议：</div>
+                </div>
+                <div class="pcjg_input">
+                    <div class="pcjg_redio_text">备注：</div>
+                    <!--<input type="text">-->
+                    <textarea id="txt_eval_info_pcjl_bz"
+                              style="margin-top:1px;width: calc(100% - 91px);height: 50px;resize: none;border: 1px solid #c1cfda; border-radius: 2px;"></textarea>
+                </div>
+            </div>
+        </div>
+        <!--评查案卡工具栏-->
+        <div id="tool_eval_handle_deal_save" style="display: none;">
+            <div id="pcbl_pcxx_center_left_bc" class="mrm_submit">保存</div>
+            <div style="clear: both"></div>
+        </div>
+    </div>
+
+    <div id="pcbl_pcxx_wdck" style="display: none;">
+        <!--报告控件显示-->
+        <div id="div_eval_handle_file_area" class="pcbl_pcxx_cent" style="margin-top: 0px;height: 100%">
+            <form runat="server" style="z-index: -99; height: 100%;">
+                <div id="divDoc" style="width: 100%; display: none"></div>
+                <div id="divPdf" style="width: 100%; display: none"></div>
+            </form>
+        </div>
+        <!--评查报审-->
+        <div id="tool_eval_handle_deal_pcbp" style="display: none;padding-left: 10px;">
+            <div style="width: calc(100% - 240px);float: left;">
+                <span class="xzspyj">意见：</span>
+                <div class="pcjg_redio" style="float: left;width: calc(100% - 90px);margin-top: 10px;">
+                    <div class="radio bgkjClick">
+                        <div class="redio_click"><input class="input_radio_spyj" name="rd_eval_handle_deal_pcbs_pcyj"
+                                                        type="radio" value="意见" /></div>
+                        意见
+                    </div>
+                </div>
+                <span class="spxzts" title="操作选择(提示:选择意见后，请直接在相应的意见栏中输入详细内容)">操作选择(提示:选择意见后，请直接在相应的意见栏中输入详细内容)</span>
+            </div>
+            <div style="width: 240px;height: 40px;float: left;">
+                <!--评查报审-->
+                <button class="bc_anys" id="btn_eval_handle_deal_pcbs_confirm" style="display: none;">提交意见</button>
+                <!--发送承办人-->
+                <button class="bc_anys" id="btn_eval_handle_deal_fscbr_confirm" style="display: none;">提交意见</button>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+        <!--评查审批-->
+        <div id="tool_eval_handle_deal_pcsp" style="display: none;padding-left: 10px;">
+            <div style="width: calc(100% - 300px);float: left;">
+                <span class="xzspyj">意见：</span>
+                <div class="pcjg_redio" style="float: left;width: calc(100% - 90px);margin-top: 10px;">
+                    <div class="radio bgkjClick">
+                        <div class="redio_click"><input class="input_radio_spyj" name="rd_eval_handle_deal_pcsp_spyj"
+                                                        type="radio" value="同意"/></div>
+                        同意
+                    </div>
+                    <div class="radio bgkjClick">
+                        <div class="redio_click"><input class="input_radio_spyj" name="rd_eval_handle_deal_pcsp_spyj"
+                                                        type="radio" value="不同意"/></div>
+                        不同意
+                    </div>
+                    <div id="rd_eval_handle_deal_pcsp_spyj_suggest" class="radio bgkjClick">
+                        <div class="redio_click"><input class="input_radio_spyj" name="rd_eval_handle_deal_pcsp_spyj"
+                                                        type="radio" value="意见"/></div>
+                        意见
+                    </div>
+                    <!--<div id="rd_eval_handle_deal_pcsp_spyj_reject" class="radio bgkjClick">
+                        <div class="redio_click"><input class="input_radio_spyj" name="rd_eval_handle_deal_pcsp_spyj"
+                                                        type="radio" value="退回"/></div>
+                        退回
+                    </div>-->
+                </div>
+                <span class="spxzts" title="操作选择(提示:选择意见后，请直接在相应的意见栏中输入详细内容)">操作选择(提示:选择意见后，请直接在相应的意见栏中输入详细内容)</span>
+            </div>
+            <div style="width: 300px;overflow:hidden;float: left;">
+                <button class="bc_anys" id="btn_eval_handle_deal_pcsp_sendApp">继续审批</button>
+                <button class="bc_anys" id="btn_eval_handle_deal_pcsp_confirm">保存并返回</button>
+                <button class="bc_anys" id="btn_eval_handle_deal_pcsp_save">保存</button>
+                <button class="bc_anys" id="btn_eval_handle_deal_pcsp_sendBack">退回</button>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+        <!--评查反馈-->
+        <div id="tool_eval_handle_deal_pcfk" style="display:none;padding-left: 10px;">
+            <div style="width: calc(100% - 120px);float: left;">
+                <span class="xzspyj">意见：</span>
+                <div class="pcjg_redio" style="float: left;width: calc(100% - 90px);margin-top: 10px;">
+                    <div class="radio bgkjClick">
+                        <div class="redio_click"><input class="input_radio_spyj" name="rd_eval_handle_deal_pcfk_fkyj"
+                                                        type="radio" value="无异议"/></div>
+                        无异议
+                    </div>
+                    <div class="radio bgkjClick">
+                        <div class="redio_click"><input class="input_radio_spyj" name="rd_eval_handle_deal_pcfk_fkyj"
+                                                        type="radio" value="有异议"/></div>
+                        有异议
+                    </div>
+                </div>
+                <span class="spxzts" title="操作选择(提示:选择意见后，请直接在相应的意见栏中输入详细内容)">操作选择(提示:选择意见后，请直接在相应的意见栏中输入详细内容)</span>
+            </div>
+            <div style="width: 120px;height: 40px;float: left;">
+                <button class="bc_anys" id="btn_eval_handle_deal_pcfk_confirm">提交意见</button>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+        <!--部门反馈-->
+        <div id="toll_eval_handle_deal_bmfk" style="display: none;padding-left: 10px;">
+            <div style="width: calc(100% - 120px);float: left;">
+                <span class="xzspyj">意见：</span>
+                <div class="pcjg_redio" style="float: left;width: calc(100% - 90px);margin-top: 10px;">
+                    <div class="radio bgkjClick">
+                        <div class="redio_click"><input class="input_radio_spyj" name="rd_eval_handle_deal_bmfk_fkyj"
+                                                        type="radio" value="同意评查意见"/></div>
+                        同意评查意见
+                    </div>
+                    <div class="radio bgkjClick">
+                        <div class="redio_click"><input class="input_radio_spyj" name="rd_eval_handle_deal_bmfk_fkyj"
+                                                        type="radio" value="同意承办人意见"/></div>
+                        同意承办人意见
+                    </div>
+                    <div class="radio bgkjClick">
+                        <div class="redio_click"><input class="input_radio_spyj" name="rd_eval_handle_deal_bmfk_fkyj"
+                                                        type="radio" value="其他意见"/></div>
+                        其他意见
+                    </div>
+                </div>
+                <span class="spxzts" title="操作选择(提示:选择意见后，请直接在相应的意见栏中输入详细内容)">操作选择(提示:选择意见后，请直接在相应的意见栏中输入详细内容)</span>
+            </div>
+            <div style="width: 120px;height: 40px;float: left;">
+                <button class="bc_anys" id="btn_eval_handle_deal_bmfk_confirm">提交意见</button>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+
+    </div>
+
+    <div class="pcbl_pcxx_Width">
+        <div id="pcbl_pcxx_center_right">
+            <div class="center_right_box center_right_box_click">
+                <div class="center_right_box_sj"></div>
+                评<br>查<br>案<br>卡
+            </div>
+            <div class="center_right_box ">
+                <div></div>
+                评<br>查<br>卷<br>宗
+            </div>
+        </div>
+        <div id="evalinfo_position_one">
+            <div class="pcbl_ssdjsj_ys">
+                <div class="pcbl_ssys" id="pcbl_ssyjksj">解锁</div>
+            </div>
+            <ul id="gaxx_jkList" class="pacbl_ajxx_tabs_ul1">
+                <li id="btn_eval_info_pcak" class="pacbl_ajxx_tabs_li">
+                    评查案卡
+                </li>
+            </ul>
+        </div>
+        <div id="evalinfo_position_two" style="">
+            <div class="pcbl_ssdjsj_ys">
+                <div id="pcbl_ssyjzsj" class="pcbl_ssys">解锁</div>
+            </div>
+            <div class="pacbl_ajxx_tabs_ul1">
+                <div id="tool_tree_eval_doc_files" class="evalinfo_position_two_mouse"
+                     style="margin-top: 10px; display: none">
+                    <a id="pcbl_pcxx_doc_upload" href="#" class="easyui-linkbutton"
+                       style="padding: 2px 5px 2px 6px;">上传</a>
+                    <a id="pcbl_pcxx_doc_delete" href="#" class="easyui-linkbutton"
+                       style="padding: 2px 5px 2px 6px;">移除</a>
+                    <a id="pcbl_pcxx_doc_rename" href="#" class="easyui-linkbutton" style="padding: 2px 5px 2px 6px;">重命名</a>
+                </div>
+                <div class="evalinfo_position_two_mouse" style="margin-top: 10px;">
+                    <ul id="tree_eval_doc_files" class="easyui-tree"
+                        style="padding: 10px 10px 10px 0;color:#000; margin-left: -6px;">
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--上传弹出层-->
+<div id="win_tccys" class="easyui-window" title="上传" style="width:600px; height:280px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,cache:false">
+    <!--<span class="evalinfo_position_two_mouse">&lt;!&ndash;上传文件窗体&ndash;&gt;</span>-->
+    <div id="uploadFileWnd" class="evalinfo_position_two_mouse" style="width: 100%;height: 100%;">
+        <form id="uploadForm" style="width: 100%;height: 100%;" enctype="multipart/form-data">
+            <div style="width: 100%;height: calc(100% - 60px);overflow: hidden;">
+
+                <div style="position: relative;top: 40px;width: 80%;margin: auto;">
+                    <span style="width: 46px;display: inline-block;float: left;margin: 9px 5px 0 0;">路径:</span>
+                    <div style="width: calc(100% - 51px);float: left;">
+                        <input id="tcc_input" type="text" placeholder="未选择文件...">
+                        <input style=" position: absolute;left: 0;top: 0;cursor:pointer;width: calc(100% - 15px);height: 34px;opacity: 0;filter: alpha(opacity=0);z-index: 1;"
+                               id="selectedFile" type="file" name="file"/>
+                        <div id="btn_select_file" class="sckj_tccys" style=" text-align: center"><span
+                                class="sckj_tccys_span"></span><span
+                                style="display: inline-block;float: left;margin-left: 5px;">选择文件</span></div>
+                    </div>
+                </div>
+                <div style="position: relative;top: 80px;width: 80%;margin: auto;">
+                    <span style="width: 46px;display: inline-block;float: left;margin: 9px 5px 0 0;">重命名:</span>
+                    <div style="width: calc(100% - 51px);float: left;">
+                        <input id="tcc_cmmys" type="text" style="">
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 10px;width: 100%;height: 40px;">
+                <a id="uploadOk_qxan" href="#" class="easyui-linkbutton"
+                   style="padding: 2px 4px 2px 6px; float: right;margin-right: 72px;width: 80px;">取消</a>
+                <a id="uploadOk" href="#" class="easyui-linkbutton"
+                   style="padding: 2px 4px 2px 6px; float: right;margin-right: 20px;width: 80px;">确定</a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<!-- 重命名弹出层   -->
+<div id="win_cmmtccys" class="easyui-window" title="重命名" style="width:600px; height:280px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,cache:false">
+    <!--<span class="evalinfo_position_two_mouse">&lt;!&ndash;上传文件窗体&ndash;&gt;</span>-->
+    <div id="urenameFileWnd" class="evalinfo_position_two_mouse" style="width: 100%;height: 100%;">
+        <div style="width: 100%;height: calc(100% - 60px);overflow: hidden;">
+            <div style="position: relative;top: 40px;width: 80%;margin: auto;">
+                <span style="width: 46px;display: inline-block;float: left;margin: 9px 5px 0 0;">原名称:</span>
+                <div style="width: calc(100% - 51px);float: left;">
+                    <input id="YY_input" type="text" readonly="readonly">
+                </div>
+
+            </div>
+            <div style="position: relative;top: 80px;width: 80%;margin: auto;">
+                <span style="width: 46px;display: inline-block;float: left;margin: 9px 5px 0 0;">新名称:</span>
+                <div style="width: calc(100% - 51px);float: left;">
+                    <input id="XZ_input" type="text">
+                </div>
+
+            </div>
+        </div>
+        <div style="margin-top: 10px;width: 100%;height: 40px;">
+            <a id="rename_qxan" href="#" class="easyui-linkbutton"
+               style="padding: 2px 4px 2px 6px; float: right;margin-right: 72px;width: 80px;">取消</a>
+            <a id="rename_Ok" href="#" class="easyui-linkbutton"
+               style="padding: 2px 4px 2px 6px; float: right;margin-right: 20px;width: 80px;">确定</a>
+        </div>
+    </div>
+</div>
+
+<!--送审弹出窗-->
+<div id="win_eval_handle_deal_fssp" class="easyui-window" title="审批人" style="width:460px; height:380px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+    <div id="div_eval_handle_deal_fssp" style="margin-bottom:15px; width:440px; text-align:center; ">
+        <!--案管负责人列表-->
+        <table id="grid_eval_handle_deal_fssp" border="0"></table>
+    </div>
+    <div style="text-align:center;">
+        <button id="btn_eval_handle_deal_fssp_confirm" class="ZXpc_pcfa_2" style="background-color: #258EEA;">确定
+        </button>
+        <button id="btn_eval_handle_deal_fssp_cancle" class="ZXpc_pcfa_2" style="background-color: #258EEA;">取消</button>
+    </div>
+</div>
+
+<!--业务部门负责人-->
+<div id="win_eval_handle_deal_ywbmfzr" class="easyui-window" title="部门领导" style="width:460px; height:380px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+    <div id="div_eval_handle_deal_ywbmfzr" style="margin-bottom:15px; width:440px; text-align:center; ">
+        <!--业务部门负责人列表-->
+        <table id="grid_eval_handle_deal_ywbmfzr" border="0"></table>
+    </div>
+    <div style="text-align:center;">
+        <button id="btn_eval_handle_deal_ywbmfzr_confirm" class="ZXpc_pcfa_2" style="background-color: #258EEA;">确定
+        </button>
+        <button id="btn_eval_handle_deal_ywbmfzr_cancle" class="ZXpc_pcfa_2" style="background-color: #258EEA;">取消</button>
+    </div>
+</div>
+
+<!--评查预览弹出框-->
+<div id="win">
+    <div class="pcblPcyl">
+        <div>评查案件：<span id="win_lbl_eval_handle_eval_ajmc"></span></div>
+        <div>承办检察官：<span id="win_lbl_eval_handle_eval_cbr"></span></div>
+        <div>评查员：<span id="win_lbl_eval_handle_eval_pcr"></span></div>
+        <div>评查案号：<span id="win_lbl_eval_handle_eval_pcsah"></span></div>
+        <div>评查时间：<span id="win_lbl_eval_handle_eval_pcsj"></span></div>
+        <div>案由：<span id="win_lbl_eval_handle_eval_ay"></span></div>
+        <div style="float: none;clear: both;height: 1px;"></div>
+    </div>
+    <div class="pcylCon"></div>
+</div>
+<!--添加到收藏夹弹出框-->
+<div id="addColl">
+    <p>
+        <span class="collName">评查案件</span>
+        <input type="text" id="collPcaj" value=""/>
+    </p>
+    <p>
+        <span class="collName">评查案号</span>
+        <input type="text" id="collPcah" value=""/>
+    </p>
+    <p>
+        <span class="collName">备注</span>
+        <textarea name="" rows="" cols="" id='collBz'></textarea>
+    </p>
+    <div>
+        <div class="addCollBut" id='collBc'>确定</div>
+    </div>
+
+</div>
+<!--添加文书-->
+<div id="addWs">
+    <div class="wsCon">
+        <table id="addWsType"></table>
+    </div>
+
+    <div style="padding-right: 10px;">
+        <div class="addCollBut" id='addWsBc'>确定</div>
+    </div>
+
+</div>
+
+</body>
+</html>

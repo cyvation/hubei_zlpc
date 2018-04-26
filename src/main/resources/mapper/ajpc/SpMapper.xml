@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.SpMapper">
+  <resultMap id="BaseResultMap" type="com.start.boot.domain.Sp">
+    <id column="PCSPBM" jdbcType="CHAR" property="pcspbm" />
+    <result column="SPWJLX" jdbcType="CHAR" property="spwjlx" />
+    <result column="SPWJBM" jdbcType="VARCHAR" property="spwjbm" />
+    <result column="SSRDWBM" jdbcType="CHAR" property="ssrdwbm" />
+    <result column="SSRDWMC" jdbcType="VARCHAR" property="ssrdwmc" />
+    <result column="SSRGH" jdbcType="CHAR" property="ssrgh" />
+    <result column="SSRXM" jdbcType="VARCHAR" property="ssrxm" />
+    <result column="SSRQ" jdbcType="TIMESTAMP" property="ssrq" />
+    <result column="SPRDWBM" jdbcType="CHAR" property="sprdwbm" />
+    <result column="SPRDWMC" jdbcType="VARCHAR" property="sprdwmc" />
+    <result column="SPRGH" jdbcType="CHAR" property="sprgh" />
+    <result column="SPRXM" jdbcType="VARCHAR" property="sprxm" />
+    <result column="SPRQ" jdbcType="TIMESTAMP" property="sprq" />
+    <result column="SPJL" jdbcType="VARCHAR" property="spjl" />
+    <result column="SPYJ" jdbcType="VARCHAR" property="spyj" />
+    <result column="SFSC" jdbcType="CHAR" property="sfsc" />
+    <result column="CJSJ" jdbcType="TIMESTAMP" property="cjsj" />
+    <result column="ZHXGSJ" jdbcType="TIMESTAMP" property="zhxgsj" />
+    <result column="SPJSBM" jdbcType="VARCHAR" property="spjsbm" />
+    <result column="SPJSMC" jdbcType="VARCHAR" property="spjsmc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    PCSPBM, SPWJLX, SPWJBM, SSRDWBM, SSRDWMC, SSRGH, SSRXM, SSRQ, SPRDWBM, SPRDWMC, SPRGH, 
+    SPRXM, SPRQ, SPJL, SPYJ, SFSC, CJSJ, ZHXGSJ, SPJSBM, SPJSMC
+  </sql>
+  <select id="selectByExample" parameterType="com.start.boot.domain.SpExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YX_PC_SP
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from YX_PC_SP
+    where PCSPBM = #{pcspbm,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from YX_PC_SP
+    where PCSPBM = #{pcspbm,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.start.boot.domain.SpExample">
+    delete from YX_PC_SP
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.start.boot.domain.Sp">
+    insert into YX_PC_SP (PCSPBM, SPWJLX, SPWJBM, 
+      SSRDWBM, SSRDWMC, SSRGH, 
+      SSRXM, SSRQ, SPRDWBM, 
+      SPRDWMC, SPRGH, SPRXM, 
+      SPRQ, SPJL, SPYJ, 
+      SFSC, CJSJ, ZHXGSJ, 
+      SPJSBM, SPJSMC)
+    values (#{pcspbm,jdbcType=CHAR}, #{spwjlx,jdbcType=CHAR}, #{spwjbm,jdbcType=VARCHAR}, 
+      #{ssrdwbm,jdbcType=CHAR}, #{ssrdwmc,jdbcType=VARCHAR}, #{ssrgh,jdbcType=CHAR}, 
+      #{ssrxm,jdbcType=VARCHAR}, #{ssrq,jdbcType=TIMESTAMP}, #{sprdwbm,jdbcType=CHAR}, 
+      #{sprdwmc,jdbcType=VARCHAR}, #{sprgh,jdbcType=CHAR}, #{sprxm,jdbcType=VARCHAR}, 
+      #{sprq,jdbcType=TIMESTAMP}, #{spjl,jdbcType=VARCHAR}, #{spyj,jdbcType=VARCHAR}, 
+      #{sfsc,jdbcType=CHAR}, #{cjsj,jdbcType=TIMESTAMP}, #{zhxgsj,jdbcType=TIMESTAMP}, 
+      #{spjsbm,jdbcType=VARCHAR}, #{spjsmc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.start.boot.domain.Sp">
+    insert into YX_PC_SP
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pcspbm != null">
+        PCSPBM,
+      </if>
+      <if test="spwjlx != null">
+        SPWJLX,
+      </if>
+      <if test="spwjbm != null">
+        SPWJBM,
+      </if>
+      <if test="ssrdwbm != null">
+        SSRDWBM,
+      </if>
+      <if test="ssrdwmc != null">
+        SSRDWMC,
+      </if>
+      <if test="ssrgh != null">
+        SSRGH,
+      </if>
+      <if test="ssrxm != null">
+        SSRXM,
+      </if>
+      <if test="ssrq != null">
+        SSRQ,
+      </if>
+      <if test="sprdwbm != null">
+        SPRDWBM,
+      </if>
+      <if test="sprdwmc != null">
+        SPRDWMC,
+      </if>
+      <if test="sprgh != null">
+        SPRGH,
+      </if>
+      <if test="sprxm != null">
+        SPRXM,
+      </if>
+      <if test="sprq != null">
+        SPRQ,
+      </if>
+      <if test="spjl != null">
+        SPJL,
+      </if>
+      <if test="spyj != null">
+        SPYJ,
+      </if>
+      <if test="sfsc != null">
+        SFSC,
+      </if>
+      <if test="cjsj != null">
+        CJSJ,
+      </if>
+      <if test="zhxgsj != null">
+        ZHXGSJ,
+      </if>
+      <if test="spjsbm != null">
+        SPJSBM,
+      </if>
+      <if test="spjsmc != null">
+        SPJSMC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pcspbm != null">
+        #{pcspbm,jdbcType=CHAR},
+      </if>
+      <if test="spwjlx != null">
+        #{spwjlx,jdbcType=CHAR},
+      </if>
+      <if test="spwjbm != null">
+        #{spwjbm,jdbcType=VARCHAR},
+      </if>
+      <if test="ssrdwbm != null">
+        #{ssrdwbm,jdbcType=CHAR},
+      </if>
+      <if test="ssrdwmc != null">
+        #{ssrdwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="ssrgh != null">
+        #{ssrgh,jdbcType=CHAR},
+      </if>
+      <if test="ssrxm != null">
+        #{ssrxm,jdbcType=VARCHAR},
+      </if>
+      <if test="ssrq != null">
+        #{ssrq,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sprdwbm != null">
+        #{sprdwbm,jdbcType=CHAR},
+      </if>
+      <if test="sprdwmc != null">
+        #{sprdwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="sprgh != null">
+        #{sprgh,jdbcType=CHAR},
+      </if>
+      <if test="sprxm != null">
+        #{sprxm,jdbcType=VARCHAR},
+      </if>
+      <if test="sprq != null">
+        #{sprq,jdbcType=TIMESTAMP},
+      </if>
+      <if test="spjl != null">
+        #{spjl,jdbcType=VARCHAR},
+      </if>
+      <if test="spyj != null">
+        #{spyj,jdbcType=VARCHAR},
+      </if>
+      <if test="sfsc != null">
+        #{sfsc,jdbcType=CHAR},
+      </if>
+      <if test="cjsj != null">
+        #{cjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="zhxgsj != null">
+        #{zhxgsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="spjsbm != null">
+        #{spjsbm,jdbcType=VARCHAR},
+      </if>
+      <if test="spjsmc != null">
+        #{spjsmc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.start.boot.domain.SpExample" resultType="java.lang.Long">
+    select count(*) from YX_PC_SP
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update YX_PC_SP
+    <set>
+      <if test="record.pcspbm != null">
+        PCSPBM = #{record.pcspbm,jdbcType=CHAR},
+      </if>
+      <if test="record.spwjlx != null">
+        SPWJLX = #{record.spwjlx,jdbcType=CHAR},
+      </if>
+      <if test="record.spwjbm != null">
+        SPWJBM = #{record.spwjbm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ssrdwbm != null">
+        SSRDWBM = #{record.ssrdwbm,jdbcType=CHAR},
+      </if>
+      <if test="record.ssrdwmc != null">
+        SSRDWMC = #{record.ssrdwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ssrgh != null">
+        SSRGH = #{record.ssrgh,jdbcType=CHAR},
+      </if>
+      <if test="record.ssrxm != null">
+        SSRXM = #{record.ssrxm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ssrq != null">
+        SSRQ = #{record.ssrq,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sprdwbm != null">
+        SPRDWBM = #{record.sprdwbm,jdbcType=CHAR},
+      </if>
+      <if test="record.sprdwmc != null">
+        SPRDWMC = #{record.sprdwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sprgh != null">
+        SPRGH = #{record.sprgh,jdbcType=CHAR},
+      </if>
+      <if test="record.sprxm != null">
+        SPRXM = #{record.sprxm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sprq != null">
+        SPRQ = #{record.sprq,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.spjl != null">
+        SPJL = #{record.spjl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spyj != null">
+        SPYJ = #{record.spyj,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfsc != null">
+        SFSC = #{record.sfsc,jdbcType=CHAR},
+      </if>
+      <if test="record.cjsj != null">
+        CJSJ = #{record.cjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.zhxgsj != null">
+        ZHXGSJ = #{record.zhxgsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.spjsbm != null">
+        SPJSBM = #{record.spjsbm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spjsmc != null">
+        SPJSMC = #{record.spjsmc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update YX_PC_SP
+    set PCSPBM = #{record.pcspbm,jdbcType=CHAR},
+      SPWJLX = #{record.spwjlx,jdbcType=CHAR},
+      SPWJBM = #{record.spwjbm,jdbcType=VARCHAR},
+      SSRDWBM = #{record.ssrdwbm,jdbcType=CHAR},
+      SSRDWMC = #{record.ssrdwmc,jdbcType=VARCHAR},
+      SSRGH = #{record.ssrgh,jdbcType=CHAR},
+      SSRXM = #{record.ssrxm,jdbcType=VARCHAR},
+      SSRQ = #{record.ssrq,jdbcType=TIMESTAMP},
+      SPRDWBM = #{record.sprdwbm,jdbcType=CHAR},
+      SPRDWMC = #{record.sprdwmc,jdbcType=VARCHAR},
+      SPRGH = #{record.sprgh,jdbcType=CHAR},
+      SPRXM = #{record.sprxm,jdbcType=VARCHAR},
+      SPRQ = #{record.sprq,jdbcType=TIMESTAMP},
+      SPJL = #{record.spjl,jdbcType=VARCHAR},
+      SPYJ = #{record.spyj,jdbcType=VARCHAR},
+      SFSC = #{record.sfsc,jdbcType=CHAR},
+      CJSJ = #{record.cjsj,jdbcType=TIMESTAMP},
+      ZHXGSJ = #{record.zhxgsj,jdbcType=TIMESTAMP},
+      SPJSBM = #{record.spjsbm,jdbcType=VARCHAR},
+      SPJSMC = #{record.spjsmc,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.start.boot.domain.Sp">
+    update YX_PC_SP
+    <set>
+      <if test="spwjlx != null">
+        SPWJLX = #{spwjlx,jdbcType=CHAR},
+      </if>
+      <if test="spwjbm != null">
+        SPWJBM = #{spwjbm,jdbcType=VARCHAR},
+      </if>
+      <if test="ssrdwbm != null">
+        SSRDWBM = #{ssrdwbm,jdbcType=CHAR},
+      </if>
+      <if test="ssrdwmc != null">
+        SSRDWMC = #{ssrdwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="ssrgh != null">
+        SSRGH = #{ssrgh,jdbcType=CHAR},
+      </if>
+      <if test="ssrxm != null">
+        SSRXM = #{ssrxm,jdbcType=VARCHAR},
+      </if>
+      <if test="ssrq != null">
+        SSRQ = #{ssrq,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sprdwbm != null">
+        SPRDWBM = #{sprdwbm,jdbcType=CHAR},
+      </if>
+      <if test="sprdwmc != null">
+        SPRDWMC = #{sprdwmc,jdbcType=VARCHAR},
+      </if>
+      <if test="sprgh != null">
+        SPRGH = #{sprgh,jdbcType=CHAR},
+      </if>
+      <if test="sprxm != null">
+        SPRXM = #{sprxm,jdbcType=VARCHAR},
+      </if>
+      <if test="sprq != null">
+        SPRQ = #{sprq,jdbcType=TIMESTAMP},
+      </if>
+      <if test="spjl != null">
+        SPJL = #{spjl,jdbcType=VARCHAR},
+      </if>
+      <if test="spyj != null">
+        SPYJ = #{spyj,jdbcType=VARCHAR},
+      </if>
+      <if test="sfsc != null">
+        SFSC = #{sfsc,jdbcType=CHAR},
+      </if>
+      <if test="cjsj != null">
+        CJSJ = #{cjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="zhxgsj != null">
+        ZHXGSJ = #{zhxgsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="spjsbm != null">
+        SPJSBM = #{spjsbm,jdbcType=VARCHAR},
+      </if>
+      <if test="spjsmc != null">
+        SPJSMC = #{spjsmc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PCSPBM = #{pcspbm,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.start.boot.domain.Sp">
+    update YX_PC_SP
+    set SPWJLX = #{spwjlx,jdbcType=CHAR},
+      SPWJBM = #{spwjbm,jdbcType=VARCHAR},
+      SSRDWBM = #{ssrdwbm,jdbcType=CHAR},
+      SSRDWMC = #{ssrdwmc,jdbcType=VARCHAR},
+      SSRGH = #{ssrgh,jdbcType=CHAR},
+      SSRXM = #{ssrxm,jdbcType=VARCHAR},
+      SSRQ = #{ssrq,jdbcType=TIMESTAMP},
+      SPRDWBM = #{sprdwbm,jdbcType=CHAR},
+      SPRDWMC = #{sprdwmc,jdbcType=VARCHAR},
+      SPRGH = #{sprgh,jdbcType=CHAR},
+      SPRXM = #{sprxm,jdbcType=VARCHAR},
+      SPRQ = #{sprq,jdbcType=TIMESTAMP},
+      SPJL = #{spjl,jdbcType=VARCHAR},
+      SPYJ = #{spyj,jdbcType=VARCHAR},
+      SFSC = #{sfsc,jdbcType=CHAR},
+      CJSJ = #{cjsj,jdbcType=TIMESTAMP},
+      ZHXGSJ = #{zhxgsj,jdbcType=TIMESTAMP},
+      SPJSBM = #{spjsbm,jdbcType=VARCHAR},
+      SPJSMC = #{spjsmc,jdbcType=VARCHAR}
+    where PCSPBM = #{pcspbm,jdbcType=CHAR}
+  </update>
+</mapper>

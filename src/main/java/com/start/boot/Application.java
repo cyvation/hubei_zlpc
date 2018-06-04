@@ -28,7 +28,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class Application  extends SpringBootServletInitializer{
 
     public static void main(String[] args) throws Exception {
-        String s="";
         SpringApplication.run(Application.class, args);
     }
 

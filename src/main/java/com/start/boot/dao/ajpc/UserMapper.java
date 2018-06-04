@@ -28,4 +28,8 @@ public interface UserMapper {
     void ResetUserPwd(Map map);
 
     void UserSync(Map map);
+
+    int offlineAddRybm(Map map);
+
+    int getMaxUserNum(Map map);
 }

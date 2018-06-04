@@ -258,4 +258,22 @@ public interface QueryMapper {
 
 
     List<YX_PC_JBXX>getMapAjJbxxJbqk(ShYPNAQuery query);
+
+    List<DwPaimin> getDwPaiMinByPcjlAndRQ(ShYPNAQuery query);
+
+    List<YX_PC_JBXX> getDWPaiMinByPcjlAndRQAjJbxx(ShYPNAQuery query);
+
+    /**
+     * 业务条线办案质量排名
+     * @param query
+     * @return
+     */
+    List<YwtxPm> ywtxAjZhiLiangPaiMin(ShYPNAQuery query);
+
+    /**
+     * 业务条线办案质量排名获取案件基本信息
+     * @param query
+     * @return
+     */
+    List<YX_PC_JBXX> ywtxAjZhiLiangPaiMinAjJbxx(ShYPNAQuery query);
 }

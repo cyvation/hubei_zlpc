@@ -10,6 +10,7 @@ public class PersonPaimin {
     private String gh;
     private String mc;
     private Integer count;
+    private String dwbm;
 
     public String getGh() {
         return gh;
@@ -33,5 +34,13 @@ public class PersonPaimin {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public String getDwbm() {
+        return dwbm;
+    }
+
+    public void setDwbm(String dwbm) {
+        this.dwbm = dwbm;
     }
 }

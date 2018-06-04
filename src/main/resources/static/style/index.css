@@ -504,6 +504,9 @@ li{
     .window,.window-shadow,.winCombo,.ajxxWinCcn{
         zoom: 1.41;
     }
+    #container{
+        zoom: 1.41;
+    }
     #pcblWin{
         width: calc(1800px*0.65);
         height: calc(820px*0.65);
@@ -542,7 +545,9 @@ li{
     #echarts_axis_ajzlndqut,
     #echarts_load_flaw_case,
     #echarts_load_unqualified_case,
-    #echarts_axis_bmbazlpm {
+    #echarts_axis_jcgbazlpm,
+    #echarts_axis_bmbazlpm,
+    #echarts_axis_dwbazlpm {
         zoom: 1.43 !important;
     }
     #pcblWin  .pcbl_pcxx_cent{
@@ -556,6 +561,9 @@ li{
         zoom: 0.7 !important;
     }
     .window,.window-shadow,.winCombo,.ajxxWinCcn{
+        zoom: 1.43;
+    }
+    #container{
         zoom: 1.43;
     }
     #pcblWin{
@@ -588,7 +596,9 @@ li{
     #echarts_axis_ajzlndqut,
     #echarts_load_flaw_case,
     #echarts_load_unqualified_case,
-    #echarts_axis_bmbazlpm {
+    #echarts_axis_jcgbazlpm,
+    #echarts_axis_bmbazlpm,
+    #echarts_axis_dwbazlpm {
         zoom: 1.43 !important;
     }
     #pcblWin  .pcbl_pcxx_cent{
@@ -601,6 +611,9 @@ li{
         zoom: 0.75 !important;
     }
     .window,.window-shadow,.winCombo,.ajxxWinCcn{
+        zoom: 1.333;
+    }
+    #container{
         zoom: 1.333;
     }
     #pcblWin{
@@ -637,7 +650,10 @@ li{
     #echarts_axis_ajzlndqut,
     #echarts_load_flaw_case,
     #echarts_load_unqualified_case,
-    #echarts_axis_bmbazlpm {
+    #echarts_axis_bmbazlpm,
+    #echarts_axis_jcgbazlpm,
+    #echarts_axis_bmbazlpm,
+    #echarts_axis_dwbazlpm {
         zoom: 1.33 !important;
     }
     #pcblWin  .pcbl_pcxx_cent{
@@ -650,6 +666,9 @@ li{
         zoom: 0.82 !important;
     }
     .window,.window-shadow,.winCombo,.ajxxWinCcn{
+        zoom: 1.22;
+    }
+    #container{
         zoom: 1.22;
     }
     #pcblWin{
@@ -686,7 +705,10 @@ li{
     #echarts_axis_ajzlndqut,
     #echarts_load_flaw_case,
     #echarts_load_unqualified_case,
-    #echarts_axis_bmbazlpm  {
+    #echarts_axis_bmbazlpm,
+    #echarts_axis_jcgbazlpm,
+    #echarts_axis_bmbazlpm,
+    #echarts_axis_dwbazlpm  {
         zoom: 1.22 !important;
     }
     #pcblWin  .pcbl_pcxx_cent{
@@ -698,6 +720,9 @@ li{
         zoom: 0.9 !important;
     }
     .window,.window-shadow,.winCombo,.ajxxWinCcn{
+        zoom: 1.11;
+    }
+    #container{
         zoom: 1.11;
     }
     #pcblWin{
@@ -734,7 +759,9 @@ li{
     #echarts_axis_ajzlndqut,
     #echarts_load_flaw_case,
     #echarts_load_unqualified_case,
-    #echarts_axis_bmbazlpm {
+    #echarts_axis_jcgbazlpm,
+    #echarts_axis_bmbazlpm,
+    #echarts_axis_dwbazlpm {
         zoom: 1.11 !important;
     }
     #pcblWin  .pcbl_pcxx_cent{

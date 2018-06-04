@@ -746,6 +746,22 @@ public class PcController extends ArchivesSystemBaseController {
     }
 
     /**
+     * 获取卷宗文件
+     *
+     * @param filePath
+     * @return
+     */
+    @RequestMapping("/getFileStream")
+    public byte[] getFileStream(String filePath) {
+        try {
+            return FileUtils.getBytes(new File(SystemConfiguration.wzbsPath + filePath));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
      * 添加卷宗文件
      *
      * @param request
@@ -1267,6 +1283,32 @@ public class PcController extends ArchivesSystemBaseController {
         } catch (Exception e) {
             super.errMsg("获取当前单位组织机构角色名称失败","", e);
             result = failure(e.getMessage(), "获取当前单位组织机构角色名称失败");
+        }
+
+        return result;
+    }
+
+    // 湖北支持节点回退
+    @RequestMapping("/backspace")
+    public String backspace(String pcslbm,String bmsah) {
+        String result = "";
+        Map map = new HashMap();
+        map.put("pcslbm",pcslbm);
+        map.put("bmsah",bmsah);
+        map.put("dwbm",getCurrentDwbm());
+        map.put("dwmc",getCurrentDwmc());
+        map.put("gh",getCurrentGh());
+        map.put("mc",getCurrentMC());
+        map.put("czsm","案件【"+bmsah+"】被回退到办理阶段");
+
+        try {
+            pcService.backspace(map);
+            result = success(true, "评查节点回退成功");
+
+        } catch (Exception e) {
+
+            super.errMsg("评查节点回退失败", pcslbm, e);
+            result = failure(e.getMessage(), "评查节点回退失败");
         }
 
         return result;

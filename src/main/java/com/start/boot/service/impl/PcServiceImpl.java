@@ -24,7 +24,6 @@ public class PcServiceImpl implements PcService {
     @Autowired
     private PcMapper pcMapper;
 
-
     // 获取评查分类列表
     @Override
     public List<Map> getPcfl() throws Exception {
@@ -712,4 +711,19 @@ public class PcServiceImpl implements PcService {
         return list;
     }
 
+    @Override
+    public void backspace(Map map) {
+        //todo 日志
+        pcMapper.addBackspaceLog(map);
+        // 执行节点回退 todo 流程节点表新增一条记录
+        pcMapper.backspace(map);
+
+
+    }
+    //获取评查报告
+    @Override
+    public List<Map> getPcbg(Map map) throws Exception {
+        List<Map> result =  pcMapper.getPcbg(map);
+        return result;
+    }
 }

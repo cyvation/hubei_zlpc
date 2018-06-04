@@ -3,6 +3,7 @@ package com.start.boot.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.start.boot.dao.ajpc.CountMapper;
 import com.start.boot.dao.ajpc.QueryMapper;
 import com.start.boot.dao.ajpc.YX_PC_JBXXMapper;
 import com.start.boot.domain.*;
@@ -52,7 +53,8 @@ public class CountServiceImpl implements CountService {
     @Autowired
     XtPcLbService xtPcLbService;
 
-
+    @Autowired
+    CountMapper countMapper;
 
     @Override
     public Map<Integer, List<CountDo>> getPcByYear(Integer year, String pcflbm) {
@@ -494,4 +496,48 @@ public class CountServiceImpl implements CountService {
     public List<YX_PC_JBXX> getMapAjJbxxJbqk(ShYPNAQuery query) {
         return queryMapper.getMapAjJbxxJbqk(query);
     }
+
+    @Override
+    public List<DwPaimin> getDwPaiMinByPcjlAndRQ(ShYPNAQuery query) {
+        return queryMapper.getDwPaiMinByPcjlAndRQ(query);
+    }
+
+    @Override
+    public List<YX_PC_JBXX> getDWPaiMinByPcjlAndRQAjJbxx(ShYPNAQuery query) {
+        return queryMapper.getDWPaiMinByPcjlAndRQAjJbxx(query);
+    }
+
+    @Override
+    public Map countPcqkOrBaqk(Map query) {
+        query.put("dwbm","".equals(query.get("dwbm"))?"":(query.get("dwbm")+"").split(","));
+        query.put("bmbm","".equals(query.get("bmbm"))?"":(query.get("bmbm")+"").split(","));
+        int pagenum = (Integer.parseInt(query.get("page") + "") - 1) * Integer.parseInt(query.get("row") + "");
+        int row = Integer.parseInt(query.get("row") + "") + pagenum;
+        query.put("page", pagenum);
+        query.put("row", row);
+//        list.addAll(countMapper.getOfflineJbxxCount(query));
+        Map dataMap = new HashMap();
+        List<Map> list= countMapper.getJbxxCount(query);
+        Map count= countMapper.getJbxxCountNum(query);
+        dataMap.put("total", count.get("NUM"));
+        dataMap.put("rows", list);
+        return dataMap;
+    }
+    @Override
+    public List<Map> loadPcInfo(Map query) {
+        List<Map> list= countMapper.getPcxFlInfo(query);//18524修改：从视图查询
+//        list.addAll(countMapper.getOfflinePcxFlInfo(query));
+        return list;
+    }
+
+    @Override
+    public List<YwtxPm> ywtxAjZhiLiangPaiMin(ShYPNAQuery query) {
+        return queryMapper.ywtxAjZhiLiangPaiMin(query);
+    }
+
+    @Override
+    public List<YX_PC_JBXX> ywtxAjZhiLiangPaiMinAjJbxx(ShYPNAQuery query) {
+        return queryMapper.ywtxAjZhiLiangPaiMinAjJbxx(query);
+    }
+
 }

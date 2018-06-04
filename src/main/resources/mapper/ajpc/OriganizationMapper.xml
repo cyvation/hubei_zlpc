@@ -11,6 +11,19 @@
                                           #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
         ]]>
     </select>
+    <resultMap id="dwTreeMap" type="Map">
+        <result property="BM" column="BM"/>
+        <result property="MC" column="MC"/>
+        <result property="FBM" column="FBM"/>
+    </resultMap>
+    <select id="getPjDwbm" parameterType="map"  resultMap="dwTreeMap">
+        SELECT dwbm BM, dwmc MC, fdwbm FBM
+        FROM xt_zzjg_dwbm d
+        WHERE sfsc = 'N'
+        START WITH  d.fdwbm = (SELECT max(fdwbm) FROM xt_zzjg_dwbm WHERE dwbm = #{p_dwbm,jdbcType=CHAR} )
+        CONNECT BY fdwbm = PRIOR dwbm
+        AND sfsc = 'N'
+    </select>
 
     <resultMap id="bmbmMap" type="Map">
         <!--<result property="BM" column="BM"/>-->

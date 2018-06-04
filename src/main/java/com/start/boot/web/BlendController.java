@@ -136,7 +136,6 @@ public class BlendController extends ArchivesSystemBaseController {
     @RequestMapping("/addPcfa")
     public String addPcfa(String json) {
         String result = "";
-
         try {
             Param_Pcfa param = FastJsonUtils.toObject(Param_Pcfa.class, json);
             param.setPcdwbm(getCurrentDwbm());

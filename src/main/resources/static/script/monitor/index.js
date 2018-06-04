@@ -96,8 +96,9 @@ function init_moniter_random_EasyUiCom() {
         onLoadSuccess: function (node, data) {
             if (data != null && data.length >= 1) {
                 dt = data[0].id;
+                var datalength = $(".redio_click_no").attr('data-value');
                 $('#cbt_moniter_random_pcdw').combotree('setValue', data[0].id); //单位默认选择
-                if ($(".redio_click_no").attr('data-value') == 3) {
+                if (datalength == 3 || typeof (datalength)== 'undefined') { //湖北:市级院需要可选下级单位
                     $('#cbt_moniter_random_pcdw').combotree('enable');
                 } else {
                     $('#cbt_moniter_random_pcdw').combotree('disable');
@@ -177,7 +178,7 @@ function init_moniter_random_EasyUiCom() {
         panelWidth: 270,
         url: getRootPath() + '/filter/getSxgzMonitor',
         queryParams: {
-            pcflbm: "001",
+            pcflbm: "",
         },
         onShowPanel: index_onShowPanel,
         onHidePanel: index_onHidePanel,
@@ -211,7 +212,7 @@ function init_moniter_random_EasyUiCom() {
              pcjlN.attributes = attN;
              data.push(pcjlN);*/
 
-            var pcjlY = new Object();
+/*            var pcjlY = new Object();
             pcjlY.id = "1000000000002";
             pcjlY.text = "有问题";
             var attY = new Object();
@@ -219,7 +220,7 @@ function init_moniter_random_EasyUiCom() {
             attY.FBM = "-1";
             attY.PCJL = "有问题";
             pcjlY.attributes = attY;
-            data.push(pcjlY);
+            data.push(pcjlY);*/
 
             return data;
         },

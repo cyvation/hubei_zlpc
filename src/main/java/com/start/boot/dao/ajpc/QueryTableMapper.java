@@ -53,4 +53,20 @@ public interface QueryTableMapper {
 
 
     List<Yx_Pc_PcxFl>getPcxFlbmList(@Param("fbmmc")String fbmmc,@Param("zbmmc")String zbmmc);
+
+    /**
+     * 根据查询条件获取 ajjbxx
+     * @param query
+     * @return
+     */
+    List<Map> getAjwthzjbxx(QueryTableAjJbxx query);
+
+    /**
+     * 根据查询条件获取线下评查案件信息
+     * @param query
+     * @return
+     */
+    List<Map> getOfflineAjwthzjbxx(QueryTableAjJbxx query);
+
+    String  getPcxmcByPcxbmAndPcxflbm(Map map);
 }

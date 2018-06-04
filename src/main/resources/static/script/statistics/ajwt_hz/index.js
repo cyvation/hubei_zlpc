@@ -3,10 +3,85 @@ $(document).ready(function () {
 
     // 样式初始化以及事件绑定
     init_statistics_analysis();
-
     // 数据加载--单位展示
     //data_monitor_statistiscs_dw();
+    init_echarts();
 });
+
+//初始化柱状图
+function init_echarts() {
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    option = {
+        legend: {},
+        tooltip: {},
+        dataset: {
+            source: [
+                ['product', '错误', '瑕疵']
+            ]
+        },
+        xAxis: {type: 'category'},
+        yAxis: {},
+        series: [
+            {
+                type: 'bar', barMinHeight: 1, barGap: '10%', itemStyle: {
+                normal: {
+                    label: {
+                        show: true,  //柱头数字
+                        position: 'top',
+                        textStyle: {
+                            fontSize: '15',
+                            fontFamily: '微软雅黑',
+                            fontWeight: 'bold'
+                        }
+                    }
+                }
+            }
+            },
+            {
+                type: 'bar', barMinHeight: 1, barGap: '10%', itemStyle: {
+                normal: {
+                    label: {
+                        show: true,  //柱头数字
+                        position: 'top',
+                        textStyle: {
+                            fontSize: '15',
+                            fontFamily: '微软雅黑',
+                            fontWeight: 'bold'
+                        }
+                    }
+                }
+            }
+            }
+        ]
+    };
+    myChart.on('click', function (params) {
+        if (params.componentType === 'series') {
+            if (params.seriesType === 'bar') {
+                if (params.data.length == 5) {
+                    var name = params.seriesName;
+                    var count;
+                    if(name == "错误"){
+                        if(params.data[1] == 0){
+                            return;
+                        }
+                        alert_bar_jbxx_ypc_ajwthz_window(params.data[3]);
+                    }else if(name == "瑕疵"){
+                        if(params.data[2] == 0){
+                            return;
+                        }
+                        alert_bar_jbxx_ypc_ajwthz_window(params.data[4]);
+                    }
+                }
+            }
+        }
+    });
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+}
 
 // 加载评查分类
 function load_cbt_win_eval_ajwt_pcfl() {
@@ -14,17 +89,14 @@ function load_cbt_win_eval_ajwt_pcfl() {
     $('#cbt_win_eval_ajwt_pcfl').combotree({
         method: 'get',
         lines: true,
-        url: getRootPath()+'/manage/getpcfl',
+        url: getRootPath() + '/manage/getpcfl',
         onLoadSuccess: function (node, data) {
             var pcflbm;
-            // 默认选中随机评查，同时选中刑事案件
-            if (data != null && data.length >= 1){
+            // 默认选中随机评查
+            if (data != null && data.length >= 1) {
                 pcflbm = data[0].id;
                 $('#cbt_win_eval_ajwt_pcfl').combotree('setValue', pcflbm);
-
-                $('#pop_ups_win_input_ajwt_pchd').show();
-                $('#pop_ups_win_input_ajwt_pcmb').hide();
-                load_cbt_win_eval_build_pchd(pcflbm);
+                load_cbt_win_eval_ajwt_pcmb(pcflbm, data[0].attributes.SFJS);
             }
 
         },
@@ -33,21 +105,8 @@ function load_cbt_win_eval_ajwt_pcfl() {
                 Alert("请重新选择评查方式！");
                 return;
             }
-
-            // 获取选中节点自定义数据
-            if (node.attributes.SFJS == "Y") {
-
-                $('#pop_ups_win_input_ajwt_pcmb').show();
-                $('#pop_ups_win_input_ajwt_pchd').hide();
-                // 加载对应评查模板
-                load_cbt_win_eval_ajwt_pcmb(node.id);
-            }else {
-                $('#pop_ups_win_input_ajwt_pchd').show();
-                $('#pop_ups_win_input_ajwt_pcmb').hide();
-                // 加载对应评查活动
-                load_cbt_win_eval_build_pchd(node.id);
-            }
-
+            // 加载对应评查模板
+            load_cbt_win_eval_ajwt_pcmb(node.id, node.attributes.SFJS);
         }
     });
 }
@@ -55,14 +114,14 @@ function load_cbt_win_eval_ajwt_pcfl() {
 // 加载评查活动
 function load_cbt_win_eval_build_pchd(pcflbm) {
 
-    $('#cbt_win_eval_build_pchd').combotree('loadData',[]);
+    $('#cbt_win_eval_build_pchd').combotree('loadData', []);
     $('#cbt_win_eval_build_pchd').combotree('clear');
     $('#cbt_win_eval_build_pchd').combotree('setValue', '');
 
     $('#cbt_win_eval_build_pchd').combotree({
         method: 'get',
         lines: true,
-        url: getRootPath()+'/manage/get_pchd',
+        url: getRootPath() + '/manage/get_pchd',
         queryParams: {
             pcflbm: pcflbm
         },
@@ -81,21 +140,26 @@ function load_cbt_win_eval_build_pchd(pcflbm) {
 }
 
 // 加载评查模板
-function load_cbt_win_eval_ajwt_pcmb(pcflbm) {
+function load_cbt_win_eval_ajwt_pcmb(pcflbm, sfjs) {
 
-    $('#cbt_win_eval_ajwt_pcmb').combotree('loadData',[]);
+    $('#cbt_win_eval_ajwt_pcmb').combotree('loadData', []);
     $('#cbt_win_eval_ajwt_pcmb').combotree('clear');
     $('#cbt_win_eval_ajwt_pcmb').combotree('setValue', '');
-
+    var url = "";
+    if (sfjs == "Y" || pcflbm == "009") {
+        url = getRootPath() + '/template/template';
+    } else {
+        url = getRootPath() + '/manage/get_pchd'
+    }
     $('#cbt_win_eval_ajwt_pcmb').combotree({
         method: 'get',
         lines: true,
-        url: getRootPath()+'/template/template',
+        url: url,
         queryParams: {
             pcflbm: pcflbm
         },
-        onLoadSuccess: function (node,data) {
-            // 专项默认选中
+        onLoadSuccess: function (node, data) {
+            // 默认选中
             if (data != null && data.length >= 1) {
                 $('#cbt_win_eval_ajwt_pcmb').combotree('setValue', data[0].id);
             }
@@ -107,6 +171,7 @@ function load_cbt_win_eval_ajwt_pcmb(pcflbm) {
     });
 
 }
+
 // 样式初始化：
 function init_statistics_analysis() {
 
@@ -116,7 +181,7 @@ function init_statistics_analysis() {
 }
 
 // 单位tab样式以及事件：
-function init_monitor_statistiscs_dw(){
+function init_monitor_statistiscs_dw() {
     //加载评查分类
     load_cbt_win_eval_ajwt_pcfl();
     //加载组织机构单位编码
@@ -125,12 +190,14 @@ function init_monitor_statistiscs_dw(){
     //单位--评查时间
     $('#ajwt_dw_start').datebox({
         editable: false,
-        value: new Date().getFullYear() + '-01-01'
+        // value: new Date().getFullYear() + '-01-01'
+        value: '2013-01-01'
     });
 
     $('#ajwt_dw_end').datebox({
         editable: false,
-        value: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate())
+        // value: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate())
+        value: '2017-12-31'
     });
 
     // 单位表格查询：
@@ -139,47 +206,6 @@ function init_monitor_statistiscs_dw(){
         data_monitor_statistiscs_dw();
     });
     var resizeTabHeight = $("#ajwt_tabsBox").height() - 62;
-}
-
-//加载组织机构单位编码
-function load_cbt_win_eval_ajwt_zzjg_dw(){
-    $('#cbt_win_eval_ajwt_dw').combotree({
-        method: 'get',
-        lines: true,
-        panelWidth:250,
-        onShowPanel: index_onShowPanel,
-        onHidePanel: index_onHidePanel,
-        url: getRootPath()+'/organization/getDwbmTree',
-        loadFilter:function (data) {
-            return data.status==200?JSON.parse(data.value):[];
-        },
-        onLoadSuccess: function (node, data) {
-            if (data != null && data.length >= 1) {
-                $('#cbt_win_eval_ajwt_dw').combotree('setValue', data[0].id); //单位默认选择
-            }
-            index_addMousedownDiv(this,"cbt_win_eval_ajwt_dw");
-        }
-    });
-};
-
-// 展示单位表格数据：
-function data_monitor_statistiscs_dw() {
-
-    var obj = new Object();
-    obj.dwbm =$('#cbt_win_eval_ajwt_dw').combotree('getValue');
-    obj.startDate = $('#ajwt_dw_start').datebox('getValue');
-    obj.endDate = $("#ajwt_dw_end").datebox('getValue');
-    obj.pcflbm = $('#cbt_win_eval_ajwt_pcfl').combotree('getValue');
-    obj.page = 1;
-    obj.rows = 1000;
-    var tree = $('#cbt_win_eval_ajwt_pcfl').combotree('tree');	// 获取树对象
-    var node = tree.tree('getSelected');		// 获取选择的节点
-    if(node.attributes.SFJS == "Y"){
-        obj.pcmbbm = $('#cbt_win_eval_ajwt_pcmb').combotree('getValue');
-    }else{
-        obj.pchdbm = $('#cbt_win_eval_build_pchd').combotree('getValue');
-        obj.pcmbbm = $('#cbt_win_eval_ajwt_pcmb').combotree('getValue');
-    }
 
     // 单位表格datagrid
     $('#table_ajwt_statistiscs_dw').datagrid({
@@ -188,48 +214,55 @@ function data_monitor_statistiscs_dw() {
         nowrap: false,
         rownumbers: true,
         singleSelect: true,
-        url: getRootPath() + "/queryTable/getDwAjwthzTableData",
-        method:'post',
-        queryParams:obj,
         columns: [[
             {
                 field: 'pcxflfmc',
-                title: '<span  style=\'font-size:22px;\'>项目</span>',
+                title: '<span  style=\'font-size:16px;\'>项目</span>',
                 rowspan: 2,
                 width: 64,
                 align: 'center',
                 halign: 'center'
             },
             {
-                title: '<span  style=\'font-size:22px;margin-top: 15px;display: inline-block;\'>具体内容及扣分标准</span>',
+                title: '<span  style=\'font-size:16px;margin-top: 15px;display: inline-block;\'>具体内容及扣分标准</span>',
                 colspan: 2
             },
             {
                 field: 'wts',
                 width: 100,
-                title: '<span  style=\'font-size:22px\'>问题数</span>',
+                title: '<span  style=\'font-size:16px\'>问题案件数</span>',
                 rowspan: 2,
                 align: 'center',
-                halign: 'center'
-            }], [
+                halign: 'center',
+                formatter: function (value, row, index) {
+                    var r = '';
+                    if (row.dwbm == userInfo.DWBM || userInfo.DWBM == DJDWBM) {
+                        r = '<a href="#"  style="color: #145bae;text-decoration: none;"   onclick="alert_jbxx_ypc_ajwthz_window(' + index + ')">' + value + '</a> ';
+                    } else {
+                        r = value;
+                    }
+                    return r;
+                }
+            }
+        ], [
             {
                 field: 'pcxflmc',
-                width:64,
-                title: '<span  style=\'font-size:22px\'>子项</span>',
+                width: 64,
+                title: '<span  style=\'font-size:16px\'>子项</span>',
                 align: 'center',
                 halign: 'center'
             },
             {
                 field: 'pcxmc',
-                title: '<span  style=\'font-size:22px\'>评查项内容</span>',
-                width:220,
+                title: '<span  style=\'font-size:16px\'>评查项内容</span>',
+                width: 180,
                 align: 'left'
             }
         ]],
-        loadFilter:function (result) {
+        loadFilter: function (result) {
             return result.code == 200 ? JSON.parse(result.data) : [];
         },
-        onLoadSuccess:function (data) {
+        onLoadSuccess: function (data) {
             if (data.rows.length > 0) {
                 //调用mergeCellsByField()合并单元格
                 mergeCellsByField("table_ajwt_statistiscs_dw", "pcxflfmc,pcxflmc");
@@ -237,6 +270,223 @@ function data_monitor_statistiscs_dw() {
         }
 
     });
+}
+
+function alert_jbxx_ypc_ajwthz_window(index) {
+    var obj = new Object();
+    obj.pcflbm = $('#cbt_win_eval_ajwt_pcfl').combotree('getValue');
+    var ypcUrl = getRootPath();
+    if (obj.pcflbm == '009') {//湖北2013年案件线下评查
+        ypcUrl = ypcUrl + "/queryTable/getOfflineAjwthzjbxx";
+    } else {
+        ypcUrl = ypcUrl + "/queryTable/getAjwthzjbxx";
+    }
+    var thisRow = $('#table_ajwt_statistiscs_dw').datagrid('getRows')[index];
+    obj.startDate = $('#ajwt_dw_start').datebox('getValue');
+    obj.endDate = $("#ajwt_dw_end").datebox('getValue');
+
+    obj.pcxflbm = thisRow.pcxflbm;
+    obj.pcxbm = thisRow.pcxbm;
+    obj.dwbmList = $('#cbt_win_eval_ajwt_dw').combotree('getValues').join(',');
+
+    // 已评查案件datagrid
+    $("#table_eval_build_statistics_ajwthz_filter").datagrid({
+        border: 0,
+        fit: true,
+        fitColumns: true,
+        singleSelect: true,
+        rownumbers: true,
+        pagination: true,
+        pageNumber: 1,
+        pageSize: 20,
+        url: ypcUrl,
+        queryParams: obj,
+        columns: [[
+            {field: 'BMSAH', title: '部门受案号', width: 160},
+            {
+                field: 'AJMC', title: '案件名称', width: 160,
+                formatter: function (value) {
+                    return tipMessage(value);
+                }
+            },
+            {field: 'AJLBMC', title: '案件类别', width: 90},
+            {field: 'DWMC', title: '承办单位', width: 90},
+            {field: 'CBRMC', title: '承办检察官', width: 90},
+            {field: 'PCR_DWMC', title: '评查单位', width: 90},
+            {
+                field: 'CJSJ', title: '评查日期', fixed: true, width: 115,
+                formatter: function (value) {
+                    return sjzh(value);
+                }
+            },
+            {
+                field: 'action', title: '操作', width: 80, align: 'center',
+                formatter: function (value, row, index) {
+                    var pcflbm = $('#cbt_win_eval_ajwt_pcfl').combotree('getValue');
+                    if (pcflbm == '009') {
+                        return ' <a href="#" onclick="pcWinPage_offline(' + index + ',\'#table_eval_build_statistics_ajwthz_filter\')">查看</a>   ';
+                    } else {
+                        return '<a href="#" onclick="pcWinPage(' + index + ',\'#table_eval_build_statistics_ajwthz_filter\',0)">查看</a>';
+                    }
+                }
+            }
+        ]]
+
+    });
+
+    // 分页控件(中文)
+    $('#table_eval_build_statistics_ajwthz_filter').datagrid('getPager').pagination({
+        beforePageText: '第',
+        afterPageText: '页   共{pages}页',
+        displayMsg: '当前显示【{from} ~ {to}】条记录   共【{total}】条记录'
+    });
+
+    $("#win_eval_build_statistics_ajwthz_filter").window('setTitle', '已经评查案件');
+    $("#win_eval_build_statistics_ajwthz_filter").window('open');
+}
+
+function alert_bar_jbxx_ypc_ajwthz_window(pcxflbm) {
+    var obj = new Object();
+    obj.pcflbm = $('#cbt_win_eval_ajwt_pcfl').combotree('getValue');
+    var ypcUrl = getRootPath();
+    if (obj.pcflbm == '009') {//湖北2013年案件线下评查
+        ypcUrl = ypcUrl + "/queryTable/getOfflineAjwthzjbxx";
+    } else {
+        ypcUrl = ypcUrl + "/queryTable/getAjwthzjbxx";
+    }
+    obj.startDate = $('#ajwt_dw_start').datebox('getValue');
+    obj.endDate = $("#ajwt_dw_end").datebox('getValue');
+
+    obj.pcxflbm = pcxflbm;
+    obj.dwbmList = $('#cbt_win_eval_ajwt_dw').combotree('getValues').join(',');
+
+    // 已评查案件datagrid
+    $("#table_eval_build_statistics_ajwthz_filter").datagrid({
+        border: 0,
+        fit: true,
+        fitColumns: true,
+        singleSelect: true,
+        rownumbers: true,
+        pagination: true,
+        pageNumber: 1,
+        pageSize: 20,
+        url: ypcUrl,
+        queryParams: obj,
+        columns: [[
+            {field: 'BMSAH', title: '部门受案号', width: 160},
+            {
+                field: 'AJMC', title: '案件名称', width: 160,
+                formatter: function (value) {
+                    return tipMessage(value);
+                }
+            },
+            {field: 'AJLBMC', title: '案件类别', width: 90},
+            {field: 'DWMC', title: '承办单位', width: 90},
+            {field: 'CBRMC', title: '承办检察官', width: 90},
+            {field: 'PCR_DWMC', title: '评查单位', width: 90},
+            {
+                field: 'CJSJ', title: '评查日期', fixed: true, width: 115,
+                formatter: function (value) {
+                    return sjzh(value);
+                }
+            },
+            {
+                field: 'action', title: '操作', width: 80, align: 'center',
+                formatter: function (value, row, index) {
+                    var pcflbm = $('#cbt_win_eval_ajwt_pcfl').combotree('getValue');
+                    if (pcflbm == '009') {
+                        return ' <a href="#" onclick="pcWinPage_offline(' + index + ',\'#table_eval_build_statistics_ajwthz_filter\')">查看</a>   ';
+                    } else {
+                        return '<a href="#" onclick="pcWinPage(' + index + ',\'#table_eval_build_statistics_ajwthz_filter\',0)">查看</a>';
+                    }
+                }
+            }
+        ]]
+    });
+
+    // 分页控件(中文)
+    $('#table_eval_build_statistics_ajwthz_filter').datagrid('getPager').pagination({
+        beforePageText: '第',
+        afterPageText: '页   共{pages}页',
+        displayMsg: '当前显示【{from} ~ {to}】条记录   共【{total}】条记录'
+    });
+
+    $("#win_eval_build_statistics_ajwthz_filter").window('setTitle', '已经评查案件');
+    $("#win_eval_build_statistics_ajwthz_filter").window('open');
+}
+
+//加载组织机构单位编码
+function load_cbt_win_eval_ajwt_zzjg_dw() {
+    $('#cbt_win_eval_ajwt_dw').combotree({
+        method: 'get',
+        lines: true,
+        panelWidth: 250,
+        multiple: true,
+        cascadeCheck: false,
+        onShowPanel: index_onShowPanel,
+        onHidePanel: index_onHidePanel,
+        url: getRootPath() + '/organization/getDwbmTree',
+        loadFilter: function (data) {
+            return data.status == 200 ? JSON.parse(data.value) : [];
+        },
+        onLoadSuccess: function (node, data) {
+            if (data != null && data.length >= 1) {
+                $('#cbt_win_eval_ajwt_dw').combotree('setValue', data[0].id); //单位默认选择
+            }
+            index_addMousedownDiv(this, "cbt_win_eval_ajwt_dw");
+        }
+    });
+};
+
+// 展示单位表格数据：
+function data_monitor_statistiscs_dw() {
+    var obj = new Object();
+    obj.dwbm = $('#cbt_win_eval_ajwt_dw').combotree('getValues').join(',');
+    obj.startDate = $('#ajwt_dw_start').datebox('getValue');
+    obj.endDate = $("#ajwt_dw_end").datebox('getValue');
+    obj.pcflbm = $('#cbt_win_eval_ajwt_pcfl').combotree('getValue');
+    obj.page = 1;
+    obj.rows = 1000;
+    var tree = $('#cbt_win_eval_ajwt_pcfl').combotree('tree');	// 获取树对象
+    var node = tree.tree('getSelected');		// 获取选择的节点
+    if (node.attributes.SFJS == "Y" || obj.pcflbm == "009") {
+        obj.pcmbbm = $('#cbt_win_eval_ajwt_pcmb').combotree('getValue');
+    } else {
+        var tree = $("#cbt_win_eval_ajwt_pcmb").combotree("tree");
+        var node = tree.tree("getSelected");
+        obj.pcmbbm = node.attributes.PCMBJ;
+    }
+    var url = "";
+    var ztUrl = "";
+    if (obj.pcflbm != "009") { //pcflbm为009时，需要查询线下案件问题汇总
+        url = getRootPath() + "/queryTable/getDwAjwthzTableData";
+        ztUrl = getRootPath() + "/queryTable/getDwAjwthzBarData";
+    } else {
+        url = getRootPath() + "/queryTable/getDwOfflineAjwthzTableData";
+        ztUrl = getRootPath() + "/queryTable/getOfflineDwAjwthzBarData";
+    }
+
+    $('#table_ajwt_statistiscs_dw').datagrid({
+        url: url,
+        method: 'post',
+        queryParams: obj
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: ztUrl,
+        data: obj,
+        dataType: "json",
+        success: function (result) {
+            var data = eval(result);
+            if (data && typeof data === "object") {
+                var dom = document.getElementById("container");
+                var myChart = echarts.init(dom);
+                myChart.setOption(data);
+            }
+        }
+    });
+
 
 }
 
@@ -254,7 +504,7 @@ function mergeCellsByField(tableID, colList) {
     var tmpB;
     var PerTxt = "";
     var CurTxt = "";
-    var curPcxflfmc ="";
+    var curPcxflfmc = "";
     var perPcxflfmc = "";
     for (j = ColArray.length - 1; j >= 0; j--) {
         PerTxt = "";
@@ -271,7 +521,7 @@ function mergeCellsByField(tableID, colList) {
                 CurTxt = tTable.datagrid("getRows")[i][ColArray[j]];
                 curPcxflfmc = tTable.datagrid("getRows")[i]["pcxflfmc"];
             }
-            if (PerTxt == CurTxt && curPcxflfmc== perPcxflfmc) {
+            if (PerTxt == CurTxt && curPcxflfmc == perPcxflfmc) {
                 tmpA += 1;
             }
             else {
@@ -291,193 +541,66 @@ function mergeCellsByField(tableID, colList) {
     }
 }
 
-// 已经评查案件（type对应0，1,2分别是单位，部门，检察官表）
-function alert_jbxx_ypc_window(el,type, index) {
-
+function export_excel_ajwthz() {
     var obj = new Object();
-    var ypcUrl = getRootPath() ;
-
-    // 判断哪个表：
-    if (type == 0) {
-       var thisRow = $('#table_ajwt_statistiscs_dw').datagrid('getRows')[index];
-        obj.startDate = $('#ajwt_dw_start').datebox('getValue');
-        obj.endDate = $("#ajwt_dw_end").datebox('getValue');
-        obj.dwbmList = thisRow.dwbm;
-
-        ypcUrl += "/queryTable/getAjjbxx";
+    obj.dwbm = $('#cbt_win_eval_ajwt_dw').combotree('getValues').join(',');
+    obj.startDate = $('#ajwt_dw_start').datebox('getValue');
+    obj.endDate = $("#ajwt_dw_end").datebox('getValue');
+    obj.pcflbm = $('#cbt_win_eval_ajwt_pcfl').combotree('getValue');
+    obj.page = 1;
+    obj.rows = 1000;
+    var tree = $('#cbt_win_eval_ajwt_pcfl').combotree('tree');	// 获取树对象
+    var node = tree.tree('getSelected');		// 获取选择的节点
+    if (node.attributes.SFJS == "Y" || obj.pcflbm == "009") {
+        obj.pcmbbm = $('#cbt_win_eval_ajwt_pcmb').combotree('getValue');
+    } else {
+        var tree = $("#cbt_win_eval_ajwt_pcmb").combotree("tree");
+        var node = tree.tree("getSelected");
+        obj.pcmbbm = node.attributes.PCMBJ;
+    }
+    var url = "";
+    if (obj.pcflbm != "009") { //pcflbm为009时，需要查询线下案件问题汇总
+        url = getRootPath() + "/queryTable/exportDwAjwthzTableDataExcel";
+    } else {
+        url = getRootPath() + "/queryTable/getDwOfflineAjwthzTableDataExcel";
     }
 
-    if (type == 1) {
-        var thisRow = $('#table_monitor_statistiscs_bm').datagrid('getRows')[index];
-        obj.startDate = $('#monitor_statis_bm_start').datebox('getValue');
-        obj.endDate = $("#monitor_statis_bm_end").datebox('getValue');
-        obj.dwbmList = $("#monitor_handler_dw_combotree").combotree('getValue');
-        obj.bmbmList =thisRow.bmbm;
-
-        ypcUrl += "/queryTable/getAjjbxxByBm";
-    }
-
-    if (type == 2) {
-        var thisRow = $('#table_monitor_statistiscs_stuff').datagrid('getRows')[index];
-        obj.startDate = $('#monitor_statis_stuff_start').datebox('getValue');
-        obj.endDate = $("#monitor_statis_stuff_end").datebox('getValue');
-        obj.dwbmList = $("#monitor_handler_stuff_dw_combotree").combotree('getValue');
-        obj.bmbmList =$("#monitor_handler_stuff_bm_combotree").combotree('getValue');
-        obj.ghList = thisRow.gh;
-
-        ypcUrl += "/queryTable/getAjjbxxByJcg";
-    }
-
-    var currField = $(el).attr("data-field");
-    var jsonField = JSON.parse(currField);
-
-
-    if (!isNull(jsonField.zmc)) {
-        obj.zmc = jsonField.zmc;
-    }
-    if (!isNull(jsonField.pcxflmc)) {
-        obj.pcxflmc = jsonField.pcxflmc;
-    }
-
-    if (!isNull(jsonField.pcflbm)) {
-        obj.pcflbm = jsonField.pcflbm;
-    }
-    if (!isNull(jsonField.pcjl)) {
-        obj.pcjl = jsonField.pcjl;
-    }
-
-    // 已评查案件datagrid
-    $("#table_eval_ajwt_statistics_analysis_filter").datagrid({
-        border:0,
-        fit:true,
-        fitColumns: true,
-        singleSelect: true,
-        rownumbers: true,
-        pagination:true,
-        pageNumber:1,
-        pageSize:20,
-        // url: getRootPath() + "/queryTable/getAjjbxx",
-        url:ypcUrl,
-        queryParams:obj,
-        columns:[[
-            {field:'BMSAH',title:'部门受案号',width:160 },
-            {field:'AJMC',title:'案件名称',width:160,
-                formatter: function (value) { return tipMessage(value); }},
-            {field:'AJLBMC',title:'案件类别',width:90},
-            {field:'DWMC',title:'承办单位',width:90},
-            {field:'CBRMC',title:'承办检察官',width:90},
-            {field:'PCR_DWMC',title:'评查单位',width:90},
-            {field:'CJSJ',title:'评查日期', fixed:true, width: 115 ,
-                formatter: function (value) {
-                    return sjzh(value);
-                }
-            },
-            {field: 'action', title: '操作', width: 80, align: 'center',
-                formatter: function (value, row, index) {
-                    return  '<a href="#" onclick="pcWinPage(' + index +',\'#table_eval_ajwt_statistics_analysis_filter\',0)">查看</a>';
-                }
+    $.ajax({
+        url: url,
+        type: "get",
+        data: obj,
+        success: function (data) {
+            if (data.code == 200) {
+                window.location.href = getRootPath() + data.data;
             }
-        ]]
-
+            CloseProgress();
+        },
+        error: function () {
+            CloseProgress();
+        }
     });
-
-    // 分页控件(中文)
-    $('#table_eval_ajwt_statistics_analysis_filter').datagrid('getPager').pagination({
-        beforePageText: '第',
-        afterPageText: '页   共{pages}页',
-        displayMsg: '当前显示【{from} ~ {to}】条记录   共【{total}】条记录'
-    });
-
-
-    $("#win_eval_build_statistics_analysis_filter").window('setTitle','已经评查案件');
-    $("#win_eval_build_statistics_analysis_filter").window('open');
-
 }
 
-//获取已审结未评查案件信息（type对应0，1,2分别是单位，部门，检察官表）
-function alert_statistic_shengji_window(el,type,index){
-
+function pcWinPage_offline(index, id, type) {
+    var rowDatas = $(id).datagrid('getRows')[index];
+    if (type == '' || type == null || type == undefined) {
+        type = 0;
+    }
     var obj = new Object();
-    // 判断哪个表：
-    if (type ==0) {
-        var  thisRow = $('#table_ajwt_statistiscs_dw').datagrid('getRows')[index];
-        obj.startDate = $('#ajwt_dw_start').datebox('getValue');
-        obj.endDate = $("#ajwt_dw_end").datebox('getValue');
-        obj.dwbmList = thisRow.dwbm;
-        obj.pcflbm = $('#cbt_win_eval_ajwt_pcfl').combotree('getValue');
-        var tree = $('#cbt_win_eval_ajwt_pcfl').combotree('tree');	// 获取树对象
-        var node = tree.tree('getSelected');		// 获取选择的节点
-        if(node.attributes.SFJS == "Y"){
-            obj.pcmbbm = $('#cbt_win_eval_ajwt_pcmb').combotree('getValue');
-        }else{
-            obj.pchdbm = $('#cbt_win_eval_build_pchd').combotree('getValue');
-        }
-    }
+    obj.PCSLBM = rowDatas.PCSLBM
+    obj.BMSAH = rowDatas.BMSAH;
+    obj.DWBM = rowDatas.PCDWBM;
+    obj.PCCZLX = '0'; //0.只读 1.评查办理 2.评查审批 3.评查反馈 4.部门反馈
+    obj.PCSPBM = ''; //仅评查审批阶段有
+    obj.type = 0;
+    var url = "view/evaluate/build/offline.html";
+    loadPcblWin_offline(url, obj);
+}
 
-    if (type == 1) {
-        var thisRow = $('#table_monitor_statistiscs_bm').datagrid('getRows')[index];
-        obj.startDate = $('#monitor_statis_bm_start').datebox('getValue');
-        obj.endDate = $("#monitor_statis_bm_end").datebox('getValue');
-        obj.dwbmList = thisRow.dwbm;
-    }
-
-    if (type == 2) {
-        var thisRow = $('#table_monitor_statistiscs_stuff').datagrid('getRows')[index];
-        obj.startDate = $('#monitor_statis_stuff_start').datebox('getValue');
-        obj.endDate = $("#monitor_statis_stuff_end").datebox('getValue');
-        obj.dwbmList = $("#monitor_handler_stuff_dw_combotree").combotree('getValue');
-        obj.bmbmList =$("#monitor_handler_stuff_bm_combotree").combotree('getValue');
-        obj.ghList = thisRow.gh;
-    }
-
-    $('#table_eval_ajwt_statistics_analysis_filter').datagrid({
-        border:0,
-        fit:true,
-        fitColumns: true,
-        singleSelect: true,
-        rownumbers: true,
-        pagination:true,
-        pageNumber:1,
-        pageSize:20,
-        url: getRootPath() + "/queryTable/getWpcAjjbxx",
-        queryParams:obj,
-        columns:[[
-            {field:'BMSAH',title:'部门受案号',width:160 },
-            {field:'AJMC',title:'案件名称',width:160,
-                formatter: function (value) { return tipMessage(value); }},
-            {field:'AJLBMC',title:'案件类别',width:90},
-            {field:'DWMC',title:'承办单位',width:90},
-            {field:'CBRMC',title:'承办检察官',width:90},
-            {field:'SLRQ',title:'受理日期',width:90,
-                formatter: function (value) {
-                    return sjzh(value);
-                }
-            },
-            {field:'WCBZRQ',title:'完成日期',width:90,
-                formatter: function (value) {
-                    return sjzh(value);
-                }
-            },
-            {field: 'action', title: '操作', width: 80, align: 'center',
-                formatter: function (value, row, index) {
-                    var r = '<a href="#" onclick="pcWinPage(' + index +',\'#table_eval_ajwt_statistics_analysis_filter\',1)">查看</a>'
-                    return r;
-                }
-            }
-        ]]
-    });
-
-    $('#table_eval_ajwt_statistics_analysis_filter').datagrid('getPager').pagination({
-        beforePageText: '第',
-        afterPageText: '页   共{pages}页',
-        displayMsg: '当前显示【{from} ~ {to}】条记录   共【{total}】条记录'
-    });
-
-    // 展示已审结未评查案件信息
-    $("#win_eval_ajwt_statistics_analysis_filter").window('setTitle','已经审结案件');
-    $("#win_eval_ajwt_statistics_analysis_filter").window('open');
-
-
+function loadPcblWin_offline(href, param) {
+    // 换从功能参数，作为参数传递
+    FUNCTION_PARAM = param;
+    $('#pcblWin').window('open').window('refresh', href);
 }
 
 

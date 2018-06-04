@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.AnalysisReportMapper">
+    <select id="loadFtlList" resultMap="ftlList">
+       select * from XT_PC_WSMB  where wsmblb=9 order by WSPX
+    </select>
+    <resultMap id="ftlList" type="Map">
+        <result property="id" column="WSMBBH"/>
+        <result property="text" column="WSMBMC"/>
+    </resultMap>
+    <select id="loadFtlDataList" resultMap="ftlList">
+       select * FROM (
+        select t.*,rownum rn from YX_PC_JZWJ t  where WJLX=9
+        <if test="dwbm !=null and dwbm!=''">
+            AND dwbm in  <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        </if>
+        <if test="ftlMb !=null and ftlMb!=''">
+            AND WSMBBH in  <foreach  item="item" collection="ftlMb" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        </if>
+        AND rownum &lt;= #{row}
+        ) WHERE  rn >#{page}
+    </select>
+    <select id="loadFtlDataListCount" resultMap="ftlList">
+        select count(*) num from YX_PC_JZWJ  where WJLX=9
+        <if test="dwbm !=null and dwbm!=''">
+          AND dwbm in  <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        </if>
+        <if test="ftlMb !=null and ftlMb!=''">
+            AND WSMBBH in  <foreach  item="item" collection="ftlMb" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        </if>
+    </select>
+</mapper>

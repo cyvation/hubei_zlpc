@@ -43,6 +43,14 @@ public interface UserService {
     String addOrUpdateRybm(Rybm rybm) throws Exception;
 
     /**
+     * 添加线下人员信息
+     * @param rybm 人员
+     * @return 是否添加成功
+     * @throws Exception
+     */
+    int offlineAddRybm(Rybm rybm) throws  Exception;
+
+    /**
      * 根据工号获取人员信息详情
      * @param gh
      * @param dwbm

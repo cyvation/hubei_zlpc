@@ -55,4 +55,6 @@ public interface OriganizationMapper {
     List<Map> getGncs(Jsgnfp map);
 
     int updateGncs(Jsgnfp jsgnfp);
+
+    List<Map> getPjDwbm(Map map);
 }

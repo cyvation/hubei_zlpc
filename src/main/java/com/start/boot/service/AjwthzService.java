@@ -11,4 +11,10 @@ import com.start.boot.query.QueryTable;
 public interface AjwthzService {
 
     List<AjpcwtxVo> getAjwthzList(QueryTable query) throws Exception;
+
+    List<AjpcwtxVo> getOfflineAjwthzList(QueryTable query) throws Exception;
+
+    String getDwAjwthzBarData(QueryTable query) throws Exception;
+
+    String getDwOfflineAjwthzBarData(QueryTable query) throws Exception;
 }

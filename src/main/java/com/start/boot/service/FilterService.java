@@ -58,4 +58,10 @@ public interface FilterService {
     List<Map>  getPcbmj(ParamSx paramSx) throws Exception;
 
     Map getAjxxByBmsah(Map param) throws  Exception;
+
+    Map getTyywAjxxByBmsah(Map param) throws  Exception;
+
+    ParamSx getSjsxAdvance(ParamSx paramSx) throws Exception;
+
+    List<Map> getSxgzByPcflbmAndYwtx(Map param) throws Exception;
 }

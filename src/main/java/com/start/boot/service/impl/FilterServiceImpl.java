@@ -542,4 +542,60 @@ public class FilterServiceImpl implements FilterService {
             throw  e;
         }
     }
+
+    @Override
+    public  Map getTyywAjxxByBmsah(Map param) throws  Exception{
+        try{
+            return filterMapper.getTyywAjxxByBmsah(param);
+        }catch (Exception e){
+            throw  e;
+        }
+    }
+
+    //随机评查案件筛选（进阶版）
+    @Override
+    public ParamSx getSjsxAdvance(ParamSx paramSx) throws Exception {
+
+        String errMsg ="";
+
+        Map map = new HashMap();
+        map.put("p_pcflbm",paramSx.getPcflbm());//评查分类编码
+        map.put("p_pcmbbm",paramSx.getPchdbm());//评查模板编码
+        map.put("p_sxgzbm",paramSx.getSxgzbm());//筛选规则编码
+        map.put("p_cbdwbm",paramSx.getCbdwbm());//承办单位编码
+        map.put("p_cbbmbm",paramSx.getCbbmbm());//承办部门编码
+        map.put("p_bmsah",paramSx.getBmsah());//部门受案号
+        map.put("p_ajmc",paramSx.getAjmc());//案件名称
+        map.put("p_cbrxm",paramSx.getCbrxm());//承办人姓名
+
+        map.put("p_wcrqbng",OracleTimeUtils.format(paramSx.getWcrqbng()));//完成日期开始时间
+        map.put("p_wcrqend",OracleTimeUtils.format(paramSx.getWcrqend()));//完成日期结束时间
+
+        map.put("p_zdycxtj",paramSx.getZdycxtj());//自定义查询条件
+        map.put("p_pagesize",paramSx.getRows());//页大小
+        map.put("p_pageindex",paramSx.getPage());//页索引
+
+        filterMapper.getSjsxAdvance(map);
+        errMsg = DataAccessHelper.getString(map,"p_errmsg");
+        if (StringUtils.isNoneEmpty(errMsg)) {
+            throw new Exception(errMsg);
+        }
+
+        Integer pCount = DataAccessHelper.getInteger(map, "p_count");
+        List<Map> list = DataAccessHelper.getListMap(map, "p_cursor");
+
+        paramSx.setList(list);
+        paramSx.setCount(pCount);
+
+        return paramSx;
+    }
+
+    @Override
+    public List<Map> getSxgzByPcflbmAndYwtx(Map param){
+        try {
+            return filterMapper.getSxgzByPcflbmAndYwtx(param);
+        }catch (Exception e){
+            throw e;
+        }
+    }
 }

@@ -47,4 +47,11 @@ public interface FilterMapper {
     void getPcbmj(Map paramSx);
 
     Map getAjxxByBmsah(Map param);
+
+    Map getTyywAjxxByBmsah(Map param);
+
+    void getSjsxAdvance(Map map);
+
+    List<Map> getSxgzByPcflbmAndYwtx(Map param);
+
 }

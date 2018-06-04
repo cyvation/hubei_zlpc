@@ -1,5 +1,6 @@
 package com.start.boot.web;
 
+import com.alibaba.fastjson.JSON;
 import com.start.boot.common.MessageResult;
 import com.start.boot.common.Param_Pager;
 import com.start.boot.common.SystemConfiguration;
@@ -19,6 +20,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -95,6 +97,7 @@ public class FilterController extends ArchivesSystemBaseController {
 //                    break;
 //                }
             }
+            result = EasyUIHelper.buildTreeListDataSource(list,"GZBM","FGZBM","GZMC","ICON","");
             result = EasyUIHelper.buildTreeDataSourceWithoutIconCol(resultList, "GZBM", "FGZBM", "GZMC", "-1");
         } catch (Exception e) {
             super.errMsg("评查筛选规则列表获取失败", pcflbm, e);
@@ -102,6 +105,7 @@ public class FilterController extends ArchivesSystemBaseController {
 
         return result;
     }
+
 
     /**
      * 评查筛选规则列表（监控用）
@@ -168,6 +172,9 @@ public class FilterController extends ArchivesSystemBaseController {
 
         return result;
     }
+
+
+
 
     /**
      * 随机评查案件筛选（部门）
@@ -667,6 +674,23 @@ public class FilterController extends ArchivesSystemBaseController {
         }
     }
 
+    @PostMapping("/updateJbxxByPcslbm")
+    public String updateJbxxByPcslbm(String json) {
+         Map map = (Map) JSON.parse(json);
+        YX_PC_JBXX jbxx = new YX_PC_JBXX();
+        jbxx.setPCSLBM(map.get("PCSLBM").toString());
+        jbxx.setSFLDBA(map.get("SFLDBA").toString());
+        if (jbxx == null) {
+            return failure("400", "提交数据为空，修改失败");
+        }
+        try {
+            yx_pc_jbxxMapper.updateByPrimaryKeySelective(jbxx);
+            return success("200", "修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return failure("400", "修改失败");
+        }
+    }
 
     /**
      * 获取部门编码
@@ -745,11 +769,63 @@ public class FilterController extends ArchivesSystemBaseController {
             if(map != null){
                 return failure("400", "案件已被"+map.get("DWMC").toString()+"评查中!");
             }
+            Map tyywAjMap = filterService.getTyywAjxxByBmsah(param);
+            if(tyywAjMap != null &&(!tyywAjMap.containsKey("WCRQ") || tyywAjMap.get("WCRQ").toString().isEmpty())){
+                return failure("400", "该案件在统一业务系统当中流程未结束!");
+            }
             return  success("200", "查询成功!");
         } catch (Exception e) {
             e.printStackTrace();
             return failure("400", "查询失败");
         }
+    }
+
+    /**
+     * 随机评查案件筛选（进阶版）
+     */
+    @RequestMapping("/getSjsxAdvance")
+    public String getSjsxAdvance(String json) {
+
+        //响应到页面封装
+        String result = "";
+
+        try {
+            ParamSx param = FastJsonUtils.toObject(ParamSx.class, json);
+            param.setPage(parsePage(getParameter("page")));
+            param.setRows(parseRows(getParameter("rows")));
+
+            ParamSx data = filterService.getSjsxAdvance(param);
+
+            result = EasyUIHelper.buildDataGridDataSource(data.getList(), data.getCount());
+        } catch (Exception e) {
+            super.errMsg("随机评查案件筛选（自定义）获取失败", json, e);
+            result = failure(e.getMessage(), "随机评查案件筛选（部门）获取失败");
+        }
+
+        return result;
+    }
+
+    /**
+     * 评查筛选规则列表
+     */
+    @RequestMapping("/getSxgzByPcflbmAndYwtx")
+    public String getSxgzByPcflbmAndYwtx(String pcflbm, String sslb,String ywtx) {
+
+        //响应到页面封装
+        String result = "";
+
+        try {
+            Map<String, Object> param = new HashMap<String, Object>();
+            param.put("dwbm", SystemConfiguration.djdwbm);
+            param.put("pcflbm", pcflbm);
+            param.put("ywtx", ywtx);
+            List<Map> list = filterService.getSxgzByPcflbmAndYwtx(param);
+            //result = EasyUIHelper.buildTreeDataSourceWithoutIconCol(list,"GZBM","FGZBM","GZMC","420000008002");
+            result = EasyUIHelper.buildTreeDataSourceWithoutIconCol(list,"GZBM","FGZBM","GZMC","-1");
+        } catch (Exception e) {
+            super.errMsg("评查筛选规则列表获取失败", pcflbm, e);
+        }
+        return result;
     }
 
 }

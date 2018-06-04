@@ -19,7 +19,6 @@ import java.util.Map;
  */
 public abstract class ArchivesSystemBaseController extends BaseController {
 
-
     /**
      * 获取当前用户
      *

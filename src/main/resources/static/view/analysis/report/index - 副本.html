@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>评查报告管理</title>
+</head>
+<body>
+
+<!--页面JS加载，放在头部不能正确加载-->
+<script type="text/javascript">
+    AddScript("text/javascript", "script/analysis/report/index.js");
+    AddScript("text/javascript", "script/document/ntkoofficecontrol_pcbg.js");
+    AddScript("text/javascript", "script/document/JScriptDoc.js");
+</script>
+<style>
+    #layout_west_rept .layout-body > .panel {
+        height: 100%;
+    }
+
+    #layout_west_rept .layout-body > .panel > .panel-noscroll {
+        height: 100%;
+    }
+
+    #layout_west_rept .layout-body > .panel > .easyui-panel > .panel:nth-of-type(1) {
+        height: 32px;
+    }
+
+    #layout_west_rept .layout-body > .panel > .easyui-panel > .panel:nth-of-type(2) {
+        height: calc(100% - 22px);
+    }
+
+
+</style>
+
+<!--评查报告-->
+<div id="layout_main_rept" class="easyui-layout" data-options="fit:true" style="border-top: 0;border-left: 0">
+    <!--评查指管理树--> <!-- ,title:'评查报告类型'-->
+    <div id="layout_west_analysis_report" data-options="region:'west',title:'评查报告类型',border:true,split:false"
+         style="width: 400px;padding-right: 4px;border-top: none;border-left:none ">
+        <div class="easyui-layout" data-options="fit:true">
+            <div id="layout_west_analysis_report_bgtree" data-options="region:'center',border:false"
+                 style="border-bottom-width: 1px;border-right-width: 1px;height: 100%;">
+                    <div class="easyui-panel" data-options="fit:true"
+                         style="padding:3px 0px 3px 2px; border-top:0; border-left:0; border-right:0; width:100%">
+                        <label style=""><b style="color: #0E2D5F">评查方式：</b> </label>
+                        <input id="combobox_analysis_report_pcfs" class="easyui-combotree" data-options="border:true" style="width:160px;height: 30px"/>
+                        <ul id="tree_analysis_report_pcdw" class="easyui-tree" style="width: 160px;margin-top:5px;"></ul>
+                    </div>
+            </div>
+            <div data-options="region:'south',split:true" style="height: 355px;border-right-width: 1px;border-left: 0;">
+                <div id="div_toolbar_rept">
+                    <a id="btn_add_rept" class="easyui-linkbutton">新增</a>
+                    <!--<a id="btn_upload_rept" class="easyui-linkbutton">上传</a>-->
+                    <a id="btn_download_rept" class="easyui-linkbutton" download="">下载</a>
+                    <a id="btn_delete_rept" class="easyui-linkbutton">删除</a>
+                </div>
+                <div id="panel_dg_pcbg_rept" class="easyui-panel" data-options="fit:true,border:false" style="padding:3px 0px 3px 2px; border-top:0; border-left:0; border-right:0; width:100%">
+                    <table id="dg_pcbg_rept" data-options="fit:true,border:false" style="width: 100%">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout_center_rept" data-options="region:'center',border:false" style="width: 98%; padding: 0 0 0 10px;">
+      <!--  评查报告控件显示区-->
+        <div id="layout_center_rept_toolpnl" style="border:0;height: 100%;" class="easyui-panel" title="评查报告" data-options="fit:true">
+            <form id="form_doc_rept" runat="server">
+                <div id="divDoc_bg" style="height: 688px;display: none;"></div>
+            </form>
+        </div>
+    </div>
+    <!--上传报告，通过js提交Form-->
+    <div id="win_upload_rept" class="easyui-window" title="上传附件" style="width: 450px; height: 200px;"
+         data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+        <form id="form_upload_rept" method="post" target="iframe_up" enctype="multipart/form-data">
+            <table style="width: 340px; margin: 0 0 0 20px; height: 100px;">
+                <tr>
+                    <td class="ralign">
+                        评查报告名称：
+                    </td>
+                    <td colspan="3">
+                        <input id="bgmc_upload_rept" name="bgnr_up" class="easyui-textbox" style="width: 210px;"
+                               editale="false"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="ralign">
+                        评查报告附件：
+                    </td>
+                    <td colspan="3">
+                        <input id="file_upload_rept" name="file" type="text" class="easyui-filebox" editale="false"
+                               style="width: 210px;" data-options="buttonText:'选择文件'"/>
+                    </td>
+                </tr>
+            </table>
+            <div style="color:Red; text-align:center; height: 30px;font-size: smaller;">
+                建议：上传文件格式为Word文件；图片请附到Word中上传；文件最大为100M。
+            </div>
+            <div style="width: 130px;  margin: 0 auto;">
+                <a id="btn_ok_upload_rept" class="easyui-linkbutton" iconcls="icon-ok">确定</a>
+                <a id="btn_cancel_upload_rept" class="easyui-linkbutton" iconcls="icon-cancel">取消</a>
+            </div>
+        </form>
+        <iframe name="iframe_up" style="display: none"></iframe>
+    </div>
+    <!--新增报告界面-->
+    <div id="pop_ups_win" class="easyui-window" title="新建评查" style="width:500px;height:190px;background:#fff"
+         data-options="closed:true,modal:true,collapsible:false,minimizable:false,maximizable:false">
+        <div class="pop_ups_win" style="width: 100%">
+            <div class="pop_ups_win_input" style="margin-top: 0">
+                评查方式&nbsp;&nbsp;
+                <input id="cbt_win_eval_build_pcfl" data-options="wincom:true" class="easyui-combotree"  style="width: 348px;height: 30px;margin-left: 5px" />
+            </div>
+            <div id="btn_wind_eval_next" style="padding: 8px 14px;background: #0690e8;border-radius: 4px;float: right;color: #FFFFFF;margin-right: 45px;margin-top: 30px;cursor: pointer">下一步</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

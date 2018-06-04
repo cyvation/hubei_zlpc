@@ -904,6 +904,9 @@
       <if test="CLJG != null">
         CLJG = #{CLJG,jdbcType=VARCHAR},
       </if>
+      <if test="SFLDBA != null">
+        SFLDBA = #{SFLDBA,jdbcType=VARCHAR}
+      </if>
     </set>
     where PCSLBM = #{PCSLBM,jdbcType=CHAR}
   </update>
@@ -912,7 +915,8 @@
     set PCJG = #{PCJG,jdbcType=VARCHAR},
       PCJL = #{PCJL,jdbcType=CHAR},
       CLJG=#{CLJG,jdbcType=VARCHAR},
-      SM = #{SM,jdbcType=VARCHAR}
+      SM = #{SM,jdbcType=VARCHAR},
+      SFLDBA = #{SFLDBA, jdbcType=VARCHAR}
     where PCSLBM = #{PCSLBM,jdbcType=CHAR}
   </update>
 </mapper>

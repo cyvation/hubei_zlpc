@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.start.boot.dao.ajpc.QueryMapper">
-
-
-
-
   <select id="query" resultType="com.start.boot.pojo.dto.CountDo">
       SELECT
 	"COUNT" (*) count,
@@ -398,11 +394,6 @@
 		</if>
 	</select>
 
-
-
-
-
-
 	<select id="shGetMapJbqk" resultType="int" parameterType="com.start.boot.query.ShYPNAQuery">
 		SELECT
 				"COUNT"(*)
@@ -441,91 +432,153 @@
 
 	<select id="getPersonPaiMinByPcjlAndRQ" parameterType="com.start.boot.query.ShYPNAQuery" resultType="com.start.boot.pojo.dto.PersonPaimin">
 		SELECT
+		RY.DWBM AS dwbm,
 		RY.GH AS gh,
 		RY.mc AS mc,
-		"COUNT" (0) as count
+		"COUNT" (0) AS COUNT
 		FROM
 		XT_ZZJG_RYBM RY
-		INNER JOIN YX_PC_JBXX jb ON RY.GH = JB.BPC_GH
+		INNER JOIN YX_PC_JBXX jb ON jb.bpc_dwbm = RY.DWBM AND RY.GH=jb.BPC_GH
 		WHERE
-		jb.bpc_dwbm = #{dwbm}
+		1=1
+		<if test="dwbm !=null and dwbm!=''">
+			AND jb.bpc_dwbm in ${dwbm}
+		</if>
 		AND JB.PCJL = #{pcjl}
 		AND  JB.sfsc = 'N'
-		AND  JB.pcjdbh = '011'
-		<if test="startDate !=null">
-			AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		<if test="startDate !=null and startDate !=''">
+			AND jb.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
 		</if>
-		<if test="endDate !=null">
-			AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		<if test="endDate !=null and endDate!=''">
+			AND jb.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
 		</if>
 		GROUP BY
 		RY.dwbm,
 		RY.GH,
 		RY.mc
-		ORDER BY 3 DESC
+		ORDER BY
+		4 DESC
 	</select>
 
 	<select id="getPersonPaiMinByPcjlAndRQAjJbxx" parameterType="com.start.boot.query.ShYPNAQuery" resultType="com.start.boot.domain.YX_PC_JBXX">
-		SELECT jb.*, jb.pcr_mc AS PCRMC,jb.ajlb_mc AS AJLBMC, jb.bpc_dwmc  AS BPCDWMC , jb.bpc_mc AS BPCMC
+		SELECT
+		DISTINCT
+		jb.*, jb.pcr_mc AS PCRMC,jb.ajlb_mc AS AJLBMC, jb.bpc_dwmc  AS BPCDWMC , jb.bpc_mc AS BPCMC
 		FROM
 		XT_ZZJG_RYBM ry
 		INNER JOIN YX_PC_JBXX jb ON RY.GH = JB.BPC_GH
-		WHERE
-		jb.bpc_dwbm = #{dwbm}
+		WHERE 1=1
+		<if test="dwbm !=null and dwbm!=''">
+			AND jb.bpc_dwbm in ${dwbm}
+		</if>
 		AND JB.PCJL = #{pcjl}
 		AND  JB.sfsc = 'N'
-		AND  JB.pcjdbh = '011'
-		<if test="startDate !=null">
-			AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		<if test="startDate !=null and startDate!=''">
+			AND jb.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
 		</if>
-		<if test="endDate !=null">
-			AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		<if test="endDate !=null and endDate!=''">
+			AND jb.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
 		</if>
-		AND jb.BPC_GH = #{gh}
-
-
+		<if test="gh !=null and gh !=''">
+			AND jb.BPC_GH = #{gh}
+		</if>
 	</select>
 
 	<select id="bmBanAjZhiLiangPaiMin" parameterType="com.start.boot.query.ShYPNAQuery" resultType="com.start.boot.pojo.dto.BmZlPm">
 		SELECT
+		JB.BPC_DWBM as dwbm,
 		JB.BPC_BMBM as bmbm,
-		jb.BPC_BMMC as bmmc,
+		"CONCAT" (
+		jb.BPC_BMMC || '(',
+		dw.dwjc|| ')'
+		)AS bmmc,
 		"COUNT"(0) as count
-	FROM
+		FROM
 		XT_ZZJG_BMBM bm
-	INNER JOIN YX_PC_JBXX jb ON BM.DWBM = jb.BPC_DWBM
-	WHERE
-		jb.BPC_DWBM = #{dwbm}
-	AND PCJL =#{pcjl}
+		INNER JOIN YX_PC_JBXX jb ON BM.DWBM = jb.BPC_DWBM
+		INNER JOIN XT_ZZJG_DWBM dw ON JB.BPC_DWBM=DW.DWBM
+		WHERE
+		1=1
+		<if test="dwbm !=null and dwbm!=''">
+			AND jb.BPC_DWBM in ${dwbm}
+		</if>
+		AND PCJL =#{pcjl}
 		AND  JB.sfsc = 'N'
-		AND  JB.pcjdbh = '011'
-	<if test="startDate !=null">
-		AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
-	</if>
-	<if test="endDate !=null">
-		AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
-	</if>
-	GROUP BY
-	JB.BPC_BMBM,
-	jb.BPC_BMMC
+		<if test="startDate !=null and startDate!=''">
+			AND jb.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="endDate !=null and endDate!=''">
+			AND jb.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		</if>
+		GROUP BY
+		JB.BPC_DWBM,
+		JB.BPC_BMBM,
+		"CONCAT" (
+		jb.BPC_BMMC || '(',
+		dw.dwjc|| ')'
+		)
+		ORDER BY 4 DESC
 	</select>
 
 	<select id="bmBanAjZhiLiangPaiMinAjJbxx" parameterType="com.start.boot.query.ShYPNAQuery" resultType="com.start.boot.domain.YX_PC_JBXX">
-		SELECT jb.*, jb.pcr_mc AS PCRMC,jb.ajlb_mc AS AJLBMC, jb.bpc_dwmc  AS BPCDWMC , jb.bpc_mc AS BPCMC
-	FROM
+		SELECT
+		DISTINCT
+		jb.*, jb.pcr_mc AS PCRMC,jb.ajlb_mc AS AJLBMC, jb.bpc_dwmc  AS BPCDWMC , jb.bpc_mc AS BPCMC
+		FROM
 		YX_PC_JBXX jb
-	WHERE
-	jb.BPC_DWBM = #{dwbm}
+		WHERE
+		jb.BPC_DWBM in ${dwbm}
 		AND  JB.sfsc = 'N'
-		AND  JB.pcjdbh = '011'
-	<if test="startDate !=null">
-		AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
-	</if>
-	<if test="endDate !=null">
-		AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
-	</if>
-	AND JB.PCJL = #{pcjl}
-	AND JB.BPC_BMBM = #{bmbm}
+		<if test="startDate !=null and startDate!=''">
+			AND jb.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="endDate !=null and endDate!=''">
+			AND jb.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		</if>
+		AND JB.PCJL = #{pcjl}
+		AND JB.BPC_BMBM = #{bmbm}
+	</select>
+
+	<select id="ywtxAjZhiLiangPaiMin" parameterType="com.start.boot.query.ShYPNAQuery" resultType="com.start.boot.pojo.dto.YwtxPm">
+		SELECT a.ywtx ywtxbm,a.cnt ,c.mc
+		FROM (SELECT m.ywtx,
+		COUNT(0) AS cnt
+		FROM yx_pc_jbxx jb
+		INNER JOIN xt_pc_mb m ON jb.pcmbbm = m.pcmbbm
+		WHERE 1 = 1
+		and jb.bpc_dwbm in ${dwbm}
+		and pcjl =#{pcjl}
+		AND jb.sfsc = 'N'
+		<if test="startDate !=null and startDate!=''">
+			AND jb.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="endDate !=null and endDate!=''">
+			AND jb.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		</if>
+		GROUP BY m.ywtx
+		) a
+		LEFT JOIN xt_pc_dm c ON c.dm = a.ywtx
+		ORDER BY a.cnt DESC
+	</select>
+
+	<select id="ywtxAjZhiLiangPaiMinAjJbxx" parameterType="com.start.boot.query.ShYPNAQuery" resultType="com.start.boot.domain.YX_PC_JBXX">
+		SELECT
+		DISTINCT
+		jb.*, jb.pcr_mc AS PCRMC,jb.ajlb_mc AS AJLBMC, jb.bpc_dwmc  AS BPCDWMC , jb.bpc_mc AS BPCMC
+		FROM
+		YX_PC_JBXX jb
+		INNER JOIN xt_pc_mb m ON jb.pcmbbm = m.pcmbbm
+		WHERE
+		jb.BPC_DWBM in ${dwbm}
+		AND  JB.sfsc = 'N'
+		AND m.ywtx = #{ywtxbm}
+		<if test="startDate !=null and startDate!=''">
+			AND jb.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="endDate !=null and endDate!=''">
+			AND jb.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		</if>
+		AND JB.PCJL = #{pcjl}
 	</select>
 
 	<select id="getWpc" resultType="int" parameterType="com.start.boot.query.ShYPNAQuery">
@@ -560,47 +613,49 @@
 	</select>
 	<select id="getPm" resultType="com.start.boot.pojo.dto.PmDto" parameterType="com.start.boot.query.ShYPNAQuery">
 		SELECT
-		jb.BPC_BMBM AS bmbm,
-		jb.BPC_BMMC AS dwmc,
+		jb.BPC_DWBM as dwbm,
+		jb.bpc_dwmc AS dwmc,
 		"COUNT" (0) AS COUNT
 		FROM
 		YX_PC_JBXX jb
+		INNER JOIN XT_ZZJG_DWBM dw ON JB.BPC_DWBM=DW.DWBM
 		WHERE
-		PCJL IN (
-		'不合格案件',
-		'瑕疵案件'
-		)
-		AND jb.BPC_DWBM = #{dwbm}
-		<if test="startDate !=null">
-			AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		jb.PCJL = #{pcjl}
+		AND jb.bpc_dwbm in ${dwbm}
+		AND  JB.sfsc = 'N'
+		AND  JB.pcjdbh = '011'
+		<if test="startDate !=null and startDate!=''">
+			AND jb.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
 		</if>
-		<if test="endDate !=null">
-			AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		<if test="endDate !=null and endDate!=''">
+			AND jb.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
 		</if>
 		GROUP BY
-		jb.BPC_BMBM,
-		jb.BPC_BMMC
+		jb.BPC_DWBM,
+		jb.bpc_dwmc
 		ORDER BY
 		3 ASC
 	</select>
 	<select id="getPmAjJbxx" parameterType="com.start.boot.query.ShYPNAQuery" resultType="com.start.boot.domain.YX_PC_JBXX">
-		SELECT jb.*, jb.pcr_mc AS PCRMC,jb.ajlb_mc AS AJLBMC, jb.bpc_dwmc  AS BPCDWMC , jb.bpc_mc AS BPCMC
+		SELECT
+		DISTINCT
+		jb.*, jb.pcr_mc AS PCRMC,jb.ajlb_mc AS AJLBMC, jb.bpc_dwmc  AS BPCDWMC , jb.bpc_mc AS BPCMC
 		FROM
-			YX_PC_JBXX jb
+		YX_PC_JBXX jb
 		WHERE
-			PCJL IN (
-				'不合格案件',
-				'瑕疵案件'
-			)
-		AND BPC_DWBM=#{dwbm}
-		AND bpc_bmbm=#{bmbm}
-		<if test="startDate !=null">
-			AND jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		PCJL =#{pcjl}
+		AND BPC_DWBM in ${dwbm}
+		<if test="bmbm!=null and bmbm!=''">
+			AND bpc_bmbm=#{bmbm}
 		</if>
-		<if test="endDate !=null">
-			AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		AND  JB.sfsc = 'N'
+		AND  JB.pcjdbh = '011'
+		<if test="startDate !=null and startDate!=''">
+			AND jb.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
 		</if>
-
+		<if test="endDate !=null and endDate!=''">
+			AND jb.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		</if>
 	</select>
 	<select id="getMapAjJbxx" parameterType="com.start.boot.query.ShYPNAQuery" resultType="com.start.boot.domain.YX_PC_JBXX">
 		SELECT jb.*, jb.pcr_mc AS PCRMC,jb.ajlb_mc AS AJLBMC, jb.bpc_dwmc  AS BPCDWMC , jb.bpc_mc AS BPCMC
@@ -645,5 +700,50 @@
 			AND jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
 		</if>
 
+	</select>
+
+	<select id="getDwPaiMinByPcjlAndRQ" parameterType="com.start.boot.query.ShYPNAQuery" resultType="com.start.boot.pojo.dto.DwPaimin">
+		SELECT
+		jb.bpc_dwbm AS dwbm,
+		dw.dwjc AS dwmc,
+		"COUNT" (0) AS COUNT
+		FROM
+		YX_PC_JBXX jb
+		inner join xt_zzjg_dwbm dw on jb.bpc_dwbm=dw.dwbm
+		WHERE
+		1=1
+		<if test="dwbm !=null and dwbm!=''">
+			AND jb.bpc_dwbm in ${dwbm}
+		</if>
+		AND JB.PCJL = #{pcjl}
+		AND  JB.sfsc = 'N'
+		<if test="startDate !=null and startDate !=''">
+			AND jb.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="endDate !=null and endDate!=''">
+			AND jb.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		</if>
+		GROUP BY
+		jb.bpc_dwbm,
+		dw.dwjc
+		order BY 3 DESC
+	</select>
+
+	<select id="getDWPaiMinByPcjlAndRQAjJbxx" parameterType="com.start.boot.query.ShYPNAQuery" resultType="com.start.boot.domain.YX_PC_JBXX">
+		SELECT
+		DISTINCT
+		jb.*, jb.pcr_mc AS PCRMC,jb.ajlb_mc AS AJLBMC, jb.bpc_dwmc  AS BPCDWMC , jb.bpc_mc AS BPCMC
+		FROM
+		YX_PC_JBXX jb
+		WHERE
+		jb.bpc_dwbm = #{dwbm}
+		AND JB.PCJL = #{pcjl}
+		AND  JB.sfsc = 'N'
+		<if test="startDate !=null and startDate!=''">
+			AND jb.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="endDate !=null and endDate!=''">
+			AND jb.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+		</if>
 	</select>
 </mapper>

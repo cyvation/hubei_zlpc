@@ -24,7 +24,7 @@ $(document).ready(function () {
     eval_info_marksDataBind();
 
     // 间隔3分钟，自动保存
-    setTimeout("autoSaveDocument()", 180000);
+    //setTimeout("autoSaveDocument()", 180000);
 });
 
 
@@ -207,6 +207,11 @@ function eval_info_marksDataBind() {
     load_cljg_pcjg('9101');
     // 评查结果
     load_cljg_pcjg('9102');
+    if(EVAL_CASE.PCFLBM != '001'){
+        $("#loadSfldba").hide();
+    }
+    //是否领导办案
+    load_sfldba('9104');
     // 评查结论
     $("#txt_eval_info_pcjl_bz").val(EVAL_CASE.SM);
     // 初始化卷宗文件树
@@ -231,6 +236,7 @@ function init_eval_info_docfiles(){
         onLoadSuccess: function (node, data) {
             if (data == null || isFirstLoad == "N")
                 return;
+            isFirstLoad = "N";
             // 初始化文件操作工具栏
             init_tool_tree_eval_doc_files();
 
@@ -529,6 +535,9 @@ function init_eval_info_docfiles(){
                             var data = result.value;
                             // 重新加载卷宗目录树
                             isFirstLoad = "N";
+                            editDocPath = "";
+                            opening_eval_doc_file = "";
+                            $("#btn_eval_info_pcak").click();
                             load_tree_eval_doc_files();
                         }
                         else{
@@ -871,6 +880,39 @@ function load_cljg_pcjg(bm) {
             }
 
 
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            Alert("消息", 'getDataDictionaryByLBBM 接口错误')
+        }
+    })
+}
+//动态获取承办人身份
+function load_sfldba(bm) {
+    $.ajax({
+        type: 'get',
+        async: false,
+        url: getRootPath() + '/common/getDataDictionaryByLBBM?lbbm='+bm,
+        dataType: 'json',
+        success: function(data) {
+            console.log('数据' + JSON.stringify(data))
+            if(data.code==200){
+                var data=data.data;
+                if(bm==9104){
+                    var html='';
+                    for(var i=0;i<data.length;i++){
+                        html+='<div class="radio">';
+                        html+='<div class="redio_click">';
+                        html+='<input class="input_radio_cljg" name="rd_eval_info_sfldba" type="radio" value="'+data[i].sm+'"/>';
+                        html+='</div>'+data[i].mc+'</div>';
+                    }
+                    $('#loadSfldba').append(html)
+                    var pcjlElement = $("input[name='rd_eval_info_sfldba'][value='" + EVAL_CASE.SFLDBA + "']");
+                    pcjlElement.parent().addClass('redio_click_no');
+                    pcjlElement.attr("checked",true);
+                }
+            }else {
+                Alert('getDataDictionaryByLBBM 错误'+data.message)
+            }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             Alert("消息", 'getDataDictionaryByLBBM 接口错误')
@@ -1276,6 +1318,9 @@ function init_eval_handle_bottom_tool(toolID) {
                 obj.PCSLBM = EVAL_CASE.PCSLBM;
                 var cljg = $("input[name='rd_eval_info_pcjl_cl']:checked").val();
                 obj.CLJG = isNull(cljg) ? "" : cljg;
+                //是否领导办案
+                var sfldba = $("input[name='rd_eval_info_sfldba']:checked").val();
+                obj.SFLDBA = isNull(sfldba) ? "" : sfldba;
                 var pcjl = $("input[name='rd_eval_info_pcjl_jg']:checked").val();
                 obj.PCJL = isNull(pcjl) ? "" : pcjl;
                 obj.SM = $("#txt_eval_info_pcjl_bz").val();
@@ -1290,6 +1335,7 @@ function init_eval_handle_bottom_tool(toolID) {
 
                         if (result.status == 200){
                             EVAL_CASE.CLJG = obj.CLJG;
+                            EVAL_CASE.SFLDBA = obj.SFLDBA;
                             EVAL_CASE.PCJL = obj.PCJL;
                             EVAL_CASE.SM = obj.SM;
                             Alert("提交成功！");
@@ -1419,16 +1465,16 @@ function init_eval_handle_bottom_tool(toolID) {
                 deal_eval_handle_deal_approve('0');
             });
 
-            // 第一次审批，不显示继续送审按钮
+        /*    // 第一次审批，不显示继续送审按钮
             if (EVAL_CASE.PCSPBM.indexOf("000001") >= 0) {
                 $('#btn_eval_handle_deal_pcsp_sendApp').css('display', 'none');
-            } else {
+            } else {*/
                 $('#btn_eval_handle_deal_pcsp_sendApp').css('display', '');
                 $("#btn_eval_handle_deal_pcsp_sendApp").unbind( "click" );
                 $("#btn_eval_handle_deal_pcsp_sendApp").bind("click", function () {
                     deal_eval_handle_deal_approve('1');
                 });
-            }
+            /*}*/
 
             break;
         case "3": //评查反馈
@@ -1492,6 +1538,7 @@ function init_eval_handle_bottom_tool(toolID) {
     });
 }
 
+var documentSavedCallback;
 // 保存评查报告
 function save_doc_file(callback) {
 
@@ -1506,11 +1553,19 @@ function save_doc_file(callback) {
     var fileresult = SaveToUrl(url);
     if (fileresult == null && fileresult != "") {
         if(callback){
-            callback();
+            documentSavedCallback = callback;
         }
         //Alert("修改评查报告成功。");
     } else {
         Alert("修改评查报告失败。" + fileresult);
+    }
+}
+
+// 文书保存成功后触发事件
+function documentSaved() {
+    if(documentSavedCallback){
+        documentSavedCallback();
+        documentSavedCallback = null;
     }
 }
 

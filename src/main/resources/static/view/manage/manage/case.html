@@ -11,49 +11,71 @@
         margin-left: 15px;
         cursor: pointer;
     }
+
 </style>
 <div style="height: 100%;" >
-    <div style="margin-bottom: 20px;height: 30px;" id="radio_manage_manage_choose">
-       <!-- <div style="float:left;">
-           &lt;!&ndash; <input id="combo_manage_manage_pcaj" style="height:30px;float:left;width:150px; margin-right: 10px"/>&ndash;&gt;
-        </div>-->
-        <div style="margin-right:5px;overflow: hidden;width:auto;padding: 0 8px;float: left;height:32px;background:#fff;border-radius: 3px">
+    <div style="margin-bottom: 20px;height: 70px;" id="radio_manage_manage_choose">
+        <!-- <div style="float:left;">
+            &lt;!&ndash; <input id="combo_manage_manage_pcaj" style="height:30px;float:left;width:150px; margin-right: 10px"/>&ndash;&gt;
+         </div>-->
+        <div style="margin-top:5px;margin-right:5px;overflow: hidden;width:auto;padding: 0 8px;float: left;height:70px;border-radius: 3px">
             <!--<input id="combo_manage_manage_choose" style="height: 30px;width:190px; margin-right: 20px"/>-->
             <div class="radiopcs" id="hd_radio"><div class="redio_click" data-value="1"></div>评查活动管理</div>
             <div class="radiopcs" id="aj_radio"><div class="redio_click redio_click_no" data-value="3"></div>评查案件管理</div>
-            <div class="radiopcs" id="ry_radio"><div class="redio_click" data-value="2"></div>专项评查组员管理</div>
+            <div class="radiopcs" id="ry_radio"><div class="redio_click" data-value="2"></div>评查组员管理</div>
         </div>
-
-
-        <div style="float: left;margin-left:5px">
-            <span style="height:30px;line-height:30px;float: left;">评查方式&nbsp; </span>
-            <input style="height:30px;width: 120px;float:left" id="combo_manage_manage_pcaj_pcfl" type="text">
+        <div style="height:70px;float: left;margin-left:5px">
+            <div style="height:38px;">
+                <div style="float: left;margin-left:26px">
+                    <span style="height:30px;line-height:30px;float: left;">评查方式&nbsp; </span>
+                    <input style="height:30px;width: 130px;float:left" id="combo_manage_manage_pcaj_pcfl" type="text">
+                </div>
+                <div style="float: left;margin-left:26px;display: none" id="div_manage_case_pcdwbm">
+                    <span style="height:30px;line-height:30px;float: left;">评查单位&nbsp; </span>
+                    <input style="height:30px;width: 130px;float:left" id="combo_manage_manage_pcaj_dwbm" class="easyui-combotree">
+                </div>
+                <div style="float: left;margin-left:28px">
+                    <span style="height:30px;line-height:30px;float: left;" >评&nbsp;&nbsp;&nbsp;查&nbsp;&nbsp;&nbsp;员&nbsp; </span>
+                    <input style="height:30px;width: 130px;float:left" id="txtbo_manage_manage_pcaj_pcy" type="text">
+                </div>
+                <div style="float: left;margin-left:26px;" id="div_manage_case_sfldba">
+                    <span style="height:30px;line-height:30px;float: left;">承办人身份&nbsp; </span>
+                    <input style="height:30px;width: 110px;float:left" id="combo_manage_manage_pcaj_sfldba" class="easyui-combotree">
+                </div>
+                <div style="float: left;margin-left:26px">
+                    <span style="height:30px;line-height:30px;float: left;"> 案件名称&nbsp; </span>
+                    <input style="height:30px;width: 120px;float:left" id="txtbo_manage_manage_pcaj_ajmc" type="text">
+                </div>
+            </div>
+            <!--换行-->
+            <div style="height:35px;">
+                <div style="float: left;margin-left:26px">
+                    <span style="height:30px;line-height:30px;float: left;">评查结论&nbsp; </span>
+                    <input style="height:30px;width: 130px;float:left" id="combo_manage_manage_pcaj_pcjl" type="text">
+                </div>
+                <div style="float: left;margin-left:26px">
+                    <span style="height:30px;line-height:30px;float: left;">评查状态&nbsp; </span>
+                    <input style="height:30px;width: 130px;float:left" id="combo_manage_manage_pcaj_pczt" type="text">
+                </div>
+                <div style="float: left;margin-left:26px">
+                    <span style="height:30px;line-height:30px;float: left;">承办检察官&nbsp; </span>
+                    <input style="height:30px;width: 130px;float:left" id="txtbo_manage_manage_pcaj_cbjcg" type="text">
+                </div>
+                <div style="float: left;margin-left:26px">
+                    <span style="height:30px;line-height:30px;float: left;"> 评查日期&nbsp; </span>
+                    <input style="height:30px;width: 120px;float:left" id="date_manage_manage_pcaj_ksrq" type="text" class="easyui-datebox" >
+                </div>
+                <div style="float: left;margin-left:26px">
+                    <span style="height:30px;line-height:30px;float: left;width: 20px;display: inline-block; text-align: center;">~ </span>
+                    <input style="height:30px;width: 120px;float:left" id="date_manage_manage_pcaj_jsrq" type="text" class="easyui-datebox" >
+                </div>
+                <!--<button id="btn_manage_manage_pcaj_cx" class="ZXpcajs_sj_2" style="padding: 0 15px;background: #258eea;color: #ffffff;">查询</button>-->
+                <a id="btn_manage_manage_pcaj_cx" class="easyui-linkbutton" style="float: left;margin-left:30px;padding: 0 15px;background: #258eea;color: #ffffff;">查询</a>
+            </div>
         </div>
-        <div style="float: left;margin-left:5px;display: none" id="div_manage_case_pcdwbm">
-            <span style="height:30px;line-height:30px;float: left;">评查单位&nbsp; </span>
-            <input style="height:30px;width: 120px;float:left" id="combo_manage_manage_pcaj_dwbm" class="easyui-combotree">
-        </div>
-        <div style="float: left;margin-left:5px">
-            <span style="height:30px;line-height:30px;float: left;"> 案件名称&nbsp; </span>
-            <input style="height:30px;width: 101px;float:left" id="txtbo_manage_manage_pcaj_ajmc" type="text">
-        </div>
-        <div style="float: left;margin-left:5px">
-            <span style="height:30px;line-height:30px;float: left;" > 评查员&nbsp;&nbsp; </span>
-            <input style="height:30px;width: 70px;float:left" id="txtbo_manage_manage_pcaj_pcy" type="text">
-        </div>
-        <div style="float: left;margin-left:6px">
-            <span style="height:30px;line-height:30px;float: left;"> 评查日期&nbsp; </span>
-            <input style="height:30px;width: 150px;float:left" id="date_manage_manage_pcaj_ksrq" type="text" class="easyui-datebox" >
-        </div>
-        <div style="float: left;margin-left:5px">
-            <span style="height:30px;line-height:30px;float: left;width: 20px;display: inline-block; text-align: center;">~ </span>
-            <input style="height:30px;width: 150px;float:left" id="date_manage_manage_pcaj_jsrq" type="text" class="easyui-datebox" >
-        </div>
-        <!--<button id="btn_manage_manage_pcaj_cx" class="ZXpcajs_sj_2" style="padding: 0 15px;background: #258eea;color: #ffffff;">查询</button>-->
-        <a id="btn_manage_manage_pcaj_cx" class="easyui-linkbutton" style="float: left;margin-left:30px;padding: 0 15px;background: #258eea;color: #ffffff;">查询</a>
     </div>
 
-    <div style="height:calc(100% - 50px)">
+    <div style="height:calc(100% - 85px)">
         <table id="datagrid_easyui_manage_manage_pcaj" class="easyui-datagrid" style="height:100%;">
         </table>
     </div>
@@ -66,6 +88,20 @@
             <table id="table_win_manage_manage_pcaj_modify_manual" border="0"></table>
         </div>
         <div id="btn_win_manage_manage_pcaj_modify_manual_confirm" style="padding: 8px 14px;background: #0690e8;border-radius: 4px;float: right;color: #FFFFFF;margin-right: 15px;margin-top: 15px;cursor: pointer">确定</div>
+    </div>
+</div>
+<div id="win_manage_pcaj_cbrsf_modify" class="easyui-window" title="编辑承办人身份" style="width:350px;height:180px;background:#fff"
+     data-options="closed:true,modal:true,collapsible:false,minimizable:false,maximizable:false">
+    <div style="padding: 20px;">
+        <div style="width: calc(100% - 18px); height: 70px; margin-top: 0px; border: 1px solid #c0cfdb; border-radius: 6px; overflow: auto;">
+            <div class="pcjg_redio" id="loadSfldba">
+                <div class="pcjg_redio_text">承办人身份：
+                    <input class="input_radio_cljg" name="rd_eval_info_sfldba" type="radio"  value="N" />非领导
+                    <input class="input_radio_cljg" name="rd_eval_info_sfldba" type="radio" value="Y"/>领导
+                </div>
+            </div>
+        </div>
+        <div id="btn_win_manage_pcaj_cbrsf_modify_confirm" style="align-content: center; padding: 8px 14px;background: #0690e8;border-radius: 4px;float: right;color: #FFFFFF;margin-right: 15px;margin-top: 15px;cursor: pointer">确定</div>
     </div>
 </div>
 <script type="text/javascript">

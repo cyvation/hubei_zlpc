@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.QueryAllMapper">
+
+	<select id="getPcxFlCount" resultType="int" parameterType="map">
+        SELECT
+        "COUNT"(0) as count
+        FROM
+        YX_PC_JBXX
+        WHERE
+        <if test="dwbm !=null and dwbm!=''">
+            BPC_DWBM=#{dwbm}
+        </if>
+        <if test="pcxflbmList !=null and pcxflbmList.size()>0">
+            AND   PCSLBM IN (
+            SELECT
+            pcslbm
+            FROM
+            YX_PC_PCX
+            WHERE
+            PCXFLBM
+            in
+            <foreach collection="pcxflbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+            )
+        </if>
+
+        <if test="startDate !=null and startDate!=''">
+            AND BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate !=null and endDate!=''">
+            AND BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+
+        <if test="pcflbm !=null and pcflbm!=''">
+            AND PCFLBM in <foreach  item="item" collection="pcflbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        </if>
+        <if test="pcjl !=null and pcjl!=''and pcjl!='全部'">
+            and PCJL=#{pcjl}
+        </if>
+        <if test="pczt !=null and pczt!='' and pczt !=0 ">
+            AND PCJDBH=#{pczt}
+        </if>
+	</select>
+    <select id="getOfflinePcxFlCount" resultType="int" parameterType="map">
+        SELECT
+        "COUNT"(0) as count
+        FROM
+        YX_PC_OFFLINE_JBXX
+        WHERE
+        <if test="dwbm !=null and dwbm!=''">
+            BPC_DWBM=#{dwbm}
+        </if>
+        <if test="pcxflbmList !=null and pcxflbmList.size()>0">
+            AND   PCSLBM IN (
+            SELECT
+            pcslbm
+            FROM
+            YX_PC_OFFLINE_PCX
+            WHERE
+            PCXFLBM
+            in
+            <foreach collection="pcxflbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+            )
+        </if>
+
+        <if test="startDate !=null and startDate!=''">
+            AND BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate !=null and endDate!=''">
+            AND BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+
+        <if test="pcflbm !=null and pcflbm!=''">
+            AND PCFLBM in <foreach  item="item" collection="pcflbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        </if>
+        <if test="pcjl !=null and pcjl!=''and pcjl!='全部'">
+            and PCJL=#{pcjl}
+        </if>
+        <if test="pczt !=null and pczt!='' and pczt !=0 ">
+            AND PCJDBH=#{pczt}
+        </if>
+    </select>
+
+	<select id="getPcxFlCountAjjbxx" resultType="com.start.boot.domain.YX_PC_JBXX" parameterType="map">
+        SELECT
+        *
+        FROM
+        YX_PC_JBXX
+        WHERE
+        BPC_DWBM=#{dwbm}
+        <if test="pcflbm !=null">
+            AND   PCSLBM IN (
+            SELECT
+            pcslbm
+            FROM
+            YX_PC_PCX
+            WHERE
+            PCXFLBM = #{pcflbm}
+            )
+        </if>
+
+        <if test="startDate !=null">
+            AND BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate !=null">
+            AND BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+
+        <if test="pcflbm !=null">
+            AND PCFLBM=#{pcflbm}
+        </if>
+        <if test="pcjl !=null">
+            and PCJL=#{pcjl}
+        </if>
+        <if test="gh !=null">
+            AND BPC_GH=0092
+        </if>
+        <if test="bmbm !=null">
+            AND BPC_BMBM=0014
+        </if>
+	</select>
+    <select id="getSjCount" resultType="int" parameterType="map">
+        SELECT
+        "COUNT" (0) AS COUNT
+        FROM
+        YX_PC_SXJL
+        WHERE
+        <if test="dwbm !=null">
+             DWBM = #{dwbm}
+        </if>
+        <if test="startDate !=null">
+            AND WCBZRQ  &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate !=null">
+            AND WCBZRQ &lt;="TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="pcflbm !=null">
+            AND PCFLBM in <foreach  item="item" collection="pcflbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        </if>
+    </select>
+    <select id="getPcxFlbmList" resultType="com.start.boot.domain.Yx_Pc_PcxFl">
+     select *
+        from XT_PC_PCXFL
+        start with PCXFLMC =#{fbmmc}
+        connect by prior PCXFLBM=PCXFLFBM AND PCXFLMC=#{zbmmc}
+
+
+    </select>
+
+    <select id="getDwbmTreeLists" resultType="com.start.boot.domain.XtZzjgDwbm">
+      select distinct a.dwbm,a.DWMC, a.DWJB, a.FDWBM, a.XH, a.DWJC, a.SFHJ, a.SFSC  from (
+        select * from XT_TJ_DW_HAS_HJ where sfsc='N' order by xh) a
+      start with  a.DWBM =#{dwbm}
+      connect by prior a.DWBM=a.FDWBM  order by a.DWBM,a.xh
+    </select>
+    <select id="getDwbmTreeList" resultType="com.start.boot.domain.XtZzjgDwbm">
+        select * from XT_TJ_DW_HAS_HJ where sfsc='N' and DWBM in <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach> order by xh
+    </select>
+    <select id="getPcxFlCountOffline" resultType="int" parameterType="map">
+        SELECT
+        "COUNT"(0) as count
+        FROM
+        YX_PC_OFFLINE_JBXX
+        WHERE
+        <if test="dwbm !=null and dwbm!=''">
+            BPC_DWBM=#{dwbm}
+        </if>
+        <if test="pcxflbmList !=null and pcxflbmList.size()>0">
+            AND   PCSLBM IN (
+            SELECT
+            pcslbm
+            FROM
+            YX_PC_OFFLINE_PCX
+            WHERE
+            PCXFLBM
+            in
+            <foreach collection="pcxflbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+            )
+        </if>
+
+        <if test="startDate !=null and startDate!=''">
+            AND BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate !=null and endDate!=''">
+            AND BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+
+        <if test="pcflbm !=null and pcflbm!=''">
+            AND PCFLBM in <foreach  item="item" collection="pcflbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        </if>
+        <if test="pcjl !=null and pcjl!=''">
+            and PCJL=#{pcjl}
+        </if>
+        <if test="gh !=null and gh!=''">
+            AND BPC_GH=#{gh}
+        </if>
+        <if test="bmbm !=null and bmbm!=''">
+            AND BPC_BMBM=#{bmbm}
+        </if>
+        <if test="pczt !=null and pczt!=''">
+            AND PCJDBH=#{pczt}
+        </if>
+    </select>
+    <select id="getPcxFlOfflinebmList" resultType="com.start.boot.domain.Yx_Pc_PcxFl">
+        select *
+        from XT_PC_OFFLINE_PCXFL
+        start with PCXFLMC =#{fbmmc}
+        connect by prior PCXFLBM=PCXFLFBM AND PCXFLMC=#{zbmmc}
+    </select>
+
+    <select id="getAjjbxx" resultMap="jbxxMap" parameterType="com.start.boot.query.QueryTableAjJbxx">
+        SELECT
+        *
+        FROM
+        YX_PC_JBXX jbxx
+        WHERE
+        1=1
+        <if test="dwbmList!=null and dwbmList.size() > 0">
+            AND  jbxx.BPC_DWBM IN
+            <foreach collection="dwbmList" item="dwbm" close=")" open="(" separator=",">
+                #{dwbm}
+            </foreach>
+        </if>
+        <if test="pcxflbmList !=null and pcxflbmList.size() > 0">
+            AND   EXISTS  (
+            SELECT
+            pcx.pcslbm
+            FROM
+            YX_PC_PCX pcx
+            WHERE
+            pcx.PCXFLBM
+            in
+            <foreach collection="pcxflbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+            AND pcx.pcslbm=jbxx.pcslbm
+            )
+        </if>
+
+        <if test="startDate !=null and startDate !=''">
+            AND jbxx.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate !=null and endDate!=''">
+            AND jbxx.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+
+        <if test="pcflbm !=null and pcflbm!=''">
+            AND jbxx.PCFLBM=#{pcflbm}
+        </if>
+        <if test="pcjl !=null and pcjl!=''">
+            and jbxx.PCJL=#{pcjl}
+        </if>
+        <if test="ghList!=null and ghList.size() > 0">
+            AND jbxx.BPC_GH IN
+            <foreach collection="ghList" item="gh" close=")" open="(" separator=",">
+                #{gh}
+            </foreach>
+        </if>
+
+        <if test="bmbmList!=null and bmbmList.size() > 0">
+            AND jbxx.BPC_BMBM IN
+            <foreach collection="bmbmList" item="bm" close=")" open="(" separator=",">
+                #{bm}
+            </foreach>
+        </if>
+    </select>
+
+    <resultMap id="jbxxMap" type="map">
+        <result column="BMSAH" jdbcType="VARCHAR" property="BMSAH"/>
+        <result column="AJMC" jdbcType="VARCHAR" property="AJMC"/>
+        <result column="AJLB_MC" jdbcType="VARCHAR" property="AJLBMC" />
+        <result column="BPC_DWMC" jdbcType="VARCHAR" property="DWMC" />
+        <result column="BPC_MC" jdbcType="VARCHAR" property="CBRMC" />
+        <result column="PCR_DWMC" jdbcType="VARCHAR" property="PCR_DWMC" />
+    </resultMap>
+
+    <select id="getAjjbxxOffline" resultMap="jbxxOfflineMap" parameterType="com.start.boot.query.QueryTableAjJbxx">
+        SELECT
+        *
+        FROM
+        YX_PC_OFFLINE_JBXX jbxx
+        WHERE
+        1=1
+        <if test="dwbmList!=null and dwbmList.size() > 0">
+            AND  jbxx.BPC_DWBM IN
+            <foreach collection="dwbmList" item="dwbm" close=")" open="(" separator=",">
+                #{dwbm}
+            </foreach>
+        </if>
+        <if test="pcxflbmList !=null and pcxflbmList.size() > 0">
+            AND   EXISTS  (
+            SELECT
+            pcx.pcslbm
+            FROM
+            YX_PC_OFFLINE_PCX pcx
+            WHERE
+            pcx.PCXFLBM
+            in
+            <foreach collection="pcxflbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+            AND pcx.pcslbm=jbxx.pcslbm
+            )
+        </if>
+
+        <if test="startDate !=null and startDate !=''">
+            AND jbxx.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate !=null and endDate!=''">
+            AND jbxx.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+
+        <if test="pcflbm !=null and pcflbm!=''">
+            AND jbxx.PCFLBM=#{pcflbm}
+        </if>
+        <if test="pcjl !=null and pcjl!=''">
+            and jbxx.PCJL=#{pcjl}
+        </if>
+        <if test="ghList!=null and ghList.size() > 0">
+            AND jbxx.BPC_GH IN
+            <foreach collection="ghList" item="gh" close=")" open="(" separator=",">
+                #{gh}
+            </foreach>
+        </if>
+
+        <if test="bmbmList!=null and bmbmList.size() > 0">
+            AND jbxx.BPC_BMBM IN
+            <foreach collection="bmbmList" item="bm" close=")" open="(" separator=",">
+                #{bm}
+            </foreach>
+        </if>
+    </select>
+
+    <resultMap id="jbxxOfflineMap" type="map">
+        <result column="BMSAH" jdbcType="VARCHAR" property="BMSAH"/>
+        <result column="AJMC" jdbcType="VARCHAR" property="AJMC"/>
+        <result column="AJLB_MC" jdbcType="VARCHAR" property="AJLBMC" />
+        <result column="BPC_DWMC" jdbcType="VARCHAR" property="DWMC" />
+        <result column="BPC_MC" jdbcType="VARCHAR" property="CBRMC" />
+        <result column="PCR_DWMC" jdbcType="VARCHAR" property="PCR_DWMC" />
+    </resultMap>
+</mapper>

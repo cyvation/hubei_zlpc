@@ -1,0 +1,727 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.MonitorMapper">
+
+  <select id="getWpc" resultType="com.start.boot.pojo.vo.PcglVo" parameterType="com.start.boot.query.PcglQuery">
+    SELECT TEMP.DWBM,TEMP.DWMC,TEMP.WPC,TEMP.SXGZBM,TEMP.SXGZMC FROM(
+    SELECT
+    jx.dwbm dwbm,
+    jx.DWMC dwmc,
+    "COUNT" (0) wpc,
+    gz.GZBM sxgzbm,
+    gz.GZMC sxgzmc,
+    gz.xh
+    FROM
+    YX_PC_SXJL jx
+    INNER JOIN XT_PC_SXGZ gz ON GZ.GZBM = jx.SXGZBM
+    WHERE
+    1=1
+    <if test="dwbm!=null and dwbm !=''">
+      AND jx.dwbm=#{dwbm}
+    </if>
+    <if test="startDate !=null">
+      AND jx.WCBZRQ  &gt; "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+    </if>
+    <if test="endDate !=null">
+      AND jx.WCBZRQ &lt;="TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+    </if>
+    <if test="pcflbm !=null and pcflbm!=''">
+      AND	jx.pcflbm=#{pcflbm}
+    </if>
+    GROUP BY
+    gz.GZBM,
+    GZ.GZMC,
+    JX.DWBM,
+    JX.DWMC,
+    gz.xh
+    ORDER BY gz.xh ASC) temp
+    INNER JOIN XT_ZZJG_DWBM dwbm ON temp.DWBM=dwbm.DWBM AND DWBM.SFSC='N' ORDER BY dwbm.dwpx ASC
+
+  </select>
+
+  <select id="getYpc" resultType="com.start.boot.pojo.vo.PcglVo" parameterType="com.start.boot.query.PcglQuery">
+    SELECT TEMP.DWBM,TEMP.DWMC,TEMP.ypc,TEMP.SXGZBM,TEMP.SXGZMC FROM(
+    SELECT
+    jb.BPC_DWBM dwbm,
+    jb.BPC_DWMC dwmc,
+    "COUNT" (0) ypc,
+      gz.pcmbbm sxgzbm,
+      gz.pcmbmc sxgzmc,
+    gz.xh
+    FROM
+    YX_PC_JBXX jb
+    INNER JOIN xt_pc_mb gz ON GZ.PCMBBM = jb.pcmbbm
+    where
+    1=1
+    <if test="pcflbm!=null and pcflbm != ''">
+      AND	jb.PCFLBM=#{pcflbm}
+    </if>
+    <if test="startDate !=null">
+      AND  jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+    </if>
+    <if test="endDate !=null">
+      AND  jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+    </if>
+      <if test="dwbms!=null and dwbms != ''">
+          AND	jb.BPC_DWBM in <foreach collection="dwbms" item="fl" close=")" open="(" separator=","> #{fl} </foreach>
+      </if>
+    and jb.sfsc='N'
+    GROUP BY
+      gz.pcmbbm,
+      gz.pcmbmc,
+    jb.BPC_DWBM,
+    jb.BPC_DWMC,
+    gz.xh
+    ORDER BY gz.xh ASC) temp
+    INNER JOIN XT_ZZJG_DWBM dwbm ON temp.DWBM=dwbm.DWBM AND DWBM.SFSC='N' ORDER BY dwbm.dwpx ASC
+  </select>
+
+    <select id="getYpcOffline" resultType="com.start.boot.pojo.vo.PcglVo" parameterType="com.start.boot.query.PcglQuery">
+        SELECT TEMP.DWBM,TEMP.DWMC,TEMP.ypc,TEMP.SXGZBM,TEMP.SXGZMC FROM(
+        SELECT
+        jb.BPC_DWBM dwbm,
+        jb.BPC_DWMC dwmc,
+        "COUNT" (0) ypc,
+        gz.pcmbbm sxgzbm,
+        gz.pcmbmc sxgzmc,
+        gz.xh
+        FROM
+        YX_PC_OFFLINE_JBXX jb
+        INNER JOIN xt_pc_mb gz ON GZ.PCMBBM = jb.pcmbbm
+        where
+        1=1
+        <if test="pcflbm!=null and pcflbm != ''">
+            AND	jb.PCFLBM=#{pcflbm}
+        </if>
+        <if test="startDate !=null">
+            AND  jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate !=null">
+            AND  jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="dwbms!=null and dwbms != ''">
+            AND	jb.BPC_DWBM in <foreach collection="dwbms" item="fl" close=")" open="(" separator=","> #{fl} </foreach>
+        </if>
+        and jb.sfsc='N'
+        GROUP BY
+        gz.pcmbbm ,
+        gz.pcmbmc ,
+        jb.BPC_DWBM,
+        jb.BPC_DWMC,
+        gz.xh
+        ORDER BY gz.xh ASC) temp
+        INNER JOIN XT_ZZJG_DWBM dwbm ON temp.DWBM=dwbm.DWBM AND DWBM.SFSC='N' ORDER BY dwbm.dwpx ASC
+    </select>
+
+  <select id="getWpcAjJbxx" resultMap="wpcMap" parameterType="com.start.boot.query.PcglQuery">
+    SELECT
+     *
+    FROM
+    YX_PC_SXJL jx
+    INNER JOIN XT_PC_SXGZ gz ON GZ.GZBM = jx.SXGZBM
+    WHERE
+    1=1
+    <if test="sxgzbm!=null and sxgzbm !=''">
+      AND jx.sxgzbm=#{sxgzbm}
+    </if>
+    <if test="dwbm!=null and dwbm !=''">
+      AND jx.dwbm=#{dwbm}
+    </if>
+    <if test="startDate !=null">
+      AND jx.WCBZRQ  &gt; "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+    </if>
+    <if test="endDate !=null">
+      AND jx.WCBZRQ &lt;="TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+    </if>
+    <if test="pcflbm !=null and pcflbm!=''">
+      AND	jx.pcflbm=#{pcflbm}
+    </if>
+
+
+  </select>
+
+  <resultMap id="wpcMap" type="map">
+    <result column="BMSAH" jdbcType="VARCHAR" property="BMSAH"/>
+    <result column="AJMC" jdbcType="VARCHAR" property="AJMC"/>
+    <result column="DWMC" jdbcType="VARCHAR" property="DWMC" />
+    <result column="BPC_MC" jdbcType="VARCHAR" property="CBRMC" />
+    <result column="BPC_DWMC" jdbcType="VARCHAR" property="DWMC" />
+    <result column="AJLB_MC" jdbcType="VARCHAR" property="AJLBMC" />
+    <result column="CBRMC" jdbcType="VARCHAR" property="CBRMC" />
+  </resultMap>
+
+  <select id="getYpcAjJbxx" resultMap="ypcMap" parameterType="com.start.boot.query.PcglQuery">
+    SELECT
+     *
+    FROM
+    YX_PC_JBXX jb
+    INNER JOIN xt_pc_mb gz ON GZ.PCMBBM = jb.pcmbbm
+    where
+    1=1
+    <if test="dwbm!=null and dwbm!=''">
+      AND  jb.bpc_dwbm=#{dwbm}
+    </if>
+    <if test="sxgzbm !=null and sxgzbm!=''">
+      AND jb.pcmbbm=#{sxgzbm}
+    </if>
+    <if test="pcflbm!=null and pcflbm != ''">
+      AND	jb.PCFLBM=#{pcflbm}
+    </if>
+    <if test="startDate !=null">
+      AND  jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+    </if>
+    <if test="endDate !=null">
+      AND  jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+    </if>
+    and jb.sfsc='N'
+  </select>
+  <resultMap id="ypcMap" type="map">
+    <result column="BMSAH" jdbcType="VARCHAR" property="BMSAH"/>
+    <result column="AJMC" jdbcType="VARCHAR" property="AJMC"/>
+    <result column="DWMC" jdbcType="VARCHAR" property="DWMC" />
+    <result column="BPC_DWMC" jdbcType="VARCHAR" property="DWMC" />
+    <result column="BPC_MC" jdbcType="VARCHAR" property="CBRMC" />
+    <result column="AJLB_MC" jdbcType="VARCHAR" property="AJLBMC" />
+    <result column="CBRMC" jdbcType="VARCHAR" property="CBRMC" />
+  </resultMap>
+    <select id="getYpcAjJbxxOffline" resultMap="ypcOfllineMap" parameterType="com.start.boot.query.PcglQuery">
+        SELECT
+        *
+        FROM
+        YX_PC_OFFLINE_JBXX jb
+        INNER JOIN xt_pc_mb gz ON GZ.PCMBBM = jb.pcmbbm
+        where
+        1=1
+        <if test="dwbm!=null and dwbm!=''">
+            AND  jb.bpc_dwbm=#{dwbm}
+        </if>
+        <if test="sxgzbm !=null and sxgzbm!=''">
+            AND jb.pcmbbm=#{sxgzbm}
+        </if>
+        <if test="pcflbm!=null and pcflbm != ''">
+            AND	jb.PCFLBM=#{pcflbm}
+        </if>
+        <if test="startDate !=null">
+            AND  jb.BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate !=null">
+            AND  jb.BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+        and jb.sfsc='N'
+    </select>
+    <resultMap id="ypcOfllineMap" type="map">
+        <result column="BMSAH" jdbcType="VARCHAR" property="BMSAH"/>
+        <result column="AJMC" jdbcType="VARCHAR" property="AJMC"/>
+        <result column="DWMC" jdbcType="VARCHAR" property="DWMC" />
+        <result column="BPC_DWMC" jdbcType="VARCHAR" property="DWMC" />
+        <result column="BPC_MC" jdbcType="VARCHAR" property="CBRMC" />
+        <result column="AJLB_MC" jdbcType="VARCHAR" property="AJLBMC" />
+        <result column="CBRMC" jdbcType="VARCHAR" property="CBRMC" />
+    </resultMap>
+    
+    <!--获取评查案件数量-->
+    <select id="getPcajCount" parameterType="com.start.boot.query.MonitoryPcjsQuery" resultType="int">
+        SELECT
+          count(1)
+        FROM
+        yx_pc_jbxx jb
+        INNER JOIN xt_pc_lb lb ON lb.pcflbm = jb.pcflbm
+        INNER JOIN xt_pc_sxgz gz ON jb.sxgzbm = gz.gzbm
+
+        <include refid="sql"></include>
+
+        AND jb.pcjdbh &gt;= '005'
+        <if test="startDate!=null and startDate!=''">
+            AND jb.cjsj  &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            AND jb.cjsj  &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="pcDwbmList!=null and pcDwbmList.size()>0">
+            AND jb.pcdwbm IN
+            <foreach collection="pcDwbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+
+        <if test="bpcBmbmList!=null and bpcBmbmList.size()>0">
+            AND jb.bpc_bmbm IN
+            <foreach collection="bpcBmbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+        <if test="pcflbmList!=null and pcflbmList.size()>0">
+            AND jb.pcflbm IN
+            <foreach collection="pcflbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+        <if test="sxgzbmList!=null and sxgzbmList.size()>0">
+            AND jb.sxgzbm IN
+            <foreach collection="sxgzbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+
+        <if test="pcjlList!=null and pcjlList.size()>0">
+            AND jb.pcjl IN
+            <foreach collection="pcjlList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+
+        <if test="pcjdbhList!=null and pcjdbhList.size()>0">
+            AND jb.pcjdbh IN
+            <foreach collection="pcjdbhList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+    </select>
+
+    <!--承办单位-->
+  <select id="getDwGroup"  resultType="com.start.boot.support.structure.EasyUITree"
+          parameterType="com.start.boot.query.MonitoryPcjsQuery">
+    SELECT
+    jb.BPC_DWBM as id ,"CONCAT"(jb.bpc_dwmc||'(', "COUNT"(0)||')') as text
+    FROM
+    yx_pc_jbxx jb
+    INNER JOIN xt_pc_lb lb ON lb.pcflbm = jb.pcflbm
+    INNER JOIN xt_pc_sxgz gz ON jb.sxgzbm = gz.gzbm
+
+      <include refid="sql"></include>
+
+    AND jb.pcjdbh &gt;= '005'
+    <if test="startDate!=null and startDate!=''">
+      AND jb.cjsj  &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+    </if>
+    <if test="endDate!=null and endDate!=''">
+      AND jb.cjsj  &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+    </if>
+    <if test="pcDwbmList!=null and pcDwbmList.size()>0">
+      AND jb.pcdwbm IN
+      <foreach collection="pcDwbmList" item="fl" close=")" open="(" separator=",">
+        #{fl}
+      </foreach>
+    </if>
+
+
+    <if test="bpcBmbmList!=null and bpcBmbmList.size()>0">
+      AND jb.bpc_bmbm IN
+      <foreach collection="bpcBmbmList" item="fl" close=")" open="(" separator=",">
+        #{fl}
+      </foreach>
+    </if>
+
+    <if test="pcflbmList!=null and pcflbmList.size()>0">
+      AND jb.pcflbm IN
+      <foreach collection="pcflbmList" item="fl" close=")" open="(" separator=",">
+        #{fl}
+      </foreach>
+    </if>
+
+    <if test="sxgzbmList!=null and sxgzbmList.size()>0">
+      AND jb.sxgzbm IN
+      <foreach collection="sxgzbmList" item="fl" close=")" open="(" separator=",">
+        #{fl}
+      </foreach>
+    </if>
+
+
+    <if test="pcjlList!=null and pcjlList.size()>0">
+      AND jb.pcjl IN
+      <foreach collection="pcjlList" item="fl" close=")" open="(" separator=",">
+        #{fl}
+      </foreach>
+    </if>
+
+
+    <if test="pcjdbhList!=null and pcjdbhList.size()>0">
+      AND jb.pcjdbh IN
+      <foreach collection="pcjdbhList" item="fl" close=")" open="(" separator=",">
+        #{fl}
+      </foreach>
+    </if>
+    GROUP BY jb.BPC_DWMC,jb.BPC_DWBM
+  </select>
+
+    <!--检察官-->
+  <select id="getJcgGroup"  resultType="com.start.boot.support.structure.EasyUITree"
+          parameterType="com.start.boot.query.MonitoryPcjsQuery">
+    SELECT
+    jb.BPC_GH as id ,"CONCAT"(jb.BPC_MC||'(', "COUNT"(0)||')') as text
+    FROM
+    yx_pc_jbxx jb
+    INNER JOIN xt_pc_lb lb ON lb.pcflbm = jb.pcflbm
+    INNER JOIN xt_pc_sxgz gz ON jb.sxgzbm = gz.gzbm
+
+      <include refid="sql"></include>
+
+      AND jb.pcjdbh &gt;= '005'
+      <if test="startDate!=null and startDate!=''">
+      AND jb.cjsj  &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+    </if>
+    <if test="endDate!=null and endDate!=''">
+      AND jb.cjsj  &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+    </if>
+    <if test="pcDwbmList!=null and pcDwbmList.size()>0">
+      AND jb.pcdwbm IN
+      <foreach collection="pcDwbmList" item="fl" close=")" open="(" separator=",">
+        #{fl}
+      </foreach>
+    </if>
+
+
+    <if test="bpcBmbmList!=null and bpcBmbmList.size()>0">
+      AND jb.bpc_bmbm IN
+      <foreach collection="bpcBmbmList" item="fl" close=")" open="(" separator=",">
+        #{fl}
+      </foreach>
+    </if>
+
+    <if test="pcflbmList!=null and pcflbmList.size()>0">
+      AND jb.pcflbm IN
+      <foreach collection="pcflbmList" item="fl" close=")" open="(" separator=",">
+        #{fl}
+      </foreach>
+    </if>
+
+    <if test="sxgzbmList!=null and sxgzbmList.size()>0">
+      AND jb.sxgzbm IN
+      <foreach collection="sxgzbmList" item="fl" close=")" open="(" separator=",">
+        #{fl}
+      </foreach>
+    </if>
+
+
+    <if test="pcjlList!=null and pcjlList.size()>0">
+      AND jb.pcjl IN
+      <foreach collection="pcjlList" item="fl" close=")" open="(" separator=",">
+        #{fl}
+      </foreach>
+    </if>
+
+
+    <if test="pcjdbhList!=null and pcjdbhList.size()>0">
+      AND jb.pcjdbh IN
+      <foreach collection="pcjdbhList" item="fl" close=")" open="(" separator=",">
+        #{fl}
+      </foreach>
+    </if>
+    GROUP BY jb.BPC_GH,jb.BPC_MC
+  </select>
+
+    <!--评查员-->
+  <select id="getPcyGroup"  resultType="com.start.boot.support.structure.EasyUITree"
+          parameterType="com.start.boot.query.MonitoryPcjsQuery">
+    SELECT
+    jb.PCR_GH as id ,"CONCAT"(jb.PCR_MC||'(', "COUNT"(0)||')') as text
+    FROM
+    yx_pc_jbxx jb
+    INNER JOIN xt_pc_lb lb ON lb.pcflbm = jb.pcflbm
+    INNER JOIN xt_pc_sxgz gz ON jb.sxgzbm = gz.gzbm
+
+    <include refid="sql"></include>
+
+    AND jb.pcjdbh &gt;= '005'
+      <if test="startDate!=null and startDate!=''">
+      AND jb.cjsj  &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+    </if>
+    <if test="endDate!=null and endDate!=''">
+      AND jb.cjsj  &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+    </if>
+    <if test="pcDwbmList!=null and pcDwbmList.size()>0">
+      AND jb.pcdwbm IN
+      <foreach collection="pcDwbmList" item="fl" close=")" open="(" separator=",">
+        #{fl}
+      </foreach>
+    </if>
+
+
+    <if test="bpcBmbmList!=null and bpcBmbmList.size()>0">
+      AND jb.bpc_bmbm IN
+      <foreach collection="bpcBmbmList" item="fl" close=")" open="(" separator=",">
+        #{fl}
+      </foreach>
+    </if>
+
+    <if test="pcflbmList!=null and pcflbmList.size()>0">
+      AND jb.pcflbm IN
+      <foreach collection="pcflbmList" item="fl" close=")" open="(" separator=",">
+        #{fl}
+      </foreach>
+    </if>
+
+    <if test="sxgzbmList!=null and sxgzbmList.size()>0">
+      AND jb.sxgzbm IN
+      <foreach collection="sxgzbmList" item="fl" close=")" open="(" separator=",">
+        #{fl}
+      </foreach>
+    </if>
+
+
+    <if test="pcjlList!=null and pcjlList.size()>0">
+      AND jb.pcjl IN
+      <foreach collection="pcjlList" item="fl" close=")" open="(" separator=",">
+        #{fl}
+      </foreach>
+    </if>
+
+
+    <if test="pcjdbhList!=null and pcjdbhList.size()>0">
+      AND jb.pcjdbh IN
+      <foreach collection="pcjdbhList" item="fl" close=")" open="(" separator=",">
+        #{fl}
+      </foreach>
+    </if>
+    GROUP BY jb.PCR_GH,jb.PCR_MC
+  </select>
+
+    <!--承办部门-->
+    <select id="getBmGroup"  resultType="com.start.boot.support.structure.EasyUITree"
+            parameterType="com.start.boot.query.MonitoryPcjsQuery">
+        SELECT
+        jb.BPC_BMBM as id ,"CONCAT"(jb.BPC_BMMC||'(', "COUNT"(0)||')') as text
+        FROM
+        yx_pc_jbxx jb
+        INNER JOIN xt_pc_lb lb ON lb.pcflbm = jb.pcflbm
+        INNER JOIN xt_pc_sxgz gz ON jb.sxgzbm = gz.gzbm
+
+        <include refid="sql"></include>
+
+        AND jb.pcjdbh &gt;= '005'
+        <if test="startDate!=null and startDate!=''">
+            AND jb.cjsj  &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            AND jb.cjsj  &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="pcDwbmList!=null and pcDwbmList.size()>0">
+            AND jb.pcdwbm IN
+            <foreach collection="pcDwbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+
+        <if test="bpcBmbmList!=null and bpcBmbmList.size()>0">
+            AND jb.bpc_bmbm IN
+            <foreach collection="bpcBmbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+        <if test="pcflbmList!=null and pcflbmList.size()>0">
+            AND jb.pcflbm IN
+            <foreach collection="pcflbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+        <if test="sxgzbmList!=null and sxgzbmList.size()>0">
+            AND jb.sxgzbm IN
+            <foreach collection="sxgzbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+
+        <if test="pcjlList!=null and pcjlList.size()>0">
+            AND jb.pcjl IN
+            <foreach collection="pcjlList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+
+        <if test="pcjdbhList!=null and pcjdbhList.size()>0">
+            AND jb.pcjdbh IN
+            <foreach collection="pcjdbhList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+        GROUP BY jb.BPC_BMBM,jb.BPC_BMMC
+    </select>
+
+    <!--评查状态-->
+    <select id="getPcztGroup"  resultType="com.start.boot.support.structure.EasyUITree"
+            parameterType="com.start.boot.query.MonitoryPcjsQuery">
+        SELECT
+        jb.PCJDBH as id ,"CONCAT"(jb.PCJDMS||'(', "COUNT"(0)||')') as text
+        FROM
+        yx_pc_jbxx jb
+        INNER JOIN xt_pc_lb lb ON lb.pcflbm = jb.pcflbm
+        INNER JOIN xt_pc_sxgz gz ON jb.sxgzbm = gz.gzbm
+
+        <include refid="sql"></include>
+
+        AND jb.pcjdbh &gt;= '005'
+        <if test="startDate!=null and startDate!=''">
+            AND jb.cjsj  &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            AND jb.cjsj  &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="pcDwbmList!=null and pcDwbmList.size()>0">
+            AND jb.pcdwbm IN
+            <foreach collection="pcDwbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+
+        <if test="bpcBmbmList!=null and bpcBmbmList.size()>0">
+            AND jb.bpc_bmbm IN
+            <foreach collection="bpcBmbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+        <if test="pcflbmList!=null and pcflbmList.size()>0">
+            AND jb.pcflbm IN
+            <foreach collection="pcflbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+        <if test="sxgzbmList!=null and sxgzbmList.size()>0">
+            AND jb.sxgzbm IN
+            <foreach collection="sxgzbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+
+        <if test="pcjlList!=null and pcjlList.size()>0">
+            AND jb.pcjl IN
+            <foreach collection="pcjlList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+
+        <if test="pcjdbhList!=null and pcjdbhList.size()>0">
+            AND jb.pcjdbh IN
+            <foreach collection="pcjdbhList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+        GROUP BY jb.PCJDBH,jb.PCJDMS
+    </select>
+
+    <!--评查结论-->
+    <select id="getPcjlGroup"  resultType="com.start.boot.support.structure.EasyUITree"
+            parameterType="com.start.boot.query.MonitoryPcjsQuery">
+        SELECT
+        jb.PCJL as id ,"CONCAT"(nvl2(jb.PCJL,jb.PCJL,'未评查')||'(', "COUNT"(0)||')') as text
+        FROM
+        yx_pc_jbxx jb
+        INNER JOIN xt_pc_lb lb ON lb.pcflbm = jb.pcflbm
+        INNER JOIN xt_pc_sxgz gz ON jb.sxgzbm = gz.gzbm
+
+        <include refid="sql"></include>
+
+        AND jb.pcjdbh &gt;= '005'
+        <if test="startDate!=null and startDate!=''">
+            AND jb.cjsj  &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            AND jb.cjsj  &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="pcDwbmList!=null and pcDwbmList.size()>0">
+            AND jb.pcdwbm IN
+            <foreach collection="pcDwbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+
+        <if test="bpcBmbmList!=null and bpcBmbmList.size()>0">
+            AND jb.bpc_bmbm IN
+            <foreach collection="bpcBmbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+        <if test="pcflbmList!=null and pcflbmList.size()>0">
+            AND jb.pcflbm IN
+            <foreach collection="pcflbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+        <if test="sxgzbmList!=null and sxgzbmList.size()>0">
+            AND jb.sxgzbm IN
+            <foreach collection="sxgzbmList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+
+        <if test="pcjlList!=null and pcjlList.size()>0">
+            AND jb.pcjl IN
+            <foreach collection="pcjlList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+
+
+        <if test="pcjdbhList!=null and pcjdbhList.size()>0">
+            AND jb.pcjdbh IN
+            <foreach collection="pcjdbhList" item="fl" close=")" open="(" separator=",">
+                #{fl}
+            </foreach>
+        </if>
+        GROUP BY jb.PCJL,jb.PCJL
+    </select>
+
+    <sql id="sql">
+        <!--单位已评查-->
+        <if test="qx_type !=null and qx_type ==3">
+            where jb.sfsc ='N'
+        </if>
+
+        <!--个人已评查-->
+        <if test="qx_type !=null and qx_type ==1">
+            where jb.sfsc ='N'
+            and   jb.pcr_dwbm = #{dwbm}
+            and   jb.pcr_gh = #{gh}
+        </if>
+
+        <!--部门被评查-->
+        <if test="qx_type !=null and qx_type ==2">
+            INNER JOIN xt_qx_ryjsfp@tyyw_link.net js
+            ON jb.bpc_dwbm=js.dwbm
+            and jb.bpc_bmbm=js.bmbm
+            where jb.sfsc ='N'
+            and js.dwbm = #{dwbm}
+            and js.gh = #{gh}
+
+        </if>
+
+        <!--个人被评查-->
+        <if test="qx_type !=null and qx_type ==0">
+            where jb.sfsc ='N'
+            and jb.bpc_dwbm = #{dwbm}
+            and jb.bpc_gh = #{gh}
+        </if>
+
+    </sql>
+    <select id="getMbbm" parameterType="com.start.boot.query.PcglQuery" resultMap="BaseResultMap">
+        select
+            distinct PCMBBM,DWBM,PCFLBM,PCMBMC
+        from xt_pc_mb
+        where pcflbm =#{pcflbm}
+        order by xh asc
+    </select>
+    <resultMap id="BaseResultMap" type="com.start.boot.domain.XtPcSxgz">
+        <id column="PCMBBM" jdbcType="CHAR" property="gzbm" />
+        <result column="DWBM" jdbcType="CHAR" property="dwbm" />
+        <result column="PCFLBM" jdbcType="CHAR" property="pcflbm" />
+        <result column="PCMBMC" jdbcType="VARCHAR" property="gzmc" />
+    </resultMap>
+</mapper>

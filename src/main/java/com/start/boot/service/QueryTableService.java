@@ -82,4 +82,18 @@ public interface QueryTableService {
      */
     ArrayList<QueryTableVo> getJcgTableData(QueryTable query);
 
+    /**
+     * 获取已经评查的 案件基本信息（查ajjbxx）
+     * @param query
+     * @return
+     */
+    List<Map> getAjwthzjbxx(QueryTableAjJbxx query);
+
+
+    /**
+     * 获取线下已评查的案件基本信息
+     * @param query
+     * @return
+     */
+    List<Map> getOfflineAjwthzjbxx(QueryTableAjJbxx query);
 }

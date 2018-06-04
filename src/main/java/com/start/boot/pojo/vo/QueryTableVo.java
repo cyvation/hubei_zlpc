@@ -11,6 +11,17 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel("表格返回数据")
 public class QueryTableVo {
 
+    @ApiModelProperty("随机抽查")
+    private Integer sjpCount=0;
+
+    @ApiModelProperty("2013案件评查")
+    private Integer ajCount=0;
+    @ApiModelProperty("父类单位编码")
+    private String fdwbm;
+    @ApiModelProperty("单位级别")
+    private String dwjb;
+    @ApiModelProperty("是否合计")
+    private String sfhj;
     @ApiModelProperty("名字")
     private String name;
 
@@ -121,6 +132,14 @@ public class QueryTableVo {
 
     @ApiModelProperty("其他情况 瑕疵数")
     private Integer qtqkXcCount = 0;
+
+    public Integer getAjCount() {
+        return ajCount;
+    }
+
+    public void setAjCount(Integer ajCount) {
+        this.ajCount = ajCount;
+    }
 
     public String getName() {
         return name;
@@ -392,5 +411,37 @@ public class QueryTableVo {
 
     public void setZcjdXcCount(Integer zcjdXcCount) {
         this.zcjdXcCount = zcjdXcCount;
+    }
+
+    public String getFdwbm() {
+        return fdwbm;
+    }
+
+    public void setFdwbm(String fdwbm) {
+        this.fdwbm = fdwbm;
+    }
+
+    public String getDwjb() {
+        return dwjb;
+    }
+
+    public void setDwjb(String dwjb) {
+        this.dwjb = dwjb;
+    }
+
+    public String getSfhj() {
+        return sfhj;
+    }
+
+    public void setSfhj(String sfhj) {
+        this.sfhj = sfhj;
+    }
+
+    public Integer getSjpCount() {
+        return sjpCount;
+    }
+
+    public void setSjpCount(Integer sjpCount) {
+        this.sjpCount = sjpCount;
     }
 }

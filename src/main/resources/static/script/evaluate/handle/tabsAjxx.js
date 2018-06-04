@@ -476,7 +476,7 @@ function open_doc_file(bmsah, wjlj, wsbh, type) {
                         $('#div_caseinfo_doc').width(width);
                         document.getElementById('div_caseinfo_panel').style.display = "none";
                         document.getElementById('div_caseinfo_doc').style.display = "";
-                        var error = OpenFile(getRootPath() + result.value, "TANGER_OCX_CASEINFO");
+                        var error = OpenFileReadonly(getRootPath() + result.value, "TANGER_OCX_CASEINFO");
 
                         opening_case_doc_file = result.value;
                         CloseProgress();
@@ -485,7 +485,7 @@ function open_doc_file(bmsah, wjlj, wsbh, type) {
                         }
 
                         // 只读
-                        SetSaveButtonState("TANGER_OCX_CASEINFO", false);
+                        SetSaveButtonStateReadonly("TANGER_OCX_CASEINFO", false);
                         break;
                     default:
                         // 下载附件

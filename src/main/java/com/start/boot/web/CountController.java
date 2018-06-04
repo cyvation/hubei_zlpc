@@ -1,6 +1,7 @@
 package com.start.boot.web;
 
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.start.boot.common.MessageResult;
@@ -15,10 +16,7 @@ import com.start.boot.pojo.vo.*;
 import com.start.boot.query.ShPcjbqkerQuery;
 import com.start.boot.query.ShYPNAQuery;
 import com.start.boot.query.YearProblemAnalyzeQuery;
-import com.start.boot.service.CountService;
-import com.start.boot.service.FilterService;
-import com.start.boot.service.SystemCoreConfigService;
-import com.start.boot.service.XtDmFldmService;
+import com.start.boot.service.*;
 import com.start.boot.support.utils.EasyUIHelper;
 import com.start.boot.support.utils.FastJsonUtils;
 import com.start.boot.support.utils.HttpContextUtils;
@@ -48,7 +46,7 @@ import java.util.zip.DeflaterOutputStream;
 @Api("统计接口")
 @RestController
 @RequestMapping("/count")
-public class CountController {
+public class CountController  extends ArchivesSystemBaseController{
 
     private  static Log logger= LogFactory.getLog(CountController.class);
 
@@ -69,6 +67,9 @@ public class CountController {
 
     @Autowired
     SystemCoreConfigService systemCoreConfigService;
+
+    @Autowired
+    OfflineService offlineService;
 
     @ApiOperation("案件质量年度趋势图")
     @GetMapping("/getCount")
@@ -680,9 +681,10 @@ public class CountController {
     public MessageResult exportJcg(ShYPNAQuery query) {
 
         MessageResult messageResult;
-
+        query.setPage(1);
+        query.setRows(10000);
        try{
-           PageHelper.startPage(1,10);
+           PageHelper.startPage(1,10000);
            String pcjl = query.getPcjl();
            List<PersonPaimin> personPaiMinByPcjlAndRQ = countService.getPersonPaiMinByPcjlAndRQ(query);
 
@@ -788,8 +790,10 @@ public class CountController {
 
         MessageResult messageResult;
         String pcjl = query.getPcjl();
-
+        query.setPage(1);
+        query.setRows(10000);
         try{
+            PageHelper.startPage(1, 10000);
             List<BmZlPm> bmZlPms = countService.bmBanAjZhiLiangPaiMin(query);
 
             ExcelVo excelVo = new ExcelVo();
@@ -1143,6 +1147,182 @@ public class CountController {
                 sigleData.add((String)m.get("PCJDMS"));
                 sigleData.add((String)m.get("SXGZMC"));
                 sigleData.add((String)m.get("PCJL"));
+                data.add(sigleData);
+            }
+            logger.error("开始导出数据");
+            excelVo.setData(data);
+            excelVo.setHeader(header);
+            String fileName  = excelUtils.exportExcelData(excelVo);
+
+            messageResult = new MessageResult(200,fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            messageResult = new MessageResult(e.getMessage(),500);
+        }
+        return messageResult;
+    }
+    @ApiOperation("单位办案质量排名 ")
+    @GetMapping("/getDwPaiMinByPcjlAndRQ")
+    public MessageResult getDwPaiMinByPcjlAndRQ(ShYPNAQuery query){
+        List<DwPaimin> getDwPaiMinByPcjlAndRQ = countService.getDwPaiMinByPcjlAndRQ(query);
+        PageInfo page = new PageInfo(getDwPaiMinByPcjlAndRQ);
+        return new MessageResult("获取成功",200,page.getList());
+    }
+
+    @ApiOperation("检察官办案质量排名获取案件基本信息")
+    @GetMapping("/getDwPaiMinByPcjlAndRQAjJbxx")
+    public MessageResult getDwPaiMinByPcjlAndRQAjJbxx(ShYPNAQuery query){
+        PageHelper.startPage(query.getPage(),query.getRows());
+        List<YX_PC_JBXX> DwPaiMinByPcjlAndRQAjJbxx = countService.getDWPaiMinByPcjlAndRQAjJbxx(query);
+        PageInfo page = new PageInfo(DwPaiMinByPcjlAndRQAjJbxx);
+        ArrayList<Map> resultMap = new ArrayList<>();
+        page.getList().stream().forEach(message -> {
+            try {
+                Map describe = BeanUtils.describe(message);
+                resultMap.add(describe);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        String s = EasyUIHelper.buildDataGridDataSource(resultMap,Math.toIntExact(page.getTotal()));
+        return new MessageResult("获取成功",200,s);
+    }
+
+    /**
+     * 导出单位办案质量排名
+     * @return
+     */
+    @ApiOperation("导出单位办案质量排名Excel")
+    @PostMapping("/exporDw")
+    public MessageResult exporDw(ShYPNAQuery query) {
+
+        MessageResult messageResult;
+        query.setPage(1);
+        query.setRows(10000);
+        try{
+            PageHelper.startPage(1,10000);
+            String pcjl = query.getPcjl();
+            List<DwPaimin> DwPaiMinByPcjlAndRQ = countService.getDwPaiMinByPcjlAndRQ(query);
+
+            ExcelVo excelVo = new ExcelVo();
+            excelVo.setFileName("单位办案质量排名" + "(" + pcjl +")");
+
+            List<String> header = new ArrayList<>();
+            header.add("单位名称");
+            header.add("数量");
+
+            List<List<String>> data = new ArrayList<List<String>>();
+
+            // 拼接Excel所需格式：
+            for (int i=0; i<DwPaiMinByPcjlAndRQ.size(); i++) {
+                Map<String,Object> map = beanToMap(DwPaiMinByPcjlAndRQ.get(i));
+                String tmpdwmc = (String) map.get("dwmc");
+                String tmpcount = map.get("count").toString();
+                List<String> list = new ArrayList<>();
+                list.add(tmpdwmc);
+                list.add(tmpcount);
+                data.add(list);
+            }
+
+            logger.error("开始导出数据");
+            excelVo.setData(data);
+            excelVo.setHeader(header); //表格头
+            String fileName  = excelUtils.exportExcelData(excelVo);
+            messageResult = new MessageResult(200,fileName);
+        }catch (Exception e) {
+            messageResult = new MessageResult(e.getMessage(),500);
+        }
+        return messageResult;
+    }
+
+    @ApiOperation(" 获取单位表格数据 ")
+    @RequestMapping("/countPcqkOrBaqk")
+    public String countPcqkOrBaqk(String jsonStr)throws  Exception{
+        Map query = (Map) JSON.parse(jsonStr);
+        String result="";
+        try {
+            query.put("row", getParameter("rows"));
+            query.put("page", getParameter("page"));
+            Map data = countService.countPcqkOrBaqk(query);
+            result = success(data, "获取列表成功");
+        } catch (Exception e) {
+            super.errMsg("获取列表失败", jsonStr, e);
+            result = failure(e.getMessage(), "获取信息列表失败");
+        }
+        return result;
+    }
+    @ApiOperation(" 获取评查表格数据 ")
+    @RequestMapping("/loadPcInfo")
+    public MessageResult loadPcInfo(String jsonStr){
+        Map query=(Map) JSON.parse(jsonStr);
+        List<Map> list = countService.loadPcInfo(query);
+        String s = EasyUIHelper.buildDataGridDataSource(list,Math.toIntExact(list.size()));
+        return new MessageResult("获取成功",200,s);
+    }
+
+    @ApiOperation("业务条线办案质量排名 ")
+    @GetMapping("/ywtxAjZhiLiangPaiMin")
+    public MessageResult ywtxAjZhiLiangPaiMin(ShYPNAQuery query){
+        PageHelper.startPage(1,10);
+        List<YwtxPm> ywtxZlPms = countService.ywtxAjZhiLiangPaiMin(query);
+        PageInfo page = new PageInfo(ywtxZlPms);
+        return new MessageResult("获取成功",200,page.getList());
+    }
+
+    @ApiOperation("业务条线办案质量排名 获取案件基本信息")
+    @GetMapping("/ywtxAjZhiLiangPaiMinAjJbxx")
+    public MessageResult ywtxAjZhiLiangPaiMinAjJbxx(ShYPNAQuery query){
+        PageHelper.startPage(query.getPage(),query.getRows());
+        List<YX_PC_JBXX> ywtxAjZhiLiangPaiMinAjJbxx = countService.ywtxAjZhiLiangPaiMinAjJbxx(query);
+        PageInfo page = new PageInfo(ywtxAjZhiLiangPaiMinAjJbxx);
+        ArrayList<Map> resultMap = new ArrayList<>();
+        page.getList().stream().forEach(message -> {
+            try {
+                Map describe = BeanUtils.describe(message);
+                resultMap.add(describe);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        String s = EasyUIHelper.buildDataGridDataSource(resultMap, Math.toIntExact(page.getTotal()));
+        return new MessageResult("获取成功",200,s);
+    }
+    @ApiOperation("导出2013案件评查数据")
+    @PostMapping("/exportOfflineExcel")
+    public MessageResult exportOfflineExcel(String json){
+        MessageResult messageResult;
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HttpSession session = HttpContextUtils.getSession();
+        try {
+            Param_Pcjk pcjkParam = FastJsonUtils.toObject(Param_Pcjk.class, json);
+            pcjkParam.setDwbm(session == null ? "" :(String) session.getAttribute(SessionNames.SESSION_KEY_DWBM));
+            pcjkParam.setGh(session == null ? "" : (String) session.getAttribute(SessionNames.SESSION_KEY_GH));
+           /* pcjkParam.setPage(parsePage(getParameter("page")));
+            pcjkParam.setRows(parseRows(getParameter("rows")));*/
+
+          //  Param_Pager datas = filterService.getPcjk(pcjkParam);
+            Map maps = (Map) JSON.parse(json);
+            List<Map> datas = offlineService.loadOfflineListExcel(maps);
+            if(datas==null || datas.size()==0){
+                return new MessageResult("暂无数据",500);
+            }
+            ExcelVo excelVo = new ExcelVo();
+            excelVo.setFileName("2013案件评查数据");
+            List<String> header ;
+            header = Arrays.asList("评查案号", "案件名称", "部门受案号", "承办单位", "承办检察官", "案件完成日期","评查结论", "评查状态", "评查日期");
+            List<List<String>> data = new ArrayList<List<String>>();
+            for(int i=0;i<datas.size();i++){
+                Map m=datas.get(i);
+                List<String> sigleData = new ArrayList<>();
+                sigleData.add((String)m.get("PCSAH"));
+                sigleData.add((String)m.get("AJMC"));
+                sigleData.add((String)m.get("BMSAH"));
+                sigleData.add((String)m.get("BPC_DWMC"));
+                sigleData.add((String)m.get("BPC_MC"));
+                sigleData.add((m.get("BPC_WCRQ")+"").split(" ")[0]);
+                sigleData.add((String)m.get("PCJL"));
+                sigleData.add((String)m.get("PCJDMS"));
+                sigleData.add((m.get("CJSJ")+"").split(" ")[0]);
                 data.add(sigleData);
             }
             logger.error("开始导出数据");

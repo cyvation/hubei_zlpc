@@ -8,7 +8,7 @@
     <script type="text/javascript">
         AddScript("text/javascript", "script/origanization/origanization/index.js");
     </script>
-    
+
     <!--组织机构管理-->
     <div id="layout_org_main" class="easyui-layout" data-options="fit:'true'">
         <!--单位部门角色管理树-->
@@ -24,12 +24,13 @@
             <div id="tool_org_manage" class="easyui-panel"
                 style="width:100%; padding: 8px 0px 8px 6px; margin-bottom: 0px; border:1px solid #b3cdf2;border-radius: 2px;margin-bottom:5px">
                 <input id="cbt_org_tool_manage_unit" class="easyui-combotree" style="width: 150px;height: 28px;" />
-                <a id="btn_org_tool_manage_add_dep" class="easyui-linkbutton" style="padding-left:25px">添加部门</a>
-                <a id="btn_org_tool_manage_edit_dep" class="easyui-linkbutton" style="padding-left:25px">编辑部门</a>
-                <a id="btn_org_tool_manage_delete_dep" class="easyui-linkbutton" style="padding-left:25px">删除部门</a>
-                <a id="btn_org_tool_manage_add_role" class="easyui-linkbutton" style="padding-left:25px">添加角色</a>
-                <a id="btn_org_tool_manage_edit_role" class="easyui-linkbutton" style="padding-left:25px">编辑角色</a>
-                <a id="btn_org_tool_manage_delete_role" class="easyui-linkbutton" style="padding-left:25px">删除角色</a>
+                <!--湖北:暂时不用该功能，需要隐藏 李志恒 2018年5月8日-->
+                <a id="btn_org_tool_manage_add_dep" class="easyui-linkbutton" style="padding-left:25px;display: none;">添加部门</a>
+                <a id="btn_org_tool_manage_edit_dep" class="easyui-linkbutton" style="padding-left:25px;display: none;">编辑部门</a>
+                <a id="btn_org_tool_manage_delete_dep" class="easyui-linkbutton" style="padding-left:25px;display: none;">删除部门</a>
+                <a id="btn_org_tool_manage_add_role" class="easyui-linkbutton" style="padding-left:25px;display: none;">添加角色</a>
+                <a id="btn_org_tool_manage_edit_role" class="easyui-linkbutton" style="padding-left:25px;display: none;">编辑角色</a>
+                <a id="btn_org_tool_manage_delete_role" class="easyui-linkbutton" style="padding-left:25px;display: none;">删除角色</a>
                 <a id="btn_org_tool_manage_asign_role_right" class="easyui-linkbutton" style="padding-left:25px">角色权限</a>
                 <a id="btn_org_tool_manage_asign_unit_right" class="easyui-linkbutton" style="padding-left:25px">分配权限给下级院</a>
             </div>
@@ -55,15 +56,15 @@
     </div>
 
     <!--弹出框：人员新增-->
-    <div id="win_org_user_manage_add" class="easyui-window" title="选择人员信息" style="width: 650px;height: 390px;" 
+    <div id="win_org_user_manage_add" class="easyui-window" title="选择人员信息" style="width: 650px;height: 390px;"
         data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
         <div id="tool_win_org_user_add" class="easyui-toolbar" data-options="border:false" style="padding: 5px 0px 5px 8px">
             <!--单位:<input id="cbt_win_org_user_add_unit" class="easyui-combotree" style="width:150px"/>-->
-            姓名：<input id="txt_win_org_user_add_xm" class="easyui-textbox" style="width: 150px" />&nbsp; 
+            姓名：<input id="txt_win_org_user_add_xm" class="easyui-textbox" style="width: 150px" />&nbsp;
             <!--工号：<input id="txt_win_org_user_add_gh" class="easyui-textbox" style="width: 90px" />-->
             <!--占位标签-->
             <label style="margin-left: 5px"></label>
-            <a id="btn_win_org_user_add_search" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a> 
+            <a id="btn_win_org_user_add_search" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
             <a id="btn_win_org_user_add_add" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a>
         </div>
         <div id="pnl_win_org_user_add_list" class="easyui-panel" data-options="fit:true,border:false">
@@ -90,11 +91,11 @@
             </tr>
         </table>
         <div style="text-align: center; margin-bottom: 10px;">
-            <a id="btn_win_org_user_edit_confirm" class="easyui-linkbutton">确定</a>&nbsp; 
+            <a id="btn_win_org_user_edit_confirm" class="easyui-linkbutton">确定</a>&nbsp;
             <a id="btn_win_org_user_edit_cancel" class="easyui-linkbutton">取消</a>
         </div>
     </div>
-    
+
     <!--弹出框：部门信息编辑-->
     <div id="win_org_dep_manage" class="easyui-window" title="部门信息" style="width: 420px; height: 320px; padding:15px 10px 10px 15px;"
         data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
@@ -114,17 +115,17 @@
             <tr>
                 <td>输入备注:</td>
                 <td>
-                    <input id="txt_win_org_dep_mange_bmbz" class="easyui-textbox" data-options="multiline:true" 
+                    <input id="txt_win_org_dep_mange_bmbz" class="easyui-textbox" data-options="multiline:true"
                         style="width: 260px;height: 80px" />
                 </td>
             </tr>
         </table>
         <div style="text-align: center; margin-top:10px; margin-bottom: 10px;">
-            <a id="btn_win_org_dep_mange_confirm" class="easyui-linkbutton">确定</a>&nbsp; 
+            <a id="btn_win_org_dep_mange_confirm" class="easyui-linkbutton">确定</a>&nbsp;
             <a id="btn_win_org_dep_mange_cancel" class="easyui-linkbutton">取消</a>
         </div>
     </div>
-    
+
     <!--弹出框：角色信息编辑-->
     <div id="win_org_role_mange" class="easyui-window" title="角色信息" style="width: 420px; height: 220px; padding:15px 10px 10px 15px;"
         data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
@@ -143,11 +144,11 @@
             </tr>
         </table>
         <div style="text-align: center; margin-top:10px; margin-bottom: 10px;">
-            <a id="btn_win_org_role_mange_confirm" class="easyui-linkbutton">确定</a>&nbsp; 
+            <a id="btn_win_org_role_mange_confirm" class="easyui-linkbutton">确定</a>&nbsp;
             <a id="btn_win_org_role_mange_cancel" class="easyui-linkbutton">取消</a>
         </div>
     </div>
-    
+
     <!--弹出框：角色功能权限分配-->
     <div id="win_org_role_right" class="easyui-window" title="设置角色权限" style="width: 760px; height: 500px;"
         data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
@@ -218,6 +219,6 @@
     </div>
 
 
-     
+
 </body>
 </html>

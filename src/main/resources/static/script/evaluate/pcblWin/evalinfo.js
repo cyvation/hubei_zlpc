@@ -172,6 +172,13 @@ function pcWin_eval_info_marksDataBind() {
 
     // 评查结果
     pcWin_load_cljg_pcjg('9102');
+
+    if(EVAL_CASE_WIN.PCFLBM != '001'){
+        $("#loadSfldba").hide();
+    }
+    //是否领导办案
+    load_sfldba('9104');
+
     // 评查结论
     $("#pcWin_txt_eval_info_pcjl_bz").val(EVAL_CASE_WIN.SM);
 
@@ -293,13 +300,13 @@ function pcWin_open_eval_file(jzwjbh, pczybm, pczylx, wjlx, wjlj) {
                         pcWin_show_eval_doc_panel("doc");
                         CloseProgress();
 
-                        var error = OpenFile(getRootPath() + result.value, "TANGER_OCX_PCXX");
+                        var error = OpenFileReadonly(getRootPath() + result.value, "TANGER_OCX_PCXX");
                         if (!isNull(error)) {
                             Alert(error);
                         }
 
                         // 仅评查报告及流转单可编辑
-                        SetSaveButtonState("TANGER_OCX_PCXX", false);
+                        SetSaveButtonStateReadonly("TANGER_OCX_PCXX", false);
 
                         break;
                     default:
@@ -405,6 +412,41 @@ function pcWin_load_cljg_pcjg(bm) {
         }
     })
 }
+
+//动态获取承办人身份
+function load_sfldba(bm) {
+    $.ajax({
+        type: 'get',
+        async: false,
+        url: getRootPath() + '/common/getDataDictionaryByLBBM?lbbm='+bm,
+        dataType: 'json',
+        success: function(data) {
+            console.log('数据' + JSON.stringify(data))
+            if(data.code==200){
+                var data=data.data;
+                if(bm==9104){
+                    var html='';
+                    for(var i=0;i<data.length;i++){
+                        html+='<div class="radio">';
+                        html+='<div class="redio_click">';
+                        html+='<input class="input_radio_cljg" name="rd_eval_info_sfldba" type="radio" value="'+data[i].sm+'"/>';
+                        html+='</div>'+data[i].mc+'</div>';
+                    }
+                    $('#loadSfldba').append(html)
+                    var pcjlElement = $("input[name='rd_eval_info_sfldba'][value='" + EVAL_CASE_WIN.SFLDBA + "']");
+                    pcjlElement.parent().addClass('redio_click_no');
+                    pcjlElement.attr("checked",true);
+                }
+            }else {
+                Alert('getDataDictionaryByLBBM 错误'+data.message)
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            Alert("消息", 'getDataDictionaryByLBBM 接口错误')
+        }
+    })
+}
+
 
 // 访问接口，动态生成质量评查内容
 function pcWin_load_eval_info_card() {

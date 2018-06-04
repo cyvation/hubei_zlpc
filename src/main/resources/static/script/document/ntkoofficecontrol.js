@@ -1,4 +1,4 @@
-﻿﻿// 请勿修改，否则可能出错
+﻿// 请勿修改，否则可能出错
 var userAgent = navigator.userAgent,
 				rMsie = /(msie\s|trident.*rv:)([\w.]+)/,
 				rFirefox = /(firefox)\/([\w.]+)/,
@@ -47,6 +47,7 @@ function OnComplete2(type, code, html) {
     //alert(code);
     //    alert(html);
     //    alert("SaveToURL成功回调");
+    documentSaved();
 }
 function OnComplete(type, code, html) {
     //alert(type);

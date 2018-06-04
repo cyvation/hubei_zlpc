@@ -32,4 +32,5 @@ public interface OfflineMapper {
     int updatePcajjg(Map map);
     int updatePcaj(Map map);
     List<Map> isOnAj(Map map);
+    List<Map> loadOfflineListExcel(Map map);
 }

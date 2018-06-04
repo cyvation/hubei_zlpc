@@ -69,6 +69,17 @@
         ]]>
     </insert>
 
+    <insert id="offlineAddRybm" parameterType="java.util.Map" >
+        INSERT INTO XT_ZZJG_RYBM(dwbm,gh,dlbm,kl,mc,sflsry,sfsc,sftz,xb)
+        VALUES(#{dwbm}, #{gh}, #{dlbm}, #{kl}, #{mc}, #{sflsry}, #{sfsc}, #{sftz}, #{xb})
+    </insert>
+
+    <select id="getMaxUserNum" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT MAX(to_number(gh)) Num
+                  FROM   XT_ZZJG_RYBM
+                  WHERE  dwbm = #{dwbm}
+    </select>
+
     <!--更新人员-->
     <update id="UpdateUser" parameterType="map" statementType="CALLABLE">
         <![CDATA[

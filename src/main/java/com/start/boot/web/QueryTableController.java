@@ -1,5 +1,6 @@
 package com.start.boot.web;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.start.boot.common.MessageResult;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -236,6 +238,97 @@ public class QueryTableController {
         });
         String s = EasyUIHelper.buildDataGridDataSource(resultMap,Math.toIntExact(list.size()));
         return new MessageResult("获取成功",200,s);
+    }
+
+    @ApiOperation(" 获取单位线下评查案件问题汇总数据 ")
+    @PostMapping("/getDwOfflineAjwthzTableData")
+    @org.springframework.cache.annotation.Cacheable("getDwOfflineAjwthzTableData")
+    public MessageResult getDwOfflineAjwthzTableData(QueryTable query){
+        PageHelper.startPage(query.getPage(), query.getRows());
+        List<AjpcwtxVo> list = null;
+        try {
+            list = ajwthzService.getOfflineAjwthzList(query);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        ArrayList<Map> resultMap = new ArrayList<>();
+        list.stream().forEach(message -> {
+            try {
+                Map describe = BeanUtils.describe(message);
+                resultMap.add(describe);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        String s = EasyUIHelper.buildDataGridDataSource(resultMap,Math.toIntExact(list.size()));
+        return new MessageResult("获取成功",200,s);
+    }
+
+    @ApiOperation("获取已评查案件信息")
+    @PostMapping("/getAjwthzjbxx")
+    public String getAjwthzjbxx(QueryTableAjJbxx query){
+        List<Map> ajjbxxs = queryTableService.getAjwthzjbxx(query);
+        PageInfo page = new PageInfo(ajjbxxs);
+        String  s = EasyUIHelper.buildDataGridDataSource(page.getList(),Math.toIntExact(page.getTotal()));
+        return s;
+    }
+
+    @ApiOperation("获取线下已评查案件信息")
+    @PostMapping("/getOfflineAjwthzjbxx")
+    public String getOfflineAjwthzjbxx(QueryTableAjJbxx query){
+        List<Map> ajjbxxs = queryTableService.getOfflineAjwthzjbxx(query);
+        PageInfo page = new PageInfo(ajjbxxs);
+        String  s = EasyUIHelper.buildDataGridDataSource(page.getList(),Math.toIntExact(page.getTotal()));
+        return s;
+    }
+
+
+    @ApiOperation("单位案件问题汇总数据excel导出")
+    @RequestMapping("/exportDwAjwthzTableDataExcel")
+    public MessageResult exportDwAjwthzTableDataExcel(QueryTable query) throws  Exception {
+        PageHelper.startPage(query.getPage(),query.getRows());
+        List<AjpcwtxVo> dwTableData = ajwthzService.getAjwthzList(query);;
+        String wzbsPath = configService.getSystemConfigValue("wzbsPath");
+        String sourceFilePath = wzbsPath + "/File/monitor/moban/案件问题汇总.xls";
+        String fileName="案件问题汇总数据导出--"+ DateTime.now().toString("yyyy年MM月dd日");
+        String path = exportExcelUtils.exportExcelToBean(dwTableData,2,fileName,"sheet1","", sourceFilePath);
+        return new MessageResult("获取成功",200, path);
+    }
+
+    @ApiOperation("单位案件问题汇总柱状图数据")
+    @RequestMapping("/getDwAjwthzBarData")
+    public String getDwAjwthzBarData(QueryTable query){
+        String result = "";
+        try {
+            result = ajwthzService.getDwAjwthzBarData(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @ApiOperation("线下案件问题汇总柱状图数据")
+    @RequestMapping("/getOfflineDwAjwthzBarData")
+    public String getOfflineDwAjwthzBarData(QueryTable query){
+        String result = "";
+        try {
+            result = ajwthzService.getDwOfflineAjwthzBarData(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @ApiOperation("线下案件问题汇总数据excel导出")
+    @RequestMapping("/getDwOfflineAjwthzTableDataExcel")
+    public MessageResult getDwOfflineAjwthzTableDataExcel(QueryTable query) throws  Exception {
+        PageHelper.startPage(query.getPage(),query.getRows());
+        List<AjpcwtxVo> dwTableData = ajwthzService.getOfflineAjwthzList(query);;
+        String wzbsPath = configService.getSystemConfigValue("wzbsPath");
+        String sourceFilePath = wzbsPath + "/File/monitor/moban/案件问题汇总.xls";
+        String fileName="线下案件问题汇总数据导出--"+ DateTime.now().toString("yyyy年MM月dd日");
+        String path = exportExcelUtils.exportExcelToBean(dwTableData,2,fileName,"sheet1","", sourceFilePath);
+        return new MessageResult("获取成功",200, path);
     }
 
 //    @ApiOperation("部门excel导出")

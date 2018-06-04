@@ -45,13 +45,13 @@
      INSERT into YX_PC_OFFLINE_JBXX (PCSLBM, PCSAH, PCDWBM, PCFLBM,PCHDBM, BMSAH, TYSAH, AJMC, AJLB_BM,AJLB_MC,BPC_DWBM,BPC_DWMC,BPC_BMBM,BPC_BMMC,
                   BPC_GH,BPC_MC,BPC_SLRQ,BPC_WCRQ,LCSLBH,PCJDBH,PCJDMS,SXR_DWBM,SXR_GH,FPDZ_FPR_DWBM,FPDZ_FPR_GH,FPDR_FPR_DWBM,
                   FPDR_FPR_DWMC,FPDR_FPR_GH,FPDR_FPR_MC,PCZ_BM,PCZ_MC,PCR_DWBM,PCR_DWMC,PCR_GH,PCR_MC,PCMBBM,AJGLZT,PCJG,PCJL,PCBGBH,SM,SFSC,
-                  CJSJ,ZHXGSJ,SXGZBM,BPC_WCBZRQ,SXR_DWMC,SXR_MC,FPDZ_FPR_DWMC,FPDZ_FPR_MC,CLJG,WAY)
+                  CJSJ,ZHXGSJ,SXGZBM,BPC_WCBZRQ,SXR_DWMC,SXR_MC,FPDZ_FPR_DWMC,FPDZ_FPR_MC,CLJG,WAY,WCRQ_NF)
       VALUES (#{pcslbm,jdbcType=CHAR},#{pcsah,jdbcType=VARCHAR} ,#{userdwbm,jdbcType=CHAR},#{pcflbm,jdbcType=CHAR},#{pcmb,jdbcType=CHAR},#{bmsah,jdbcType=CHAR},#{tysah,jdbcType=CHAR},#{ajmc,jdbcType=VARCHAR},#{ajmb,jdbcType=CHAR},#{ajslmc,jdbcType=CHAR},
               #{pcdw,jdbcType=CHAR},#{pcdwmc,jdbcType=VARCHAR},#{cbbm,jdbcType=CHAR},#{cbbmmc,jdbcType=VARCHAR},#{cbrgh,jdbcType=CHAR},#{cbr,jdbcType=VARCHAR},to_date(#{date},'yyyy-mm-dd hh24:mi:ss'),
               to_date(#{date},'yyyy-mm-dd hh24:mi:ss'),'01',#{pcjdbh,jdbcType=CHAR},#{pcjdms,jdbcType=VARCHAR},#{userdwbm,jdbcType=VARCHAR},#{usergh,jdbcType=CHAR},#{userdwbm,jdbcType=VARCHAR},#{usergh,jdbcType=CHAR},
              #{userdwbm,jdbcType=CHAR},#{userdwmc,jdbcType=VARCHAR},#{usergh,jdbcType=CHAR}, #{usermc,jdbcType=VARCHAR},'001','默认分组', #{userdwbm,jdbcType=CHAR},#{userdwmc,jdbcType=VARCHAR},#{usergh,jdbcType=CHAR},#{usermc,jdbcType=VARCHAR},
              #{pcmb,jdbcType=CHAR},'1','',#{pcjy,jdbcType=VARCHAR},'','','N',to_date(#{nowdate},'yyyy-mm-dd hh24:mi:ss'),to_date(#{nowdate},'yyyy-mm-dd hh24:mi:ss'),#{sxgz,jdbcType=CHAR},
-             to_date(#{date},'yyyy-mm-dd'),#{userdwmc,jdbcType=VARCHAR},#{usermc,jdbcType=VARCHAR},#{userdwmc,jdbcType=VARCHAR},#{usermc,jdbcType=VARCHAR},'',#{way,jdbcType=CHAR})
+             to_date(#{date},'yyyy-mm-dd'),#{userdwmc,jdbcType=VARCHAR},#{usermc,jdbcType=VARCHAR},#{userdwmc,jdbcType=VARCHAR},#{usermc,jdbcType=VARCHAR},'',#{way,jdbcType=CHAR},#{wcrqnf,jdbcType=CHAR})
     </insert>
     <insert id="savePCFL" parameterType="com.start.boot.pojo.vo.Yx_Pc_PcxFlVo">
         INSERT into YX_PC_OFFLINE_PCXFL (PCSLBM,PCXFLBM,PCXFLMC,PCJG,PCYJ,JLSJ,PCRDWBM,PCRDWMC,PCRGH,PCRMC,SM,PCXFLFBM,PCMBBM,PCJLBM,XH,SFTJ,WAY)
@@ -60,11 +60,12 @@
                 #{xh ,jdbcType=CHAR}, #{sftj ,jdbcType=CHAR},'1' )
     </insert>
     <insert id="savePCX" parameterType="com.start.boot.domain.Yx_Pc_Pcx">
-        INSERT into YX_PC_OFFLINE_PCX (PCSLBM,PCXBM,PCXMC,PCXFLBM,PCMBBM,PCXLX,PCFS,PCJLBM,FZ_GD,FZ_QSZ,FZ_JSZ,ZDPCCX,XH,SFTJ,BZ,PCJG,PCYJ,JLSJ,PCRDWBM,PCRDWMC,PCRGH,PCRMC,SM,WAY)
+        INSERT into YX_PC_OFFLINE_PCX (PCSLBM,PCXBM,PCXMC,PCXFLBM,PCMBBM,PCXLX,PCFS,PCJLBM,FZ_GD,FZ_QSZ,FZ_JSZ,ZDPCCX,XH,SFTJ,BZ,PCJG,PCYJ,
+        JLSJ,PCRDWBM,PCRDWMC,PCRGH,PCRMC,SM, FLXTDM ,FFLXTDM , YWTX , PCFLBM , XTDM,WAY)
         values (#{pcslbm ,jdbcType=CHAR},#{pcxbm ,jdbcType=CHAR},#{pcxmc ,jdbcType=VARCHAR}, #{pcxflbm ,jdbcType=CHAR},#{pcmbbm ,jdbcType=CHAR}, #{pcxlx ,jdbcType=CHAR},
         #{pcfs ,jdbcType=CHAR},#{pcjlbm ,jdbcType=CHAR},#{fz_gd ,jdbcType=CHAR},#{fz_qsz ,jdbcType=CHAR},#{fz_jsz ,jdbcType=CHAR},#{zdpccx ,jdbcType=CHAR},#{xh ,jdbcType=CHAR},
         #{sftj ,jdbcType=CHAR},#{bz ,jdbcType=CHAR},#{pcjg ,jdbcType=CHAR},#{pcyj ,jdbcType=CHAR},#{jlsj},#{pcrdwbm ,jdbcType=CHAR},#{pcrdwmc ,jdbcType=CHAR},#{pcrgh ,jdbcType=CHAR},
-        #{pcrmc ,jdbcType=CHAR},#{sm ,jdbcType=VARCHAR},'1')
+        #{pcrmc ,jdbcType=CHAR},#{sm ,jdbcType=VARCHAR},#{flxtdm ,jdbcType=CHAR},#{fflxtdm ,jdbcType=CHAR},#{ywtx ,jdbcType=CHAR},#{pcflbm ,jdbcType=CHAR},#{xtdm ,jdbcType=CHAR},'1')
     </insert>
 
     <select id="loadOfflineList" parameterType="map" resultMap="offlineList">
@@ -186,4 +187,24 @@
     </select>
     <resultMap id="isOnAj" type="Map">
     </resultMap>
+    <select id="loadOfflineListExcel" resultType="map" parameterType="map">
+        SELECT jb.pcslbm, jb.pcsah, jb.pcdwbm, jb.pcflbm, jb.pchdbm, jb.bmsah, jb.tysah, jb.ajmc, jb.ajlb_bm, jb.ajlb_mc, jb.bpc_dwbm, jb.bpc_dwmc,
+        jb.bpc_bmbm, jb.bpc_bmmc, jb.bpc_gh, jb.bpc_mc, jb.bpc_slrq, jb.pcjdbh, jb.pcjdms,
+        jb.fpdz_fpr_dwbm, jb.fpdz_fpr_gh, jb.pcz_bm, jb.pcz_mc, jb.pcr_dwbm, jb.pcr_dwmc,jb.bpc_wcrq,
+        jb.pcr_gh, jb.pcr_mc, jb.pcmbbm, jb.ajglzt, jb.pcjg, jb.pcjl, jb. pcbgbh, jb.cjsj , jb.zhxgsj, lb.pcflmc
+        FROM yx_pc_offline_jbxx jb
+        INNER join xt_pc_lb lb ON jb.pcflbm=lb.pcflbm
+        WHERE jb.sfsc = 'N'  AND jb.pcr_dwbm IN
+        <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        <if test="ajmc !=null and ajmc!='' ">
+            AND jb.ajmc like '%'||#{ajmc}||'%'
+        </if>
+        <if test="pcr !=null and pcr!='' ">
+            AND jb.pcr_mc = #{pcr}
+        </if>
+        <if test="bpcr !=null and bpcr!='' ">
+            AND jb.bpc_mc = #{bpcr}
+        </if>
+        AND jb.cjsj between to_date(#{begin},'yyyy-mm-dd') and to_date(#{end},'yyyy-mm-dd')
+    </select>
 </mapper>

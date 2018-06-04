@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案件情况质量条线分析</title>
+</head>
+
+<body>
+<script type="text/javascript">
+    AddScript("text/javascript", "script/analysis/ajqkzlfx/txfx.js");
+</script>
+<style>
+    .easyui_table_yscx {
+        width: 100%;
+        height: calc(100% - 40px);
+    }
+
+    .easyui_table_yscx .datagrid-header-inner {
+        width: 100%;
+    }
+
+    .easyui_table_yscx .datagrid-header-inner table.datagrid-htable {
+        /*width: 100%;*/
+        background-color: #eaf2f0;
+        height: 40px !important;
+    }
+
+    .easyui_table_yscx .datagrid-header .datagrid-cell {
+        margin: auto;
+    }
+
+    .easyui_table_yscx .datagrid-view2 table.datagrid-htable tr td {
+        border: 1px solid #Dbdbdb !important;
+        border-right: 0 !important;
+        border-bottom: 0 !important;
+    }
+
+    .easyui_table_yscx .datagrid-view2 table.datagrid-btable tr td {
+        border: 1px solid #Dbdbdb !important;
+        border-top: none !important;
+        border-right: none !important;
+
+    }
+
+    .easyui_table_yscx .datagrid-view2 table tr:last-child td {
+        border-bottom: 1px solid #Dbdbdb !important;
+    }
+
+    .easyui_table_yscx table tbody .datagrid-row {
+        border-bottom: none !important;
+    }
+
+    .easyui_table_yscx table tbody .datagrid-row td {
+        border: 1px solid #Dbdbdb;
+    }
+
+    .easyui_table_yscx .datagrid-cell-group {
+        width: 100% !important;
+        height: 100%;
+    }
+
+    .easyui_table_yscx .tolong_ils .panel-header, .panel-body {
+        border-color: #b1cff1 !important;
+        border-top: none;
+    }
+
+    .easyui_table_yscx .datagrid-view2 table tr:nth-of-type(1) td {
+        border-top: 0 !important;
+    }
+
+    .easyui_table_yscx .datagrid-header {
+        border-top: 1px solid #b1cff1 !important;
+        border-bottom: 1px solid #Dbdbdb !important;
+        background-color: #eaf2f0 !important;
+        /*height: 85px !important;*/
+    }
+
+    .easyui_table_yscx table .datagrid-header-row {
+        height: 18px !important;
+    }
+
+    .easyui_table_yscx .datagrid-body .datagrid-cell {
+        margin: auto;
+    }
+
+    .easyui_table_yscx .datagrid-header td {
+        color: #094c7b !important;
+    }
+
+    #monitor_tabs_box .tabs-wrap {
+        border-right: 1px solid #95B8E7;
+    }
+
+    #monitor_tabs_box ul.tabs {
+        border: 1px solid #95B8E7;
+    }
+
+    #monitor_tabs_box ul.tabs > li {
+        margin-right: 0;
+    }
+
+    #monitor_tabs_box ul.tabs > li > a {
+        padding: 0 30px;
+        background: rgba(255, 255, 255, .0);
+        border-color: rgba(255, 255, 255, .0)
+    }
+
+    #monitor_tabs_box ul.tabs > li:nth-of-type(1) > a {
+        border-left: none;
+    }
+
+    #monitor_tabs_box ul.tabs > li.tabs-selected {
+        border-top: 3px solid #1E8EE1;
+    }
+
+    #monitor_tabs_box ul.tabs > li.tabs-selected > a {
+        border-top: none;
+        border-radius: 0;
+        border-color: #95B8E7;
+        background-color: #ffffff;
+        color: #0E2D5F;
+        background: -webkit-linear-gradient(top, #EFF5FF 0, #ffffff 100%);
+        background: -moz-linear-gradient(top, #EFF5FF 0, #ffffff 100%);
+        background: -o-linear-gradient(top, #EFF5FF 0, #ffffff 100%);
+        background: linear-gradient(to bottom, #EFF5FF 0, #ffffff 100%);
+        background-repeat: repeat-x;
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#EFF5FF, endColorstr=#ffffff, GradientType=0);
+    }
+
+    #monitor_tabs_box ul.tabs > li > a > span {
+        font-size: 14px;
+        color: #333;
+    }
+
+
+    .easyui_table_yscx .datagrid-header-row .datagrid-cell {
+        padding: 3px 4px !important;
+        white-space: normal !important;
+    }
+
+    .easyui_table_yscx .datagrid-body table {
+        width: 100%;
+    }
+</style>
+
+<div id="monitor_tabs_box" style="width: 100%;height: 100%;">
+    <div style="margin-bottom: 10px">
+        <span>年度</span>
+        <input id="monitor_handler_year_combotree" class="easyui-combotree" style="width: 160px;"/>
+        <span>承办单位</span>
+        <input id="monitor_handler_dw_combotree" class="easyui-combotree" style="width: 220px;"/>
+        <span>评查方式</span>
+        <input id="cbt_win_eval_build_pcfl" class="easyui-combotree" style="width: 220px;"/>
+        <span>评查模板</span>
+        <input id="cbt_win_eval_build_pcmb" class="easyui-combotree" style="width: 160px;"/>
+        <span>承办人身份</span>
+        <input id="cbt_win_eval_build_cbrsf" class="easyui-combotree" style="width: 160px;"/>
+        <span>案件统计类别</span>
+        <input id="tjfx_tx_cbt_build_ajtjlb" class="easyui-combotree" style="width: 160px;"/>
+        <button id="btn_monitor_overview_rd_search" class="pcajsx_sj_2">查询</button>
+        <button id="btn_tx_expExcel" class="pcajsx_sj_2" disabled="disabled">导出</button>
+    </div>
+    <div class="easyui_table_yscx">
+        <table id="table_analysis_ajqkzlfx_tx" border="0" data-options="fit:true" style="width: 100%;">
+        </table>
+    </div>
+</div>
+
+<div id="win_analysis_tx_filter" class="easyui-window" title="评查案件列表"
+     data-options="closed:true,collapsible:false,shadow:false,maximizable:false,minimizable:false,modal:true,cache:false,resizable:true,width:1000,height:600">
+    <table id="table_analysis_tx_filter"></table>
+</div>
+
+<!--评查预览弹出框-->
+<div id="pcWin_win" style="padding: 10px;">
+    <div class="pcblPcyl">
+        <div>评查案件：<span id="win_pcWin_lbl_eval_handle_eval_ajmc"></span></div>
+        <div>承办检察官：<span id="win_pcWin_lbl_eval_handle_eval_cbr"></span></div>
+        <div>评查员：<span id="win_pcWin_lbl_eval_handle_eval_pcr"></span></div>
+        <div>评查案号：<span id="win_pcWin_lbl_eval_handle_eval_pcsah"></span></div>
+        <div>评查时间：<span id="win_pcWin_lbl_eval_handle_eval_pcsj"></span></div>
+        <div>案件完成日期：<span id="win_pcWin_lbl_eval_handle_eval_ajsj"></span></div>
+    </div>
+    <div class="pcylCon" id="pcWin_pcylCon"></div>
+</div>
+
+</body>
+</html>

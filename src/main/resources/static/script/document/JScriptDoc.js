@@ -53,9 +53,15 @@ function OpenFile(slpath, docId) {
     }
     try {
         if (slpath != null && slpath != "") {
-            TANGER_OCX_OBJ.OpenFromURL(slpath);
+            /*TANGER_OCX_OBJ.OpenFromURL(slpath);
             //TANGER_OCX_OBJ.FileSave = false;
             //TANGER_OCX_OBJ.FileSaveAs = false;
+            TANGER_OCX_OBJ.ToolBars = true;*/
+
+            var sysUrl = getRootPath();
+            var filePath = slpath.substring(sysUrl.length);
+            var fileUrl = sysUrl + "/manage/getFileStream?filePath=" + filePath;
+            TANGER_OCX_OBJ.OpenFromURL(fileUrl);
             TANGER_OCX_OBJ.ToolBars = true;
         } else {
             error = "文件路径为空";
@@ -103,13 +109,18 @@ function SetBMarkValue(bmarkArry) {
 function GetMarkValue(markKey) {
 
     /*var bkmkObj = TANGER_OCX_OBJ.ActiveDocument.BookMarks(markKey);
-    if(!bkmkObj)
-    {
-        Alert("Word 模板中不存在名称为：\""+markKey+"\"的书签！");
+     if(!bkmkObj)
+     {
+     Alert("Word 模板中不存在名称为：\""+markKey+"\"的书签！");
+     }
+     return bkmkObj.Range.Text;*/
+    var value = "";
+    try {
+        value = TANGER_OCX_OBJ.GetBookmarkValue(markKey);
+    } catch (e) {
+        console.log(e);
     }
-    return bkmkObj.Range.Text;*/
-
-    return TANGER_OCX_OBJ.GetBookmarkValue(markKey);
+    return value;
 }
 
 // 设置书签值
@@ -139,8 +150,12 @@ function OpenForRead(wspath, docId) {
     try {
         //TANGER_OCX_OBJ.Close();
         if (wspath != null && wspath != "") {
-            TANGER_OCX_OBJ.OpenFromURL(wspath, true);
+            //TANGER_OCX_OBJ.OpenFromURL(wspath, true);
             //SetDocProtect();
+
+            var filePath = wspath.substring(length(getRootPath()));
+            var fileUrl = getRootPath() + "/manage/getFileStream?filePath=" + filePath;
+            TANGER_OCX_OBJ.OpenFromURL(fileUrl, true);
         }
         else {
             error = "文件路径为空";

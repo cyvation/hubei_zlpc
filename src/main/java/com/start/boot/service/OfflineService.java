@@ -39,4 +39,6 @@ public interface OfflineService {
     int updatePcaj(String pcslbm, String dw)throws Exception;
 
     int isOnAj(Map map)throws Exception;
+
+    List<Map> loadOfflineListExcel(Map map)throws Exception;
 }

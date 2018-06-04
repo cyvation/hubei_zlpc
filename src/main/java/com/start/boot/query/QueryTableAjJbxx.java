@@ -40,6 +40,15 @@ public class QueryTableAjJbxx extends PageInfo {
     @ApiModelProperty("评查项分类编码List")
     private List<String> pcxflbmList=new ArrayList<>();
 
+    @ApiModelProperty("评查项分类编码")
+    private  String pcxflbm;
+
+    @ApiModelProperty("评查项编码")
+    private String pcxbm;
+
+    @ApiModelProperty("其他标记")
+    private String other;
+
     public String getPcflbm() {
         return pcflbm;
     }
@@ -142,5 +151,29 @@ public class QueryTableAjJbxx extends PageInfo {
 
     public void setPcxflbmList(List<String> pcxflbmList) {
         this.pcxflbmList = pcxflbmList;
+    }
+
+    public String getPcxflbm() {
+        return pcxflbm;
+    }
+
+    public void setPcxflbm(String pcxflbm) {
+        this.pcxflbm = pcxflbm;
+    }
+
+    public String getPcxbm() {
+        return pcxbm;
+    }
+
+    public void setPcxbm(String pcxbm) {
+        this.pcxbm = pcxbm;
+    }
+
+    public String getOther() {
+        return other;
+    }
+
+    public void setOther(String other) {
+        this.other = other;
     }
 }

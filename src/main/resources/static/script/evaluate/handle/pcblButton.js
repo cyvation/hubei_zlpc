@@ -2,12 +2,18 @@
 // 新建文书
 function butAddWs(num) {
     var obj = get_eval_info_doc(PCBGLX);
+    var cbrsf = $("input[name='rd_eval_info_sfldba']:checked").val();
+    if(isNull(cbrsf)){
+        Alert("未勾选承办人身份！");
+        return;
+    }
     // 评查结束验证
     var pcjg = $("input[name='rd_eval_info_pcjl_jg']:checked").val();
     if(isNull(pcjg)){
         Alert("未勾选结果等次建议！");
         return;
     }
+
     if(isNull(obj)){
         $.ajax({
             type: "get",
@@ -295,6 +301,40 @@ function butPcjs(num) {
     finish_eval_handle_deal("Y");
 }
 
+//湖北 李志恒 编辑案卡信息后，没有点击保存，数据一样会通过验证，再次自动保存数据 2018年5月8日
+function saveAkxx(){
+    var vo = initPostData();
+    // 评查结论
+    var obj = new Object();
+    obj.PCSLBM = EVAL_CASE.PCSLBM;
+    var cljg = $("input[name='rd_eval_info_pcjl_cl']:checked").val();
+    obj.CLJG = isNull(cljg) ? "" : cljg;
+    var pcjl = $("input[name='rd_eval_info_pcjl_jg']:checked").val();
+    obj.PCJL = isNull(pcjl) ? "" : pcjl;
+    obj.SM = $("#txt_eval_info_pcjl_bz").val();
+    var cbrsf = $("input[name='rd_eval_info_sfldba']:checked").val();
+    obj.SFLDBA = cbrsf;
+
+    $.ajax({
+        url: getRootPath() + "/filter/saveEvalCards",
+        data: { json: JSON.stringify(vo), jbxx: JSON.stringify(obj)},
+        type: 'post',
+        async: false,
+        dataType: 'json',
+        success: function (result) {
+
+            if (result.status == 200){
+                EVAL_CASE.CLJG = obj.CLJG;
+                EVAL_CASE.PCJL = obj.PCJL;
+                EVAL_CASE.SFLDBA = obj.SFLDBA;
+                EVAL_CASE.SM = obj.SM;
+            }else{
+                Alert(result.note);
+            }
+        }
+    });
+}
+
 // 评查结束
 function finish_eval_handle_deal(sffs) {
 
@@ -304,6 +344,12 @@ function finish_eval_handle_deal(sffs) {
         Alert("未勾选结果等次建议！");
         return;
     }
+    var cbrsf = $("input[name='rd_eval_info_sfldba']:checked").val();
+    if(isNull(cbrsf)){
+        Alert("未勾选承办人身份！");
+        return;
+    }
+    saveAkxx();
     var obj = get_eval_info_doc(PCLZDLX);
     // if(isNull(obj)){
     //     Alert("未生成评查流转单！");
@@ -375,6 +421,7 @@ function butAddScj(num) {
                 }else{
                     Alert(data.zlmc+'收藏成功');
                     $('#addColl').window('close');
+                    $('.star').hide();
                 }
             }
         });
@@ -459,7 +506,7 @@ function generate_doc_file(wsCon) {
             }
 
             try {
-                show_eval_doc_panel("doc");
+                show_rpt_doc_panel("doc");
                 CloseProgress();
 
                 var error = OpenFile(getRootPath() + result.value, "TANGER_OCX");
@@ -471,6 +518,7 @@ function generate_doc_file(wsCon) {
                 load_tree_eval_doc_files();
                 isApproveDoc = obj.WJLX == PCLZDLX; //是否评查流转单
                 editDocPath = result.note;
+                opening_eval_doc_file = result.value;
                 SetSaveButtonState("TANGER_OCX", true);
 
                 // 关闭新建评查报告弹窗
@@ -527,7 +575,7 @@ function generate_auto_doc_file(wsCon) {
             }
 
             try {
-                show_eval_doc_panel("doc");
+                show_rpt_doc_panel("doc");
                 CloseProgress();
 
                 var error = OpenFile(getRootPath() + result.value, "TANGER_OCX");
@@ -538,6 +586,7 @@ function generate_auto_doc_file(wsCon) {
 
                 isApproveDoc = false; //是否评查流转单
                 editDocPath = "";
+                opening_eval_doc_file = "";
                 SetSaveButtonState("TANGER_OCX", false);
 
             } catch (e) {

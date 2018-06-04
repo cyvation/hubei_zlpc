@@ -29,6 +29,9 @@ public class ShYPNAQuery extends PageInfo {
     @ApiModelProperty("部门编码，部门办案排名获取案件信息必填")
     private String bmbm;
 
+    @ApiModelProperty("业务条线编码，业务条线排名获取案件信息必填")
+    private String ywtxbm;
+
     public String getBmbm() {
         return bmbm;
     }
@@ -91,5 +94,13 @@ public class ShYPNAQuery extends PageInfo {
 
     public void setPcflbm(String pcflbm) {
         this.pcflbm = pcflbm;
+    }
+
+    public String getYwtxbm() {
+        return ywtxbm;
+    }
+
+    public void setYwtxbm(String ywtxbm) {
+        this.ywtxbm = ywtxbm;
     }
 }

@@ -36,6 +36,26 @@ public class OriganizationServiceImpl implements OriganizationService {
         return DataAccessHelper.getListMap(map, "p_cursor");
     }
 
+    /**
+     *  获取单位树:湖北线下评查跨院
+     * 获取本单位平级及下级单位
+     * @param dwbm
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Map> getPjDwbm(String dwbm) throws Exception {
+        String errMsg = "";
+
+        Map map = new HashMap();
+        map.put("p_dwbm", dwbm);
+
+        // 操作数据库
+        List<Map> list=  origanizationMapper.getPjDwbm(map);
+
+        return list;
+    }
+
     @Override
     public List<Map> getDwBmJsInfoByDwBm(String dwbm) throws Exception {
         String errMsg = "";

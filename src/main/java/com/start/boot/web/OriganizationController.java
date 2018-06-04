@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.login.Configuration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +38,35 @@ public class OriganizationController extends ArchivesSystemBaseController {
             String dwbm = getCurrentDwbm();
             List<Map> list = origanizationService.getDwbm(dwbm);
 
+            //遍历集合，找到本单位的父单位
+            String topBM = GetDw.topBM(list,dwbm);
+
+            result = success(EasyUIHelper.buildTreeDataSourceWithoutIconCol(list, "BM", "FBM", "MC", topBM), "获取单位树成功");
+        } catch (Exception e) {
+            super.errMsg("获取单位树失败", "单位：", e);
+            result = failure(e.getMessage(), "获取单位树失败");
+        }
+
+        return result;
+    }
+
+    /**
+     * 湖北线下评查跨院
+     * @return
+     */
+    @ApiOperation("获取单位树(获取本单位平级及下级单位)")
+    @GetMapping("/getPjDwbmTree")
+    public String getGePjtDwbmTree() {
+        String result = "";
+
+        try {
+            List<Map> list=new ArrayList<>();
+            String dwbm = getCurrentDwbm();
+           if( SystemConfiguration.djdwbm.equals(dwbm)){
+                list = origanizationService.getDwbm(dwbm);
+            }else{
+                list = origanizationService.getPjDwbm(dwbm);
+            }
             //遍历集合，找到本单位的父单位
             String topBM = GetDw.topBM(list,dwbm);
 

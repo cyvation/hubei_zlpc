@@ -20,8 +20,6 @@ public class ApprovalController extends ArchivesSystemBaseController{
     @Autowired
     private HandleService handleService;
 
-
-
     /**
      * 评查审批案件列表
      * @param

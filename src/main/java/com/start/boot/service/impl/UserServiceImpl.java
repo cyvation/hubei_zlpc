@@ -136,6 +136,31 @@ public class UserServiceImpl implements UserService {
         return errMsg;
     }
 
+    @Override
+    public int offlineAddRybm(Rybm rybm) throws Exception {
+        Map<String,String> map = new HashMap<>();
+        map.put("dwbm",rybm.getDwbm());
+        Integer gh = userMapper.getMaxUserNum(map);
+        if(gh <= 4000){
+            gh = 6000 + 1;
+        }else{
+            gh = gh + 1;
+        }
+        map.put("gh",  gh.toString());
+        map.put("dlbm",rybm.getDlbm());
+        map.put("kl","1bbd886460827015e5d605ed44252251");
+        map.put("mc",rybm.getMc());
+        map.put("sflsry",rybm.getSflsry());
+        map.put("sfsc",rybm.getSfsc());
+        map.put("sftz",rybm.getSftz());
+        map.put("xb",rybm.getXb());
+        try {
+            userMapper.offlineAddRybm(map);
+            return gh;
+        }catch (Exception e){
+            throw e;
+        }
+    }
 
     // 根据工号获取人员信息详情
     @Override

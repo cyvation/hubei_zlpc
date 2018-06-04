@@ -1,5 +1,6 @@
 package com.start.boot.pojo.vo;
 
+import com.start.boot.annotation.ExcelProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -15,21 +16,25 @@ public class AjpcwtxVo {
     @ApiModelProperty("评查项分类父编码")
     private String pcxflfbm;
 
+    @ExcelProperty(name = "项目")
     @ApiModelProperty("评查项分类父名称")
     private String pcxflfmc;
 
     @ApiModelProperty("评查分类编码")
     private String pcxflbm;
 
+    @ExcelProperty(name = "子项")
     @ApiModelProperty("评查分类名称")
     private String pcxflmc;
 
     @ApiModelProperty("评查项编码")
     private String pcxbm;
 
+    @ExcelProperty(name = "评查项名称")
     @ApiModelProperty("评查项名称")
     private String pcxmc;
 
+    @ExcelProperty(name = "问题数")
     @ApiModelProperty("问题数")
     private Integer wts = 0;
 

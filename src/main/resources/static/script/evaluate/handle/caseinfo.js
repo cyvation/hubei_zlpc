@@ -12,7 +12,8 @@ $(document).ready(function () {
         $(this).siblings().children(".pcbl_ajxx_btn_postion").hide()
     })
     $(".pcbl_ajxx_btn_postion").mouseout(function () {
-        $(".pcbl_ajxx_btn_postion").hide()
+        $(".pcbl_ajxx_btn_postion").hide();
+        $(".pcbl_ajxx_sjx").hide();
     })
 
     evalInfo = get_eval_handle_pcxx();
@@ -461,7 +462,7 @@ function open_doc_file(bmsah, wjlj, wsbh, type) {
                 switch (ext) {
                     case ".pdf":
                         // PDF方式打开文书
-                        document.getElementById('div_caseinfo_doc').style.display = "none";
+                        //document.getElementById('div_caseinfo_doc').style.display = "none";
                         document.getElementById('div_caseinfo_panel').style.display = "";
                         show_caseinfo_fanyeBtn(true);
                         CloseProgress();
@@ -476,11 +477,11 @@ function open_doc_file(bmsah, wjlj, wsbh, type) {
                         break;
                     case ".doc":
                     case ".docx":
-                        // 加载文书
+                        /*// 加载文书
                         show_caseinfo_fanyeBtn(false);
                         document.getElementById('div_caseinfo_panel').style.display = "none";
                         document.getElementById('div_caseinfo_doc').style.display = "";
-                        var error = OpenFile(getRootPath() + result.value, "TANGER_OCX_CASEINFO");
+                        var error = OpenFileReadonly(getRootPath() + result.value, "TANGER_OCX_CASEINFO");
 
                         CloseProgress();
                         if (!isNull(error)) {
@@ -488,7 +489,7 @@ function open_doc_file(bmsah, wjlj, wsbh, type) {
                         }
 
                         // 只读
-                        SetSaveButtonState("TANGER_OCX_CASEINFO", false);
+                        SetSaveButtonStateReadonly("TANGER_OCX_CASEINFO", false);*/
                         break;
                     default:
                         // 下载附件
@@ -514,7 +515,7 @@ function open_doc_file(bmsah, wjlj, wsbh, type) {
 // 打开电子卷宗文件
 function open_dossier_file(dwbm, bmsah, jzbh) {
 
-    document.getElementById('div_caseinfo_doc').style.display = "none";
+    //document.getElementById('div_caseinfo_doc').style.display = "none";
     document.getElementById('div_caseinfo_panel').style.display = "";
     show_caseinfo_fanyeBtn(true);
 
@@ -553,7 +554,7 @@ function open_dossier_file(dwbm, bmsah, jzbh) {
 // 打开案卡项
 function show_case_card_info(akbm) {
     show_caseinfo_fanyeBtn(false);
-    document.getElementById('div_caseinfo_doc').style.display = "none";
+    //document.getElementById('div_caseinfo_doc').style.display = "none";
     document.getElementById('div_caseinfo_panel').style.display = "";
     $('#gaxx_akxh').val(akbm);
     $('#div_caseinfo_panel').panel({
@@ -565,7 +566,7 @@ function show_case_card_info(akbm) {
 // 打开过程项
 function show_process_card_info(akbm) {
     show_caseinfo_fanyeBtn(false);
-    document.getElementById('div_caseinfo_doc').style.display = "none";
+    //document.getElementById('div_caseinfo_doc').style.display = "none";
     document.getElementById('div_caseinfo_panel').style.display = "";
     $('#gaxx_gcakxh').val(akbm);
     $('#div_caseinfo_panel').panel({
@@ -577,7 +578,7 @@ function show_process_card_info(akbm) {
 //打开流程项
 function show_flow_card_info() {
     show_caseinfo_fanyeBtn(false);
-    document.getElementById('div_caseinfo_doc').style.display = "none";
+    //document.getElementById('div_caseinfo_doc').style.display = "none";
     document.getElementById('div_caseinfo_panel').style.display = "";
     // $('#gaxx_gcakxh').val(akbm);
     $('#div_caseinfo_panel').panel({

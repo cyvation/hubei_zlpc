@@ -9,4 +9,10 @@ import org.springframework.stereotype.Repository;
 public interface AjwthzMapper {
 
     List<AjpcwtxVo> getAjwthzList(QueryTable query) throws Exception;
+
+    List<AjpcwtxVo> getOfflineAjwthzList(QueryTable query) throws Exception;
+
+    List<AjpcwtxVo> getBarAjwthzList(QueryTable query) throws Exception;
+
+    List<AjpcwtxVo> getOfflineBarAjwthzList(QueryTable query) throws Exception;
 }

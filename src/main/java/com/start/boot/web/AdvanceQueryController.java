@@ -29,8 +29,6 @@ import java.util.Map;
 @RequestMapping("/advanceQuery")
 public class AdvanceQueryController extends ArchivesSystemBaseController{
 
-
-
     @Autowired
     AdvanceQueryService advanceQueryService;
 
@@ -76,7 +74,6 @@ public class AdvanceQueryController extends ArchivesSystemBaseController{
     @ApiOperation("获取单位编码")
     @GetMapping("/getDwbmTreeList")
     public  MessageResult getDwbmTreeList() throws Exception {
-
 
         //传入单位编码，返回结果集
         Map map = new HashMap();

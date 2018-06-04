@@ -147,6 +147,9 @@ public class YX_PC_JBXX extends Param_Pager {
 
     private String CLJG;
 
+    @JSONField(name = "SFLDBA")
+    private String SFLDBA;
+
     public String getCLJG() {
         return CLJG;
     }
@@ -572,6 +575,11 @@ public class YX_PC_JBXX extends Param_Pager {
         this.FPDZFPRMC = FPDZFPRMC;
     }
 
+    public String getSFLDBA() {
+        return SFLDBA;
+    }
 
-
+    public void setSFLDBA(String SFLDBA) {
+        this.SFLDBA = SFLDBA;
+    }
 }

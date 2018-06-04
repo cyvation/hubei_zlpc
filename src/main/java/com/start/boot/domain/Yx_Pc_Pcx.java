@@ -44,6 +44,13 @@ public class Yx_Pc_Pcx extends Yx_Pc_PcxKey {
     private String pcrmc;
 
     private String sm;
+    private String flxtdm;
+    private String fflxtdm;
+    private String ywtx;
+    private String pcflbm;
+    private String xtdm;
+
+
 
     public String getPcxmc() {
         return pcxmc;
@@ -211,5 +218,45 @@ public class Yx_Pc_Pcx extends Yx_Pc_PcxKey {
 
     public void setSm(String sm) {
         this.sm = sm == null ? null : sm.trim();
+    }
+
+    public String getXtdm() {
+        return xtdm;
+    }
+
+    public void setXtdm(String xtdm) {
+        this.xtdm = xtdm== null ? null : xtdm.trim();
+    }
+
+    public String getFlxtdm() {
+        return flxtdm;
+    }
+
+    public void setFlxtdm(String flxtdm) {
+        this.flxtdm = flxtdm== null ? null : flxtdm.trim();
+    }
+
+    public String getFflxtdm() {
+        return fflxtdm;
+    }
+
+    public void setFflxtdm(String fflxtdm) {
+        this.fflxtdm = fflxtdm== null ? null : fflxtdm.trim();
+    }
+
+    public String getYwtx() {
+        return ywtx;
+    }
+
+    public void setYwtx(String ywtx) {
+        this.ywtx = ywtx== null ? null : ywtx.trim();
+    }
+
+    public String getPcflbm() {
+        return pcflbm;
+    }
+
+    public void setPcflbm(String pcflbm) {
+        this.pcflbm = pcflbm== null ? null : pcflbm.trim();
     }
 }

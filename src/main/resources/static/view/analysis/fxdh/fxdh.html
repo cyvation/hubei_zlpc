@@ -1,0 +1,135 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>分析导航</title>
+</head>
+<body>
+<script type="text/javascript">
+    AddScript("text/javascript", "script/analysis/fxdh/fxdh.js");
+</script>
+<style>
+    *{
+        font-family: "微软雅黑";
+        font-size: 14px;
+    }
+    html,body{
+        height: 100%;
+    }
+    body{
+        margin: 0;
+        padding: 0;
+    }
+    .center{
+        width: 100%;
+        height:  100%;
+    }
+    .box{
+        width: 706px;
+        height: 188px;
+        margin-left: 95px;
+        margin-top: 3px;
+        float: left;
+        margin-bottom: 10px;
+    }
+    .box_top{
+        background: #6bbdf3;
+        color: #ffffff;
+
+        float: left;
+        height: 100%;
+        width: 60px;
+        position: relative;
+    }
+
+    .xx_box{
+        width:28%;
+        height: 100%;
+
+        float: left;
+        margin-left: 20px;
+        text-align: center;
+    }
+    .xx_box_xz{
+        background:  #99b1ff;
+        color: #ffffff;
+    }
+    .ss_button{
+        background: #248dea;
+        border: 1px solid #248dea;
+        padding: 7px 28px;
+        border-radius: 5px;
+        color: #ffffff;
+        cursor: pointer;
+    }
+    .top_input_input{
+        width: 194px;
+        height: 30px;
+        border: 1px solid #c0cfdb;
+    }
+    .box_top_text{
+        width: 14px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        font-size: 14px;
+        line-height: 19px;
+    }
+    .xx{
+        width:calc(100% - 60px);
+        height: 100%;
+        float: left;
+        background: #f0f9ff;
+    }
+    .xx_box_img_two{
+        display: none;
+    }
+    .xx_box_img{
+        margin-top: 24px;
+    }
+    .xx_box_text{
+        margin-top: 10px;
+        color: #666666;
+        font-size: 14px
+    }
+    .thisdiv_body{
+        width: 100%;
+        height:  calc(100% - 40px);
+        background: #f0f9ff;
+        padding: 20px;
+    }
+    .box_bg{
+        width: 100%;
+        background: #ffffff;
+        margin-top: 20px;
+        height: calc(100% - 19px);
+        padding: 20px 0 0 20px;
+        border:  1px solid #b1cef2;
+        overflow: auto;
+    }
+    .tabs-inner{
+        padding: 0 43px !important;
+    }
+    .tabs li a.tabs-close, .tabs-p-tool.tabs li a.tabs-close, .tabs-p-tool{
+        margin-top: -18px;
+    }
+</style>
+<div id="tabs_div" class="easyui-tabs" style="width:100%;height: 100%;" data-options="fit:true">
+    <div title="导航">
+        <div class="thisdiv_body">
+            <div class="center">
+                <div class="top_input">
+                    <input type="text" id="top_input" class="top_input_input" style="width: 260px;height: 36px;">
+                    <button in="btnSerach" onclick="serach()" class="ss_button">搜索</button>
+                    <button id="btnReset"  onclick="reset()" class="ss_button">重置</button>
+                    <!--<button id="btnURL"  onclick="btnUrl()" class="ss_button">重置URL</button>-->
+                </div>
+                <div class="box_bg" id="groupboxbg">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

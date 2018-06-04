@@ -265,3 +265,36 @@ function deletePcaj(index){
         }
     })
 }
+
+
+function export_excel_dw() {
+    var ajmc = $('#txt_offline_ajmc').val();
+    var pcr = $('#txt_offline_pcr').val();
+    var bpcr = $('#txt_offline_bpcr').val();
+    var begin = $("#date_offline_begin").datebox('getValue');
+    var end = $("#date_offline_end").datebox('getValue');
+    var dw=$('#cbt_offline_pcdw').combotree('getValue') == undefined ? userInfo.DWBM : $('#cbt_offline_pcdw').combotree('getValues').join(",");//评查单位编码
+    // JS对象
+    var basciInfo ={
+        'ajmc':ajmc,
+        'pcr':pcr,
+        'bpcr':bpcr,
+        'begin':begin,
+        'end':end,
+        'dwbm':dw
+    };
+    $.ajax({
+        url:getRootPath()+"/count/exportOfflineExcel",
+        type:"post",
+        data:{json: JSON.stringify(basciInfo)},
+        success:function (data) {
+            if (data.code == 200) {
+                window.location.href=getRootPath()+ data.data;
+            }
+            CloseProgress();
+        },
+        error:function () {
+            CloseProgress();
+        }
+    });
+}

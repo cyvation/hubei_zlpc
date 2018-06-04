@@ -46,6 +46,10 @@ public class PcAjServiceImpl implements PcAjService {
         map.put("p_pcflbm",pcajParam.getPcflbm());//评查分类编码
         map.put("p_ajmc",pcajParam.getAjmc());//案件名称
         map.put("p_pcrmc",pcajParam.getPcr_mc());//评查员
+        map.put("p_cbrmc",pcajParam.getCbr());//承办人名称
+        map.put("p_sfldba", pcajParam.getSfldba());//是否领导办案
+        map.put("p_pcjl",pcajParam.getPcjl());//评查结论
+        map.put("p_pczt",pcajParam.getPczt());//评查状态
         map.put("p_pckssj", OracleTimeUtils.format(pcajParam.getPckssj()));//评查开始时间
         map.put("p_pcjssj",OracleTimeUtils.format(pcajParam.getPcjssj()));//评查结束时间
         map.put("p_pagesize",pcajParam.getRows());//页大小

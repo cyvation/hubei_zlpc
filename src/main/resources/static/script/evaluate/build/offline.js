@@ -157,14 +157,14 @@ function eval_random_marksInit() {
         //cascadeCheck: false,
         onShowPanel: index_onShowPanel,
         onHidePanel: index_onHidePanel,
-        url: getRootPath() + '/organization/getDwbmTree',
+        url: getRootPath() + '/organization/getPjDwbmTree',
         async: false,
         loadFilter: function (data) {
             return data.status == 200 ? JSON.parse(data.value) : [];
         },
         onLoadSuccess: function (node, data) {
             if (data != null && data.length >= 1) {
-                    $('#offline_pcdw').combotree('setValue', data[0].id); //单位默认选择
+                    $('#offline_pcdw').combotree('setValue', userInfo.DWBM); //单位默认选择
             }
             index_addMousedownDiv(this, 'offline_pcdw');
         },

@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -563,5 +564,31 @@ public class QueryTableServiceImpl implements QueryTableService {
                 temp.setBhgCount(pcxFlCount);
             }
         });
+    }
+
+    @Override
+    public List<Map> getAjwthzjbxx(QueryTableAjJbxx query) {
+        PageHelper.startPage(query.getPage(), query.getRows());
+        Map<String, String> map = new HashMap<String, String>();
+        if(!StringUtils.isEmpty(query.getPcxbm())){
+            map.put("pcxbm", query.getPcxbm());
+            map.put("pcxflbm", query.getPcxflbm());
+            //湖北:评查项中的其他和正常的评查项有区别，所以这里需要做单独处理 李志恒 2018年5月9日
+            String pcxmc = queryTableMapper.getPcxmcByPcxbmAndPcxflbm(map);
+            if(!pcxmc.isEmpty() && "其他".equals(pcxmc)){
+                query.setOther("1");
+            }else{
+                query.setOther("0");
+            }
+        }else{
+            query.setOther("2");
+        }
+        return queryTableMapper.getAjwthzjbxx(query);
+    }
+
+    @Override
+    public List<Map> getOfflineAjwthzjbxx(QueryTableAjJbxx query) {
+        PageHelper.startPage(query.getPage(), query.getRows());
+        return queryTableMapper.getOfflineAjwthzjbxx(query);
     }
 }

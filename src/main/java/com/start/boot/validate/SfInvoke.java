@@ -479,7 +479,7 @@ public class SfInvoke {
 
         jbxx.setZHXGSJ(DateTime.now().toLocalDate().toDate());
         //湖北：如果没有评查人，则案件状态为005待评查
-        if(Strings.isNullOrEmpty(jbxx.getPCRGH())){
+        if(Strings.isNullOrEmpty(jbxx.getPCRGH())&&StringUtils.isNotEmpty(jbxx.getPCJDBH())&&Integer.parseInt(jbxx.getPCJDBH())>5){
             jbxx.setPCJDBH("005");
             jbxx.setPCJDMS("待评查");
         }

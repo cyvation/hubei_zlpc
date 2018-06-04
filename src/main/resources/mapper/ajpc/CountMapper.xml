@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.CountMapper">
+
+	<select id="getPcxFlInfo" parameterType="map"  resultMap="jbxxMap">
+        SELECT
+        *
+        FROM
+        v_pcajxx
+        WHERE 1=1
+           AND PCJL is  not null
+        <if test="dwbm !=null and dwbm!=''">
+            AND BPC_DWBM = #{dwbm}
+        </if>
+        <if test="startDate !=null and startDate!=''">
+            AND BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate !=null and endDate!=''">
+            AND BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="pcjl !=null and pcjl!='' and pcjl!='allNum'">
+            and PCJL=#{pcjl}
+        </if>
+        <if test="bmbm !=null and bmbm!=''" >
+            AND BPC_BMBM = #{bmbm}
+        </if>
+        <if test="cbrmc !=null and cbrmc!=''" >
+            AND BPC_MC =#{cbrmc}
+        </if>
+	</select>
+    <resultMap id="jbxxMap" type="Map">
+        <result column="BMSAH" jdbcType="VARCHAR" property="BMSAH"/>
+        <result column="AJMC" jdbcType="VARCHAR" property="AJMC"/>
+        <result column="AJLB_MC" jdbcType="VARCHAR" property="AJLBMC" />
+        <result column="BPC_DWMC" jdbcType="VARCHAR" property="DWMC" />
+        <result column="BPC_MC" jdbcType="VARCHAR" property="CBRMC" />
+        <result column="PCR_DWMC" jdbcType="VARCHAR" property="PCR_DWMC" />
+        <result column="PCFLBM" jdbcType="VARCHAR" property="PCFLBM" />
+    </resultMap>
+    <select id="getOfflinePcxFlInfo"  parameterType="map" resultMap="jbxxOfflineMap">
+        SELECT
+        *
+        FROM
+        YX_PC_OFFLINE_JBXX
+        WHERE 1=1
+        <if test="dwbm !=null and dwbm!=''">
+            AND BPC_DWBM = #{dwbm}
+        </if>
+        <if test="startDate !=null and startDate!=''">
+            AND BPC_WCBZRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate !=null and endDate!=''">
+            AND BPC_WCBZRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="pcjl !=null and pcjl!='' and pcjl!='allNum'">
+            and PCJL=#{pcjl}
+        </if>
+        <if test="bmbm !=null and bmbm!=''" >
+            AND BPC_BMBM = #{bmbm}
+        </if>
+        <if test="cbrmc !=null and cbrmc!=''" >
+            AND BPC_MC =#{cbrmc}
+        </if>
+    </select>
+    <resultMap id="jbxxOfflineMap" type="Map">
+        <result column="BMSAH" jdbcType="VARCHAR" property="BMSAH"/>
+        <result column="AJMC" jdbcType="VARCHAR" property="AJMC"/>
+        <result column="AJLB_MC" jdbcType="VARCHAR" property="AJLBMC" />
+        <result column="BPC_DWMC" jdbcType="VARCHAR" property="DWMC" />
+        <result column="BPC_MC" jdbcType="VARCHAR" property="CBRMC" />
+        <result column="PCR_DWMC" jdbcType="VARCHAR" property="PCR_DWMC" />
+        <result column="PCFLBM" jdbcType="VARCHAR" property="PCFLBM" />
+    </resultMap>
+    <select id="getJbxxCount" resultType="map" parameterType="map">
+        SELECT * FROM(
+        select tem.*,(tem.YXSL+tem.HGSL+tem.XCSL+tem.BHGSL) BPCSL ,rownum rn from(SELECT
+        bpc_bmbm,bpc_dwbm,bpc_dwmc,bpc_bmmc,bpc_mc, SUM(case pcjl when '优质案件' then 1 else 0 END)  YXSL,
+        SUM(case pcjl when '合格案件' then 1 else 0 END) HGSL,
+        SUM(case pcjl when '不合格案件' then 1 else 0 END) BHGSL ,
+        SUM(case pcjl when '瑕疵案件' then 1 else 0 END) XCSL
+        FROM
+        v_pcajxx
+        WHERE 1=1
+        <if test="dwbm !=null and dwbm!='' and dwbm.length>0">
+            AND BPC_DWBM in <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        </if>
+        <if test="startDate !=null and startDate!=''">
+            AND BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate !=null and endDate!=''">
+            AND BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="bmbm !=null and bmbm!='' and bmbm.length>0 " >
+            AND BPC_BMBM in <foreach  item="item" collection="bmbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        </if>
+        <if test="cbrmc !=null and cbrmc!=''" >
+            AND BPC_MC LIKE '%'||#{cbrmc}||'%'
+        </if>
+        <if test="cbrsf !=null and cbrsf=='N,Y'">
+            AND sfldba in ('N', 'Y')
+        </if>
+        <if test="cbrsf !=null and cbrsf!='' and cbrsf!='N,Y'">
+            AND sfldba = #{cbrsf}
+        </if>
+        group by bpc_bmbm,bpc_dwbm,bpc_dwmc,bpc_bmmc,bpc_mc)tem where rownum &lt;= #{row} ) WHERE  rn >#{page}
+    </select>
+    <select id="getJbxxCountNum" resultType="map" parameterType="map">
+        SELECT COUNT(*) NUM FROM(SELECT
+        bpc_bmbm,bpc_dwbm,bpc_dwmc,bpc_bmmc,bpc_mc
+        FROM
+        v_pcajxx
+        WHERE 1=1
+        <if test="dwbm !=null and dwbm!='' and dwbm.length>0">
+            AND BPC_DWBM in <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        </if>
+        <if test="startDate !=null and startDate!=''">
+            AND BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate !=null and endDate!=''">
+            AND BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="bmbm !=null and bmbm!='' and bmbm.length>0 " >
+            AND BPC_BMBM in <foreach  item="item" collection="bmbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        </if>
+        <if test="cbrmc !=null and cbrmc!=''" >
+            AND BPC_MC LIKE '%'||#{cbrmc}||'%'
+        </if>
+        <if test="cbrsf !=null and cbrsf=='N,Y'">
+            AND sfldba in ('N', 'Y')
+        </if>
+        <if test="cbrsf !=null and cbrsf!='' and cbrsf!='N,Y'">
+            AND sfldba = #{cbrsf}
+        </if>
+        group by bpc_bmbm,bpc_dwbm,bpc_dwmc,bpc_bmmc,bpc_mc)tem
+    </select>
+</mapper>

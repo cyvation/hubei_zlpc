@@ -76,6 +76,29 @@
     </select>
     <resultMap id="sjsxMap" type="map"></resultMap>
 
+    <!--随机评查案件筛选（进阶版）-->
+    <select id="getSjsxAdvance" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+          call pkg_pcsx.proc_get_sjsx_advance(
+                                        #{p_pcflbm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_pcmbbm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_sxgzbm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_cbdwbm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_cbbmbm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_bmsah,mode=IN,jdbcType=VARCHAR},
+                                        #{p_ajmc,mode=IN,jdbcType=VARCHAR},
+                                        #{p_cbrxm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_wcrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_wcrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                        #{p_zdycxtj,mode=IN,jdbcType=VARCHAR},
+                                        #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                        #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                        #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                        #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=sjsxMap},
+                                        #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+
     <!--随机评查案件筛选（部门）-->
     <select id="get_sjsx_bm" parameterType="map" statementType="CALLABLE">
         <![CDATA[
@@ -318,5 +341,21 @@
             AND aj.bmsah=#{bmsah}
         </if>
     </select>
-    
+
+    <!--根据部门受案号查询统一业务案件信息-->
+    <select id="getTyywAjxxByBmsah" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT aj.* FROM tyyw_gg_ajjbxx@tyyw_link.net aj
+        WHERE  aj.sfsc = 'N'
+        <if test="bmsah !=null and bmsah!=''">
+            AND aj.bmsah=#{bmsah}
+        </if>
+    </select>
+    <!--获取筛选规则列表-->
+    <select id="getSxgzByPcflbmAndYwtx" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT gz.gzbm, gz.dwbm, gz.pcflbm, gz.gzmc, gz.sxcx, gz.cxcs, gz.sm, nvl(FGZBM, '-1') fgzbm
+                        , ywtx, sfzdy
+                    FROM xt_pc_sxgz gz WHERE  gz.ywtx = #{ywtx} AND gz.pcflbm = #{pcflbm} AND gz.dwbm = #{dwbm}
+        UNION  SELECT '-1' gzbm, #{dwbm} dwbm,  #{pcflbm} pcflbm ,'全部' gzmc,'' sxcx ,'' cxcs, '' sm, '0' fgzbm, #{ywtx} ywtx,'N' sfzdy from dual
+    </select>
+
 </mapper>

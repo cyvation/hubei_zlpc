@@ -221,6 +221,104 @@
         </if>
     </select>
 
+    <select id="getAjwthzjbxx" resultMap="jbxxMap" parameterType="com.start.boot.query.QueryTableAjJbxx">
+        SELECT
+        *
+        FROM
+        YX_PC_JBXX jbxx
+        WHERE
+        1=1 AND jbxx.sfsc = 'N'
+        <if test="dwbmList!=null and dwbmList.size() > 0">
+            AND  jbxx.BPC_DWBM IN
+            <foreach collection="dwbmList" item="dwbm" close=")" open="(" separator=",">
+                #{dwbm}
+            </foreach>
+        </if>
+        <if test="pcxflbm !=null and pcxflbm !=''">
+            AND   EXISTS  (
+            SELECT
+            pcx.pcslbm
+            FROM
+            YX_PC_PCX pcx
+            WHERE
+            pcx.PCXFLBM = #{pcxflbm}
+            <if test="pcxbm !=null and pcxbm !=''">
+                AND pcx.pcxbm = #{pcxbm}
+            </if>
+            <if test='other =="1"'>
+                AND pcx.pcjg != '1'
+            </if>
+            <if test='other =="0"'>
+                AND pcx.pcjg = '1'
+            </if>
+            <if test='other =="2"'>
+                AND (
+                (pcfs='1' and pcx.pcjg = '1')
+                OR (pcfs = '2' and length(nvl(pcjg,''))>0)
+                )
+            </if>
+            AND pcx.pcslbm=jbxx.pcslbm
+            )
+        </if>
+
+        <if test="startDate !=null and startDate !=''">
+            AND jbxx.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate !=null and endDate!=''">
+            AND jbxx.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+
+        <if test="pcflbm !=null and pcflbm!=''">
+            AND jbxx.PCFLBM=#{pcflbm}
+        </if>
+
+    </select>
+
+    <select id="getOfflineAjwthzjbxx" resultMap="jbxxMap" parameterType="com.start.boot.query.QueryTableAjJbxx">
+        SELECT
+        *
+        FROM
+        YX_PC_OFFLINE_JBXX jbxx
+        WHERE
+        1=1 AND jbxx.sfsc = 'N'
+        <if test="dwbmList!=null and dwbmList.size() > 0">
+            AND  jbxx.BPC_DWBM IN
+            <foreach collection="dwbmList" item="dwbm" close=")" open="(" separator=",">
+                #{dwbm}
+            </foreach>
+        </if>
+        <if test="pcxflbm !=null and pcxflbm !=''">
+            AND   EXISTS  (
+            SELECT
+            pcx.pcslbm
+            FROM
+            YX_PC_OFFLINE_PCX pcx
+            WHERE
+            pcx.PCXFLBM = #{pcxflbm}
+            <if test="pcxbm !=null and pcxbm !=''">
+                AND pcx.pcxbm = #{pcxbm}
+            </if>
+            AND pcx.pcjg = '1'
+            AND pcx.pcslbm=jbxx.pcslbm
+            )
+        </if>
+
+        <if test="startDate !=null and startDate !=''">
+            AND jbxx.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate !=null and endDate!=''">
+            AND jbxx.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+
+        <if test="pcflbm !=null and pcflbm!=''">
+            AND jbxx.PCFLBM=#{pcflbm}
+        </if>
+
+    </select>
+    <select id="getPcxmcByPcxbmAndPcxflbm" resultType="java.lang.String" parameterType="java.util.Map">
+        SELECT pcxmc FROM xt_pc_pcx WHERE pcxbm = #{pcxbm} and pcxflbm = #{pcxflbm}
+    </select>
+
     <resultMap id="jbxxMap" type="map">
         <result column="BMSAH" jdbcType="VARCHAR" property="BMSAH"/>
         <result column="AJMC" jdbcType="VARCHAR" property="AJMC"/>

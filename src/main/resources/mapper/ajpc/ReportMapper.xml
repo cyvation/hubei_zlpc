@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.ReportMapper">
+    <select id="getPcbgMb" resultType="map">
+        SELECT wsmbbh,
+        dwbm,
+        pcflbm,
+        wsmbmc,
+        wsmblb,
+        wsmblj,
+        wsmbnr,
+        wspx,
+        spbbm,
+        sfgx,
+        sm,
+        jzmlh
+        FROM xt_pc_wsmb
+        WHERE pcflbm = #{pcflbm}and wsmblb = #{wsmblb}
+
+    </select>
+
+    <select id="getMaxPczybm" resultType="java.lang.String">
+        SELECT pczybm FROM YX_PC_JZWJ t WHERE pczybm LIKE #{pczybm}
+    </select>
+</mapper>

@@ -221,4 +221,46 @@ public interface CountService {
   List<YX_PC_JBXX>getMapAjJbxxJbqk(ShYPNAQuery query);
 
 
+  /**
+   * 获取单位 排名
+   * @param query
+   * @return
+   */
+  List<DwPaimin> getDwPaiMinByPcjlAndRQ(ShYPNAQuery query);
+
+  /**
+   * 获取单位下案件信息
+   * @param query
+   * @return
+   */
+  List<YX_PC_JBXX> getDWPaiMinByPcjlAndRQAjJbxx(ShYPNAQuery query);
+
+    /**
+     * 地图获取案件信息
+     * @param query
+     * @return
+     */
+    Map countPcqkOrBaqk(Map query);
+    /**
+     * 地图获取案件信息
+     * @param query
+     * @return
+     */
+    List<Map>loadPcInfo(Map query);
+
+    /**
+     * 业务条线办案质量排名
+     * @param query
+     * @return
+     */
+    List<YwtxPm> ywtxAjZhiLiangPaiMin(ShYPNAQuery query);
+
+
+    /**
+     * 业务条线办案质量排名获取案件基本信息
+     * @param query
+     * @return
+     */
+    List<YX_PC_JBXX> ywtxAjZhiLiangPaiMinAjJbxx(ShYPNAQuery query);
+
 }

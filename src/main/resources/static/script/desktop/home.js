@@ -46,7 +46,7 @@ $(document).ready(function () {
     });
     $('.tabs_box:first').click();
     $('.tabs_box:first').addClass("tabs_box_click");
-    $('.tabs_box:first').children(".tabs_box_yuan").css("background","red")
+    $('.tabs_box:first').children(".tabs_box_yuan").css("background","red");
     $('.tabs_box:first').css("border-radius","5px 0 0 0");
     $('.tabs_box').click(function(){
         $(this).addClass("tabs_box_click");
@@ -54,11 +54,6 @@ $(document).ready(function () {
         $(this).children(".tabs_box_yuan").css("background","red");
         $(this).siblings().children(".tabs_box_yuan").css("background","#4383AD");
     });
-    /*$('#home_panel').panel({
-     width:"100%",
-     fit:true,
-     href:'view/evaluate/handle/index.html',
-     });*/
 });
 
 // 加载功能

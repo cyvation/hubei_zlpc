@@ -10,7 +10,6 @@ $(document).ready(function () {
 
     // 新建评查界面传递的参数，评查分类及评查模板等信息
     var pcxx = FUNCTION_PARAM;
-
     // 界面标签样式设置及事件绑定
     eval_special_marksInit(pcxx);
 
@@ -22,8 +21,6 @@ $(document).ready(function () {
 
     // 初始化操作按钮
     init_special_toolbar();
-
-    var vcount = $('#table_win_eval_bulid_sp_filtered').datagrid('getRows').length;
 
 });
 
@@ -187,6 +184,7 @@ function eval_special_marksInit(pcxx) {
             onSelect: function (node) {
                 load_cbt_eval_bulid_sp_sxgz(pcxx.PCFLBM, node.attributes.YWTX);
                 load_cbt_eval_bulid_sp_assign_sxgz(pcxx.PCFLBM, node.attributes.YWTX);
+                $("#table_eval_bulid_sp_filter").datagrid("loadData",{total:0, rows : []});
             }
         });
     }else{
@@ -211,13 +209,10 @@ function eval_special_marksInit(pcxx) {
             onSelect: function (node) {
                 load_cbt_eval_bulid_sp_sxgz(pcxx.PCFLBM, node.attributes.YWTX);
                 load_cbt_eval_bulid_sp_assign_sxgz(pcxx.PCFLBM, node.attributes.YWTX);
+                $("#table_eval_bulid_sp_filter").datagrid("loadData",{total:0, rows : []});
             }
         });
     }
-
-
-
-
     // 承办部门下拉树
     $("#txt_eval_build_sp_cbbm").combotree({
         method: 'get',
@@ -335,6 +330,7 @@ function eval_special_marksInit(pcxx) {
             },
             {field:'DWBM',title:'单位编码',hidden:true},
             {field:'SXGZBM',title:'筛选规则编码',hidden:true},
+            {field:'PCMBBM',title:'评查模板编码',hidden:true},
             {field: 'action', title: '操作', width: 90, align: 'center',
                 formatter: function (value, row, index) {
                     var r = '<a href="#" onclick="pcWinPage(' + index +',\'#table_eval_bulid_sp_filter\',1)">查看</a>';
@@ -353,10 +349,8 @@ function eval_special_marksInit(pcxx) {
     // 查询
     $("#btn_eval_build_sp_search").unbind( "click" );
     $("#btn_eval_build_sp_search").bind("click", function () {
-
         // 加载案件列表
-        load_table_eval_bulid_sp_filter(pcxx);
-
+        load_table_eval_bulid_sp_filter(pcxx.PCFLBM);
     });
 
     // 高级查询
@@ -425,6 +419,7 @@ function eval_special_marksInit(pcxx) {
             },
             {field:'DWBM',title:'单位编码',hidden:true},
             {field:'SXGZBM',title:'筛选规则编码',hidden:true},
+            {field:'PCMBBM',title:'评查模板编码',hidden:true},
             {field: 'action', title: '操作', width: 90, align: 'center',
                 formatter: function (value, row, index) {
                     var r = '<a href="#" onclick="pcWinPage(' + index +',\'#table_win_eval_bulid_sp_filtered\',1)">查看</a> ';
@@ -495,7 +490,8 @@ function load_cbt_eval_bulid_sp_sxgz(pcflbm, ywtx) {
         // cascadeCheck: false,
         onShowPanel: index_onShowPanel,
         onHidePanel: index_onHidePanel,
-        url: getRootPath()+'/filter/getSxgzByPcmbbm',
+        // url: getRootPath()+'/filter/getSxgzByPcmbbm',
+        url: getRootPath()+'/filter/getSxgzByPcflbmAndYwtx',
         queryParams: {
             pcflbm: pcflbm,
             sslb: "",
@@ -1037,7 +1033,7 @@ function eval_special_marksDataBind(pcxx){
 }
 
 // 获取案件列表（查询）
-function load_table_eval_bulid_sp_filter(pcxx) {
+function load_table_eval_bulid_sp_filter(pcflbm) {
     var bmsah = $('#txt_eval_build_sp_bmsah').textbox('getValue').trim();
     var ajmc = $('#txt_eval_build_sp_ajmc').textbox('getValue').trim();
     var cbrxm = $('#txt_eval_build_sp_cbr').textbox('getValue').trim();
@@ -1072,7 +1068,7 @@ function load_table_eval_bulid_sp_filter(pcxx) {
     // JS对象
     var obj = new Object();
     obj.PCDWBM = userInfo.DWBM;
-    obj.PCFLBM = pcxx.PCFLBM;
+    obj.PCFLBM = pcflbm;
     obj.PCHDBM = pchdbm;
     obj.GZDWBM = '';
     obj.SXGZBM = $('#cbt_eval_bulid_sp_sxgz').combotree('getValues').join(',');
@@ -1093,9 +1089,18 @@ function load_table_eval_bulid_sp_filter(pcxx) {
     obj.GZRQBNG = $('#date_eval_build_sp_begin').datebox('getValue');
     obj.GZRQEND = $('#date_eval_build_sp_end').datebox('getValue');
     obj.ZDYCXTJ = get_eval_build_sp_zdycxtj();
-
+    var tree =  $('#cbt_eval_bulid_sp_sxgz').combotree("tree");
+    var node = tree.tree("getSelected");
+    var url = "";
+    if(node.attributes.SFZDY == "Y"){
+        url =  getRootPath()+'/filter/getSjsx';
+    }else{
+        url = getRootPath()+'/filter/getSjsxAdvance';
+    }
     $('#table_eval_bulid_sp_filter').datagrid({
-        url: getRootPath()+'/filter/getSjsx',
+        // url: getRootPath()+'/filter/getSjsx',
+        // url: getRootPath()+'/filter/getSjsxAdvance',
+        url: url,
         queryParams: { json : JSON.stringify(obj) }
     });
 }
@@ -1103,17 +1108,18 @@ function load_table_eval_bulid_sp_filter(pcxx) {
 // 获取自定义查询条件
 function get_eval_build_sp_zdycxtj() {
     var bmsahs = "";
-    var rows = $("#table_win_eval_bulid_sp_filtered").datagrid("getRows");
-    for (var i = 0; i < rows.length; i++){
-        if(rows[i]){
-            if (i == 0){
-                bmsahs = bmsahs + "'" + rows[i].BMSAH + "'"
-            } else{
-                bmsahs = bmsahs + ",'" + rows[i].BMSAH + "'"
+    if($("#table_win_eval_bulid_sp_filtered").length > 0){
+        var rows = $("#table_win_eval_bulid_sp_filtered").datagrid("getRows");
+        for (var i = 0; i < rows.length; i++){
+            if(rows[i]){
+                if (i == 0){
+                    bmsahs = bmsahs + "'" + rows[i].BMSAH + "'"
+                } else{
+                    bmsahs = bmsahs + ",'" + rows[i].BMSAH + "'"
+                }
             }
         }
     }
-
     return isNull(bmsahs) ? "" : " AND aj.bmsah NOT IN (" + bmsahs + ")";
 }
 
@@ -1137,13 +1143,17 @@ function filter_special_case(index,row) {
             CBR: remover.CBR,
             SLRQ: remover.SLRQ,
             WCBZRQ: remover.WCBZRQ,
-            SXGZBM: remover.SXGZBM
+            SXGZBM: remover.SXGZBM,
+            PCMBBM: remover.PCMBBM
         });
     }
     var index = $("#table_eval_bulid_sp_filter").datagrid("getRowIndex", remover.BMSAH);
     $("#table_eval_bulid_sp_filter").datagrid("deleteRow", index);
 
     $("#btn_eval_build_sp_filtered").text("已筛选(" + $('#table_win_eval_bulid_sp_filtered').datagrid('getRows').length + ")");
+    if($('#table_win_eval_bulid_sp_filtered').datagrid('getRows').length > 0){
+        $("#cbt_eval_bulid_sp_pcmb").combotree("disable");
+    }
 }
 
 // 移除案件
@@ -1161,12 +1171,16 @@ function remove_special_case(index) {
         CBR: remover.CBR,
         SLRQ: remover.SLRQ,
         WCBZRQ: remover.WCBZRQ,
-        SXGZBM: remover.SXGZBM
+        SXGZBM: remover.SXGZBM,
+        PCMBBM: remover.PCMBBM
     });
     var index = $("#table_win_eval_bulid_sp_filtered").datagrid("getRowIndex", remover.BMSAH);
     $("#table_win_eval_bulid_sp_filtered").datagrid("deleteRow", index);
 
     $("#btn_eval_build_sp_filtered").text("已筛选(" + $('#table_win_eval_bulid_sp_filtered').datagrid('getRows').length + ")");
+    if($('#table_win_eval_bulid_sp_filtered').datagrid('getRows').length <= 0){
+        $("#cbt_eval_bulid_sp_pcmb").combotree("enable");
+    }
 }
 
 // 初始化功能页面，加载评查基本信息、评查组信息
@@ -1256,7 +1270,27 @@ function click_btn_wind_eval_next(pcxx){
     if(IS_EDIT){
         return;
     }
-
+    var isReturn = false;
+    var rows = $("#table_win_eval_bulid_sp_filtered").datagrid("getRows");
+    var pcmbbm = $("#cbt_eval_bulid_sp_pcmb").combotree("getValue");
+    var oldPcmbbm = "";
+    //遍历已筛选的案件里面是否存在不同评查模板案件，如果存在，需要提示用户将该案件删除
+    for (var i = 0; i < rows.length; i++){
+        if(i==0){
+            var idx = $("#table_win_eval_bulid_sp_filtered").datagrid("getRowIndex",rows[i].BMSAH);
+            $("#table_win_eval_bulid_sp_filtered").datagrid("selectRow",idx);
+            var selectRow = $("#table_win_eval_bulid_sp_filtered").datagrid("getSelected");
+            oldPcmbbm = selectRow.PCMBBM;
+        }
+        if(oldPcmbbm != pcmbbm){
+            isReturn = true;
+            break;
+        }
+    }
+    if(isReturn){
+        Alert('该活动使用了两个评查模板！');
+        return;
+    }
     // JS对象,需要传输的值
     var obj = new Object();
     obj.PCDWBM = IS_EDIT ? EVAL_DATA.PCDWBM : "";
@@ -1413,7 +1447,7 @@ function init_eval_build_special_assign() {
                 formatter: function (value, row, index) {
                     var r;
                     var d;
-                    if(parseInt(row.PCJDBH) <= parseInt("005") || typeof(row.PCJDBH) == "undefined"){
+                    if(typeof(row.PCJDBH) == "undefined" || parseInt(row.PCJDBH) <= parseInt("005") ){
                          r = '<a href="#" onclick="pcWinPage(' + index +',\'#table_eval_bulid_sp_assign\',1)">查看</a> ';
                          d = '<a href="#" onclick="assign_special_case(' + index + ')">分配</a> ';
                     }else {
@@ -2246,7 +2280,7 @@ function resize_table_eval_bulid_sp_assign(height){
         return c + height;
     });
     try{
-        $("#table_eval_bulid_sp_assign").datagrid('resize', { height: $('#div_table_eval_bulid_sp_assign').height()});
+        //     $("#table_eval_bulid_sp_assign").datagrid('resize', {height: $('#div_table_eval_bulid_sp_assign').height()});
     }catch (e){
         console.log(e);
     }
@@ -2259,7 +2293,8 @@ function load_cbt_eval_bulid_sp_assign_sxgz(pcflbm,ywtx){
         lines: true,
         onShowPanel: index_onShowPanel,
         onHidePanel: index_onHidePanel,
-        url: getRootPath()+'/filter/getSxgzByPcmbbm',
+        // url: getRootPath()+'/filter/getSxgzByPcmbbm',
+        url: getRootPath() + '/filter/getSxgzByPcflbmAndYwtx',
         queryParams: {
             pcflbm: pcflbm,
             sslb: "",
@@ -2343,6 +2378,11 @@ function eval_special_win_filter_marksInit(pcxx) {
         pagination:true,
         pageSize:20,
         pageNumber:1,
+        onLoadSuccess:function(data){
+            // if(data.total > 0){
+            //     Alert(data.total);
+            // }
+        },
         columns:[[
             {field:'BMSAH',title:'部门受案号',width:160 },
             {field:'AJMC',title:'案件名称',width:160,
@@ -2393,12 +2433,12 @@ function eval_special_win_filter_marksInit(pcxx) {
 
 //  获取案件列表（案件筛选界面）
 function load_table_eval_bulid_sp_assign_filter(pcxx) {
-
+    var pchdbm = $('#cbt_eval_bulid_sp_pcmb').combotree('getValue');
     // JS对象
     var obj = new Object();
     obj.PCDWBM = userInfo.DWBM;
     obj.PCFLBM = pcxx.PCFLBM;
-    obj.PCHDBM = pcxx.PCHDBM;
+    obj.PCHDBM = pchdbm;
     obj.GZDWBM = '';
     obj.SXGZBM = $('#cbt_eval_bulid_sp_assign_sxgz').combotree('getValue');
     obj.CBDWBM = $('#cbt_eval_bulid_sp_assign_dwbm').combotree('getValues').join(",");
@@ -2419,10 +2459,22 @@ function load_table_eval_bulid_sp_assign_filter(pcxx) {
     //obj.ZDYCXTJ = get_eval_build_sp_zdycxtj();
     obj.ZDYCXTJ = '';
 
+    var tree =  $('#cbt_eval_bulid_sp_assign_sxgz').combotree("tree");
+    var node = tree.tree("getSelected");
+    var url = "";
+    if(node.attributes.SFZDY == "Y"){
+        url =  getRootPath()+'/filter/getSjsx';
+    }else{
+        url = getRootPath()+'/filter/getSjsxAdvance';
+    }
+
     $('#table_eval_bulid_sp_assign_filter').datagrid({
-        url: getRootPath()+'/filter/getSjsx',
+        // url: getRootPath()+'/filter/getSjsx',
+        url: url,
         queryParams: { json : JSON.stringify(obj) }
     });
+
+    $('#table_eval_bulid_sp_assign_filter').datagrid("load");
 }
 
 // 筛选案件

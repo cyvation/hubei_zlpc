@@ -15,6 +15,18 @@ public class XtZzjgDwbm {
 
     private String dwsx;
 
+    public String getSfhj() {
+        return sfhj;
+    }
+
+    public void setSfhj(String sfhj) {
+        this.sfhj = sfhj;
+    }
+
+    private  String sfhj;
+
+
+
     public String getDwbm() {
         return dwbm;
     }

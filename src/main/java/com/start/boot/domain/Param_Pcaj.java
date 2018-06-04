@@ -56,7 +56,12 @@ public class Param_Pcaj extends Param_Pager {
     private  String pckssj;
     @JSONField(name = "PCJSSJ")
     private  String pcjssj;
-
+    @JSONField(name = "PCJL")
+    private String pcjl;//评查结论
+    @JSONField(name = "PCZT")
+    private String pczt;//评查状态
+    @JSONField(name = "SFLDBA")
+    private String sfldba;//是否领导办案
 
     public String getPckssj() {
         return pckssj;
@@ -251,4 +256,28 @@ public class Param_Pcaj extends Param_Pager {
     }
 
     private String pcah;
+
+    public String getPcjl() {
+        return pcjl;
+    }
+
+    public void setPcjl(String pcjl) {
+        this.pcjl = pcjl;
+    }
+
+    public String getPczt() {
+        return pczt;
+    }
+
+    public void setPczt(String pczt) {
+        this.pczt = pczt;
+    }
+
+    public String getSfldba() {
+        return sfldba;
+    }
+
+    public void setSfldba(String sfldba) {
+        this.sfldba = sfldba;
+    }
 }

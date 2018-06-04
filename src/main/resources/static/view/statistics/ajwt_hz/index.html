@@ -70,102 +70,52 @@
     .easyui_table_yscx  .datagrid-header td{
         color: #094c7b!important;
     }
-    /*#ajwt_tabsBox .tabs-wrap{*/
-        /*border-right: 1px solid #95B8E7;*/
-    /*}*/
-    /*#ajwt_tabsBox ul.tabs{*/
-        /*border: 1px solid #95B8E7;*/
-    /*}*/
-    /*#ajwt_tabsBox ul.tabs>li{*/
-        /*margin-right: 0;*/
-    /*}*/
     #ajwt_tabsBox ul.tabs>li>a{
         padding: 0 30px;
         background: rgba(255,255,255,.0);
         border-color: rgba(255,255,255,.0)
     }
-    /*#ajwt_tabsBox ul.tabs>li:nth-of-type(1)>a{*/
-        /*border-left: none;*/
-    /*}*/
-    /*#ajwt_tabsBox ul.tabs>li.tabs-selected{*/
-        /*border-top: 3px solid #1E8EE1;*/
-    /*}*/
-    /*#ajwt_tabsBox ul.tabs>li.tabs-selected>a{*/
-        /*border-top: none;*/
-        /*border-radius: 0;*/
-        /*border-color: #95B8E7;*/
-        /*background-color: #ffffff;*/
-        /*color: #0E2D5F;*/
-        /*background: -webkit-linear-gradient(top,#EFF5FF 0,#ffffff 100%);*/
-        /*background: -moz-linear-gradient(top,#EFF5FF 0,#ffffff 100%);*/
-        /*background: -o-linear-gradient(top,#EFF5FF 0,#ffffff 100%);*/
-        /*background: linear-gradient(to bottom,#EFF5FF 0,#ffffff 100%);*/
-        /*background-repeat: repeat-x;*/
-        /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#EFF5FF,endColorstr=#ffffff,GradientType=0);*/
-    /*}*/
-    /*#ajwt_tabsBox ul.tabs>li>a>span{*/
-        /*font-size: 24px;*/
-        /*color: #333;*/
-    /*}*/
 </style>
 <div id="ajwt_main_div" class="easyui-layout" style="width:100%;height:100%;">
     <div data-options="region:'west',title:'案件问题项列表',split:true" style="width:50%;">
         <div id="ajwt_tabsBox" style="width: 100%;height: 100%;">
-            <!--<div id="tabs" class="easyui-tabs" style="width:100%;height: 100%;" >-->
-                <!--<div title="单位" closable="false" style="padding:10px;" >-->
-            <!--<div style="margin-bottom: 10px">-->
             <div style="width: 100%;overflow: hidden;padding: 5px">
                 <div style="float:left;width:230px;overflow: hidden" id="pop_ups_win_input_ajwt_dw">
-                    单位&nbsp;<input id="cbt_win_eval_ajwt_dw"  class="easyui-combotree" style="width: 150px;" />
+                    承办单位&nbsp;<input id="cbt_win_eval_ajwt_dw"  class="easyui-combotree" style="width: 150px;" />
                 </div>
                 <div style="float:left;width:260px;overflow: hidden">
                     评查方式&nbsp;<input id="cbt_win_eval_ajwt_pcfl" class="easyui-combotree"  style="width: 150px;" />
                 </div>
-                <div style="float:left;display: none;width:260px;overflow: hidden" id="pop_ups_win_input_ajwt_pcmb">
+                <div style="float:left;width:260px;overflow: hidden" id="pop_ups_win_input_ajwt_pcmb">
                     评查模板&nbsp;<input id="cbt_win_eval_ajwt_pcmb"  class="easyui-combotree" style="width: 150px;" />
                 </div>
-                <div style="float:left;width:260px;;overflow: hidden" id="pop_ups_win_input_ajwt_pchd">
-                    评查模板&nbsp;<input id="cbt_win_eval_build_pchd"  class="easyui-combotree" style="width: 150px;" />
-                </div>
+                <!--<div style="float:left;width:260px;;overflow: hidden" id="pop_ups_win_input_ajwt_pchd">-->
+                    <!--评查模板&nbsp;<input id="cbt_win_eval_build_pchd"  class="easyui-combotree" style="width: 150px;" />-->
+                <!--</div>-->
                 <div style="float: left;width: 520px;overflow: hidden;margin-top: 5px">
-                    评查结束时间&nbsp;
+                    案件完成日期&nbsp;
                     <input id="ajwt_dw_start" class="easyui-datebox" />
                     <span>~</span>
                     <input id="ajwt_dw_end" class="easyui-datebox" />
                 </div>
+                <div id="btn_ajwt_dw_exp" class="btn" onclick="export_excel_ajwthz()">导出</div>
                 <div id="btn_ajwt_dw_search" class="btn">查询</div>
             </div>
             <div class="easyui_table_yscx">
                 <table id="table_ajwt_statistiscs_dw"  border="0" data-options="fit:true" style="width: 100%;"></table>
             </div>
 
-                <!--</div>-->
-            <!--</div>-->
         </div>
     </div>
-    <div data-options="region:'center',title:'案件问题数饼图'" style="padding:5px;background:#eee;"></div>
+    <div id="ajwtZzt" data-options="region:'center',title:'案件问题柱状图'" style="padding:5px;width:50%;">
+        <div id="container" style="height:100%;width:100%">
+
+        </div>
+    </div>
 </div>
-
-
-<div id="win_eval_ajwt_statistics_analysis_filter" class="easyui-window" title="评查案件列表"
+<div id="win_eval_build_statistics_ajwthz_filter" class="easyui-window" title="评查案件列表"
      data-options="closed:true,collapsible:false,shadow:false,maximizable:false,minimizable:false,modal:true,cache:false,resizable:true,width:1000,height:600">
-    <table id="table_eval_ajwt_statistics_analysis_filter" ></table>
+    <table id="table_eval_build_statistics_ajwthz_filter" ></table>
 </div>
-
-
-
 </body>
-<style>
-    .ZXpcjks_sj_2{
-        width: 80px;
-        height: 30px;
-        color: #fff;
-        background-color: #248DE9;
-        border: 0;
-        border-radius:5px;
-        font-size: 14px;
-        outline: none;
-        margin-left: 5px;
-    }
-</style>
 </html>

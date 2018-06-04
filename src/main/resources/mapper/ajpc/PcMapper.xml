@@ -362,7 +362,11 @@
               call pkg_pcgl.proc_get_pcaj(#{p_pcflbm, mode=IN, jdbcType=VARCHAR},
                                           #{p_ajmc, mode=IN, jdbcType=VARCHAR},
                                           #{p_pcrmc, mode=IN, jdbcType=VARCHAR},
+                                          #{p_cbrmc, mode=IN, jdbcType=VARCHAR},
+                                          #{p_sfldba, mode=IN, jdbcType=VARCHAR},
                                           #{p_dwbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pcjl, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pczt, mode=IN, jdbcType=VARCHAR},
                                           #{p_pckssj, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
                                           #{p_pcjssj, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
                                           #{p_pagesize,mode=IN,jdbcType=NUMERIC},
@@ -533,9 +537,63 @@
     <!--获取角色名称-->
     <select id="getJsmc" parameterType="java.util.Map" resultMap="jsmcMap">
         SELECT jsmc,rownum jsbm FROM (
-             SELECT jsmc FROM xt_qx_jsbm@tyyw_link.net WHERE dwbm LIKE '42%' GROUP BY jsmc ORDER BY jsmc)
+        SELECT jsmc FROM xt_qx_jsbm@tyyw_link.net WHERE dwbm LIKE '42%' GROUP BY jsmc ORDER BY jsmc)
     </select>
     <resultMap id="jsmcMap" type="java.util.Map" >
     </resultMap>
 
+    <!--湖北支持节点回退-->
+    <update id="backspace" parameterType="map" >
+        UPDATE yx_pc_jbxx j SET j.pcjdbh='006',j.pcjdms='评查办理',j.zhxgsj=SYSDATE WHERE j.pcslbm=#{pcslbm,jdbcType=VARCHAR}
+    </update>
+    <!--湖北支持节点回退,操作日志-->
+    <insert id="addBackspaceLog" parameterType="map" >
+        <selectKey keyProperty="logid" resultType="string" order="BEFORE">
+            select seq_yx_rz_cz.nextval from dual
+        </selectKey>
+        INSERT INTO yx_rz_cz
+        (logid,
+        czsj,
+        czlx,
+        czsm,
+        czrdwbm,
+        czrdwmc,
+        czrgh,
+        czrmc,
+        pcslbm,
+        gnmc)
+        VALUES
+        (#{logid},
+        SYSDATE,
+        '1',
+        #{czsm,jdbcType=VARCHAR},
+        #{dwbm,jdbcType=VARCHAR},
+        #{dwmc,jdbcType=VARCHAR},
+        #{gh,jdbcType=VARCHAR},
+        #{mc,jdbcType=VARCHAR},
+        #{pcslbm,jdbcType=VARCHAR},
+        '评查管理节点回退')
+
+    </insert>
+
+    <resultMap id="getPcbgMap" type="java.util.Map">
+        <id column="JZWJBH" jdbcType="VARCHAR" property="jzwjbh"/>
+        <result column="DWBM" jdbcType="CHAR" property="dwbm"/>
+        <result column="WJMC" jdbcType="VARCHAR" property="wjmc"/>
+        <result column="WSCFLJ" jdbcType="VARCHAR" property="wscflj"/>
+        <result column="NZRXM" jdbcType="VARCHAR" property="nzrxm"/>
+        <result column="CJSJ" jdbcType="DATE" property="cjsj"/>
+    </resultMap>
+    <!--获取评查报告列表-->
+    <select id="getPcbg" parameterType="java.util.Map" resultMap="getPcbgMap">
+        SELECT J.JZWJBH,J.DWBM,J.WJMC,J.WSCFLJ,J.NZRXM,J.CJSJ
+        FROM YX_PC_JZWJ J
+        WHERE WSMBBH
+        IN(
+        SELECT WSMBBH FROM Xt_Pc_WSMB where WSMBLB='3'
+        <if test="pcflbm!=null">
+            AND PCFLBM IN(${pcflbm})
+        </if>
+        ) AND J.DWBM IN (${dwbm})
+    </select>
 </mapper>

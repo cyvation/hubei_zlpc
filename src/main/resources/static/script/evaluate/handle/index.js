@@ -32,7 +32,6 @@ $(document).ready(function () {
         // sortOrder
         multiSort:true,
         remoteSort:false,
-
     columns: [[
             { field: 'PCSLBM', title: '评查受理编码', hidden: true },
             { field: 'PCSAH', title: '评查案号', width: 160, sortable:true },
@@ -66,6 +65,7 @@ $(document).ready(function () {
             },
             { field: 'PCJDBH', title: '评查节点编号', hidden: true },
             { field: 'PCJDMS', title: '评查状态', width: 100, sortable:true  },
+            { field: 'PCJL', title: '评查结论', width: 100, sortable:true  },
             { field: 'PCFLBM', title: '评查分类编码', hidden: true },
             { field: 'PCFLMC', title: '评查分类名称', hidden: true },
             { field: 'action', title: '操作', width: 60, align: 'center',

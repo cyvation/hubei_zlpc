@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.XtPcSxgzMapper">
+  <resultMap id="BaseResultMap" type="com.start.boot.domain.XtPcSxgz">
+    <id column="GZBM" jdbcType="CHAR" property="gzbm" />
+    <result column="DWBM" jdbcType="CHAR" property="dwbm" />
+    <result column="PCFLBM" jdbcType="CHAR" property="pcflbm" />
+    <result column="GZMC" jdbcType="VARCHAR" property="gzmc" />
+    <result column="SXCX" jdbcType="VARCHAR" property="sxcx" />
+    <result column="CXCS" jdbcType="VARCHAR" property="cxcs" />
+    <result column="SM" jdbcType="VARCHAR" property="sm" />
+    <result column="SSLB" jdbcType="VARCHAR" property="sslb" />
+    <result column="XH" jdbcType="DECIMAL" property="xh" />
+    <result column="PCMBJ" jdbcType="VARCHAR" property="pcmbj" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    GZBM, DWBM, PCFLBM, GZMC, SXCX, CXCS, SM, SSLB, XH, PCMBJ
+  </sql>
+  <select id="selectByExample" parameterType="com.start.boot.domain.XtPcSxgzExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from XT_PC_SXGZ
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from XT_PC_SXGZ
+    where GZBM = #{gzbm,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from XT_PC_SXGZ
+    where GZBM = #{gzbm,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.start.boot.domain.XtPcSxgzExample">
+    delete from XT_PC_SXGZ
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.start.boot.domain.XtPcSxgz">
+    insert into XT_PC_SXGZ (GZBM, DWBM, PCFLBM, GZMC, 
+      SXCX, CXCS, SM, SSLB, 
+      XH, PCMBJ)
+    values (#{gzbm,jdbcType=CHAR}, #{dwbm,jdbcType=CHAR}, #{pcflbm,jdbcType=CHAR}, #{gzmc,jdbcType=VARCHAR}, 
+      #{sxcx,jdbcType=VARCHAR}, #{cxcs,jdbcType=VARCHAR}, #{sm,jdbcType=VARCHAR}, #{sslb,jdbcType=VARCHAR}, 
+      #{xh,jdbcType=DECIMAL}, #{pcmbj,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.start.boot.domain.XtPcSxgz">
+    insert into XT_PC_SXGZ
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gzbm != null">
+        GZBM,
+      </if>
+      <if test="dwbm != null">
+        DWBM,
+      </if>
+      <if test="pcflbm != null">
+        PCFLBM,
+      </if>
+      <if test="gzmc != null">
+        GZMC,
+      </if>
+      <if test="sxcx != null">
+        SXCX,
+      </if>
+      <if test="cxcs != null">
+        CXCS,
+      </if>
+      <if test="sm != null">
+        SM,
+      </if>
+      <if test="sslb != null">
+        SSLB,
+      </if>
+      <if test="xh != null">
+        XH,
+      </if>
+      <if test="pcmbj != null">
+        PCMBJ,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gzbm != null">
+        #{gzbm,jdbcType=CHAR},
+      </if>
+      <if test="dwbm != null">
+        #{dwbm,jdbcType=CHAR},
+      </if>
+      <if test="pcflbm != null">
+        #{pcflbm,jdbcType=CHAR},
+      </if>
+      <if test="gzmc != null">
+        #{gzmc,jdbcType=VARCHAR},
+      </if>
+      <if test="sxcx != null">
+        #{sxcx,jdbcType=VARCHAR},
+      </if>
+      <if test="cxcs != null">
+        #{cxcs,jdbcType=VARCHAR},
+      </if>
+      <if test="sm != null">
+        #{sm,jdbcType=VARCHAR},
+      </if>
+      <if test="sslb != null">
+        #{sslb,jdbcType=VARCHAR},
+      </if>
+      <if test="xh != null">
+        #{xh,jdbcType=DECIMAL},
+      </if>
+      <if test="pcmbj != null">
+        #{pcmbj,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.start.boot.domain.XtPcSxgzExample" resultType="java.lang.Long">
+    select count(*) from XT_PC_SXGZ
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update XT_PC_SXGZ
+    <set>
+      <if test="record.gzbm != null">
+        GZBM = #{record.gzbm,jdbcType=CHAR},
+      </if>
+      <if test="record.dwbm != null">
+        DWBM = #{record.dwbm,jdbcType=CHAR},
+      </if>
+      <if test="record.pcflbm != null">
+        PCFLBM = #{record.pcflbm,jdbcType=CHAR},
+      </if>
+      <if test="record.gzmc != null">
+        GZMC = #{record.gzmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sxcx != null">
+        SXCX = #{record.sxcx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cxcs != null">
+        CXCS = #{record.cxcs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sm != null">
+        SM = #{record.sm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sslb != null">
+        SSLB = #{record.sslb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xh != null">
+        XH = #{record.xh,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pcmbj != null">
+        PCMBJ = #{record.pcmbj,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update XT_PC_SXGZ
+    set GZBM = #{record.gzbm,jdbcType=CHAR},
+      DWBM = #{record.dwbm,jdbcType=CHAR},
+      PCFLBM = #{record.pcflbm,jdbcType=CHAR},
+      GZMC = #{record.gzmc,jdbcType=VARCHAR},
+      SXCX = #{record.sxcx,jdbcType=VARCHAR},
+      CXCS = #{record.cxcs,jdbcType=VARCHAR},
+      SM = #{record.sm,jdbcType=VARCHAR},
+      SSLB = #{record.sslb,jdbcType=VARCHAR},
+      XH = #{record.xh,jdbcType=DECIMAL},
+      PCMBJ = #{record.pcmbj,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.start.boot.domain.XtPcSxgz">
+    update XT_PC_SXGZ
+    <set>
+      <if test="dwbm != null">
+        DWBM = #{dwbm,jdbcType=CHAR},
+      </if>
+      <if test="pcflbm != null">
+        PCFLBM = #{pcflbm,jdbcType=CHAR},
+      </if>
+      <if test="gzmc != null">
+        GZMC = #{gzmc,jdbcType=VARCHAR},
+      </if>
+      <if test="sxcx != null">
+        SXCX = #{sxcx,jdbcType=VARCHAR},
+      </if>
+      <if test="cxcs != null">
+        CXCS = #{cxcs,jdbcType=VARCHAR},
+      </if>
+      <if test="sm != null">
+        SM = #{sm,jdbcType=VARCHAR},
+      </if>
+      <if test="sslb != null">
+        SSLB = #{sslb,jdbcType=VARCHAR},
+      </if>
+      <if test="xh != null">
+        XH = #{xh,jdbcType=DECIMAL},
+      </if>
+      <if test="pcmbj != null">
+        PCMBJ = #{pcmbj,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where GZBM = #{gzbm,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.start.boot.domain.XtPcSxgz">
+    update XT_PC_SXGZ
+    set DWBM = #{dwbm,jdbcType=CHAR},
+      PCFLBM = #{pcflbm,jdbcType=CHAR},
+      GZMC = #{gzmc,jdbcType=VARCHAR},
+      SXCX = #{sxcx,jdbcType=VARCHAR},
+      CXCS = #{cxcs,jdbcType=VARCHAR},
+      SM = #{sm,jdbcType=VARCHAR},
+      SSLB = #{sslb,jdbcType=VARCHAR},
+      XH = #{xh,jdbcType=DECIMAL},
+      PCMBJ = #{pcmbj,jdbcType=VARCHAR}
+    where GZBM = #{gzbm,jdbcType=CHAR}
+  </update>
+</mapper>

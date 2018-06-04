@@ -88,4 +88,14 @@ public interface PcMapper {
     void getPcsp(Map map);
 
     List<Map> getJsmc(Map map);
+
+    void backspace(Map map);
+
+    void addBackspaceLog(Map map);
+
+    int htPcaj(String pcslbm);
+
+    int htRZ(Map map);
+
+    List<Map> getPcbg(Map map);
 }

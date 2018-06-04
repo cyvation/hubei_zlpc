@@ -42,6 +42,7 @@ function eval_random_marksInit(pcxx) {
             }
         });
     // }
+
     //检查官筛选条件加载
     init_eval_build_rd_stuff_codition(pcxx);
     // 检察官总表样式初始化
@@ -534,8 +535,16 @@ function load_table_eval_build_rd_custom(pcxx) {
     if(!checkTime(obj.GZRQBNG,obj.GZRQEND)){
         return;
     }
+    var tree = $("#cbt_eval_build_rd_custom_sxgz").combotree("tree");
+    var node = tree.tree("getSelected")
+    var url = "";
+    if(node.attributes.SFZDY == "Y"){
+        url = getRootPath()+'/filter/getSjsx';
+    }else{
+        url = getRootPath()+'/filter/getSjsxAdvance';
+    }
     $('#table_eval_build_rd_custom').datagrid({
-        url: getRootPath()+'/filter/getSjsx',
+        url: url,
         queryParams: { json : JSON.stringify(obj) }
     });
 }

@@ -16,6 +16,14 @@ public interface OriganizationService {
     List<Map> getDwbm(String dwbm)throws Exception;
 
     /**
+     * 获取单位树:湖北线下评查跨院
+     * 获取本单位平级及下级单位
+     * @param dwbm
+     * @return
+     */
+    List<Map> getPjDwbm(String dwbm)throws Exception;
+
+    /**
      * 获取组织结构树(单位部门角色)
      * @param dwbm
      * @return

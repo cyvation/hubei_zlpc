@@ -5,6 +5,7 @@ import com.start.boot.dao.ajpc.OfflineMapper;
 import com.start.boot.domain.*;
 import com.start.boot.pojo.vo.Yx_Pc_PcxFlVo;
 import com.start.boot.service.OfflineService;
+import com.start.boot.service.UserService;
 import com.start.boot.support.utils.DataAccessHelper;
 import com.start.boot.support.utils.OracleTimeUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -23,6 +24,11 @@ import java.util.*;
 public class OfflineServiceImpl implements OfflineService {
     @Autowired
     private OfflineMapper offlineMapper;
+
+    @Autowired
+    private UserService userService;
+
+
     @Override
     public List<Map> getPcbz(String pcflbm,String dwbm) throws Exception {
         String errMsg = "";
@@ -184,6 +190,7 @@ public class OfflineServiceImpl implements OfflineService {
             Date date = new Date();
             String nowdate=sdf.format(date);
             String newPcslNo=map.get("userdwbm")+nowdate+"XSL"+map.get("pcflbm")+num;
+            map.put("wcrqnf",(map.get("date")+"").split("-")[0]);
             map.put("pcslbm",newPcslNo);
             map.put("pcsah",dwjc.get("DWJC")+"线下评查["+nowdate+"]"+map.get("userdwbm")+Integer.valueOf(map.get("pcflbm")+"")+num+"号");
             map.put("bmsah",dwjc.get("DWJC")+"线下"+map.get("ajsljc")+"["+(map.get("date")+"").split("-")[0]+"]"+map.get("userdwbm")+bmsa+"号");
@@ -194,6 +201,18 @@ public class OfflineServiceImpl implements OfflineService {
             map.put("pcjdbh","011");
             map.put("pcjdms","评查结束");
             map.put("way","1");
+            if(map.containsKey("cbrgh") && "".equals(map.get("cbrgh").toString())){
+                Rybm rybm = new Rybm();
+                rybm.setDwbm(map.get("pcdw").toString());
+                rybm.setMc(map.get("cbr").toString());
+                rybm.setDlbm(map.get("cbr").toString());
+                rybm.setXb("1");
+                rybm.setSfsc("N");
+                rybm.setSflsry("N");
+                rybm.setSftz("N");
+                int gh = userService.offlineAddRybm(rybm);
+                map.put("cbrgh", gh);
+            }
             i= offlineMapper.saveAnJian(map);
             for (Yx_Pc_PcxFlVo fl:vo) {
                 fl.setPcslbm(newPcslNo);
@@ -396,5 +415,17 @@ public class OfflineServiceImpl implements OfflineService {
         // 操作数据库
         List<Map> list=offlineMapper.isOnAj(map);
         return list.size()>0?1:0;
+    }
+
+    // 已办已评查已反馈 列表
+    @Override
+    public List<Map> loadOfflineListExcel(Map map) throws Exception {
+        String errMsg = "";
+        String dw=map.get("dwbm")+"";
+        String [] d=dw.split(",");
+        map.put("dwbm",d);
+        // 操作数据库
+        List<Map> list=offlineMapper.loadOfflineListExcel(map);
+        return list;
     }
 }

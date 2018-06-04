@@ -254,13 +254,11 @@ function load_menu() {
                             var d1 = '<ul>';
                             var d2 = '';
                             //李志恒 2018年4月11日 暂时隐藏专题分析功能
-                            if(v.flbm!="4200000004"){
                                 v.functionList.forEach(function(jsonObj){
                                     if(jsonObj.gnsm!='N'){
                                         d2 += '<li class="lefttwo_text" id="'+ jsonObj.gnbm +'"><div class="lefttwo_left" style="float: left;"><img src="image/cqe/func/'+ jsonObj.icon +'.png"></div><div class="lefttwo_left_text">'+ jsonObj.gnxsmc +'</div><div class="lefttwo_right" style="float: right;"><img src="image/index/arrow.png"></div></li>'
                                     }
                                 })
-                            }
                             var d3 = '</ul>'
                             b += d1+d2+d3
                         }
@@ -1530,7 +1528,6 @@ function pcWinPage(index,id,type) {
     obj.PCCZLX = '0'; //0.只读 1.评查办理 2.评查审批 3.评查反馈 4.部门反馈
     obj.PCSPBM = ''; //仅评查审批阶段有
     obj.type=type;
-
     var url = "view/evaluate/pcblWin/deal.html";
     loadPcblWin(url, obj);
 }

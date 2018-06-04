@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>承办人评查情况统计</title>
+</head>
+<body>
+<!--页面JS加载，放在头部不能正确加载-->
+<script type="text/javascript">
+    AddScript("text/javascript", "script/statistics/promoter/index.js")
+</script>
+
+<!--功能模块-->
+<div id="tool_tj_promoters" style="padding:5px 0 5px 10px;" >
+    承办单位：<input id="cbt_tj_promoters_dw" class="easyui-combotree" style="width:150px"/>
+    案件承办部门：<input id="cbt_tj_promoters_bm" class="easyui-combotree" style="width:150px"/>
+    案件完成日期：<input id="date_tj_promoters_start" class="easyui-datebox" style="width:120px; border-color:#95B8E7;"/>
+    ~
+    <input id="date_tj_promoters_end" class="easyui-datebox" style="width:120px; border-color:#95B8E7;"/>
+    办案检察官：<input id="txt_tj_promoters_cbr" class="easyui-textbox" style="width:120px;" />
+    <span>承办人身份</span>
+    <input id="cbt_win_eval_build_cbrsf" class="easyui-combotree" style="width: 160px;"/>
+    <!--<a id="btn_tj_promoters_search" class="easyui-linkbutton">查询</a>-->
+    <button id="btn_tj_promoters_search" class="ZXpcjks_sj_2" style="cursor: pointer">查询</button>
+</div>
+<div id="layout_tj_promoters" class="easyui-layout" data-options="fit:'true'">
+    <div id="panel_tj_promoters" class="easyui-panel" data-options="fit:true,border:true">
+        <table id="grid_tj_promoters" border="0">
+        </table>
+    </div>
+</div>
+<div id="win_pcCount_filter" class="easyui-window" title="评查案件列表"
+     data-options="closed:true,collapsible:false,shadow:false,maximizable:false,minimizable:false,modal:true,cache:false,resizable:true,width:1000,height:600">
+    <table id="table_pcCount_filter" ></table>
+</div>
+<!--评查预览弹出框-->
+<div id="pcWin_win" style="padding: 10px;">
+    <div class="pcblPcyl">
+        <div>评查案件：<span id="win_pcWin_ajmc"></span></div>
+        <div>承办检察官：<span id="win_pcWin_cbr"></span></div>
+        <div>评查员：<span id="win_pcWin_pcr"></span></div>
+        <div>评查案号：<span id="win_pcWin_pcsah"></span></div>
+        <div>评查时间：<span id="win_pcWin_pcsj"></span></div>
+        <div>案件完成日期：<span id="win_pcWin_ajsj"></span></div>
+        <!-- <div>案由：<span id="win_pcWin_lbl_eval_handle_eval_ay"></span></div>-->
+    </div>
+    <div class="pcylCon" id="pcWin_pcylCon"></div>
+</div>
+</body>
+</html>

@@ -31,6 +31,7 @@ public class ExcelTest {
         try {
 
             HSSFWorkbook sheets1 = new HSSFWorkbook(new FileInputStream("E:\\周报\\46周_曹敏_个人周报.xlsx"));
+            HSSFWorkbook sheets1 = new HSSFWorkbook(new FileInputStream("E:\\周报\\46周_曹敏_个人周报.xlsx"));
             XSSFWorkbook sheets = new XSSFWorkbook(new FileInputStream("E:\\周报\\46周_曹敏_个人周报.xlsx"));
 
             // 读取Excel

@@ -1,24 +1,24 @@
 
 var option=[
     {
-        field: 'pcajs',title: '<span  style="font-size:14px">1评查案件数（件）</span>',width: 80,rowspan: 4,align: 'center',
+        field: 'pcajs',title: '<span  style="font-size:14px">1评查案件数（件）</span>',width: 120,rowspan: 4,align: 'center',
         formatter: function (value, row, index) {
             var r = (row.name.indexOf("合计") > 0 || row.name == '合计') ? value : '<a href="#" data-field={"id":"' + row.id + '","pid":"' + row.pid + '","fl":""} onclick="pcWin_pcList(this,0)">' + value + '</a>';
             return r;
         }
     },
     {
-        field: 'cwajs',title: '<span  style=\'font-size:14px\'>2存在错误项的案件数</span>',width: 80,rowspan: 4, align: 'center',
+        field: 'cwajs',title: '<span  style=\'font-size:14px\'>2存在错误项的案件数</span>',width:120,rowspan: 4, align: 'center',
         formatter: function (value, row, index) {
             var r= (row.name.indexOf("合计")>0||row.name=='合计') ?value:'<a href="#" data-field={"id":"'+row.id+'","pid":"'+row.pid+'","fl":""} onclick="pcWin_pcList(this,1)">'+value+'</a>';
             return r;
         }
     },
     {
-        field: 'cwBl',title: '<span  style=\'font-size:14px\'>3存在错误项的案件比例（2/1）</span>',width: 80,rowspan: 4,align: 'center'
+        field: 'cwBl',title: '<span  style=\'font-size:14px\'>3存在错误项的案件比例（2/1）</span>',width: 100,rowspan: 4,align: 'center'
     },
     {
-        field: 'cws',title: '<span  style=\'font-size:14px\'>4错误项个数</span>',rowspan: 4,width: 80,align: 'center'
+        field: 'cws',title: '<span  style=\'font-size:14px\'>4错误项个数</span>',rowspan: 4,width: 120,align: 'center'
     },
     {
         field: 'ajpjcws',title: '<span  style=\'font-size:14px\'>案件平均错误项个数(4/1)</span>',rowspan: 4,width: 80,align: 'center'

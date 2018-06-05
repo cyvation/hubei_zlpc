@@ -76,8 +76,12 @@
         jb.pcr_gh, jb.pcr_mc, jb.pcmbbm, jb.ajglzt, jb.pcjg, jb.pcjl, jb. pcbgbh, jb.cjsj , jb.zhxgsj, lb.pcflmc,rownum rn
         FROM yx_pc_offline_jbxx jb
         INNER join xt_pc_lb lb ON jb.pcflbm=lb.pcflbm
-        WHERE jb.sfsc = 'N'  AND jb.pcr_dwbm IN
-        <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        WHERE jb.sfsc = 'N'  AND jb.PCDWBM IN
+        <foreach item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        <if test="bpcdw !=null and bpcdw!=''">
+            AND jb.BPC_DWBM IN
+            <foreach item="item" collection="bpcdw" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        </if>
         <if test="ajmc !=null and ajmc!='' ">
             AND jb.ajmc like '%'||#{ajmc}||'%'
         </if>

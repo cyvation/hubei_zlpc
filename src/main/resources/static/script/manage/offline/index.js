@@ -33,7 +33,29 @@ function init_tool_done_list() {
             index_addMousedownDiv(this,"cbt_offline_pcdw");
         }
     });
-
+    //评查单位树
+    $('#cbt_offline_bpcdw').combotree({
+        method: 'get',
+        editable: false,
+        panelWidth: 250,
+        lines: true,
+        multiple: true,
+        cascadeCheck: false,
+        url: getRootPath() + '/organization/getDwbmTree',
+        async: false,
+        onShowPanel: index_onShowPanel,
+        onHidePanel: index_onHidePanel,
+        loadFilter: function (data) {
+            return data.status == 200 ? JSON.parse(data.value) : [];
+        },
+        onLoadSuccess: function (node, data) {
+            if (data != null && data.length >= 1) {
+                dt = data[0].id;
+                $('#cbt_offline_bpcdw').combotree('setValue', data[0].id); //单位默认选择
+            }
+            index_addMousedownDiv(this,"cbt_offline_bpcdw");
+        }
+    });
     // 设置时间为本年
     $('#date_offline_begin').datebox({
         editable: false,
@@ -141,6 +163,7 @@ function load_grid_done_list_pc() {
     var begin = $("#date_offline_begin").datebox('getValue');
     var end = $("#date_offline_end").datebox('getValue');
     var dw=$('#cbt_offline_pcdw').combotree('getValue') == undefined ? userInfo.DWBM : $('#cbt_offline_pcdw').combotree('getValues').join(",");//评查单位编码
+    var dw=$('#cbt_offline_bpcdw').combotree('getValue') == undefined ? "" : $('#cbt_offline_bpcdw').combotree('getValues').join(",");//评查单位编码
     // JS对象
     var basciInfo ={
         'ajmc':ajmc,
@@ -148,7 +171,8 @@ function load_grid_done_list_pc() {
         'bpcr':bpcr,
         'begin':begin,
         'end':end,
-        'dwbm':dw
+        'dwbm':dw,
+        'bpcdw':dw
     };
     $('#grid_done_list_pc').datagrid({
         url: getRootPath() + '/offline/loadOfflineList',

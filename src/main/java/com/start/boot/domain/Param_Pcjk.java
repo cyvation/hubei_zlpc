@@ -9,6 +9,10 @@ public class Param_Pcjk extends Param_Pager {
 
     //单位编码
     private String dwbm;
+
+    //承办单位
+    private String cbdwbm;
+
     //部门编码
     private String bmbm;
     //工号
@@ -145,4 +149,11 @@ public class Param_Pcjk extends Param_Pager {
     }
 
 
+    public String getCbdwbm() {
+        return cbdwbm;
+    }
+
+    public void setCbdwbm(String cbdwbm) {
+        this.cbdwbm = cbdwbm;
+    }
 }

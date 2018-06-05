@@ -108,6 +108,30 @@ function init_moniter_random_EasyUiCom() {
         }
     });
 
+    //评查单位树
+    $('#cbt_moniter_random_cbdw').combotree({
+        method: 'get',
+        editable: false,
+        panelWidth: 250,
+        lines: true,
+        multiple: true,
+        cascadeCheck: false,
+        url: getRootPath() + '/organization/getDwbmTree',
+        async: false,
+        onShowPanel: index_onShowPanel,
+        onHidePanel: index_onHidePanel,
+        loadFilter: function (data) {
+            return data.status == 200 ? JSON.parse(data.value) : [];
+        },
+        onLoadSuccess: function (node, data) {
+            if (data != null && data.length >= 1) {
+                dt = data[0].id;
+                $('#cbt_moniter_random_cbdw').combotree('setValue', data[0].id); //单位默认选择
+            }
+            index_addMousedownDiv(this,"cbt_moniter_random_cbdw");
+        }
+    });
+
     // 承办部门树：
     $("#cbt_moniter_random_dept").combotree({
         method: 'get',
@@ -508,6 +532,7 @@ function load_monitor_random_sjpc_filter() {
 
     var obj = new Object();
     obj.PCDWBM = $('#cbt_moniter_random_pcdw').combotree('getValue') == undefined ? userInfo.DWBM : $('#cbt_moniter_random_pcdw').combotree('getValues').join(",");//评查单位编码
+    obj.CBDWBM = $('#cbt_moniter_random_cbdw').combotree('getValue') == undefined ? userInfo.DWBM : $('#cbt_moniter_random_cbdw').combotree('getValues').join(",");//承办单位编码
     obj.PCFLBM = $('#cbt_moniter_random_pcfs').combotree('getValues').join(",");//评查分类编码
     var tempPCJL = $('#cbt_moniter_random_pcjl').combotree('getText');
     var tempArr = tempPCJL.split(",");

@@ -242,7 +242,8 @@ public class FilterServiceImpl implements FilterService {
         String errMsg = "";
 
         Map map = new HashMap();
-        map.put("p_dwbm",pcjkParam.getDwbm());//单位编码
+        map.put("p_dwbm",pcjkParam.getDwbm());//评查单位编码
+        map.put("p_cbdwbm", pcjkParam.getCbdwbm()); //承办单位编码
         map.put("p_bmbm",pcjkParam.getBmbm()); // 部门编码
         map.put("p_gh",pcjkParam.getGh());//工号
         map.put("p_pcdwbm",pcjkParam.getPcdwbm());//评查单位编码

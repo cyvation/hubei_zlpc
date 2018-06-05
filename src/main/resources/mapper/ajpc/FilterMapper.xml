@@ -167,6 +167,7 @@
     <select id="getPcjk" parameterType="map" statementType="CALLABLE">
         <![CDATA[
           call pkg_pcsx.proc_get_pcjklist(#{p_dwbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_cbdwbm, mode=IN, jdbcType=VARCHAR},
                                           #{p_bmbm, mode=IN, jdbcType=VARCHAR},
                                           #{p_gh, mode=IN, jdbcType=VARCHAR},
                                           #{p_pcdwbm, mode=IN, jdbcType=VARCHAR},

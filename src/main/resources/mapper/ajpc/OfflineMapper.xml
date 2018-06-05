@@ -101,7 +101,11 @@
         FROM yx_pc_offline_jbxx jb
         INNER join xt_pc_lb lb ON jb.pcflbm=lb.pcflbm
         WHERE jb.sfsc = 'N'
-        AND jb.pcr_dwbm IN  <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        AND jb.PCDWBM IN  <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        <if test="bpcdw !=null and bpcdw!=''">
+            AND jb.BPC_DWBM IN
+            <foreach item="item" collection="bpcdw" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        </if>
         <if test="ajmc !=null and ajmc!='' ">
             AND jb.ajmc like '%'||#{ajmc}||'%'
         </if>

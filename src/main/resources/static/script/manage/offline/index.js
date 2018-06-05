@@ -163,7 +163,7 @@ function load_grid_done_list_pc() {
     var begin = $("#date_offline_begin").datebox('getValue');
     var end = $("#date_offline_end").datebox('getValue');
     var dw=$('#cbt_offline_pcdw').combotree('getValue') == undefined ? userInfo.DWBM : $('#cbt_offline_pcdw').combotree('getValues').join(",");//评查单位编码
-    var dw=$('#cbt_offline_bpcdw').combotree('getValue') == undefined ? "" : $('#cbt_offline_bpcdw').combotree('getValues').join(",");//评查单位编码
+    var dws=$('#cbt_offline_bpcdw').combotree('getValue') == undefined ? "" : $('#cbt_offline_bpcdw').combotree('getValues').join(",");//评查单位编码
     // JS对象
     var basciInfo ={
         'ajmc':ajmc,
@@ -172,7 +172,7 @@ function load_grid_done_list_pc() {
         'begin':begin,
         'end':end,
         'dwbm':dw,
-        'bpcdw':dw
+        'bpcdw':dws
     };
     $('#grid_done_list_pc').datagrid({
         url: getRootPath() + '/offline/loadOfflineList',

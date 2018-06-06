@@ -3176,7 +3176,6 @@ public class AnalysisServiceImpl implements AnalysisService {
                 sigleData.add(String.valueOf(m.get("fljdHj")));
             } else {
                 sigleData.add(String.valueOf(m.get("zjcxHj")));
-                sigleData.add(String.valueOf(m.get("zjcx40000")));
                 sigleData.add(String.valueOf(m.get("zjcx40072")));
                 sigleData.add(String.valueOf(m.get("zjcx40073")));
                 sigleData.add(String.valueOf(m.get("zjcx40116")));
@@ -3191,8 +3190,8 @@ public class AnalysisServiceImpl implements AnalysisService {
                 sigleData.add(String.valueOf(m.get("zjcx40246")));
                 sigleData.add(String.valueOf(m.get("zjcx40288")));
                 sigleData.add(String.valueOf(m.get("zjcx40292")));
+                sigleData.add(String.valueOf(m.get("zjcx40000")));
                 sigleData.add(String.valueOf(m.get("ssrdHj")));
-                sigleData.add(String.valueOf(m.get("ssrd40000")));
                 sigleData.add(String.valueOf(m.get("ssrd40024")));
                 sigleData.add(String.valueOf(m.get("ssrd40025")));
                 sigleData.add(String.valueOf(m.get("ssrd40026")));
@@ -3208,8 +3207,8 @@ public class AnalysisServiceImpl implements AnalysisService {
                 sigleData.add(String.valueOf(m.get("ssrd40275")));
                 sigleData.add(String.valueOf(m.get("ssrd40281")));
                 sigleData.add(String.valueOf(m.get("ssrd40282")));
+                sigleData.add(String.valueOf(m.get("ssrd40000")));
                 sigleData.add(String.valueOf(m.get("flsyHj")));
-                sigleData.add(String.valueOf(m.get("flsy40000")));
                 sigleData.add(String.valueOf(m.get("flsy40125")));
                 sigleData.add(String.valueOf(m.get("flsy40126")));
                 sigleData.add(String.valueOf(m.get("flsy40127")));
@@ -3219,8 +3218,8 @@ public class AnalysisServiceImpl implements AnalysisService {
                 sigleData.add(String.valueOf(m.get("flsy40270")));
                 sigleData.add(String.valueOf(m.get("flsy40271")));
                 sigleData.add(String.valueOf(m.get("flsy40284")));
+                sigleData.add(String.valueOf(m.get("flsy40000")));
                 sigleData.add(String.valueOf(m.get("bacxHj")));
-                sigleData.add(String.valueOf(m.get("bacx40000")));
                 sigleData.add(String.valueOf(m.get("bacx40003")));
                 sigleData.add(String.valueOf(m.get("bacx40004")));
                 sigleData.add(String.valueOf(m.get("bacx40006")));
@@ -3328,8 +3327,8 @@ public class AnalysisServiceImpl implements AnalysisService {
                 sigleData.add(String.valueOf(m.get("bacx40273")));
                 sigleData.add(String.valueOf(m.get("bacx40279")));
                 sigleData.add(String.valueOf(m.get("bacx40287")));
+                sigleData.add(String.valueOf(m.get("bacx40000")));
                 sigleData.add(String.valueOf(m.get("flwsHj")));
-                sigleData.add(String.valueOf(m.get("flws40000")));
                 sigleData.add(String.valueOf(m.get("flws40043")));
                 sigleData.add(String.valueOf(m.get("flws40044")));
                 sigleData.add(String.valueOf(m.get("flws40156")));
@@ -3337,13 +3336,13 @@ public class AnalysisServiceImpl implements AnalysisService {
                 sigleData.add(String.valueOf(m.get("flws40186")));
                 sigleData.add(String.valueOf(m.get("flws40189")));
                 sigleData.add(String.valueOf(m.get("flws40242")));
+                sigleData.add(String.valueOf(m.get("flws40000")));
                 sigleData.add(String.valueOf(m.get("sfHj")));
-                sigleData.add(String.valueOf(m.get("sf40000")));
                 sigleData.add(String.valueOf(m.get("sf40038")));
                 sigleData.add(String.valueOf(m.get("sf40184")));
                 sigleData.add(String.valueOf(m.get("sf40198")));
+                sigleData.add(String.valueOf(m.get("sf40000")));
                 sigleData.add(String.valueOf(m.get("xtgfHj")));
-                sigleData.add(String.valueOf(m.get("xtgf40000")));
                 sigleData.add(String.valueOf(m.get("xtgf40018")));
                 sigleData.add(String.valueOf(m.get("xtgf40097")));
                 sigleData.add(String.valueOf(m.get("xtgf40110")));
@@ -3351,11 +3350,12 @@ public class AnalysisServiceImpl implements AnalysisService {
                 sigleData.add(String.valueOf(m.get("xtgf40177")));
                 sigleData.add(String.valueOf(m.get("xtgf40178")));
                 sigleData.add(String.valueOf(m.get("xtgf40196")));
+                sigleData.add(String.valueOf(m.get("xtgf40000")));
                 sigleData.add(String.valueOf(m.get("qtHj")));
-                sigleData.add(String.valueOf(m.get("qt40000")));
                 sigleData.add(String.valueOf(m.get("qt40049")));
                 sigleData.add(String.valueOf(m.get("qt40050")));
                 sigleData.add(String.valueOf(m.get("qt40154")));
+                sigleData.add(String.valueOf(m.get("qt40000")));
                 sigleData.add(String.valueOf(m.get("zcjdHj")));
                 sigleData.add(String.valueOf(m.get("zcjd40002")));
                 sigleData.add(String.valueOf(m.get("zcjd40039")));
@@ -3380,7 +3380,6 @@ public class AnalysisServiceImpl implements AnalysisService {
                 sigleData.add(String.valueOf(m.get("cxesg40204")));
                 sigleData.add(String.valueOf(m.get("cxesg40000")));
                 sigleData.add(String.valueOf(m.get("tbHj")));
-                sigleData.add(String.valueOf(m.get("tb40000")));
                 sigleData.add(String.valueOf(m.get("tb40048")));
                 sigleData.add(String.valueOf(m.get("tb40083")));
                 sigleData.add(String.valueOf(m.get("tb40092")));
@@ -3396,18 +3395,19 @@ public class AnalysisServiceImpl implements AnalysisService {
                 sigleData.add(String.valueOf(m.get("tb40232")));
                 sigleData.add(String.valueOf(m.get("tb40243")));
                 sigleData.add(String.valueOf(m.get("tb40285")));
+                sigleData.add(String.valueOf(m.get("tb40000")));
                 sigleData.add(String.valueOf(m.get("cxeswHj")));
-                sigleData.add(String.valueOf(m.get("cxesw40000")));
                 sigleData.add(String.valueOf(m.get("cxesw40105")));
                 sigleData.add(String.valueOf(m.get("cxesw40115")));
                 sigleData.add(String.valueOf(m.get("cxesw40172")));
                 sigleData.add(String.valueOf(m.get("cxesw40204")));
+                sigleData.add(String.valueOf(m.get("cxesw40000")));
                 sigleData.add(String.valueOf(m.get("fljdHj")));
-                sigleData.add(String.valueOf(m.get("fljd40000")));
                 sigleData.add(String.valueOf(m.get("fljd40200")));
                 sigleData.add(String.valueOf(m.get("fljd40201")));
                 sigleData.add(String.valueOf(m.get("fljd40202")));
                 sigleData.add(String.valueOf(m.get("fljd40203")));
+                sigleData.add(String.valueOf(m.get("fljd40000")));
             }
             data.add(sigleData);
         }

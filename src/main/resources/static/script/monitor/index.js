@@ -97,7 +97,7 @@ function init_moniter_random_EasyUiCom() {
             if (data != null && data.length >= 1) {
                 dt = data[0].id;
                 var datalength = $(".redio_click_no").attr('data-value');
-                $('#cbt_moniter_random_pcdw').combotree('setValue', data[0].id); //单位默认选择
+                // $('#cbt_moniter_random_pcdw').combotree('setValue', data[0].id); //单位默认选择
                 if (datalength == 3 || typeof (datalength)== 'undefined') { //湖北:市级院需要可选下级单位
                     $('#cbt_moniter_random_pcdw').combotree('enable');
                 } else {
@@ -531,7 +531,7 @@ function init_table_monitor_Ajlb_DataGrid(groupCol) {
 function load_monitor_random_sjpc_filter() {
 
     var obj = new Object();
-    obj.PCDWBM = $('#cbt_moniter_random_pcdw').combotree('getValue') == undefined ? userInfo.DWBM : $('#cbt_moniter_random_pcdw').combotree('getValues').join(",");//评查单位编码
+    obj.PCDWBM = $('#cbt_moniter_random_pcdw').combotree('getValues').join(",");//评查单位编码
     obj.CBDWBM = $('#cbt_moniter_random_cbdw').combotree('getValue') == undefined ? userInfo.DWBM : $('#cbt_moniter_random_cbdw').combotree('getValues').join(",");//承办单位编码
     obj.PCFLBM = $('#cbt_moniter_random_pcfs').combotree('getValues').join(",");//评查分类编码
     var tempPCJL = $('#cbt_moniter_random_pcjl').combotree('getText');
@@ -562,11 +562,13 @@ function load_monitor_random_sjpc_filter() {
     });
 
 }
+
 //获取案件列表（导出
 function load_monitor_random_sjpc_filter_excel() {
 
     var obj = new Object();
     obj.PCDWBM = $('#cbt_moniter_random_pcdw').combotree('getValue') == undefined ? userInfo.DWBM : $('#cbt_moniter_random_pcdw').combotree('getValues').join(",");//评查单位编码
+    obj.CBDWBM = $('#cbt_moniter_random_cbdw').combotree('getValue') == undefined ? userInfo.DWBM : $('#cbt_moniter_random_cbdw').combotree('getValues').join(",");//承办单位编码
     obj.PCFLBM = $('#cbt_moniter_random_pcfs').combotree('getValues').join(",");//评查分类编码
     var tempPCJL = $('#cbt_moniter_random_pcjl').combotree('getText');
     var tempArr = tempPCJL.split(",");
@@ -610,7 +612,8 @@ function load_monitor_random_sjpc_filter_excel() {
 function load_monitor_random_sjpc_filter_excel() {
 
     var obj = new Object();
-    obj.PCDWBM = $('#cbt_moniter_random_pcdw').combotree('getValue') == undefined ? userInfo.DWBM : $('#cbt_moniter_random_pcdw').combotree('getValues').join(",");//评查单位编码
+    obj.PCDWBM = $('#cbt_moniter_random_pcdw').combotree('getValues').join(",");//评查单位编码
+    obj.CBDWBM = $('#cbt_moniter_random_cbdw').combotree('getValue') == undefined ? userInfo.DWBM : $('#cbt_moniter_random_cbdw').combotree('getValues').join(",");//承办单位编码
     obj.PCFLBM = $('#cbt_moniter_random_pcfs').combotree('getValues').join(",");//评查分类编码
     var tempPCJL = $('#cbt_moniter_random_pcjl').combotree('getText');
     var tempArr = tempPCJL.split(",");

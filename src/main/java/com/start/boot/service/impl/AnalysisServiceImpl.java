@@ -688,8 +688,8 @@ public class AnalysisServiceImpl implements AnalysisService {
                 }
                 map.put("dwbm", "".equals(dw) ? "" : dw.split(","));
                 Map counts=analysisMapper.loadGeneralPersonalNum(map);
-                m.put("bjrNum", counts.get("BJR")+"");
-                m.put("pcrNum", counts.get("PCR")+"");
+                m.put("bjrNum", counts==null?"0":counts.get("BJR")+"");
+                m.put("pcrNum", counts==null?"0":counts.get("PCR")+"");
                 Double pcajNum = Double.valueOf( m.get("pcajNum") + "");
                 Double bjajNum = Double.valueOf( m.get("bjajNum") + "");
                 Double bjrNum = Double.valueOf( m.get("bjrNum") + "");
@@ -717,6 +717,19 @@ public class AnalysisServiceImpl implements AnalysisService {
         for (int i = 0; i < list.size(); i++) {
             Map m = list.get(i);
             int count = 0;
+            if(lists.size()==0){
+                m.put("bjrNum", 0);
+                m.put("bjajNum", 0);
+                m.put("pcrNum", 0);
+                m.put("pcajNum", 0);
+                m.put("pcbl", "0.00%");
+                m.put("bpcAvgNum", "0.00");
+                m.put("avgNum", "0.00");
+                m.put("id", m.get("ID"));
+                m.put("pid", m.get("PID"));
+                m.put("name", m.get("DWMC"));
+                continue;
+            }
             for (int a = 0; a < lists.size(); a++) {
                 Map map = lists.get(a);
                 if (m.get("ID").equals(map.get("id"))) {
@@ -1280,6 +1293,41 @@ public class AnalysisServiceImpl implements AnalysisService {
         for (int i = 0; i < list.size(); i++) {
             Map m = list.get(i);
             int count = 0;
+            if(lists.size()==0){
+                m.put("PCALLCOUNT", "0");
+                m.put("errorAllCount", "0");
+                m.put("errorCount", "0");
+                m.put("zjcxHj", "0");
+                m.put("zjcxBl", "0.00%");
+                m.put("ssrdHj", "0");
+                m.put("ssrdBl", "0.00%");
+                m.put("flsyHj", "0");
+                m.put("flsyBl", "0.00%");
+                m.put("bacxHj", "0");
+                m.put("bacxBl", "0.00%");
+                m.put("flwsHj", "0");
+                m.put("flwsBl", "0.00%");
+                m.put("sfHj", "0");
+                m.put("sfBl", "0.00%");
+                m.put("xtgfHj", "0");
+                m.put("xtgfBl", "0.00%");
+                m.put("qtHj", "0");
+                m.put("qtBl", "0.00%");
+                m.put("zcjdHj", "0");
+                m.put("zcjdBl", "0.00%");
+                m.put("cxesgHj", "0");
+                m.put("cxesgBl", "0.00%");
+                m.put("tbHj", "0");
+                m.put("tbBl", "0.00%");
+                m.put("cxeswHj", "0");
+                m.put("cxeswBl", "0.00%");
+                m.put("fljdHj", "0");
+                m.put("fljdBl", "0.00%");
+                m.put("id", m.get("ID"));
+                m.put("pid", m.get("PID"));
+                m.put("name", m.get("DWMC"));
+                continue;
+            }
             for (int a = 0; a < lists.size(); a++) {
                 Map map = lists.get(a);
                 if (m.get("ID").equals(map.get("id"))) {
@@ -1669,8 +1717,8 @@ public class AnalysisServiceImpl implements AnalysisService {
                     }
                     seach.put("dwbm", "".equals(dw) ? "" : dw.split(","));
                     Map counts=analysisMapper.loadGeneralPersonalNum(seach);
-                    m.put("bjrNum", counts.get("BJR")+"");
-                    m.put("pcrNum", counts.get("PCR")+"");
+                    m.put("bjrNum", counts==null?"0":counts.get("BJR")+"");
+                    m.put("pcrNum", counts==null?"0":counts.get("PCR")+"");
                     Double pcajNum = Double.valueOf( m.get("pcajNum") + "");
                     Double bjajNum = Double.valueOf( m.get("bjajNum") + "");
                     Double bjrNum = Double.valueOf( m.get("bjrNum") + "");
@@ -2123,6 +2171,41 @@ public class AnalysisServiceImpl implements AnalysisService {
         for (int i = 0; i < list.size(); i++) {
             Map m = list.get(i);
             int count = 0;
+            if(lists.size()==0){
+                m.put("PCALLCOUNT", "0");
+                m.put("errorAllCount", "0");
+                m.put("errorCount", "0");
+                m.put("zjcxHj", "0");
+                m.put("zjcxBl", "0.00%");
+                m.put("ssrdHj", "0");
+                m.put("ssrdBl", "0.00%");
+                m.put("flsyHj", "0");
+                m.put("flsyBl", "0.00%");
+                m.put("bacxHj", "0");
+                m.put("bacxBl", "0.00%");
+                m.put("flwsHj", "0");
+                m.put("flwsBl", "0.00%");
+                m.put("sfHj", "0");
+                m.put("sfBl", "0.00%");
+                m.put("xtgfHj", "0");
+                m.put("xtgfBl", "0.00%");
+                m.put("qtHj", "0");
+                m.put("qtBl", "0.00%");
+                m.put("zcjdHj", "0");
+                m.put("zcjdBl", "0.00%");
+                m.put("cxesgHj", "0");
+                m.put("cxesgBl", "0.00%");
+                m.put("tbHj", "0");
+                m.put("tbBl", "0.00%");
+                m.put("cxeswHj", "0");
+                m.put("cxeswBl", "0.00%");
+                m.put("fljdHj", "0");
+                m.put("fljdBl", "0.00%");
+                m.put("id", m.get("ID"));
+                m.put("pid", m.get("PID"));
+                m.put("name", m.get("DWMC"));
+                continue;
+            }
             for (int a = 0; a < lists.size(); a++) {
                 Map map = lists.get(a);
                 if (m.get("ID").equals(map.get("id"))) {
@@ -3337,6 +3420,19 @@ public class AnalysisServiceImpl implements AnalysisService {
         for (int i = 0; i < list.size(); i++) {
             Map m = list.get(i);
             int count = 0;
+            if(lists.size()==0){
+                m.put("bjrNum", 0);
+                m.put("bjajNum", 0);
+                m.put("pcrNum", 0);
+                m.put("pcajNum", 0);
+                m.put("pcbl", "0.00%");
+                m.put("bpcAvgNum", "0.00");
+                m.put("avgNum", "0.00");
+                m.put("id", m.get("ID"));
+                m.put("pid", m.get("PID"));
+                m.put("name", m.get("DWMC"));
+                continue;
+            }
             for (int a = 0; a < lists.size(); a++) {
                 Map map = lists.get(a);
                 if (m.get("ID").equals(map.get("id"))) {

@@ -1065,6 +1065,9 @@
         <if test="dwbm !=null and dwbm!=''">
             AND ajxx.bpc_dwbm in (${dwbm})
         </if>
+        <if test="flxtdm !=null and flxtdm!=''">
+            AND pcx.flxtdm = #{flxtdm}
+        </if>
     </select>
     <select id="loadGeneralPersonalNum" resultType='map' parameterType="map">
         select

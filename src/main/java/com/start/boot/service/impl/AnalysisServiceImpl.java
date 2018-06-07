@@ -201,13 +201,13 @@ public class AnalysisServiceImpl implements AnalysisService {
                         } else if (m.get("DM").equals("20009")) {//侦查监督
                             map.put("zcjdHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("zcjdHj") + ""));
                             map.put("zcjdBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("zcjdHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
-                        } else if (m.get("DM").equals("20006") && m.get("ZYYWTX").equals("10003")) {//出席二审法庭
+                        } else if (m.get("DM").equals("20006") && (m.get("ZYYWTX")+"").contains("10003")) {//出席二审法庭
                             map.put("cxesgHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("cxesgHj") + ""));
                             map.put("cxesgBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("cxesgHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20005")) { //特别程序
                             map.put("tbHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("tbHj") + ""));
                             map.put("tbBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("tbHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
-                        } else if (m.get("DM").equals("20006") && m.get("ZYYWTX").equals("10017")) {//出席二审法庭
+                        } else if (m.get("DM").equals("20006") && (m.get("ZYYWTX")+"").contains("10017")) {//出席二审法庭
                             map.put("cxeswHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("cxeswHj") + ""));
                             map.put("cxeswBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("cxeswHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20007")) { //法律监督
@@ -296,13 +296,13 @@ public class AnalysisServiceImpl implements AnalysisService {
                         } else if (m.get("DM").equals("20009")) {//侦查监督
                             map.put("zcjdHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("zcjdHj") + ""));
                             map.put("zcjdBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("zcjdHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
-                        } else if (m.get("DM").equals("20006") && m.get("ZYYWTX").equals("10003")) {//出席二审法庭
+                        } else if (m.get("DM").equals("20006") && (m.get("ZYYWTX")+"").contains("10003")) {//出席二审法庭
                             map.put("cxesgHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("cxesgHj") + ""));
                             map.put("cxesgBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("cxesgHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20005")) { //特别程序
                             map.put("tbHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("tbHj") + ""));
                             map.put("tbBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("tbHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
-                        } else if (m.get("DM").equals("20006") && m.get("ZYYWTX").equals("10017")) {//出席二审法庭
+                        } else if (m.get("DM").equals("20006") && (m.get("ZYYWTX")+"").contains("10017")) {//出席二审法庭
                             map.put("cxeswHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("cxeswHj") + ""));
                             map.put("cxeswBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("cxeswHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20007")) { //法律监督
@@ -1920,9 +1920,9 @@ public class AnalysisServiceImpl implements AnalysisService {
                     }
                 } else {
                     Map pcxMap = pcx.get(a);
-                    if (pcxMap.get("DM").equals(map.get("DM")) && pcxMap.get("YWTX").equals("10017")) {
+                    if (pcxMap.get("DM").equals(map.get("DM")) && (pcxMap.get("YWTX")+"").contains("10017")) {
                         m.put(name + pcxMap.get("XTDM"), "0/0.00%");
-                    } else if (pcxMap.get("DM").equals(map.get("DM")) && pcxMap.get("YWTX").equals("10003")) {
+                    } else if (pcxMap.get("DM").equals(map.get("DM")) && (pcxMap.get("YWTX")+"").contains("10003")) {
                         m.put(name + pcxMap.get("XTDM"), "0/0.00%");
                     }
                 }
@@ -1961,11 +1961,11 @@ public class AnalysisServiceImpl implements AnalysisService {
                             name = "qt";
                         } else if (m.get("DM").equals("20009")) {//侦查监督
                             name = "zcjd";
-                        } else if (m.get("DM").equals("20006") && m.get("ZYYWTX").equals("10003")) {//出席二审法庭
+                        } else if (m.get("DM").equals("20006") && (m.get("ZYYWTX")+"").contains("10003")) {//出席二审法庭
                             name = "cxesg";
                         } else if (m.get("DM").equals("20005")) { //特别程序
                             name = "tb";
-                        } else if (m.get("DM").equals("20006") && m.get("ZYYWTX").equals("10017")) {//出席二审法庭
+                        } else if (m.get("DM").equals("20006") && (m.get("ZYYWTX")+"").contains("10017")) {//出席二审法庭
                             name = "cxesw";
                         } else if (m.get("DM").equals("20007")) { //法律监督
                             name = "fljd";
@@ -2020,9 +2020,9 @@ public class AnalysisServiceImpl implements AnalysisService {
                         }
                     } else {
                         Map pcxMap = pcx.get(a);
-                        if (pcxMap.get("DM").equals(map.get("DM")) && pcxMap.get("YWTX").equals("10017")) {
+                        if (pcxMap.get("DM").equals(map.get("DM")) && (pcxMap.get("YWTX")+"").contains("10017")) {
                             map.put(name + pcxMap.get("XTDM"), "0/0.00%");
-                        } else if (pcxMap.get("DM").equals(map.get("DM")) && pcxMap.get("YWTX").equals("10003")) {
+                        } else if (pcxMap.get("DM").equals(map.get("DM")) && (pcxMap.get("YWTX")+"").contains("10003")) {
                             map.put(name + pcxMap.get("XTDM"), "0/0.00%");
                         }
                     }
@@ -2098,11 +2098,11 @@ public class AnalysisServiceImpl implements AnalysisService {
                             name = "qt";
                         } else if (m.get("DM").equals("20009")) {//侦查监督
                             name = "zcjd";
-                        } else if (m.get("DM").equals("20006") && m.get("ZYYWTX").equals("10003")) {//出席二审法庭
+                        } else if (m.get("DM").equals("20006") && (m.get("ZYYWTX")+"").contains("10003")) {//出席二审法庭
                             name = "cxesg";
                         } else if (m.get("DM").equals("20005")) { //特别程序
                             name = "tb";
-                        } else if (m.get("DM").equals("20006") && m.get("ZYYWTX").equals("10017")) {//出席二审法庭
+                        } else if (m.get("DM").equals("20006") && (m.get("ZYYWTX")+"").contains("10017")) {//出席二审法庭
                             name = "cxesw";
                         } else if (m.get("DM").equals("20007")) { //法律监督
                             name = "fljd";
@@ -2157,9 +2157,9 @@ public class AnalysisServiceImpl implements AnalysisService {
                         }
                     } else {
                         Map pcxMap = pcx.get(a);
-                        if (pcxMap.get("DM").equals(map.get("DM")) && pcxMap.get("YWTX").equals("10017")) {
+                        if (pcxMap.get("DM").equals(map.get("DM")) && (pcxMap.get("YWTX")+"").contains("10017")) {
                             map.put(name + pcxMap.get("XTDM"), "0/0.00%");
-                        } else if (pcxMap.get("DM").equals(map.get("DM")) && pcxMap.get("YWTX").equals("10003")) {
+                        } else if (pcxMap.get("DM").equals(map.get("DM")) && (pcxMap.get("YWTX")+"").contains("10003")) {
                             map.put(name + pcxMap.get("XTDM"), "0/0.00%");
                         }
                     }

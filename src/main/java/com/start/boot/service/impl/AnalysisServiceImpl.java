@@ -176,43 +176,43 @@ public class AnalysisServiceImpl implements AnalysisService {
                         map.put("name", map.get("NAME"));
                         if (m.get("DM").equals("20001")) {//证据采信
                             map.put("zjcxHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("zjcxHj") + ""));
-                            map.put("zjcxBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("zjcxHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("zjcxBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("zjcxHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20002")) { //事实认定
                             map.put("ssrdHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("ssrdHj") + ""));
-                            map.put("ssrdBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("ssrdHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("ssrdBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("ssrdHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20003")) {//法律适用
                             map.put("flsyHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("flsyHj") + ""));
-                            map.put("flsyBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("flsyHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("flsyBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("flsyHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20004")) {//办案程序
                             map.put("bacxHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("bacxHj") + ""));
-                            map.put("bacxBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("bacxHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("bacxBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("bacxHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20008")) { //法律文书
                             map.put("flwsHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("flwsHj") + ""));
-                            map.put("flwsBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("flwsHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("flwsBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("flwsHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20010")) {//司法责任制落实
                             map.put("sfHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("sfHj") + ""));
-                            map.put("sfBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("sfHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("sfBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("sfHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20011")) {//系统规范应用
                             map.put("xtgfHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("xtgfHj") + ""));
-                            map.put("xtgfBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("xtgfHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("xtgfBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("xtgfHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20020")) {//其他情况
                             map.put("qtHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("qtHj") + ""));
-                            map.put("qtBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("qtHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("qtBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("qtHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20009")) {//侦查监督
                             map.put("zcjdHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("zcjdHj") + ""));
-                            map.put("zcjdBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("zcjdHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("zcjdBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("zcjdHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20006") && m.get("ZYYWTX").equals("10003")) {//出席二审法庭
                             map.put("cxesgHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("cxesgHj") + ""));
-                            map.put("cxesgBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("cxesgHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("cxesgBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("cxesgHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20005")) { //特别程序
                             map.put("tbHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("tbHj") + ""));
-                            map.put("tbBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("tbHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("tbBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("tbHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20006") && m.get("ZYYWTX").equals("10017")) {//出席二审法庭
                             map.put("cxeswHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("cxeswHj") + ""));
-                            map.put("cxeswBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("cxeswHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("cxeswBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("cxeswHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20007")) { //法律监督
                             map.put("fljdHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("fljdHj") + ""));
-                            map.put("fljdBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("fljdHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("fljdBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("fljdHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         }
                     } else {
                         if (count == pcFlList.size() - 1) {
@@ -271,43 +271,43 @@ public class AnalysisServiceImpl implements AnalysisService {
                         map.put("name", map.get("NAME"));
                         if (m.get("DM").equals("20001")) {//证据采信
                             map.put("zjcxHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("zjcxHj") + ""));
-                            map.put("zjcxBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("zjcxHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("zjcxBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("zjcxHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20002")) { //事实认定
                             map.put("ssrdHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("ssrdHj") + ""));
-                            map.put("ssrdBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("ssrdHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("ssrdBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("ssrdHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20003")) {//法律适用
                             map.put("flsyHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("flsyHj") + ""));
-                            map.put("flsyBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("flsyHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("flsyBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("flsyHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20004")) {//办案程序
                             map.put("bacxHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("bacxHj") + ""));
-                            map.put("bacxBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("bacxHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("bacxBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("bacxHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20008")) { //法律文书
                             map.put("flwsHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("flwsHj") + ""));
-                            map.put("flwsBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("flwsHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("flwsBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("flwsHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20010")) {//司法责任制落实
                             map.put("sfHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("sfHj") + ""));
-                            map.put("sfBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("sfHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("sfBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("sfHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20011")) {//系统规范应用
                             map.put("xtgfHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("xtgfHj") + ""));
-                            map.put("xtgfBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("xtgfHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("xtgfBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("xtgfHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20020")) {//其他情况
                             map.put("qtHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("qtHj") + ""));
-                            map.put("qtBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("qtHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("qtBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("qtHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20009")) {//侦查监督
                             map.put("zcjdHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("zcjdHj") + ""));
-                            map.put("zcjdBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("zcjdHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("zcjdBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("zcjdHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20006") && m.get("ZYYWTX").equals("10003")) {//出席二审法庭
                             map.put("cxesgHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("cxesgHj") + ""));
-                            map.put("cxesgBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("cxesgHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("cxesgBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("cxesgHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20005")) { //特别程序
                             map.put("tbHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("tbHj") + ""));
-                            map.put("tbBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("tbHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("tbBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("tbHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20006") && m.get("ZYYWTX").equals("10017")) {//出席二审法庭
                             map.put("cxeswHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("cxeswHj") + ""));
-                            map.put("cxeswBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("cxeswHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("cxeswBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("cxeswHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         } else if (m.get("DM").equals("20007")) { //法律监督
                             map.put("fljdHj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf(map.get("fljdHj") + ""));
-                            map.put("fljdBl", decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf(map.get("fljdHj") + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                            map.put("fljdBl", decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf(map.get("fljdHj") + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         }
                     } else {
                         if (count == pcFlList.size() - 1) {
@@ -878,40 +878,42 @@ public class AnalysisServiceImpl implements AnalysisService {
         }
         Map count=analysisMapper.loadGeneralPersonalNum(map);
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
-        list.get(0).put("bjrNum", count.get("BJR")+"");
-        list.get(0).put("pcrNum", count.get("PCR")+"");
-        Double pcajNum = Double.valueOf( list.get(0).get("pcajNum") + "");
-        Double bjajNum = Double.valueOf( list.get(0).get("bjajNum") + "");
-        Double bjrNum = Double.valueOf( list.get(0).get("bjrNum") + "");
-        Double pcrNum = Double.valueOf( list.get(0).get("pcrNum") + "");
-        if (pcajNum == 0) {
-            list.get(0).put("pcbl", "0.00%");
-            list.get(0).put("bpcAvgNum", "0.00");
-            list.get(0).put("avgNum", "0.00");
-        } else {
-            list.get(0).put("pcbl", decimalFormat.format((pcajNum / bjajNum) * 100) + "%");
-            list.get(0).put("bpcAvgNum", decimalFormat.format((pcajNum / bjrNum)));
-            list.get(0).put("avgNum", decimalFormat.format((pcajNum / pcrNum)));
-        }
-        for(int i=1;i<list.size();i++){
-            Map m=list.get(i);
-            if("Y".equals(m.get("sfhj"))){
-                map.put("ywtx",(m.get("YWTX") + "").split(","));
-                Map counts=analysisMapper.loadGeneralPersonalNum(map);
-                m.put("bjrNum", counts.get("BJR")+"");
-                m.put("pcrNum", counts.get("PCR")+"");
-                pcajNum = Double.valueOf( m.get("pcajNum") + "");
-                bjajNum = Double.valueOf( m.get("bjajNum") + "");
-                bjrNum = Double.valueOf( m.get("bjrNum") + "");
-                pcrNum = Double.valueOf( m.get("pcrNum") + "");
-                if (pcajNum == 0) {
-                    m.put("pcbl", "0.00%");
-                    m.put("bpcAvgNum", "0.00");
-                    m.put("avgNum", "0.00");
-                } else {
-                    m.put("pcbl", decimalFormat.format((pcajNum / bjajNum) * 100) + "%");
-                    m.put("bpcAvgNum", decimalFormat.format((pcajNum / bjrNum)));
-                    m.put("avgNum", decimalFormat.format((pcajNum / pcrNum)));
+        if(list.size()>0) {
+            list.get(0).put("bjrNum", count == null ? "0" : count.get("BJR") + "");
+            list.get(0).put("pcrNum", count == null ? "0" : count.get("PCR") + "");
+            Double pcajNum = Double.valueOf(list.get(0).get("pcajNum") + "");
+            Double bjajNum = Double.valueOf(list.get(0).get("bjajNum") + "");
+            Double bjrNum = Double.valueOf(list.get(0).get("bjrNum") + "");
+            Double pcrNum = Double.valueOf(list.get(0).get("pcrNum") + "");
+            if (pcajNum == 0) {
+                list.get(0).put("pcbl", "0.00%");
+                list.get(0).put("bpcAvgNum", "0.00");
+                list.get(0).put("avgNum", "0.00");
+            } else {
+                list.get(0).put("pcbl", decimalFormat.format((pcajNum / bjajNum) * 100) + "%");
+                list.get(0).put("bpcAvgNum", decimalFormat.format((pcajNum / bjrNum)));
+                list.get(0).put("avgNum", decimalFormat.format((pcajNum / pcrNum)));
+            }
+            for (int i = 1; i < list.size(); i++) {
+                Map m = list.get(i);
+                if ("Y".equals(m.get("sfhj"))) {
+                    map.put("ywtx", (m.get("YWTX") + "").split(","));
+                    Map counts = analysisMapper.loadGeneralPersonalNum(map);
+                    m.put("bjrNum", counts.get("BJR") + "");
+                    m.put("pcrNum", counts.get("PCR") + "");
+                    pcajNum = Double.valueOf(m.get("pcajNum") + "");
+                    bjajNum = Double.valueOf(m.get("bjajNum") + "");
+                    bjrNum = Double.valueOf(m.get("bjrNum") + "");
+                    pcrNum = Double.valueOf(m.get("pcrNum") + "");
+                    if (pcajNum == 0) {
+                        m.put("pcbl", "0.00%");
+                        m.put("bpcAvgNum", "0.00");
+                        m.put("avgNum", "0.00");
+                    } else {
+                        m.put("pcbl", decimalFormat.format((pcajNum / bjajNum) * 100) + "%");
+                        m.put("bpcAvgNum", decimalFormat.format((pcajNum / bjrNum)));
+                        m.put("avgNum", decimalFormat.format((pcajNum / pcrNum)));
+                    }
                 }
             }
         }
@@ -996,31 +998,33 @@ public class AnalysisServiceImpl implements AnalysisService {
     private void sumData(List<Map> list,Map count) {
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         ErrorAndFlawTreeVo num = new ErrorAndFlawTreeVo();
-        for (int a = 0; a < list.size(); a++) {
-            Map map = list.get(a);
-            assignmentToGeneral(num, map);
+        if(list.size()>0){
+            for (int a = 0; a < list.size(); a++) {
+                Map map = list.get(a);
+                assignmentToGeneral(num, map);
+            }
+            Map m = new HashMap<>();
+            calculationNumToGeneral(num, m);
+            m.put("bjrNum", count.get("BJR")+"");
+            m.put("pcrNum", count.get("PCR")+"");
+            Double pcajNum = Double.valueOf(m.get("pcajNum") + "");
+            Double bjajNum = Double.valueOf(m.get("bjajNum") + "");
+            Double bjrNum = Double.valueOf(m.get("bjrNum") + "");
+            Double pcrNum = Double.valueOf(m.get("pcrNum") + "");
+            if (pcajNum == 0) {
+                m.put("pcbl", "0.00%");
+                m.put("bpcAvgNum", "0.00");
+                m.put("avgNum", "0.00");
+            } else {
+                m.put("pcbl", decimalFormat.format((pcajNum / bjajNum) * 100) + "%");
+                m.put("bpcAvgNum", decimalFormat.format((pcajNum / bjrNum)));
+                m.put("avgNum", decimalFormat.format((pcajNum / pcrNum)));
+            }
+            m.put("name", "合计");
+            m.put("pid", "-1");
+            m.put("id", "10000");
+            list.add(0, m);
         }
-        Map m = new HashMap<>();
-        calculationNumToGeneral(num, m);
-        m.put("bjrNum", count.get("BJR")+"");
-        m.put("pcrNum", count.get("PCR")+"");
-        Double pcajNum = Double.valueOf(m.get("pcajNum") + "");
-        Double bjajNum = Double.valueOf(m.get("bjajNum") + "");
-        Double bjrNum = Double.valueOf(m.get("bjrNum") + "");
-        Double pcrNum = Double.valueOf(m.get("pcrNum") + "");
-        if (pcajNum == 0) {
-            m.put("pcbl", "0.00%");
-            m.put("bpcAvgNum", "0.00");
-            m.put("avgNum", "0.00");
-        } else {
-            m.put("pcbl", decimalFormat.format((pcajNum / bjajNum) * 100) + "%");
-            m.put("bpcAvgNum", decimalFormat.format((pcajNum / bjrNum)));
-            m.put("avgNum", decimalFormat.format((pcajNum / pcrNum)));
-        }
-        m.put("name", "合计");
-        m.put("pid", "-1");
-        m.put("id", "10000");
-        list.add(0, m);
     }
 
     @Override
@@ -1525,19 +1529,19 @@ public class AnalysisServiceImpl implements AnalysisService {
         m.put("tbHj", num.getTbHj());
         m.put("cxeswHj", num.getCxeswHj());
         m.put("fljdHj", num.getFljdHj());
-        m.put("zjcxBl", decimalFormat.format(Double.valueOf(m.get("errorAllCount") + "") == 0 ? 0 : (Double.valueOf(m.get("zjcxHj") + "") / Double.valueOf(m.get("errorAllCount") + "") * 100)) + "%");
-        m.put("ssrdBl", decimalFormat.format(Double.valueOf(m.get("errorAllCount") + "") == 0 ? 0 : (Double.valueOf(m.get("ssrdHj") + "") / Double.valueOf(m.get("errorAllCount") + "") * 100)) + "%");
-        m.put("flsyBl", decimalFormat.format(Double.valueOf(m.get("errorAllCount") + "") == 0 ? 0 : (Double.valueOf(m.get("flsyHj") + "") / Double.valueOf(m.get("errorAllCount") + "") * 100)) + "%");
-        m.put("bacxBl", decimalFormat.format(Double.valueOf(m.get("errorAllCount") + "") == 0 ? 0 : (Double.valueOf(m.get("bacxHj") + "") / Double.valueOf(m.get("errorAllCount") + "") * 100)) + "%");
-        m.put("flwsBl", decimalFormat.format(Double.valueOf(m.get("errorAllCount") + "") == 0 ? 0 : (Double.valueOf(m.get("flwsHj") + "") / Double.valueOf(m.get("errorAllCount") + "") * 100)) + "%");
-        m.put("sfBl", decimalFormat.format(Double.valueOf(m.get("errorAllCount") + "") == 0 ? 0 : (Double.valueOf(m.get("sfHj") + "") / Double.valueOf(m.get("errorAllCount") + "") * 100)) + "%");
-        m.put("xtgfBl", decimalFormat.format(Double.valueOf(m.get("errorAllCount") + "") == 0 ? 0 : (Double.valueOf(m.get("xtgfHj") + "") / Double.valueOf(m.get("errorAllCount") + "") * 100)) + "%");
-        m.put("qtBl", decimalFormat.format(Double.valueOf(m.get("errorAllCount") + "") == 0 ? 0 : (Double.valueOf(m.get("qtHj") + "") / Double.valueOf(m.get("errorAllCount") + "") * 100)) + "%");
-        m.put("zcjdBl", decimalFormat.format(Double.valueOf(m.get("errorAllCount") + "") == 0 ? 0 : (Double.valueOf(m.get("zcjdHj") + "") / Double.valueOf(m.get("errorAllCount") + "") * 100)) + "%");
-        m.put("cxesgBl", decimalFormat.format(Double.valueOf(m.get("errorAllCount") + "") == 0 ? 0 : (Double.valueOf(m.get("cxesgHj") + "") / Double.valueOf(m.get("errorAllCount") + "") * 100)) + "%");
-        m.put("tbBl", decimalFormat.format(Double.valueOf(m.get("errorAllCount") + "") == 0 ? 0 : (Double.valueOf(m.get("tbHj") + "") / Double.valueOf(m.get("errorAllCount") + "") * 100)) + "%");
-        m.put("cxeswBl", decimalFormat.format(Double.valueOf(m.get("errorAllCount") + "") == 0 ? 0 : (Double.valueOf(m.get("cxeswHj") + "") / Double.valueOf(m.get("errorAllCount") + "") * 100)) + "%");
-        m.put("fljdBl", decimalFormat.format(Double.valueOf(m.get("errorAllCount") + "") == 0 ? 0 : (Double.valueOf(m.get("fljdHj") + "") / Double.valueOf(m.get("errorAllCount") + "") * 100)) + "%");
+        m.put("zjcxBl", decimalFormat.format(Double.valueOf(m.get("errorCount") + "") == 0 ? 0 : (Double.valueOf(m.get("zjcxHj") + "") / Double.valueOf(m.get("errorCount") + "") * 100)) + "%");
+        m.put("ssrdBl", decimalFormat.format(Double.valueOf(m.get("errorCount") + "") == 0 ? 0 : (Double.valueOf(m.get("ssrdHj") + "") / Double.valueOf(m.get("errorCount") + "") * 100)) + "%");
+        m.put("flsyBl", decimalFormat.format(Double.valueOf(m.get("errorCount") + "") == 0 ? 0 : (Double.valueOf(m.get("flsyHj") + "") / Double.valueOf(m.get("errorCount") + "") * 100)) + "%");
+        m.put("bacxBl", decimalFormat.format(Double.valueOf(m.get("errorCount") + "") == 0 ? 0 : (Double.valueOf(m.get("bacxHj") + "") / Double.valueOf(m.get("errorCount") + "") * 100)) + "%");
+        m.put("flwsBl", decimalFormat.format(Double.valueOf(m.get("errorCount") + "") == 0 ? 0 : (Double.valueOf(m.get("flwsHj") + "") / Double.valueOf(m.get("errorCount") + "") * 100)) + "%");
+        m.put("sfBl", decimalFormat.format(Double.valueOf(m.get("errorCount") + "") == 0 ? 0 : (Double.valueOf(m.get("sfHj") + "") / Double.valueOf(m.get("errorCount") + "") * 100)) + "%");
+        m.put("xtgfBl", decimalFormat.format(Double.valueOf(m.get("errorCount") + "") == 0 ? 0 : (Double.valueOf(m.get("xtgfHj") + "") / Double.valueOf(m.get("errorCount") + "") * 100)) + "%");
+        m.put("qtBl", decimalFormat.format(Double.valueOf(m.get("errorCount") + "") == 0 ? 0 : (Double.valueOf(m.get("qtHj") + "") / Double.valueOf(m.get("errorCount") + "") * 100)) + "%");
+        m.put("zcjdBl", decimalFormat.format(Double.valueOf(m.get("errorCount") + "") == 0 ? 0 : (Double.valueOf(m.get("zcjdHj") + "") / Double.valueOf(m.get("errorCount") + "") * 100)) + "%");
+        m.put("cxesgBl", decimalFormat.format(Double.valueOf(m.get("errorCount") + "") == 0 ? 0 : (Double.valueOf(m.get("cxesgHj") + "") / Double.valueOf(m.get("errorCount") + "") * 100)) + "%");
+        m.put("tbBl", decimalFormat.format(Double.valueOf(m.get("errorCount") + "") == 0 ? 0 : (Double.valueOf(m.get("tbHj") + "") / Double.valueOf(m.get("errorCount") + "") * 100)) + "%");
+        m.put("cxeswBl", decimalFormat.format(Double.valueOf(m.get("errorCount") + "") == 0 ? 0 : (Double.valueOf(m.get("cxeswHj") + "") / Double.valueOf(m.get("errorCount") + "") * 100)) + "%");
+        m.put("fljdBl", decimalFormat.format(Double.valueOf(m.get("errorCount") + "") == 0 ? 0 : (Double.valueOf(m.get("fljdHj") + "") / Double.valueOf(m.get("errorCount") + "") * 100)) + "%");
         Double pcAllCount = Double.valueOf(m.get("PCALLCOUNT") + "");
         Double errorAllCount = Double.valueOf(m.get("errorAllCount") + "");
         Double errorCount = Double.valueOf(m.get("errorCount") + "");
@@ -1756,40 +1760,42 @@ public class AnalysisServiceImpl implements AnalysisService {
             }
             Map count=analysisMapper.loadGeneralPersonalNum(seach);
             DecimalFormat decimalFormat = new DecimalFormat("0.00");
-            list.get(0).put("bjrNum", count.get("BJR")+"");
-            list.get(0).put("pcrNum", count.get("PCR")+"");
-            Double pcajNum = Double.valueOf( list.get(0).get("pcajNum") + "");
-            Double bjajNum = Double.valueOf( list.get(0).get("bjajNum") + "");
-            Double bjrNum = Double.valueOf( list.get(0).get("bjrNum") + "");
-            Double pcrNum = Double.valueOf( list.get(0).get("pcrNum") + "");
-            if (pcajNum == 0) {
-                list.get(0).put("pcbl", "0.00%");
-                list.get(0).put("bpcAvgNum", "0.00");
-                list.get(0).put("avgNum", "0.00");
-            } else {
-                list.get(0).put("pcbl", decimalFormat.format((pcajNum / bjajNum) * 100) + "%");
-                list.get(0).put("bpcAvgNum", decimalFormat.format((pcajNum / bjrNum)));
-                list.get(0).put("avgNum", decimalFormat.format((pcajNum / pcrNum)));
-            }
-            for(int i=1;i<list.size();i++){
-                Map m=list.get(i);
-                if("Y".equals(m.get("sfhj"))){
-                    seach.put("ywtx",(m.get("YWTX") + "").split(","));
-                    Map counts=analysisMapper.loadGeneralPersonalNum(seach);
-                    m.put("bjrNum", counts.get("BJR")+"");
-                    m.put("pcrNum", counts.get("PCR")+"");
-                    pcajNum = Double.valueOf( m.get("pcajNum") + "");
-                    bjajNum = Double.valueOf( m.get("bjajNum") + "");
-                    bjrNum = Double.valueOf( m.get("bjrNum") + "");
-                    pcrNum = Double.valueOf( m.get("pcrNum") + "");
-                    if (pcajNum == 0) {
-                        m.put("pcbl", "0.00%");
-                        m.put("bpcAvgNum", "0.00");
-                        m.put("avgNum", "0.00");
-                    } else {
-                        m.put("pcbl", decimalFormat.format((pcajNum / bjajNum) * 100) + "%");
-                        m.put("bpcAvgNum", decimalFormat.format((pcajNum / bjrNum)));
-                        m.put("avgNum", decimalFormat.format((pcajNum / pcrNum)));
+            if(list.size()>0) {
+                list.get(0).put("bjrNum", count.get("BJR") + "");
+                list.get(0).put("pcrNum", count.get("PCR") + "");
+                Double pcajNum = Double.valueOf(list.get(0).get("pcajNum") + "");
+                Double bjajNum = Double.valueOf(list.get(0).get("bjajNum") + "");
+                Double bjrNum = Double.valueOf(list.get(0).get("bjrNum") + "");
+                Double pcrNum = Double.valueOf(list.get(0).get("pcrNum") + "");
+                if (pcajNum == 0) {
+                    list.get(0).put("pcbl", "0.00%");
+                    list.get(0).put("bpcAvgNum", "0.00");
+                    list.get(0).put("avgNum", "0.00");
+                } else {
+                    list.get(0).put("pcbl", decimalFormat.format((pcajNum / bjajNum) * 100) + "%");
+                    list.get(0).put("bpcAvgNum", decimalFormat.format((pcajNum / bjrNum)));
+                    list.get(0).put("avgNum", decimalFormat.format((pcajNum / pcrNum)));
+                }
+                for (int i = 1; i < list.size(); i++) {
+                    Map m = list.get(i);
+                    if ("Y".equals(m.get("sfhj"))) {
+                        seach.put("ywtx", (m.get("YWTX") + "").split(","));
+                        Map counts = analysisMapper.loadGeneralPersonalNum(seach);
+                        m.put("bjrNum", counts.get("BJR") + "");
+                        m.put("pcrNum", counts.get("PCR") + "");
+                        pcajNum = Double.valueOf(m.get("pcajNum") + "");
+                        bjajNum = Double.valueOf(m.get("bjajNum") + "");
+                        bjrNum = Double.valueOf(m.get("bjrNum") + "");
+                        pcrNum = Double.valueOf(m.get("pcrNum") + "");
+                        if (pcajNum == 0) {
+                            m.put("pcbl", "0.00%");
+                            m.put("bpcAvgNum", "0.00");
+                            m.put("avgNum", "0.00");
+                        } else {
+                            m.put("pcbl", decimalFormat.format((pcajNum / bjajNum) * 100) + "%");
+                            m.put("bpcAvgNum", decimalFormat.format((pcajNum / bjrNum)));
+                            m.put("avgNum", decimalFormat.format((pcajNum / pcrNum)));
+                        }
                     }
                 }
             }
@@ -1967,9 +1973,9 @@ public class AnalysisServiceImpl implements AnalysisService {
                         if ("".equals(name))
                             continue;
                         map.put(name + m.get("XTDM"), Integer.valueOf(m.get("NUM") + "") + Integer.valueOf((map.get(name + m.get("XTDM")) + "").split("/")[0] + "") + "/"
-                                + decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf((map.get(name + m.get("XTDM")) + "").split("/")[0] + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                                + decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf((map.get(name + m.get("XTDM")) + "").split("/")[0] + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         map.put(name + "Hj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf((map.get(name + "Hj") + "").split("/")[0] + "") + "/"
-                                + decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf((map.get(name + "Hj") + "").split("/")[0] + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                                + decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf((map.get(name + "Hj") + "").split("/")[0] + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                     } else {
                         map.put("id", map.get("ID"));
                         map.put("pid", map.get("PID"));
@@ -2104,9 +2110,9 @@ public class AnalysisServiceImpl implements AnalysisService {
                         if ("".equals(name))
                             continue;
                         map.put(name + m.get("XTDM"), Integer.valueOf(m.get("NUM") + "") + Integer.valueOf((map.get(name + m.get("XTDM")) + "").split("/")[0] + "") + "/"
-                                + decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf((map.get(name + m.get("XTDM")) + "").split("/")[0] + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                                + decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf((map.get(name + m.get("XTDM")) + "").split("/")[0] + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                         map.put(name + "Hj", Integer.valueOf(m.get("NUM") + "") + Integer.valueOf((map.get(name + "Hj") + "").split("/")[0] + "") + "/"
-                                + decimalFormat.format(map.get("errorAllCount").equals("0") ? 0 : (Double.valueOf((map.get(name + "Hj") + "").split("/")[0] + "") / Double.valueOf(map.get("errorAllCount") + "") * 100)) + "%");
+                                + decimalFormat.format(map.get("errorCount").equals("0") ? 0 : (Double.valueOf((map.get(name + "Hj") + "").split("/")[0] + "") / Double.valueOf(map.get("errorCount") + "") * 100)) + "%");
                     } else {
                         map.put("id", map.get("ID"));
                         map.put("pid", map.get("PID"));
@@ -2658,337 +2664,337 @@ public class AnalysisServiceImpl implements AnalysisService {
          m.put("pcrNum", num.getPcrNum());
          m.put("pcajNum", num.getPcajNum());
          m.put("PCALLCOUNT", num.getPcAllnum());m.put("errorAllCount",num.getErrorAllNum());m.put("errorCount", num.getErrorNum());
-         m.put("zjcxHj", num.getZjcxHj() + "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : ( num.getZjcxHj() / num.getErrorAllNum() * 100)) + "%");
-         m.put("ssrdHj", num.getSsrdHj() + "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : ( num.getSsrdHj() / num.getErrorAllNum() * 100)) + "%");
-         m.put("flsyHj",  num.getFlsyHj() + "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : ( num.getFlsyHj() / num.getErrorAllNum() * 100)) + "%");
-         m.put("bacxHj",  num.getBacxHj() + "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : ( num.getBacxHj() / num.getErrorAllNum() * 100)) + "%");
-         m.put("flwsHj",  num.getFlwsHj() + "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : ( num.getFlwsHj() / num.getErrorAllNum() * 100)) + "%");
-         m.put("sfHj",  num.getSfHj() + "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : ( num.getSfHj() / num.getErrorAllNum() * 100)) + "%");
-         m.put("xtgfHj",  num.getXtgfHj() + "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : ( num.getXtgfHj() / num.getErrorAllNum() * 100)) + "%");
-         m.put("qtHj",  num.getQtHj() + "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : ( num.getQtHj() / num.getErrorAllNum() * 100)) + "%");
-         m.put("zcjdHj",  num.getZcjdHj() + "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : ( num.getZcjdHj() / num.getErrorAllNum() * 100)) + "%");
-         m.put("cxesgHj",  num.getCxesgHj() + "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : ( num.getCxesgHj() / num.getErrorAllNum() * 100)) + "%");
-         m.put("tbHj",  num.getTbHj() + "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : ( num.getTbHj() / num.getErrorAllNum() * 100)) + "%");
-         m.put("cxeswHj",  num.getCxeswHj() + "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : ( num.getCxeswHj() / num.getErrorAllNum() * 100)) + "%");
-         m.put("fljdHj",  num.getFljdHj() + "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : ( num.getFljdHj() / num.getErrorAllNum() * 100)) + "%");
+         m.put("zjcxHj", num.getZjcxHj() + "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : ( num.getZjcxHj() / num.getErrorNum() * 100)) + "%");
+         m.put("ssrdHj", num.getSsrdHj() + "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : ( num.getSsrdHj() / num.getErrorNum() * 100)) + "%");
+         m.put("flsyHj",  num.getFlsyHj() + "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : ( num.getFlsyHj() / num.getErrorNum() * 100)) + "%");
+         m.put("bacxHj",  num.getBacxHj() + "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : ( num.getBacxHj() / num.getErrorNum() * 100)) + "%");
+         m.put("flwsHj",  num.getFlwsHj() + "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : ( num.getFlwsHj() / num.getErrorNum() * 100)) + "%");
+         m.put("sfHj",  num.getSfHj() + "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : ( num.getSfHj() / num.getErrorNum() * 100)) + "%");
+         m.put("xtgfHj",  num.getXtgfHj() + "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : ( num.getXtgfHj() / num.getErrorNum() * 100)) + "%");
+         m.put("qtHj",  num.getQtHj() + "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : ( num.getQtHj() / num.getErrorNum() * 100)) + "%");
+         m.put("zcjdHj",  num.getZcjdHj() + "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : ( num.getZcjdHj() / num.getErrorNum() * 100)) + "%");
+         m.put("cxesgHj",  num.getCxesgHj() + "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : ( num.getCxesgHj() / num.getErrorNum() * 100)) + "%");
+         m.put("tbHj",  num.getTbHj() + "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : ( num.getTbHj() / num.getErrorNum() * 100)) + "%");
+         m.put("cxeswHj",  num.getCxeswHj() + "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : ( num.getCxeswHj() / num.getErrorNum() * 100)) + "%");
+         m.put("fljdHj",  num.getFljdHj() + "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : ( num.getFljdHj() / num.getErrorNum() * 100)) + "%");
          if (flxtdm.equals("30002")) {
-             m.put("zjcx40000",num.getZjcx40000()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40000()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40007",num.getZjcx40007()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40007()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40010",num.getZjcx40010()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40010()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40066",num.getZjcx40066()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40066()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40067",num.getZjcx40067()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40067()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40068",num.getZjcx40068()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40068()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40069",num.getZjcx40069()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40069()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40071",num.getZjcx40071()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40071()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40074",num.getZjcx40074()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40074()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40081",num.getZjcx40081()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40081()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40136",num.getZjcx40136()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40136()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40137",num.getZjcx40137()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40137()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40138",num.getZjcx40138()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40138()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40139",num.getZjcx40139()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40139()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40140",num.getZjcx40140()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40140()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40141",num.getZjcx40141()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40141()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40214",num.getZjcx40214()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40214()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40215",num.getZjcx40215()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40215()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40216",num.getZjcx40216()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40216()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40229",num.getZjcx40229()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40229()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40289",num.getZjcx40289()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40289()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40290",num.getZjcx40290()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40290()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40291",num.getZjcx40291()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40291()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40000",num.getSsrd40000()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40000()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40005",num.getSsrd40005()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40005()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40025",num.getSsrd40025()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40025()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40026",num.getSsrd40026()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40026()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40029",num.getSsrd40029()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40029()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40030",num.getSsrd40030()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40030()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40031",num.getSsrd40031()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40031()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40032",num.getSsrd40032()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40032()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40033",num.getSsrd40033()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40033()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40075",num.getSsrd40075()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40075()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40076",num.getSsrd40076()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40076()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40088",num.getSsrd40088()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40088()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40089",num.getSsrd40089()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40089()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40090",num.getSsrd40090()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40090()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40131",num.getSsrd40131()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40131()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40170",num.getSsrd40170()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40170()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40207",num.getSsrd40207()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40207()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40210",num.getSsrd40210()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40210()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40224",num.getSsrd40224()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40224()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40227",num.getSsrd40227()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40227()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40274",num.getSsrd40274()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40274()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40276",num.getSsrd40276()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40276()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40277",num.getSsrd40277()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40277()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40278",num.getSsrd40278()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40278()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40280",num.getSsrd40280()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40280()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40000",num.getFlsy40000()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40000()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40208",num.getFlsy40208()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40208()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40258",num.getFlsy40258()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40258()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40259",num.getFlsy40259()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40259()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40260",num.getFlsy40260()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40260()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40261",num.getFlsy40261()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40261()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40262",num.getFlsy40262()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40262()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40263",num.getFlsy40263()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40263()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40264",num.getFlsy40264()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40264()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40265",num.getFlsy40265()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40265()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40266",num.getFlsy40266()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40266()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40000",num.getBacx40000()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40000()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40001",num.getBacx40001()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40001()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40008",num.getBacx40008()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40008()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40042",num.getBacx40042()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40042()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40059",num.getBacx40059()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40059()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40062",num.getBacx40062()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40062()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40070",num.getBacx40070()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40070()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40082",num.getBacx40082()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40082()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40102",num.getBacx40102()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40102()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40103",num.getBacx40103()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40103()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40112",num.getBacx40112()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40112()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40118",num.getBacx40118()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40118()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40120",num.getBacx40120()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40120()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40129",num.getBacx40129()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40129()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40135",num.getBacx40135()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40135()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40160",num.getBacx40160()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40160()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40220",num.getBacx40220()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40220()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40231",num.getBacx40231()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40231()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40251",num.getBacx40251()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40251()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40252",num.getBacx40252()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40252()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40253",num.getBacx40253()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40253()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40254",num.getBacx40254()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40254()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40268",num.getBacx40268()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40268()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40272",num.getBacx40272()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40272()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40283",num.getBacx40283()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40283()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flws40037",num.getFlws40037()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlws40037()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flws40098",num.getFlws40098()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlws40098()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flws40155",num.getFlws40155()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlws40155()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("sf40000",num.getSf40000()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSf40000()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("sf40163",num.getSf40163()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSf40163()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40056",num.getZcjd40056()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40056()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40099",num.getZcjd40099()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40099()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40249",num.getZcjd40249()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40249()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40255",num.getZcjd40255()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40255()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("tb40180",num.getTb40180()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getTb40180()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("tb40212",num.getTb40212()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getTb40212()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("tb40286",num.getTb40286()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getTb40286()/ num.getErrorAllNum() * 100)) + "%");
+             m.put("zjcx40000",num.getZjcx40000()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40000()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40007",num.getZjcx40007()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40007()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40010",num.getZjcx40010()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40010()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40066",num.getZjcx40066()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40066()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40067",num.getZjcx40067()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40067()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40068",num.getZjcx40068()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40068()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40069",num.getZjcx40069()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40069()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40071",num.getZjcx40071()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40071()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40074",num.getZjcx40074()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40074()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40081",num.getZjcx40081()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40081()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40136",num.getZjcx40136()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40136()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40137",num.getZjcx40137()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40137()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40138",num.getZjcx40138()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40138()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40139",num.getZjcx40139()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40139()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40140",num.getZjcx40140()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40140()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40141",num.getZjcx40141()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40141()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40214",num.getZjcx40214()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40214()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40215",num.getZjcx40215()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40215()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40216",num.getZjcx40216()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40216()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40229",num.getZjcx40229()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40229()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40289",num.getZjcx40289()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40289()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40290",num.getZjcx40290()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40290()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40291",num.getZjcx40291()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40291()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40000",num.getSsrd40000()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40000()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40005",num.getSsrd40005()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40005()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40025",num.getSsrd40025()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40025()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40026",num.getSsrd40026()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40026()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40029",num.getSsrd40029()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40029()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40030",num.getSsrd40030()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40030()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40031",num.getSsrd40031()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40031()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40032",num.getSsrd40032()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40032()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40033",num.getSsrd40033()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40033()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40075",num.getSsrd40075()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40075()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40076",num.getSsrd40076()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40076()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40088",num.getSsrd40088()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40088()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40089",num.getSsrd40089()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40089()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40090",num.getSsrd40090()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40090()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40131",num.getSsrd40131()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40131()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40170",num.getSsrd40170()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40170()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40207",num.getSsrd40207()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40207()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40210",num.getSsrd40210()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40210()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40224",num.getSsrd40224()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40224()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40227",num.getSsrd40227()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40227()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40274",num.getSsrd40274()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40274()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40276",num.getSsrd40276()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40276()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40277",num.getSsrd40277()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40277()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40278",num.getSsrd40278()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40278()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40280",num.getSsrd40280()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40280()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40000",num.getFlsy40000()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40000()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40208",num.getFlsy40208()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40208()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40258",num.getFlsy40258()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40258()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40259",num.getFlsy40259()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40259()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40260",num.getFlsy40260()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40260()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40261",num.getFlsy40261()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40261()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40262",num.getFlsy40262()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40262()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40263",num.getFlsy40263()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40263()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40264",num.getFlsy40264()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40264()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40265",num.getFlsy40265()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40265()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40266",num.getFlsy40266()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40266()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40000",num.getBacx40000()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40000()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40001",num.getBacx40001()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40001()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40008",num.getBacx40008()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40008()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40042",num.getBacx40042()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40042()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40059",num.getBacx40059()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40059()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40062",num.getBacx40062()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40062()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40070",num.getBacx40070()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40070()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40082",num.getBacx40082()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40082()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40102",num.getBacx40102()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40102()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40103",num.getBacx40103()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40103()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40112",num.getBacx40112()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40112()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40118",num.getBacx40118()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40118()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40120",num.getBacx40120()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40120()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40129",num.getBacx40129()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40129()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40135",num.getBacx40135()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40135()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40160",num.getBacx40160()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40160()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40220",num.getBacx40220()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40220()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40231",num.getBacx40231()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40231()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40251",num.getBacx40251()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40251()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40252",num.getBacx40252()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40252()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40253",num.getBacx40253()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40253()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40254",num.getBacx40254()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40254()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40268",num.getBacx40268()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40268()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40272",num.getBacx40272()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40272()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40283",num.getBacx40283()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40283()/ num.getErrorNum() * 100)) + "%");
+             m.put("flws40037",num.getFlws40037()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlws40037()/ num.getErrorNum() * 100)) + "%");
+             m.put("flws40098",num.getFlws40098()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlws40098()/ num.getErrorNum() * 100)) + "%");
+             m.put("flws40155",num.getFlws40155()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlws40155()/ num.getErrorNum() * 100)) + "%");
+             m.put("sf40000",num.getSf40000()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSf40000()/ num.getErrorNum() * 100)) + "%");
+             m.put("sf40163",num.getSf40163()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSf40163()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40056",num.getZcjd40056()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40056()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40099",num.getZcjd40099()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40099()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40249",num.getZcjd40249()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40249()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40255",num.getZcjd40255()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40255()/ num.getErrorNum() * 100)) + "%");
+             m.put("tb40180",num.getTb40180()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getTb40180()/ num.getErrorNum() * 100)) + "%");
+             m.put("tb40212",num.getTb40212()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getTb40212()/ num.getErrorNum() * 100)) + "%");
+             m.put("tb40286",num.getTb40286()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getTb40286()/ num.getErrorNum() * 100)) + "%");
          } else {
-             m.put("zjcx40000",num.getZjcx40000()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40000()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40072",num.getZjcx40072()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40072()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40073",num.getZjcx40073()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40073()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40116",num.getZjcx40116()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40116()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40213",num.getZjcx40213()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40213()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40235",num.getZjcx40235()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40235()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40236",num.getZjcx40236()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40236()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40237",num.getZjcx40237()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40237()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40238",num.getZjcx40238()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40238()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40239",num.getZjcx40239()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40239()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40240",num.getZjcx40240()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40240()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40241",num.getZjcx40241()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40241()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40246",num.getZjcx40246()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40246()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40288",num.getZjcx40288()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40288()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zjcx40292",num.getZjcx40292()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZjcx40292()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40000",num.getSsrd40000()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40000()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40024",num.getSsrd40024()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40024()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40025",num.getSsrd40025()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40025()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40026",num.getSsrd40026()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40026()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40027",num.getSsrd40027()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40027()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40028",num.getSsrd40028()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40028()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40034",num.getSsrd40034()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40034()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40035",num.getSsrd40035()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40035()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40041",num.getSsrd40041()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40041()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40091",num.getSsrd40091()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40091()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40096",num.getSsrd40096()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40096()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40134",num.getSsrd40134()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40134()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40228",num.getSsrd40228()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40228()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40275",num.getSsrd40275()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40275()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40281",num.getSsrd40281()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40281()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("ssrd40282",num.getSsrd40282()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSsrd40282()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40000",num.getFlsy40000()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40000()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40125",num.getFlsy40125()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40125()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40126",num.getFlsy40126()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40126()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40127",num.getFlsy40127()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40127()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40128",num.getFlsy40128()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40128()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40209",num.getFlsy40209()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40209()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40267",num.getFlsy40267()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40267()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40270",num.getFlsy40270()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40270()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40271",num.getFlsy40271()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40271()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flsy40284",num.getFlsy40284()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlsy40284()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40000",num.getBacx40000()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40000()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40003",num.getBacx40003()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40003()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40004",num.getBacx40004()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40004()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40006",num.getBacx40006()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40006()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40009",num.getBacx40009()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40009()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40011",num.getBacx40011()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40011()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40012",num.getBacx40012()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40012()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40013",num.getBacx40013()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40013()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40014",num.getBacx40014()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40014()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40015",num.getBacx40015()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40015()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40016",num.getBacx40016()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40016()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40017",num.getBacx40017()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40017()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40019",num.getBacx40019()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40019()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40020",num.getBacx40020()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40020()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40021",num.getBacx40021()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40021()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40022",num.getBacx40022()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40022()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40023",num.getBacx40023()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40023()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40036",num.getBacx40036()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40036()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40045",num.getBacx40045()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40045()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40046",num.getBacx40046()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40046()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40047",num.getBacx40047()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40047()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40051",num.getBacx40051()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40051()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40052",num.getBacx40052()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40052()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40055",num.getBacx40055()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40055()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40058",num.getBacx40058()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40058()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40060",num.getBacx40060()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40060()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40061",num.getBacx40061()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40061()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40064",num.getBacx40064()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40064()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40065",num.getBacx40065()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40065()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40077",num.getBacx40077()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40077()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40079",num.getBacx40079()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40079()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40080",num.getBacx40080()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40080()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40087",num.getBacx40087()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40087()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40093",num.getBacx40093()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40093()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40094",num.getBacx40094()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40094()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40101",num.getBacx40101()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40101()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40104",num.getBacx40104()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40104()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40107",num.getBacx40107()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40107()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40111",num.getBacx40111()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40111()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40114",num.getBacx40114()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40114()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40119",num.getBacx40119()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40119()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40121",num.getBacx40121()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40121()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40122",num.getBacx40122()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40122()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40123",num.getBacx40123()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40123()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40124",num.getBacx40124()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40124()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40130",num.getBacx40130()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40130()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40142",num.getBacx40142()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40142()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40143",num.getBacx40143()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40143()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40144",num.getBacx40144()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40144()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40145",num.getBacx40145()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40145()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40146",num.getBacx40146()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40146()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40147",num.getBacx40147()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40147()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40148",num.getBacx40148()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40148()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40149",num.getBacx40149()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40149()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40150",num.getBacx40150()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40150()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40151",num.getBacx40150()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40150()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40152",num.getBacx40152()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40152()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40153",num.getBacx40153()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40153()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40159",num.getBacx40159()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40159()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40161",num.getBacx40161()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40161()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40164",num.getBacx40164()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40164()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40165",num.getBacx40165()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40165()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40166",num.getBacx40166()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40166()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40167",num.getBacx40167()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40167()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40168",num.getBacx40168()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40168()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40169",num.getBacx40169()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40169()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40171",num.getBacx40171()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40171()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40174",num.getBacx40174()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40174()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40175",num.getBacx40175()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40175()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40176",num.getBacx40176()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40176()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40179",num.getBacx40179()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40179()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40181",num.getBacx40181()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40181()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40182",num.getBacx40182()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40182()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40183",num.getBacx40183()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40183()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40185",num.getBacx40185()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40185()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40188",num.getBacx40188()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40188()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40190",num.getBacx40190()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40190()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40191",num.getBacx40191()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40191()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40192",num.getBacx40192()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40192()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40193",num.getBacx40193()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40193()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40194",num.getBacx40194()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40194()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40195",num.getBacx40195()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40195()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40197",num.getBacx40197()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40197()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40199",num.getBacx40199()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40199()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40204",num.getBacx40204()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40204()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40205",num.getBacx40205()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40205()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40217",num.getBacx40217()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40217()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40218",num.getBacx40218()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40218()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40219",num.getBacx40219()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40219()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40221",num.getBacx40221()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40221()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40222",num.getBacx40222()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40222()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40223",num.getBacx40223()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40223()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40225",num.getBacx40225()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40225()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40226",num.getBacx40226()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40226()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40230",num.getBacx40230()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40230()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40233",num.getBacx40233()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40233()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40234",num.getBacx40234()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40234()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40244",num.getBacx40244()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40244()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40245",num.getBacx40245()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40245()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40247",num.getBacx40247()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40247()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40248",num.getBacx40248()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40248()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40250",num.getBacx40250()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40250()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40256",num.getBacx40256()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40256()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40257",num.getBacx40257()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40257()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40269",num.getBacx40269()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40269()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40273",num.getBacx40273()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40273()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40279",num.getBacx40279()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40279()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("bacx40287",num.getBacx40287()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getBacx40287()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flws40000",num.getFlws40000()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlws40000()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flws40043",num.getFlws40043()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlws40043()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flws40044",num.getFlws40044()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlws40044()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flws40156",num.getFlws40156()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlws40156()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flws40157",num.getFlws40157()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlws40157()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flws40186",num.getFlws40186()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlws40186()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flws40189",num.getFlws40189()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlws40189()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("flws40242",num.getFlws40242()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFlws40242()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("sf40000",num.getSf40000()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSf40000()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("sf40038",num.getSf40038()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSf40038()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("sf40184",num.getSf40184()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSf40184()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("sf40198",num.getSf40198()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getSf40198()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("xtgf40000",num.getXtgf40000()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getXtgf40000()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("xtgf40018",num.getXtgf40018()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getXtgf40018()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("xtgf40097",num.getXtgf40097()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getXtgf40097()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("xtgf40110",num.getXtgf40110()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getXtgf40110()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("xtgf40162",num.getXtgf40162()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getXtgf40162()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("xtgf40177",num.getXtgf40177()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getXtgf40177()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("xtgf40178",num.getXtgf40178()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getXtgf40178()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("xtgf40196",num.getXtgf40196()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getXtgf40196()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("qt40000", num.getQt40000()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getQt40000()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("qt40049", num.getQt40049()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getQt40049()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("qt40050", num.getQt40050()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getQt40050()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("qt40154", num.getQt40154()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getQt40154()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40002",num.getZcjd40002()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40002()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40039",num.getZcjd40039()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40039()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40040",num.getZcjd40040()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40040()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40053",num.getZcjd40053()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40053()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40054",num.getZcjd40054()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40054()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40057",num.getZcjd40057()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40057()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40063",num.getZcjd40063()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40063()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40078",num.getZcjd40078()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40078()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40084",num.getZcjd40084()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40084()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40085",num.getZcjd40085()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40085()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40086",num.getZcjd40086()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40086()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40100",num.getZcjd40100()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40100()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40132",num.getZcjd40132()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40132()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40133",num.getZcjd40133()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40133()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40158",num.getZcjd40158()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40158()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("zcjd40173",num.getZcjd40173()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getZcjd40173()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("cxesg40000", num.getCxesg40000()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getCxesg40000()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("cxesg40105", num.getCxesg40105()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getCxesg40105()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("cxesg40115", num.getCxesg40115()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getCxesg40115()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("cxesg40172", num.getCxesg40172()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getCxesg40172()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("cxesg40204", num.getCxesg40204()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getCxesg40204()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("tb40000",num.getTb40000()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getTb40000()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("tb40048",num.getTb40048()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getTb40048()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("tb40083",num.getTb40083()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getTb40083()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("tb40092",num.getTb40092()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getTb40092()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("tb40095",num.getTb40095()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getTb40095()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("tb40106",num.getTb40106()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getTb40106()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("tb40108",num.getTb40108()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getTb40108()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("tb40109",num.getTb40109()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getTb40109()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("tb40113",num.getTb40113()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getTb40113()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("tb40117",num.getTb40117()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getTb40117()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("tb40187",num.getTb40187()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getTb40187()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("tb40206",num.getTb40206()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getTb40206()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("tb40211",num.getTb40211()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getTb40211()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("tb40232",num.getTb40232()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getTb40232()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("tb40243",num.getTb40243()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getTb40243()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("tb40285",num.getTb40285()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getTb40285()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("cxesw40000", num.getCxesw40000()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getCxesw40000()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("cxesw40105", num.getCxesw40105()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getCxesw40105()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("cxesw40115", num.getCxesw40115()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getCxesw40115()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("cxesw40172", num.getCxesw40172()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getCxesw40172()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("cxesw40204", num.getCxesw40204()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getCxesw40204()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("fljd40000", num.getFljd40000()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFljd40000()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("fljd40200", num.getFljd40200()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFljd40200()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("fljd40201", num.getFljd40201()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFljd40201()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("fljd40202", num.getFljd40202()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFljd40202()/ num.getErrorAllNum() * 100)) + "%");
-             m.put("fljd40203", num.getFljd40202()+ "/" + decimalFormat.format((num.getErrorAllNum() == 0) ? 0 : (num.getFljd40203()/ num.getErrorAllNum() * 100)) + "%");
+             m.put("zjcx40000",num.getZjcx40000()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40000()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40072",num.getZjcx40072()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40072()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40073",num.getZjcx40073()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40073()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40116",num.getZjcx40116()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40116()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40213",num.getZjcx40213()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40213()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40235",num.getZjcx40235()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40235()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40236",num.getZjcx40236()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40236()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40237",num.getZjcx40237()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40237()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40238",num.getZjcx40238()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40238()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40239",num.getZjcx40239()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40239()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40240",num.getZjcx40240()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40240()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40241",num.getZjcx40241()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40241()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40246",num.getZjcx40246()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40246()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40288",num.getZjcx40288()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40288()/ num.getErrorNum() * 100)) + "%");
+             m.put("zjcx40292",num.getZjcx40292()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZjcx40292()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40000",num.getSsrd40000()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40000()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40024",num.getSsrd40024()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40024()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40025",num.getSsrd40025()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40025()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40026",num.getSsrd40026()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40026()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40027",num.getSsrd40027()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40027()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40028",num.getSsrd40028()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40028()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40034",num.getSsrd40034()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40034()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40035",num.getSsrd40035()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40035()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40041",num.getSsrd40041()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40041()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40091",num.getSsrd40091()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40091()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40096",num.getSsrd40096()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40096()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40134",num.getSsrd40134()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40134()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40228",num.getSsrd40228()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40228()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40275",num.getSsrd40275()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40275()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40281",num.getSsrd40281()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40281()/ num.getErrorNum() * 100)) + "%");
+             m.put("ssrd40282",num.getSsrd40282()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSsrd40282()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40000",num.getFlsy40000()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40000()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40125",num.getFlsy40125()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40125()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40126",num.getFlsy40126()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40126()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40127",num.getFlsy40127()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40127()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40128",num.getFlsy40128()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40128()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40209",num.getFlsy40209()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40209()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40267",num.getFlsy40267()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40267()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40270",num.getFlsy40270()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40270()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40271",num.getFlsy40271()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40271()/ num.getErrorNum() * 100)) + "%");
+             m.put("flsy40284",num.getFlsy40284()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlsy40284()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40000",num.getBacx40000()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40000()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40003",num.getBacx40003()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40003()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40004",num.getBacx40004()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40004()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40006",num.getBacx40006()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40006()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40009",num.getBacx40009()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40009()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40011",num.getBacx40011()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40011()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40012",num.getBacx40012()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40012()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40013",num.getBacx40013()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40013()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40014",num.getBacx40014()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40014()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40015",num.getBacx40015()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40015()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40016",num.getBacx40016()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40016()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40017",num.getBacx40017()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40017()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40019",num.getBacx40019()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40019()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40020",num.getBacx40020()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40020()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40021",num.getBacx40021()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40021()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40022",num.getBacx40022()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40022()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40023",num.getBacx40023()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40023()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40036",num.getBacx40036()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40036()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40045",num.getBacx40045()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40045()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40046",num.getBacx40046()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40046()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40047",num.getBacx40047()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40047()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40051",num.getBacx40051()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40051()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40052",num.getBacx40052()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40052()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40055",num.getBacx40055()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40055()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40058",num.getBacx40058()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40058()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40060",num.getBacx40060()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40060()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40061",num.getBacx40061()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40061()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40064",num.getBacx40064()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40064()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40065",num.getBacx40065()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40065()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40077",num.getBacx40077()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40077()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40079",num.getBacx40079()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40079()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40080",num.getBacx40080()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40080()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40087",num.getBacx40087()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40087()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40093",num.getBacx40093()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40093()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40094",num.getBacx40094()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40094()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40101",num.getBacx40101()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40101()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40104",num.getBacx40104()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40104()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40107",num.getBacx40107()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40107()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40111",num.getBacx40111()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40111()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40114",num.getBacx40114()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40114()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40119",num.getBacx40119()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40119()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40121",num.getBacx40121()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40121()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40122",num.getBacx40122()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40122()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40123",num.getBacx40123()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40123()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40124",num.getBacx40124()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40124()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40130",num.getBacx40130()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40130()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40142",num.getBacx40142()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40142()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40143",num.getBacx40143()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40143()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40144",num.getBacx40144()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40144()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40145",num.getBacx40145()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40145()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40146",num.getBacx40146()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40146()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40147",num.getBacx40147()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40147()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40148",num.getBacx40148()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40148()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40149",num.getBacx40149()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40149()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40150",num.getBacx40150()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40150()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40151",num.getBacx40150()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40150()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40152",num.getBacx40152()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40152()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40153",num.getBacx40153()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40153()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40159",num.getBacx40159()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40159()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40161",num.getBacx40161()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40161()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40164",num.getBacx40164()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40164()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40165",num.getBacx40165()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40165()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40166",num.getBacx40166()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40166()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40167",num.getBacx40167()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40167()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40168",num.getBacx40168()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40168()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40169",num.getBacx40169()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40169()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40171",num.getBacx40171()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40171()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40174",num.getBacx40174()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40174()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40175",num.getBacx40175()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40175()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40176",num.getBacx40176()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40176()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40179",num.getBacx40179()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40179()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40181",num.getBacx40181()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40181()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40182",num.getBacx40182()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40182()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40183",num.getBacx40183()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40183()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40185",num.getBacx40185()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40185()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40188",num.getBacx40188()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40188()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40190",num.getBacx40190()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40190()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40191",num.getBacx40191()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40191()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40192",num.getBacx40192()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40192()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40193",num.getBacx40193()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40193()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40194",num.getBacx40194()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40194()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40195",num.getBacx40195()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40195()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40197",num.getBacx40197()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40197()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40199",num.getBacx40199()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40199()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40204",num.getBacx40204()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40204()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40205",num.getBacx40205()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40205()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40217",num.getBacx40217()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40217()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40218",num.getBacx40218()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40218()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40219",num.getBacx40219()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40219()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40221",num.getBacx40221()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40221()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40222",num.getBacx40222()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40222()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40223",num.getBacx40223()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40223()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40225",num.getBacx40225()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40225()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40226",num.getBacx40226()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40226()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40230",num.getBacx40230()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40230()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40233",num.getBacx40233()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40233()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40234",num.getBacx40234()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40234()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40244",num.getBacx40244()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40244()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40245",num.getBacx40245()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40245()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40247",num.getBacx40247()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40247()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40248",num.getBacx40248()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40248()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40250",num.getBacx40250()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40250()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40256",num.getBacx40256()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40256()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40257",num.getBacx40257()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40257()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40269",num.getBacx40269()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40269()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40273",num.getBacx40273()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40273()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40279",num.getBacx40279()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40279()/ num.getErrorNum() * 100)) + "%");
+             m.put("bacx40287",num.getBacx40287()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getBacx40287()/ num.getErrorNum() * 100)) + "%");
+             m.put("flws40000",num.getFlws40000()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlws40000()/ num.getErrorNum() * 100)) + "%");
+             m.put("flws40043",num.getFlws40043()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlws40043()/ num.getErrorNum() * 100)) + "%");
+             m.put("flws40044",num.getFlws40044()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlws40044()/ num.getErrorNum() * 100)) + "%");
+             m.put("flws40156",num.getFlws40156()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlws40156()/ num.getErrorNum() * 100)) + "%");
+             m.put("flws40157",num.getFlws40157()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlws40157()/ num.getErrorNum() * 100)) + "%");
+             m.put("flws40186",num.getFlws40186()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlws40186()/ num.getErrorNum() * 100)) + "%");
+             m.put("flws40189",num.getFlws40189()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlws40189()/ num.getErrorNum() * 100)) + "%");
+             m.put("flws40242",num.getFlws40242()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFlws40242()/ num.getErrorNum() * 100)) + "%");
+             m.put("sf40000",num.getSf40000()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSf40000()/ num.getErrorNum() * 100)) + "%");
+             m.put("sf40038",num.getSf40038()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSf40038()/ num.getErrorNum() * 100)) + "%");
+             m.put("sf40184",num.getSf40184()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSf40184()/ num.getErrorNum() * 100)) + "%");
+             m.put("sf40198",num.getSf40198()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getSf40198()/ num.getErrorNum() * 100)) + "%");
+             m.put("xtgf40000",num.getXtgf40000()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getXtgf40000()/ num.getErrorNum() * 100)) + "%");
+             m.put("xtgf40018",num.getXtgf40018()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getXtgf40018()/ num.getErrorNum() * 100)) + "%");
+             m.put("xtgf40097",num.getXtgf40097()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getXtgf40097()/ num.getErrorNum() * 100)) + "%");
+             m.put("xtgf40110",num.getXtgf40110()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getXtgf40110()/ num.getErrorNum() * 100)) + "%");
+             m.put("xtgf40162",num.getXtgf40162()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getXtgf40162()/ num.getErrorNum() * 100)) + "%");
+             m.put("xtgf40177",num.getXtgf40177()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getXtgf40177()/ num.getErrorNum() * 100)) + "%");
+             m.put("xtgf40178",num.getXtgf40178()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getXtgf40178()/ num.getErrorNum() * 100)) + "%");
+             m.put("xtgf40196",num.getXtgf40196()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getXtgf40196()/ num.getErrorNum() * 100)) + "%");
+             m.put("qt40000", num.getQt40000()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getQt40000()/ num.getErrorNum() * 100)) + "%");
+             m.put("qt40049", num.getQt40049()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getQt40049()/ num.getErrorNum() * 100)) + "%");
+             m.put("qt40050", num.getQt40050()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getQt40050()/ num.getErrorNum() * 100)) + "%");
+             m.put("qt40154", num.getQt40154()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getQt40154()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40002",num.getZcjd40002()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40002()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40039",num.getZcjd40039()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40039()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40040",num.getZcjd40040()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40040()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40053",num.getZcjd40053()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40053()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40054",num.getZcjd40054()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40054()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40057",num.getZcjd40057()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40057()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40063",num.getZcjd40063()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40063()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40078",num.getZcjd40078()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40078()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40084",num.getZcjd40084()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40084()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40085",num.getZcjd40085()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40085()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40086",num.getZcjd40086()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40086()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40100",num.getZcjd40100()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40100()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40132",num.getZcjd40132()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40132()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40133",num.getZcjd40133()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40133()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40158",num.getZcjd40158()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40158()/ num.getErrorNum() * 100)) + "%");
+             m.put("zcjd40173",num.getZcjd40173()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getZcjd40173()/ num.getErrorNum() * 100)) + "%");
+             m.put("cxesg40000", num.getCxesg40000()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getCxesg40000()/ num.getErrorNum() * 100)) + "%");
+             m.put("cxesg40105", num.getCxesg40105()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getCxesg40105()/ num.getErrorNum() * 100)) + "%");
+             m.put("cxesg40115", num.getCxesg40115()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getCxesg40115()/ num.getErrorNum() * 100)) + "%");
+             m.put("cxesg40172", num.getCxesg40172()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getCxesg40172()/ num.getErrorNum() * 100)) + "%");
+             m.put("cxesg40204", num.getCxesg40204()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getCxesg40204()/ num.getErrorNum() * 100)) + "%");
+             m.put("tb40000",num.getTb40000()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getTb40000()/ num.getErrorNum() * 100)) + "%");
+             m.put("tb40048",num.getTb40048()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getTb40048()/ num.getErrorNum() * 100)) + "%");
+             m.put("tb40083",num.getTb40083()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getTb40083()/ num.getErrorNum() * 100)) + "%");
+             m.put("tb40092",num.getTb40092()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getTb40092()/ num.getErrorNum() * 100)) + "%");
+             m.put("tb40095",num.getTb40095()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getTb40095()/ num.getErrorNum() * 100)) + "%");
+             m.put("tb40106",num.getTb40106()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getTb40106()/ num.getErrorNum() * 100)) + "%");
+             m.put("tb40108",num.getTb40108()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getTb40108()/ num.getErrorNum() * 100)) + "%");
+             m.put("tb40109",num.getTb40109()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getTb40109()/ num.getErrorNum() * 100)) + "%");
+             m.put("tb40113",num.getTb40113()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getTb40113()/ num.getErrorNum() * 100)) + "%");
+             m.put("tb40117",num.getTb40117()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getTb40117()/ num.getErrorNum() * 100)) + "%");
+             m.put("tb40187",num.getTb40187()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getTb40187()/ num.getErrorNum() * 100)) + "%");
+             m.put("tb40206",num.getTb40206()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getTb40206()/ num.getErrorNum() * 100)) + "%");
+             m.put("tb40211",num.getTb40211()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getTb40211()/ num.getErrorNum() * 100)) + "%");
+             m.put("tb40232",num.getTb40232()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getTb40232()/ num.getErrorNum() * 100)) + "%");
+             m.put("tb40243",num.getTb40243()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getTb40243()/ num.getErrorNum() * 100)) + "%");
+             m.put("tb40285",num.getTb40285()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getTb40285()/ num.getErrorNum() * 100)) + "%");
+             m.put("cxesw40000", num.getCxesw40000()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getCxesw40000()/ num.getErrorNum() * 100)) + "%");
+             m.put("cxesw40105", num.getCxesw40105()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getCxesw40105()/ num.getErrorNum() * 100)) + "%");
+             m.put("cxesw40115", num.getCxesw40115()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getCxesw40115()/ num.getErrorNum() * 100)) + "%");
+             m.put("cxesw40172", num.getCxesw40172()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getCxesw40172()/ num.getErrorNum() * 100)) + "%");
+             m.put("cxesw40204", num.getCxesw40204()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getCxesw40204()/ num.getErrorNum() * 100)) + "%");
+             m.put("fljd40000", num.getFljd40000()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFljd40000()/ num.getErrorNum() * 100)) + "%");
+             m.put("fljd40200", num.getFljd40200()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFljd40200()/ num.getErrorNum() * 100)) + "%");
+             m.put("fljd40201", num.getFljd40201()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFljd40201()/ num.getErrorNum() * 100)) + "%");
+             m.put("fljd40202", num.getFljd40202()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFljd40202()/ num.getErrorNum() * 100)) + "%");
+             m.put("fljd40203", num.getFljd40202()+ "/" + decimalFormat.format((num.getErrorNum() == 0) ? 0 : (num.getFljd40203()/ num.getErrorNum() * 100)) + "%");
          }
          Double pcAllCount = Double.valueOf(m.get("PCALLCOUNT") + "");Double errorAllCount = Double.valueOf(m.get("errorAllCount") + "");
          Double errorCount = Double.valueOf(m.get("errorCount") + ""); Double errorBlNum = pcAllCount == 0 ? 0 : (errorAllCount / pcAllCount) * 100;

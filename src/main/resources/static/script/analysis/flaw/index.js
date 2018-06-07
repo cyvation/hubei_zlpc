@@ -465,7 +465,7 @@ function pcWin_pcList(el,type){
             },
             {field: 'action', title: '操作', width: 80, align: 'center',
                 formatter: function (value, row, index) {
-                    return  row.PCFLBM=="009"? '<a href="#" onclick="pcWin_xlpcLn(' + index +')">查看</a>':'<a href="#" onclick="pcWinPage(' + index +',\'#table_eval_Ajlb\',0)">查看</a>';
+                    return  '<a href="#" onclick="pcWin_xlpcLn(' + index +')">查看</a>';
                 }
             }
         ]]

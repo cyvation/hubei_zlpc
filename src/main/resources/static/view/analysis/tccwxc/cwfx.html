@@ -144,6 +144,53 @@
     .easyui_table_yscx .datagrid-body table {
         width: 100%;
     }
+    /*评查预览*/
+    #pcWin_win_offline {
+        padding: 10px;
+        margin:0 auto;
+        background: #e0ecff;
+    }
+
+    #pcWin_win_offline table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 0px solid #8ac9e6;
+        border-right: 0 !important;
+    }
+
+    #pcWin_win_offline .thead {
+        background: #ecf6fb;
+    }
+
+    #pcWin_win_offline td {
+        height: 30px;
+        line-height: 20px;
+        font-size: 12px;
+        padding: 10px;
+        border: none;
+        border-right: 1px solid #8ac9e6;
+    }
+
+    #pcWin_win_offline tr {
+        border-bottom: 1px solid #8ac9e6;
+    }
+
+    #pcWin_win_offline .thead td {
+        color: #006391;
+        white-space: nowrap !important;
+    }
+
+    /*#pcWin_win .tbody td:nth-child(1) {*/
+    /*white-space: nowrap !important;*/
+    /*}*/
+
+    #pcWin_win_offline .tbody tr:nth-child(2n) {
+        background: #fafafa;
+    }
+
+    #pcWin_win_offline .tbody tr:hover {
+        background: #fcf8e3;
+    }
 </style>
 
 <div id="tcxc_xcx_main_div" class="easyui-layout" style="width:100%;height:100%;">
@@ -191,7 +238,7 @@
 </div>
 
 <!--评查预览弹出框-->
-<div id="pcWin_win" style="padding: 10px;">
+<!--<div id="pcWin_win" style="padding: 10px;">
     <div class="pcblPcyl">
         <div>评查案件：<span id="win_pcWin_lbl_eval_handle_eval_ajmc"></span></div>
         <div>承办检察官：<span id="win_pcWin_lbl_eval_handle_eval_cbr"></span></div>
@@ -201,7 +248,18 @@
         <div>案件完成日期：<span id="win_pcWin_lbl_eval_handle_eval_ajsj"></span></div>
     </div>
     <div class="pcylCon" id="pcWin_pcylCon"></div>
+</div>-->
+<!--评查预览弹出框-->
+<div id="pcWin_win_offline" style="padding: 10px;">
+    <div class="pcblPcyl">
+        <div>评查案件：<span id="win_pcWin_ajmc"></span></div>
+        <div>承办检察官：<span id="win_pcWin_cbr"></span></div>
+        <div>评查员：<span id="win_pcWin_pcr"></span></div>
+        <div>评查案号：<span id="win_pcWin_pcsah"></span></div>
+        <div>评查时间：<span id="win_pcWin_pcsj"></span></div>
+        <div>案件完成日期：<span id="win_pcWin_ajsj"></span></div>
+    </div>
+    <div class="pcylCon" id="pcWin_pcylCon_offline"></div>
 </div>
-
 </body>
 </html>

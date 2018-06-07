@@ -120,18 +120,31 @@
     <resultMap id="offlineCount" type="Map">
     </resultMap>
     <select id="getPcflInfo" parameterType="map" resultMap="pcflInfoMap">
-         select distinct t.PCXFLBM, t.PCXFLMC, t.PCXFLFBM, t.PCMBBM,t.PCRDWBM, t.PCJLBM, t.XH, t.SFTJ, t.SM,  t.FLXTDM, t.FFLXTDM, t.YWTX, t.PCFLBM,t.PCSLBM,t.pcjg
+         select * from (select distinct t.PCXFLBM, t.PCXFLMC, t.PCXFLFBM, t.PCMBBM,t.PCRDWBM, t.PCJLBM, t.XH, t.SFTJ, t.SM,  t.FLXTDM, t.FFLXTDM, t.YWTX, t.PCFLBM,t.PCSLBM,t.pcjg
         from YX_PC_OFFLINE_PCXFL t
-        where t.pcslbm=#{pcslbm}  ORDER BY t.pcxflbm,t.PCXFLFBM
+        where t.pcslbm=#{pcslbm}
+         ORDER BY t.pcxflbm,t.PCXFLFBM)
+        union all
+        select * from (select distinct t.PCXFLBM, t.PCXFLMC, t.PCXFLFBM, t.PCMBBM,t.PCRDWBM, t.PCJLBM, t.XH, t.SFTJ, t.SM,  t.FLXTDM, t.FFLXTDM, t.YWTX, t.PCFLBM,t.PCSLBM,t.pcjg
+        from YX_PC_PCXFL t
+        where t.pcslbm=#{pcslbm}
+        ORDER BY t.pcxflbm,t.PCXFLFBM)
     </select>
     <resultMap id="pcflInfoMap" type="Map">
     </resultMap>
     <select id="getPcflxInfo" parameterType="map" resultMap="pcflxInfoMap">
-        select distinct p.PCXBM, p.PCSLBM PCSLBMS,P.PCRDWBM PCRDWBMS,
+        select * from ( select distinct p.PCXBM, p.PCSLBM PCSLBMS,P.PCRDWBM PCRDWBMS,
         p.PCXMC, p.PCXFLBM PCXFLBMS, p.PCMBBM PCMBBMS, p.PCXLX, p.PCFS, p.PCJLBM PCJLBMS,p.FZ_GD, p.FZ_QSZ, p.FZ_JSZ, p.ZDPCCX, p.XH XHS, p.SFTJ SFTJS,
         p.BZ,p.SM SMS, p.FLXTDM FLXTDMS, p.FFLXTDM FFLXTDMS, p.YWTX YWTXS, p.PCFLBM PCFLBMS, p.XTDM,p.pcjg pcjgs
         from yx_pc_offline_pcx p
-        where p.pcslbm=#{pcslbm} ORDER BY p.pcxbm
+        where p.pcslbm=#{pcslbm}
+     ORDER BY p.pcxbm)
+         union all
+        select * from ( select distinct p.PCXBM, p.PCSLBM PCSLBMS,P.PCRDWBM PCRDWBMS,
+        p.PCXMC, p.PCXFLBM PCXFLBMS, p.PCMBBM PCMBBMS, p.PCXLX, p.PCFS, p.PCJLBM PCJLBMS,p.FZ_GD, p.FZ_QSZ, p.FZ_JSZ, p.ZDPCCX, p.XH XHS, p.SFTJ SFTJS,
+        p.BZ,p.SM SMS, p.FLXTDM FLXTDMS, p.FFLXTDM FFLXTDMS, p.YWTX YWTXS, p.PCFLBM PCFLBMS, p.XTDM,p.pcjg pcjgs
+        from yx_pc_pcx p
+        where p.pcslbm=#{pcslbm} ORDER BY p.pcxbm)
     </select>
     <resultMap id="pcflxInfoMap" type="Map">
     </resultMap>
@@ -139,6 +152,7 @@
         SELECT *
         FROM yx_pc_offline_jbxx jb
         WHERE jb.sfsc = 'N'
+        AND jb.pcr_dwbm = #{dwbm}
           AND jb.pcslbm = #{pcslbm}
     </select>
     <resultMap id="pcAjInfo" type="Map">

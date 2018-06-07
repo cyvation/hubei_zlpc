@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     //样式初始化以及按钮事件绑定
     init_monitor_overview();
-    $("#pcWin_win").hide();
+    $("#pcWin_win_offline").hide();
 });
 
 
@@ -403,12 +403,8 @@ function alert_tcxc_xcx_jbxx_window(index, name) {
             {
                 field: 'CZ', title: '操作', width: 80, align: 'center',
                 formatter: function (value, row, index) {
-                    var pcflbm = row.PCFLBM;
-                    if (pcflbm == '009') {
-                        return ' <a href="#" onclick="pcWin_analysis_xcx_pcyl(' + index + ')">查看</a>   ';
-                    } else {
-                        return '<a href="#" onclick="pcWinPage(' + index + ',\'#table_tcxc_xcx_ajxx_filter\',0)">查看</a>';
-                    }
+                    return ' <a href="#" onclick="pcWin_analysis_xcx_pcyl(' + index + ')">查看</a>   ';
+
                 }
             }
         ]]
@@ -427,7 +423,7 @@ function alert_tcxc_xcx_jbxx_window(index, name) {
 }
 
 function pcWin_analysis_xcx_pcyl(index) {
-    $('#pcWin_win').window({
+    $('#pcWin_win_offline').window({
         width: 780,
         height: 500,
         modal: true,
@@ -439,17 +435,17 @@ function pcWin_analysis_xcx_pcyl(index) {
         onClose: function () {
         }
     });
-    $('#pcWin_pcylCon').find("table").remove();
-    var datas=$('#table_analysis_nd_filter').datagrid('getRows')[index];
-    $('#pcWin_win').window('open');
-    $("#pcWin_win").show();
+    $('#pcWin_pcylCon_offline').find("table").remove();
+    var datas=$('#table_tcxc_xcx_ajxx_filter').datagrid('getRows')[index];
+    $('#pcWin_win_offline').window('open');
+    $("#pcWin_win_offline").show();
     // 评查案件信息初始化
-    $('#win_pcWin_lbl_eval_handle_eval_ajmc').text(datas.AJMC);
-    $('#win_pcWin_lbl_eval_handle_eval_cbr').text(datas.CBRMC);
-    $('#win_pcWin_lbl_eval_handle_eval_pcr').text(datas.PCR_MC);
-    $('#win_pcWin_lbl_eval_handle_eval_pcsah').text(datas.BMSAH);
-    $('#win_pcWin_lbl_eval_handle_eval_pcsj').text(sjzh(datas.CJSJ));
-    $('#win_pcWin_lbl_eval_handle_eval_ajsj').text(sjzh(datas.BPC_WCRQ));
+    $('#win_pcWin_ajmc').text(datas.AJMC);
+    $('#win_pcWin_cbr').text(datas.CBRMC);
+    $('#win_pcWin_pcr').text(datas.PCR_MC);
+    $('#win_pcWin_pcsah').text(datas.BMSAH);
+    $('#win_pcWin_pcsj').text(sjzh(datas.CJSJ));
+    $('#win_pcWin_ajsj').text(sjzh(datas.BPC_WCRQ));
     $.ajax({
         url: getRootPath() + '/offline/getPcjgInfo',
         type: 'get',
@@ -496,7 +492,7 @@ function pcWin_analysis_xcx_pcyl(index) {
                 }
 
                 html += '</table>';
-                $('#pcWin_pcylCon').html(html);
+                $('#pcWin_pcylCon_offline').html(html);
             }
         }
     });

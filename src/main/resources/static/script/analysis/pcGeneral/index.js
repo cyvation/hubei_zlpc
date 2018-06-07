@@ -370,7 +370,7 @@ function pcWin_generalList(el,index,type){
             },
             {field: 'action', title: '操作', width: 80, align: 'center',
                 formatter: function (value, row, index) {
-                    return  row.PCFLBM=="009"? '<a href="#" onclick="pcWin_pcCountWin(' + index +')">查看</a>':'<a href="#" onclick="pcWinPages(' + index +',\'#table_eval_Ajlb\',0)">查看</a>';
+                    return '<a href="#" onclick="pcWin_pcCountWin(' + index +')">查看</a>';
                 }
             }
         ]]
@@ -384,7 +384,7 @@ function pcWin_generalList(el,index,type){
 // 办理win弹框加载
 // 跳转到评查办理界面
 // type类别 0：评查信息  1：案件信息
-function pcWinPages(index,id,type) {
+/*function pcWinPages(index,id,type) {
     var rowDatas = $(id).datagrid('getRows');
     if(type==''||type==null||type==undefined){
         type=0;
@@ -408,7 +408,7 @@ function loadPcblWin(href, param) {
     }else {
         $('#pcblWin').window('open').window('refresh', href);
     }
-}
+}*/
 function pcWin_pcCountWin(index) {
     $('#pcWin_win_offline').window({
         width: 780,

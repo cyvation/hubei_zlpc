@@ -3712,7 +3712,7 @@ public class AnalysisServiceImpl implements AnalysisService {
             for (int i = 0; i < ajs.size(); i++) {
                 ajMap = ajs.get(i);
                 List<String> sigleData = new ArrayList<>();
-                sigleData.add("-1".equals(ajMap.get("AJLB_BM"))?ajMap.get("YWTX_MC").toString():ajMap.get("AJLB_MC").toString());
+                sigleData.add("-1".equals(ajMap.get("AJLB_BM"))?ajMap.get("YWTX_MC").toString()+"（合计）":ajMap.get("AJLB_MC").toString());
                 sigleData.add(ajMap.get("BJAJS").toString());
                 sigleData.add(ajMap.get("PCAJS").toString());
                 sigleData.add(ajMap.get("PCZB").toString());

@@ -59,37 +59,37 @@
         )group by wcrq_nf order by wcrq_nf
     </select>
     <select id="loadDateErrCount" resultType ='map' parameterType="map">
-        select wcrq_nf name ,wcrq_nf id,sum(num) num
-        from (select jb.wcrq_nf, count(pcx.pcslbm) num
-        from yx_pc_pcx pcx
-        left join v_pcajxx jb
-        on jb.pcslbm = pcx.pcslbm
+      select wcrq_nf name ,wcrq_nf id,sum(num) num
+          from (select jb.wcrq_nf, count(pcx.pcslbm) num
+                  from yx_pc_pcx pcx
+                  left join v_pcajxx jb
+                    on jb.pcslbm = pcx.pcslbm
         <include refid="seachPcxFx"/>
-        group by jb.wcrq_nf
-        union all
-        select jb.wcrq_nf, count(pcx.pcslbm) num
-        from yx_pc_offline_pcx pcx
-        left join v_pcajxx jb
-        on jb.pcslbm = pcx.pcslbm
+                 group by jb.wcrq_nf
+                union all
+                select jb.wcrq_nf, count(pcx.pcslbm) num
+                  from yx_pc_offline_pcx pcx
+                  left join v_pcajxx jb
+                    on jb.pcslbm = pcx.pcslbm
         <include refid="seachPcxFx"/>
-        group by jb.wcrq_nf)
-        group by wcrq_nf order by wcrq_nf
+                 group by jb.wcrq_nf)
+         group by wcrq_nf order by wcrq_nf
     </select>
-    <select id="loadDatePcFlCount" resultType ='map' parameterType="map">
-        select wcrq_nf name,wcrq_nf id,zyywtx,dm,mc,sum(num) num from (
-        select jb.wcrq_nf,dm.zyywtx, dm.dm, dm.mc, count(DISTINCT pcx.pcslbm) num
-        from yx_pc_pcx pcx left join XT_PC_DM dm on pcx.fflxtdm = dm.dm
-        left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
-        <include refid="seachPcxFx"/>
-        group by jb.wcrq_nf, dm.zyywtx,dm.dm, dm.mc
-        union all
-        select jb.wcrq_nf,dm.zyywtx, dm.dm, dm.mc, count(DISTINCT pcx.pcslbm) num
-        from yx_pc_offline_pcx pcx left join XT_PC_DM dm on pcx.fflxtdm = dm.dm
-        left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
-        <include refid="seachPcxFx"/>
-        group by jb.wcrq_nf,dm.zyywtx,dm.dm, dm.mc
-        )group by wcrq_nf,zyywtx,dm,mc order by wcrq_nf
-    </select>
+        <select id="loadDatePcFlCount" resultType ='map' parameterType="map">
+            select wcrq_nf name,wcrq_nf id,zyywtx,dm,mc,sum(num) num from (
+            select jb.wcrq_nf,dm.zyywtx, dm.dm, dm.mc, count(DISTINCT pcx.pcslbm) num
+            from yx_pc_pcx pcx left join XT_PC_DM dm on pcx.fflxtdm = dm.dm
+            left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
+            <include refid="seachPcxFx"/>
+            group by jb.wcrq_nf, dm.zyywtx,dm.dm, dm.mc
+            union all
+            select jb.wcrq_nf,dm.zyywtx, dm.dm, dm.mc, count(DISTINCT pcx.pcslbm) num
+            from yx_pc_offline_pcx pcx left join XT_PC_DM dm on pcx.fflxtdm = dm.dm
+            left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
+            <include refid="seachPcxFx"/>
+            group by jb.wcrq_nf,dm.zyywtx,dm.dm, dm.mc
+            )group by wcrq_nf,zyywtx,dm,mc order by wcrq_nf
+        </select>
     <select id="loadTxPcCount" resultType ='map'>
         select id ,name,mc,pid, count(pcslbm) pcAllCount from(
         select AJLB_BM id,k.AJLBMC name,YWTX_MC mc,ywtx pid,pcslbm from v_pcajxx jb
@@ -117,7 +117,7 @@
             and ywtx in
             <foreach  item="item" collection="ywtx" index="index"  open="(" separator="," close=")">#{item}</foreach>
         </if>
-        group by AJLB_BM,k.AJLBMC,YWTX_MC,ywtx ,pcslbm
+         group by AJLB_BM,k.AJLBMC,YWTX_MC,ywtx ,pcslbm
         )group by id,name,mc,pid order by mc
     </select>
     <select id="loadTxErrPcCount" resultType ='map'>
@@ -207,22 +207,22 @@
         group by dwbm order by dwbm
     </select>
     <select id="loadDqErrCount" resultType ='map' parameterType="map">
-        select dwbm id, sum(num) num
-        from (select * from ( select jb.bpc_dwbm dwbm, count(pcx.pcslbm) num
-        from yx_pc_pcx pcx
-        left join v_pcajxx jb  on jb.pcslbm = pcx.pcslbm
+       select dwbm id, sum(num) num
+      from (select * from ( select jb.bpc_dwbm dwbm, count(pcx.pcslbm) num
+              from yx_pc_pcx pcx
+              left join v_pcajxx jb  on jb.pcslbm = pcx.pcslbm
         <include refid="seachPcxFx"/>
-        group by jb.bpc_dwbm
-        order by jb.bpc_dwbm)
-        union all
-        select * from ( select jb.bpc_dwbm dwbm, count(pcx.pcslbm) num
-        from yx_pc_offline_pcx pcx
-        left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
+             group by jb.bpc_dwbm
+             order by jb.bpc_dwbm)
+            union all
+           select * from ( select jb.bpc_dwbm dwbm, count(pcx.pcslbm) num
+              from yx_pc_offline_pcx pcx
+              left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
         <include refid="seachPcxFx"/>
-        group by jb.bpc_dwbm
-        order by jb.bpc_dwbm)
-        )
-        group by dwbm order by dwbm
+             group by jb.bpc_dwbm
+             order by jb.bpc_dwbm)
+             )
+     group by dwbm order by dwbm
     </select>
     <select id="loadDqPcFlCount" resultType ='map' parameterType="map">
         select dwbm id ,zyywtx,dm,mc,sum (num) num from (
@@ -406,8 +406,8 @@
         ORDER BY xh
     </select>
     <select id="loadDateGeneralBa" resultType='map' parameterType="map">
-        select d.wcrq_nf name,d.wcrq_nf id,count(d.wcrq_nf) num from (
-        SELECT DISTINCT cbdwbm,cbrgh,wcrq_nf FROM V_BJAJXX c <include refid="seachBJ" />
+       select d.wcrq_nf name,d.wcrq_nf id,count(d.wcrq_nf) num from (
+              SELECT DISTINCT cbdwbm,cbrgh,wcrq_nf FROM V_BJAJXX c <include refid="seachBJ" />
         order by c.wcrq_nf
         ) d GROUP BY d.wcrq_nf order by d.wcrq_nf
 
@@ -495,71 +495,71 @@
     </select>
 
     <select id="loadTxGeneralAll" resultType ='map' parameterType="map">
-        --评查汇总按条线
+      --评查汇总按条线
         WITH
-        bjtab AS (SELECT * from v_bjajxx c <include refid="seachBJ" />),
-        pctab AS (SELECT * from v_pcajxx c <include refid="seachPC"/>),
-        hztab AS(
-        --汇总临时表start
-        SELECT u.ywtx,u.ajlb_bm,
-        SUM(decode(coltype,'bars',cnt,0)) bars, --办案人数
-        SUM(decode(coltype,'bjajs',cnt,0)) bjajs, --办结案件数
-        SUM(decode(coltype,'pcrys',cnt,0)) pcrys, --评查人员数
-        SUM(decode(coltype,'pcajs',cnt,0)) pcajs, --评查案件数
-        'N' sfhj
-        FROM
-        (
-        --办案人数
-        SELECT ywtx,ajlb_bm, count(*) cnt, 'bars' coltype from ( SELECT DISTINCT ywtx,ajlb_bm,cbdwbm ,cbrgh from bjtab ) a GROUP BY ywtx,ajlb_bm
-        UNION ALL
-        --办结案件数
-        SELECT ywtx,ajlb_bm, count(*) cnt, 'bjajs' coltype from  bjtab  a GROUP BY ywtx,ajlb_bm
-        UNION ALL
-        --评查人员数
-        SELECT ywtx,ajlb_bm, count(*) cnt, 'pcrys' coltype from ( SELECT DISTINCT ywtx,ajlb_bm,pcr_dwbm,pcr_gh from pctab v ) a GROUP BY ywtx,ajlb_bm
-        UNION ALL
-        --评查案件数
-        SELECT ywtx,ajlb_bm, count(bmsah) cnt, 'pcajs' coltype from ( SELECT DISTINCT ywtx,ajlb_bm,bmsah from pctab v ) a GROUP BY ywtx,ajlb_bm
-        ) u
-        GROUP BY u.ywtx,u.ajlb_bm
-        ) --汇总临时表end
-        ,txtab AS (--业务条线、案件类别临时表（只统计评查系统里出现过的类别）start
-        SELECT pctx.ywtx,
-        (CASE WHEN pctx.ywtx = '-1' AND pctx.ajlb_bm='-1' THEN '合计' WHEN  pctx.ywtx != '-1' AND pctx.ajlb_bm='-1' THEN d.mc||'(合计)' ELSE d.mc END  ) ywtx_mc,
-        pctx.ajlb_bm,ajlb.ajlbmc ajlb_mc
-        FROM
-        (
-        SELECT '-1' ywtx,'-1' ajlb_bm FROM dual --增加总计
-        UNION ALL
-        SELECT ywtx,'-1' ajlb_bm FROM pctab GROUP BY ywtx --增加条线合计
-        UNION ALL
-        SELECT ywtx,ajlb_bm
-        FROM pctab
-        GROUP BY ywtx, ajlb_bm
-        ) pctx
-        LEFT JOIN xt_pc_dm d ON pctx.ywtx=d.dm
-        LEFT JOIN xt_dm_ajlbbm@tyyw_link.net ajlb ON pctx.ajlb_bm=ajlb.ajlbbm
-        ) --业务条线、案件类别临时表（只统计评查系统里出现过的类别）end
+           bjtab AS (SELECT * from v_bjajxx c <include refid="seachBJ" />),
+           pctab AS (SELECT * from v_pcajxx c <include refid="seachPC"/>),
+           hztab AS(
+             --汇总临时表start
+              SELECT u.ywtx,u.ajlb_bm,
+                SUM(decode(coltype,'bars',cnt,0)) bars, --办案人数
+                SUM(decode(coltype,'bjajs',cnt,0)) bjajs, --办结案件数
+                SUM(decode(coltype,'pcrys',cnt,0)) pcrys, --评查人员数
+                SUM(decode(coltype,'pcajs',cnt,0)) pcajs, --评查案件数
+                'N' sfhj
+              FROM
+              (
+                --办案人数
+                SELECT ywtx,ajlb_bm, count(*) cnt, 'bars' coltype from ( SELECT DISTINCT ywtx,ajlb_bm,cbdwbm ,cbrgh from bjtab ) a GROUP BY ywtx,ajlb_bm
+                UNION ALL
+                --办结案件数
+                SELECT ywtx,ajlb_bm, count(*) cnt, 'bjajs' coltype from  bjtab  a GROUP BY ywtx,ajlb_bm
+                UNION ALL
+                --评查人员数
+                SELECT ywtx,ajlb_bm, count(*) cnt, 'pcrys' coltype from ( SELECT DISTINCT ywtx,ajlb_bm,pcr_dwbm,pcr_gh from pctab v ) a GROUP BY ywtx,ajlb_bm
+                UNION ALL
+                --评查案件数
+                SELECT ywtx,ajlb_bm, count(bmsah) cnt, 'pcajs' coltype from ( SELECT DISTINCT ywtx,ajlb_bm,bmsah from pctab v ) a GROUP BY ywtx,ajlb_bm
+              ) u
+              GROUP BY u.ywtx,u.ajlb_bm
+          ) --汇总临时表end
+          ,txtab AS (--业务条线、案件类别临时表（只统计评查系统里出现过的类别）start
+            SELECT pctx.ywtx,
+              (CASE WHEN pctx.ywtx = '-1' AND pctx.ajlb_bm='-1' THEN '合计' WHEN  pctx.ywtx != '-1' AND pctx.ajlb_bm='-1' THEN d.mc||'(合计)' ELSE d.mc END  ) ywtx_mc,
+              pctx.ajlb_bm,ajlb.ajlbmc ajlb_mc
+            FROM
+            (
+              SELECT '-1' ywtx,'-1' ajlb_bm FROM dual --增加总计
+              UNION ALL
+              SELECT ywtx,'-1' ajlb_bm FROM pctab GROUP BY ywtx --增加条线合计
+              UNION ALL
+              SELECT ywtx,ajlb_bm
+                FROM pctab
+               GROUP BY ywtx, ajlb_bm
+            ) pctx
+           LEFT JOIN xt_pc_dm d ON pctx.ywtx=d.dm
+           LEFT JOIN xt_dm_ajlbbm@tyyw_link.net ajlb ON pctx.ajlb_bm=ajlb.ajlbbm
+          ) --业务条线、案件类别临时表（只统计评查系统里出现过的类别）end
         --算比例start
-        SELECT y.ywtx,txtab.ywtx_mc,y.ajlb_bm,txtab.ajlb_mc,
-        y.bars "bjrNum",y.bjajs "bjajNum",y.pcrys "pcrNum",y.pcajs "pcajNum"
-        --,to_char((y.pcajs*100/y.bjajs),'fm999999990.0099')||'%'  "评查比例（4/2）"
-        ,to_char(decode(y.bjajs,0,0,y.pcajs*100/y.bjajs),'fm999999990.009')||'%' "pcbl"
-        ,round(decode(y.bars,0,0,(y.pcajs/y.bars)),4)   "bpcAvgNum"
-        ,round(decode(y.pcrys,0,0,(y.pcajs/y.pcrys)),4)  "avgNum"
-        ,y.sfhj "sfhj"
-        FROM
-        (--计算数量start
-        SELECT ywtx,ajlb_bm,bars,bjajs,pcrys,pcajs,sfhj from hztab
-        UNION ALL
-        --增加合计行
-        SELECT nvl(ywtx,'-1') ywtx,'-1',sum(bars),sum(bjajs),sum(pcrys),sum(pcajs),'Y' sfhj
-        FROM hztab  GROUP BY ROLLUP (ywtx)
-        ) y--计算数量end
-        INNER JOIN txtab ON txtab.ywtx=y.ywtx AND txtab.ajlb_bm=y.ajlb_bm
-        WHERE y.pcajs >0
-        ORDER by txtab.ywtx,txtab.ajlb_bm
-        --计算比例end
+         SELECT y.ywtx,txtab.ywtx_mc,y.ajlb_bm,txtab.ajlb_mc,
+            y.bars "bjrNum",y.bjajs "bjajNum",y.pcrys "pcrNum",y.pcajs "pcajNum"
+            --,to_char((y.pcajs*100/y.bjajs),'fm999999990.0099')||'%'  "评查比例（4/2）"
+            ,to_char(decode(y.bjajs,0,0,y.pcajs*100/y.bjajs),'fm999999990.009')||'%' "pcbl"
+            ,round(decode(y.bars,0,0,(y.pcajs/y.bars)),4)   "bpcAvgNum"
+            ,round(decode(y.pcrys,0,0,(y.pcajs/y.pcrys)),4)  "avgNum"
+            ,y.sfhj "sfhj"
+          FROM
+            (--计算数量start
+             SELECT ywtx,ajlb_bm,bars,bjajs,pcrys,pcajs,sfhj from hztab
+              UNION ALL
+              --增加合计行
+              SELECT nvl(ywtx,'-1') ywtx,'-1',sum(bars),sum(bjajs),sum(pcrys),sum(pcajs),'Y' sfhj
+               FROM hztab  GROUP BY ROLLUP (ywtx)
+             ) y--计算数量end
+          INNER JOIN txtab ON txtab.ywtx=y.ywtx AND txtab.ajlb_bm=y.ajlb_bm
+          WHERE y.pcajs >0
+          ORDER by txtab.ywtx,txtab.ajlb_bm
+         --计算比例end
 
     </select>
 
@@ -643,26 +643,22 @@
     <select id="getPcxByFlxtdm" parameterType="java.util.Map" resultType="java.util.Map">
         SELECT dm, fdm, mc, bqbm, bqmc, sm, sftj, sfsc, xh from
         (SELECT DISTINCT x.xtdm from xt_pc_pcx x
-        WHERE x.flxtdm=#{flxtdm}) a
+           WHERE x.flxtdm=#{flxtdm}) a
         INNER JOIN xt_pc_dm d ON a.xtdm=d.dm and d.sfsc = 'N' ORDER BY DM
     </select>
 
 
-    <!--根据系统代码获取突出错误/突出瑕疵案件量-->
-    <select id="getAjPcxCountByXtdm" parameterType="java.util.Map" resultType="java.util.Map">
-        select DISTINCT dm ,mc, nvl(sum(cnt), 0) cnt from (
-        select * from (SELECT PCX_XTDM.dm ,PCX_XTDM.mc, nvl(aj.cnt, 0) cnt FROM (SELECT dm, mc from
+    <!--根据系统代码获取突出错误/突出瑕疵案件量  67修改-->
+    <!--<select id="getAjPcxCountByXtdm" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT PCX_XTDM.dm ,PCX_XTDM.mc, nvl(aj.cnt, 0) cnt FROM (SELECT dm, mc from
         (SELECT DISTINCT x.xtdm from xt_pc_pcx x
         WHERE x.flxtdm = #{flxtdm} ) a
         INNER JOIN xt_pc_dm d ON a.xtdm=d.dm and d.sfsc = 'N') PCX_XTDM
         LEFT JOIN (SELECT COUNT(distinct bmsah) cnt, pcx.xtdm FROM v_pcajxx ajxx
         INNER JOIN yx_pc_pcx pcx ON pcx.pcslbm = ajxx.pcslbm
-        WHERE 1=1 AND pcx.pcjg != '0'
+        WHERE 1=1 AND pcx.pcjg = '1'
         <if test="wcrqnf !=null and wcrqnf!=''">
             AND ajxx.wcrq_nf in (${wcrqnf})
-        </if>
-        <if test="flxtdm !=null and flxtdm!=''">
-            AND pcx.flxtdm in (${flxtdm})
         </if>
         <if test="ajtjlb !=null and ajtjlb!=''">
             AND ajxx.stajbs in (${ajtjlb})
@@ -688,47 +684,59 @@
         <if test="dwbm !=null and dwbm!=''">
             AND ajxx.bpc_dwbm in (${dwbm})
         </if>
-        group by pcx.xtdm) AJ ON AJ.xtdm = PCX_XTDM.dm ORDER BY nvl(aj.cnt, 0) desc, PCX_XTDM.dm)
-        union all
-        select * from(SELECT PCX_XTDM.dm ,PCX_XTDM.mc, nvl(aj.cnt, 0) cnt FROM (SELECT dm, mc from
-        (SELECT DISTINCT x.xtdm from xt_pc_pcx x
-        WHERE x.flxtdm = #{flxtdm} ) a
-        INNER JOIN xt_pc_dm d ON a.xtdm=d.dm and d.sfsc = 'N') PCX_XTDM
-        LEFT JOIN (SELECT COUNT(distinct bmsah) cnt, pcx.xtdm FROM v_pcajxx ajxx
-        INNER JOIN yx_pc_offline_pcx pcx ON pcx.pcslbm = ajxx.pcslbm
-        WHERE 1=1 AND pcx.pcjg != '0'
-        <if test="wcrqnf !=null and wcrqnf!=''">
-            AND ajxx.wcrq_nf in (${wcrqnf})
-        </if>
-        <if test="flxtdm !=null and flxtdm!=''">
-            AND pcx.flxtdm in (${flxtdm})
-        </if>
-        <if test="ajtjlb !=null and ajtjlb!=''">
-            AND ajxx.stajbs in (${ajtjlb})
-        </if>
-        <if test="cbrsf !=null and cbrsf=='N,Y'">
-            AND ajxx.sfldba in ('N', 'Y')
-        </if>
-        <if test="cbrsf !=null and cbrsf!='' and cbrsf!='N,Y'">
-            AND ajxx.sfldba = #{cbrsf}
-        </if>
-        <if test="flxtdm !=null and flxtdm!=''">
-            AND pcx.xtdm in (SELECT dm from
-            (SELECT DISTINCT x.xtdm from xt_pc_pcx x
-            WHERE x.flxtdm = #{flxtdm}) a
-            INNER JOIN xt_pc_dm d ON a.xtdm=d.dm and d.sfsc = 'N')
-        </if>
-        <if test="ywtx !=null and ywtx!=''">
-            AND ajxx.ywtx in (${ywtx})
-        </if>
-        <if test="pcflbm !=null and pcflbm!=''">
-            AND ajxx.pcflbm in (${pcflbm})
-        </if>
-        <if test="dwbm !=null and dwbm!=''">
-            AND ajxx.bpc_dwbm in (${dwbm})
-        </if>
-        group by pcx.xtdm) AJ ON AJ.xtdm = PCX_XTDM.dm ORDER BY nvl(aj.cnt, 0) desc, PCX_XTDM.dm))
-        group by dm,mc ORDER BY nvl(cnt, 0) desc
+        group by pcx.xtdm) AJ ON AJ.xtdm = PCX_XTDM.dm ORDER BY nvl(aj.cnt, 0) desc, PCX_XTDM.dm
+    </select>-->
+    <select id="getAjPcxCountByXtdm" parameterType="java.util.Map" resultType="java.util.Map">
+        --错误项案件数
+         SELECT dm.mc,dm.dm,nvl(a.cnt,0) cnt FROM
+             --运行评查项里的错误/瑕疵案件数start
+             (SELECT pcx.xtdm,COUNT(pcslbm) cnt
+                FROM
+                (--合并线上线下start
+                  SELECT onx.pcslbm,onx.xtdm,onx.pcjg,onx.flxtdm FROM yx_pc_pcx onx
+                   WHERE onx.pcjg != '0'  AND onx.flxtdm = #{flxtdm}
+                   UNION ALL
+                  SELECT ofx.pcslbm,ofx.xtdm,ofx.pcjg,ofx.flxtdm FROM yx_pc_offline_pcx ofx
+                   WHERE ofx.pcjg != '0'  AND ofx.flxtdm = #{flxtdm}
+                ) pcx--合并线上线下end
+               WHERE EXISTS (
+                     SELECT 1 FROM v_pcajxx ajxx WHERE pcx.pcslbm = ajxx.PCSLBM
+                    <if test="wcrqnf !=null and wcrqnf!=''">
+                        AND ajxx.wcrq_nf in (${wcrqnf})
+                    </if>
+                    <if test="ajtjlb !=null and ajtjlb!=''">
+                        AND ajxx.stajbs in (${ajtjlb})
+                    </if>
+                    <if test="cbrsf !=null and cbrsf=='N,Y'">
+                        AND ajxx.sfldba in ('N', 'Y')
+                    </if>
+                    <if test="cbrsf !=null and cbrsf!='' and cbrsf!='N,Y'">
+                        AND ajxx.sfldba = #{cbrsf}
+                    </if>
+                    <if test="ywtx !=null and ywtx!=''">
+                        AND ajxx.ywtx in (${ywtx})
+                    </if>
+                    <if test="pcflbm !=null and pcflbm!=''">
+                        AND ajxx.pcflbm in (${pcflbm})
+                    </if>
+                    <if test="dwbm !=null and dwbm!=''">
+                        AND ajxx.bpc_dwbm in (${dwbm})
+                    </if>
+               )
+               GROUP BY pcx.xtdm
+              ) a
+              --运行评查项里的错误/瑕疵案件数end
+         RIGHT JOIN
+          (SELECT dm,mc --从评查模版里提取定义的错误/瑕疵项start
+            FROM (SELECT DISTINCT x.xtdm
+                    FROM xt_pc_pcx x
+                   WHERE x.flxtdm =  #{flxtdm}
+                  ) a
+           INNER JOIN xt_pc_dm d ON a.xtdm = d.dm
+            AND d.sfsc = 'N'
+            ) dm   --从评查模版里提取定义的错误/瑕疵项end
+            ON a.xtdm=dm.dm
+         ORDER BY nvl(a.cnt,0) desc, a.xtdm
     </select>
 
     <!--获取单位编码列表-->
@@ -778,19 +786,19 @@
     </select>
 
     <select id="loadDatePcFlCountExcel" resultType ='map' parameterType="map">
-        select wcrq_nf name,wcrq_nf id,zyywtx,dm,mc,xtdm,pcxmc,sum(num) num from (
-        select jb.wcrq_nf,dm.zyywtx, dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc, count(DISTINCT pcx.pcslbm) num
-        from yx_pc_pcx pcx left join XT_PC_DM dm on pcx.fflxtdm = dm.dm
-        left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
+       select wcrq_nf name,wcrq_nf id,zyywtx,dm,mc,xtdm,pcxmc,sum(num) num from (
+            select jb.wcrq_nf,dm.zyywtx, dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc, count(DISTINCT pcx.pcslbm) num
+            from yx_pc_pcx pcx left join XT_PC_DM dm on pcx.fflxtdm = dm.dm
+            left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
         <include refid="seachPcxFx"/>
-        group by jb.wcrq_nf, dm.zyywtx,dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc
-        union all
-        select jb.wcrq_nf,dm.zyywtx, dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc, count(DISTINCT pcx.pcslbm) num
-        from yx_pc_offline_pcx pcx left join XT_PC_DM dm on pcx.fflxtdm = dm.dm
-        left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
+            group by jb.wcrq_nf, dm.zyywtx,dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc
+            union all
+            select jb.wcrq_nf,dm.zyywtx, dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc, count(DISTINCT pcx.pcslbm) num
+            from yx_pc_offline_pcx pcx left join XT_PC_DM dm on pcx.fflxtdm = dm.dm
+            left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
         <include refid="seachPcxFx"/>
-        group by jb.wcrq_nf,dm.zyywtx,dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc
-        )group by wcrq_nf,zyywtx,dm,mc,xtdm,pcxmc order by wcrq_nf
+            group by jb.wcrq_nf,dm.zyywtx,dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc
+            )group by wcrq_nf,zyywtx,dm,mc,xtdm,pcxmc order by wcrq_nf
     </select>
 
     <select id="loadDqPcFlCountExcel" resultType ='map' parameterType="map">
@@ -815,164 +823,152 @@
 
     <!--根据系统代码获取评查项备注说明-->
     <select id="getPcxBzByXtdm" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT pcx.sm,pcx.xtdm FROM v_pcajxx ajxx
-        INNER JOIN
-          (
-             SELECT pcslbm,flxtdm,xtdm,sm from
-                  (SELECT onx.pcslbm,onx.xtdm,onx.pcjg,onx.flxtdm,onx.PCJG,
-                          concat(onx.sm,decode(onx.PCJG,'0',NULL,'1',NULL,onx.pcjg)) sm
-                     FROM yx_pc_pcx onx
-                    WHERE onx.pcjg != '0'
-                    <if test="xtdm !=null and xtdm!=''">
-                        AND onx.xtdm = #{xtdm}
-                    </if>
-                    <if test="flxtdm !=null and flxtdm!=''">
-                        AND onx.flxtdm = #{flxtdm}
-                    </if>
-                   UNION ALL
-                   SELECT ofx.pcslbm,ofx.xtdm,ofx.pcjg,ofx.flxtdm,ofx.PCJG,
-                          concat(ofx.sm,decode(ofx.PCJG,'0',NULL,'1',NULL,ofx.pcjg)) sm
-                     FROM yx_pc_offline_pcx ofx
-                    WHERE ofx.pcjg != '0'
-                    <if test="xtdm !=null and xtdm!=''">
-                        AND ofx.xtdm = #{xtdm}
-                    </if>
-                    <if test="flxtdm !=null and flxtdm!=''">
-                        AND ofx.flxtdm = #{flxtdm}
-                    </if>
-                    ) WHERE  sm IS NOT NULL
-          ) pcx
-         ON pcx.pcslbm = ajxx.PCSLBM
-          where 1=1
-           <if test="wcrqnf !=null and wcrqnf!=''">
-                AND ajxx.wcrq_nf in (${wcrqnf})
-            </if>
-            <if test="ajtjlb !=null and ajtjlb!=''">
-                AND ajxx.stajbs in (${ajtjlb})
-            </if>
-            <if test="cbrsf !=null and cbrsf !=''">
-                AND ajxx.sfldba in (${cbrsf})
-            </if>
-            <if test="ywtx !=null and ywtx!=''">
-                AND ajxx.ywtx in (${ywtx})
-            </if>
-            <if test="pcflbm !=null and pcflbm!=''">
-                AND ajxx.pcflbm in (${pcflbm})
-            </if>
-            <if test="dwbm !=null and dwbm!=''">
-                AND ajxx.bpc_dwbm in (${dwbm})
-            </if>
+        SELECT pcx.sm, pcx.xtdm FROM v_pcajxx ajxx
+          INNER JOIN
+        (--合并线上线下start
+            SELECT onx.pcslbm,onx.xtdm,onx.pcjg,onx.flxtdm,sm FROM yx_pc_pcx onx
+            WHERE onx.pcjg != '0'  AND onx.flxtdm = #{flxtdm}
+            UNION ALL
+            SELECT ofx.pcslbm,ofx.xtdm,ofx.pcjg,ofx.flxtdm,sm FROM yx_pc_offline_pcx ofx
+            WHERE ofx.pcjg != '0'  AND ofx.flxtdm = #{flxtdm}
+        ) pcx
+        ON pcx.pcslbm = ajxx.pcslbm
+         WHERE pcx.pcjg = '1' and pcx.sm IS NOT NULL
+        <if test="wcrqnf !=null and wcrqnf!=''">
+            AND ajxx.wcrq_nf in (${wcrqnf})
+        </if>
+        <if test="ajtjlb !=null and ajtjlb!=''">
+            AND ajxx.stajbs in (${ajtjlb})
+        </if>
+        <if test="cbrsf !=null and cbrsf !=''">
+            AND ajxx.sfldba in (${cbrsf})
+        </if>
+        <if test="xtdm !=null and xtdm!=''">
+            AND pcx.xtdm = #{xtdm}
+        </if>
+        <if test="flxtdm !=null and flxtdm!=''">
+            AND pcx.flxtdm = #{flxtdm}
+        </if>
+        <if test="ywtx !=null and ywtx!=''">
+            AND ajxx.ywtx in (${ywtx})
+        </if>
+        <if test="pcflbm !=null and pcflbm!=''">
+            AND ajxx.pcflbm in (${pcflbm})
+        </if>
+        <if test="dwbm !=null and dwbm!=''">
+            AND ajxx.bpc_dwbm in (${dwbm})
+        </if>
         GROUP BY pcx.sm, pcx.xtdm
         ORDER BY pcx.sm
     </select>
 
     <select id="getAjzlpcfxByYwtx" parameterType="java.util.Map" resultType="java.util.Map">
         WITH
-        bjtab AS (SELECT * from v_bjajxx WHERE 1=1
-        <if test="wcrqnf !=null and wcrqnf!=''">
-            AND wcrq_nf in (${wcrqnf})
-        </if>
-        <if test="ajtjlb !=null and ajtjlb!=''">
-            AND stajbs in (${ajtjlb})
-        </if>
-        <if test="cbrsf !=null and cbrsf!=''">
-            AND sfldba in (${cbrsf})
-        </if>
-        <if test="ywtx !=null and ywtx!=''">
-            AND ywtx in (${ywtx})
-        </if>
-        <if test="pcflbm !=null and pcflbm!=''">
-            AND pcflbm in (${pcflbm})
-        </if>
-        <if test="dwbm !=null and dwbm!=''">
-            AND cbdwbm in (${dwbm})
-        </if>
-        ),
-        pctab AS (SELECT * from v_pcajxx WHERE 1=1
-        <if test="wcrqnf !=null and wcrqnf!=''">
-            AND wcrq_nf in (${wcrqnf})
-        </if>
-        <if test="ajtjlb !=null and ajtjlb!=''">
-            AND stajbs in (${ajtjlb})
-        </if>
-        <if test="cbrsf !=null and cbrsf!=''">
-            AND sfldba in (${cbrsf})
-        </if>
-        <if test="ywtx !=null and ywtx!=''">
-            AND ywtx in (${ywtx})
-        </if>
-        <if test="pcflbm !=null and pcflbm!=''">
-            AND pcflbm in (${pcflbm})
-        </if>
-        <if test="dwbm !=null and dwbm!=''">
-            AND bpc_dwbm in (${dwbm})
-        </if>
-        ),
-        hztab AS (
-        SELECT u.ywtx,u.ajlb_bm,
-        SUM(decode(coltype,'bjajs',cnt,0)) bjajs, --办结案件数
-        SUM(decode(coltype,'pcajs',cnt,0)) pcajs, --评查案件数
-        SUM(decode(coltype,'yzajs',cnt,0)) yzajs, --优质案件数
-        SUM(decode(coltype,'hgajs',cnt,0)) hgajs, --合格案件数
-        SUM(decode(coltype,'xcajs',cnt,0)) xcajs, --瑕疵案件数
-        SUM(decode(coltype,'bhgajs',cnt,0)) bhgajs,  --不合格案件数
-        'N' sfhj
-        from (
-        --办结案件数
-        SELECT ywtx,ajlb_bm, COUNT(*) cnt, 'bjajs' coltype FROM bjtab GROUP BY ywtx,ajlb_bm
-        UNION ALL
-        --评查案件数
-        SELECT ywtx,ajlb_bm, COUNT(bmsah) cnt, 'pcajs' coltype FROM ( SELECT DISTINCT ywtx,ajlb_bm,bmsah from pctab ) a GROUP BY a.ywtx,a.ajlb_bm
-        UNION ALL
-        SELECT ywtx,ajlb_bm,COUNT(bmsah) cnt, 'yzajs' coltype FROM pctab WHERE  pcjl='优质案件' GROUP BY ywtx,ajlb_bm
-        UNION ALL
-        SELECT ywtx,ajlb_bm,COUNT(bmsah) cnt, 'hgajs' coltype FROM pctab WHERE  pcjl='合格案件' GROUP BY ywtx,ajlb_bm
-        UNION ALL
-        SELECT ywtx,ajlb_bm,COUNT(bmsah) cnt, 'xcajs' coltype FROM pctab WHERE  pcjl='瑕疵案件' GROUP BY ywtx,ajlb_bm
-        UNION ALL
-        SELECT ywtx,ajlb_bm,COUNT(bmsah) cnt, 'bhgajs' coltype FROM pctab WHERE  pcjl='不合格案件' GROUP BY ywtx,ajlb_bm
-        ) u
-        GROUP BY u.ywtx,u.ajlb_bm --汇总临时表end
-        )
-        ,txtab AS (--业务条线、案件类别临时表（只统计评查系统里出现过的类别）start
-        SELECT pctx.ywtx,
-        (CASE WHEN pctx.ywtx = '-1' AND pctx.ajlb_bm='-1' THEN '合计' WHEN  pctx.ywtx != '-1' AND pctx.ajlb_bm='-1' THEN d.mc ELSE d.mc END  ) ywtx_mc,
-        pctx.ajlb_bm,ajlb.ajlbmc ajlb_mc
-        FROM
-        (
-        SELECT '-1' ywtx,'-1' ajlb_bm FROM dual --增加总计
-        UNION ALL
-        SELECT ywtx,'-1' ajlb_bm FROM v_pcajxx GROUP BY ywtx --增加条线合计
-        UNION ALL
-        SELECT ywtx,ajlb_bm
-        FROM v_pcajxx
-        GROUP BY ywtx, ajlb_bm
-        ) pctx
-        LEFT JOIN xt_pc_dm d ON pctx.ywtx=d.dm
-        LEFT JOIN xt_dm_ajlbbm@tyyw_link.net ajlb ON pctx.ajlb_bm=ajlb.ajlbbm
-        ) --业务条线、案件类别临时表（只统计评查系统里出现过的类别）end
+           bjtab AS (SELECT * from v_bjajxx WHERE 1=1
+                <if test="wcrqnf !=null and wcrqnf!=''">
+                    AND wcrq_nf in (${wcrqnf})
+                </if>
+                <if test="ajtjlb !=null and ajtjlb!=''">
+                    AND stajbs in (${ajtjlb})
+                </if>
+                <if test="cbrsf !=null and cbrsf!=''">
+                    AND sfldba in (${cbrsf})
+                </if>
+                <if test="ywtx !=null and ywtx!=''">
+                    AND ywtx in (${ywtx})
+                </if>
+                <if test="pcflbm !=null and pcflbm!=''">
+                    AND pcflbm in (${pcflbm})
+                </if>
+                <if test="dwbm !=null and dwbm!=''">
+                    AND cbdwbm in (${dwbm})
+                </if>
+            ),
+          pctab AS (SELECT * from v_pcajxx WHERE 1=1
+                <if test="wcrqnf !=null and wcrqnf!=''">
+                    AND wcrq_nf in (${wcrqnf})
+                </if>
+                <if test="ajtjlb !=null and ajtjlb!=''">
+                    AND stajbs in (${ajtjlb})
+                </if>
+                <if test="cbrsf !=null and cbrsf!=''">
+                    AND sfldba in (${cbrsf})
+                </if>
+                <if test="ywtx !=null and ywtx!=''">
+                    AND ywtx in (${ywtx})
+                </if>
+                <if test="pcflbm !=null and pcflbm!=''">
+                    AND pcflbm in (${pcflbm})
+                </if>
+                <if test="dwbm !=null and dwbm!=''">
+                    AND bpc_dwbm in (${dwbm})
+                </if>
+            ),
+           hztab AS (
+             SELECT u.ywtx,u.ajlb_bm,
+              SUM(decode(coltype,'bjajs',cnt,0)) bjajs, --办结案件数
+              SUM(decode(coltype,'pcajs',cnt,0)) pcajs, --评查案件数
+              SUM(decode(coltype,'yzajs',cnt,0)) yzajs, --优质案件数
+              SUM(decode(coltype,'hgajs',cnt,0)) hgajs, --合格案件数
+              SUM(decode(coltype,'xcajs',cnt,0)) xcajs, --瑕疵案件数
+              SUM(decode(coltype,'bhgajs',cnt,0)) bhgajs,  --不合格案件数
+              'N' sfhj
+          from (
+                --办结案件数
+                SELECT ywtx,ajlb_bm, COUNT(*) cnt, 'bjajs' coltype FROM bjtab GROUP BY ywtx,ajlb_bm
+                UNION ALL
+                --评查案件数
+                SELECT ywtx,ajlb_bm, COUNT(bmsah) cnt, 'pcajs' coltype FROM ( SELECT DISTINCT ywtx,ajlb_bm,bmsah from pctab ) a GROUP BY a.ywtx,a.ajlb_bm
+                UNION ALL
+                SELECT ywtx,ajlb_bm,COUNT(bmsah) cnt, 'yzajs' coltype FROM pctab WHERE  pcjl='优质案件' GROUP BY ywtx,ajlb_bm
+                UNION ALL
+                SELECT ywtx,ajlb_bm,COUNT(bmsah) cnt, 'hgajs' coltype FROM pctab WHERE  pcjl='合格案件' GROUP BY ywtx,ajlb_bm
+                UNION ALL
+                SELECT ywtx,ajlb_bm,COUNT(bmsah) cnt, 'xcajs' coltype FROM pctab WHERE  pcjl='瑕疵案件' GROUP BY ywtx,ajlb_bm
+                UNION ALL
+                SELECT ywtx,ajlb_bm,COUNT(bmsah) cnt, 'bhgajs' coltype FROM pctab WHERE  pcjl='不合格案件' GROUP BY ywtx,ajlb_bm
+            ) u
+          GROUP BY u.ywtx,u.ajlb_bm --汇总临时表end
+         )
+       ,txtab AS (--业务条线、案件类别临时表（只统计评查系统里出现过的类别）start
+         SELECT pctx.ywtx,
+           (CASE WHEN pctx.ywtx = '-1' AND pctx.ajlb_bm='-1' THEN '合计' WHEN  pctx.ywtx != '-1' AND pctx.ajlb_bm='-1' THEN d.mc ELSE d.mc END  ) ywtx_mc,
+           pctx.ajlb_bm,ajlb.ajlbmc ajlb_mc
+         FROM
+         (
+          SELECT '-1' ywtx,'-1' ajlb_bm FROM dual --增加总计
+          UNION ALL
+          SELECT ywtx,'-1' ajlb_bm FROM v_pcajxx GROUP BY ywtx --增加条线合计
+          UNION ALL
+          SELECT ywtx,ajlb_bm
+            FROM v_pcajxx
+           GROUP BY ywtx, ajlb_bm
+          ) pctx
+         LEFT JOIN xt_pc_dm d ON pctx.ywtx=d.dm
+         LEFT JOIN xt_dm_ajlbbm@tyyw_link.net ajlb ON pctx.ajlb_bm=ajlb.ajlbbm
+       ) --业务条线、案件类别临时表（只统计评查系统里出现过的类别）end
         --算比例start
         SELECT
-        y.ywtx,x.ywtx_mc,y.ajlb_bm,x.ajlb_mc,
-        bjajs,pcajs,yzajs,hgajs,xcajs,bhgajs,
-        to_char(decode(y.bjajs,0,0,y.pcajs*100/y.bjajs),'fm999999990.0099')||'%' pczb,
-        to_char(decode(y.pcajs,0,0,y.yzajs*100/y.pcajs),'fm999999990.0099')||'%' yzajzb,
-        to_char(decode(y.pcajs,0,0,y.hgajs*100/y.pcajs),'fm999999990.0099')||'%' hgajzb,
-        to_char(decode(y.pcajs,0,0,y.xcajs*100/y.pcajs),'fm999999990.0099')||'%' xcajzb,
-        to_char(decode(y.pcajs,0,0,y.bhgajs*100/y.pcajs),'fm999999990.0099')||'%' bhgajzb,
-        sfhj
-        FROM
-        (
-        SELECT ywtx,ajlb_bm,bjajs,pcajs,yzajs,hgajs,xcajs,bhgajs,sfhj from hztab
-        UNION ALL
-        --增加合计行
-        SELECT nvl(ywtx,'-1') ywtx,'-1',sum(bjajs),sum(pcajs),sum(yzajs),sum(hgajs),sum(xcajs),sum(bhgajs),'Y' sfhj
-        FROM hztab  GROUP BY ROLLUP (ywtx)
-        ) y
+         y.ywtx,x.ywtx_mc,y.ajlb_bm,x.ajlb_mc,
+         bjajs,pcajs,yzajs,hgajs,xcajs,bhgajs,
+         to_char(decode(y.bjajs,0,0,y.pcajs*100/y.bjajs),'fm999999990.0099')||'%' pczb,
+         to_char(decode(y.pcajs,0,0,y.yzajs*100/y.pcajs),'fm999999990.0099')||'%' yzajzb,
+         to_char(decode(y.pcajs,0,0,y.hgajs*100/y.pcajs),'fm999999990.0099')||'%' hgajzb,
+         to_char(decode(y.pcajs,0,0,y.xcajs*100/y.pcajs),'fm999999990.0099')||'%' xcajzb,
+         to_char(decode(y.pcajs,0,0,y.bhgajs*100/y.pcajs),'fm999999990.0099')||'%' bhgajzb,
+         sfhj
+         FROM
+          (
+          SELECT ywtx,ajlb_bm,bjajs,pcajs,yzajs,hgajs,xcajs,bhgajs,sfhj from hztab
+          UNION ALL
+          --增加合计行
+          SELECT nvl(ywtx,'-1') ywtx,'-1',sum(bjajs),sum(pcajs),sum(yzajs),sum(hgajs),sum(xcajs),sum(bhgajs),'Y' sfhj
+               FROM hztab  GROUP BY ROLLUP (ywtx)
+          ) y
         INNER JOIN txtab x ON x.ywtx=y.ywtx AND x.ajlb_bm=y.ajlb_bm
         --只显示评查数大于0的
-        WHERE y.pcajs >0
-        ORDER by x.ywtx,x.ajlb_bm
+         WHERE y.pcajs >0
+          ORDER by x.ywtx,x.ajlb_bm
     </select>
 
     <select id="getAJBjlb" parameterType="java.util.Map" resultType="java.util.Map">
@@ -1062,7 +1058,7 @@
             AND c.ajlb_bm=#{pcxId}
         </if>
         <if test="type != 0">
-            AND  pcx.pcjg!='0'and pcx.flxtdm =#{flxtdm}
+         AND  pcx.pcjg!='0'and pcx.flxtdm =#{flxtdm}
         </if>
         <if test="fl !=null and fl!=''">
             AND  pcx.FFLXTDM=#{fl}
@@ -1071,7 +1067,7 @@
         )
 
     </select>
-    <!--获取评查案件信息-->
+    <!--获取评查案件信息 67修改-->
     <select id="getPcAjxxByParams" parameterType="java.util.Map" resultType="java.util.Map">
         SELECT ajxx.bmsah, ajxx.ajmc, ajxx.ajlb_mc ajlbmc, ajxx.bpc_dwmc dwmc, ajxx.pcdwbm, ajxx.bpc_mc cbrmc,
         ajxx.pcr_dwmc, ajxx.cjsj, '' cz, ajxx.pcflbm, ajxx.pcslbm, ajxx.pcr_mc, ajxx.bpc_wcrq, ajxx.bpc_dwbm from v_pcajxx ajxx WHERE 1 = 1
@@ -1100,13 +1096,20 @@
             AND bpc_dwbm in (${dwbm})
         </if>
     </select>
-    <!--获取突出错误/瑕疵评查案件信息-->
+    <!--获取突出错误/瑕疵评查案件信息  67修改-->
     <select id="getTccwxxPcAjxxByParams" parameterType="java.util.Map" resultType="java.util.Map">
-        select * from(select distinct ajxx.bmsah, ajxx.ajmc, ajxx.ajlb_mc ajlbmc, ajxx.bpc_dwmc dwmc, ajxx.pcdwbm,
-        ajxx.bpc_mc cbrmc,
-        ajxx.pcr_dwmc, ajxx.cjsj, '' cz, ajxx.pcflbm, ajxx.pcslbm, ajxx.pcr_mc, ajxx.bpc_wcrq, ajxx.bpc_dwbm from
-        v_pcajxx ajxx
-        inner join yx_pc_pcx pcx on pcx.pcslbm = ajxx.pcslbm WHERE 1 = 1 and pcx.pcjg != '0'
+        select distinct ajxx.bmsah, ajxx.ajmc, ajxx.ajlb_mc ajlbmc, ajxx.bpc_dwmc dwmc, ajxx.pcdwbm, ajxx.bpc_mc cbrmc,
+        ajxx.pcr_dwmc, ajxx.cjsj, '' cz, ajxx.pcflbm, ajxx.pcslbm, ajxx.pcr_mc, ajxx.bpc_wcrq, ajxx.bpc_dwbm from v_pcajxx ajxx
+        inner join
+            (--合并线上线下start
+            SELECT onx.pcslbm,onx.flxtdm,onx.xtdm,onx.pcjg,onx.sm FROM yx_pc_pcx onx
+            WHERE onx.pcjg != '0'  AND onx.flxtdm = #{flxtdm}
+            UNION ALL
+            SELECT ofx.pcslbm,ofx.flxtdm,ofx.xtdm,ofx.pcjg,ofx.sm FROM yx_pc_offline_pcx ofx
+            WHERE ofx.pcjg != '0'  AND ofx.flxtdm = #{flxtdm}
+            ) pcx
+        on pcx.pcslbm = ajxx.pcslbm
+        WHERE 1 = 1
         <if test="wcrqnf !=null and wcrqnf!=''">
             AND ajxx.wcrq_nf in (${wcrqnf})
         </if>
@@ -1134,41 +1137,6 @@
         <if test="flxtdm !=null and flxtdm!=''">
             AND pcx.flxtdm = #{flxtdm}
         </if>
-        )
-        union all
-        select * from(select distinct ajxx.bmsah, ajxx.ajmc, ajxx.ajlb_mc ajlbmc, ajxx.bpc_dwmc dwmc, ajxx.pcdwbm,
-        ajxx.bpc_mc cbrmc,
-        ajxx.pcr_dwmc, ajxx.cjsj, '' cz, ajxx.pcflbm, ajxx.pcslbm, ajxx.pcr_mc, ajxx.bpc_wcrq, ajxx.bpc_dwbm from
-        v_pcajxx ajxx
-        inner join yx_pc_offline_pcx pcx on pcx.pcslbm = ajxx.pcslbm WHERE 1 = 1 and pcx.pcjg != '0'
-        <if test="wcrqnf !=null and wcrqnf!=''">
-            AND ajxx.wcrq_nf in (${wcrqnf})
-        </if>
-        <if test="ajtjlb !=null and ajtjlb!=''">
-            AND ajxx.stajbs in (${ajtjlb})
-        </if>
-        <if test="cbrsf !=null and cbrsf!=''">
-            AND ajxx.sfldba in (${cbrsf})
-        </if>
-        <if test="sm !=null and sm!=''">
-            AND pcx.sm = #{sm}
-        </if>
-        <if test="xtdm !=null and xtdm!=''">
-            AND pcx.xtdm = #{xtdm}
-        </if>
-        <if test="ywtx !=null and ywtx!=''">
-            AND ajxx.ywtx in (${ywtx})
-        </if>
-        <if test="pcflbm !=null and pcflbm!=''">
-            AND ajxx.pcflbm in (${pcflbm})
-        </if>
-        <if test="dwbm !=null and dwbm!=''">
-            AND ajxx.bpc_dwbm in (${dwbm})
-        </if>
-        <if test="flxtdm !=null and flxtdm!=''">
-            AND pcx.flxtdm = #{flxtdm}
-        </if>
-        )
     </select>
     <select id="loadGeneralPersonalNum" resultType='map' parameterType="map">
         select

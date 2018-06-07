@@ -813,7 +813,7 @@
         )group by dwbm ,zyywtx,dm,mc,xtdm,pcxmc order by dwbm
     </select>
 
-    <!--根据系统代码获取评查项备注说明-->
+    <!--根据系统代码获取评查项备注说明 需要主要其他的备注不是sm字段是pcjg字段-->
     <select id="getPcxBzByXtdm" parameterType="java.util.Map" resultType="java.util.Map">
         SELECT pcx.sm,pcx.xtdm FROM v_pcajxx ajxx
         INNER JOIN
@@ -1102,25 +1102,46 @@
     </select>
     <!--获取突出错误/瑕疵评查案件信息-->
     <select id="getTccwxxPcAjxxByParams" parameterType="java.util.Map" resultType="java.util.Map">
-        select * from(select distinct ajxx.bmsah, ajxx.ajmc, ajxx.ajlb_mc ajlbmc, ajxx.bpc_dwmc dwmc, ajxx.pcdwbm,
-        ajxx.bpc_mc cbrmc,
-        ajxx.pcr_dwmc, ajxx.cjsj, '' cz, ajxx.pcflbm, ajxx.pcslbm, ajxx.pcr_mc, ajxx.bpc_wcrq, ajxx.bpc_dwbm from
-        v_pcajxx ajxx
-        inner join yx_pc_pcx pcx on pcx.pcslbm = ajxx.pcslbm WHERE 1 = 1 and pcx.pcjg != '0'
+        SELECT  ajxx.bmsah, ajxx.ajmc, ajxx.ajlb_mc ajlbmc, ajxx.bpc_dwmc dwmc, ajxx.pcdwbm, ajxx.bpc_mc cbrmc,
+               ajxx.pcr_dwmc, ajxx.cjsj, '' cz, ajxx.pcflbm, ajxx.pcslbm, ajxx.pcr_mc, ajxx.bpc_wcrq, ajxx.bpc_dwbm
+        FROM v_pcajxx ajxx
+        INNER JOIN
+        (
+        SELECT pcslbm,flxtdm,xtdm,sm from
+                (
+                    SELECT onx.pcslbm,onx.xtdm,onx.pcjg,onx.flxtdm,onx.PCJG,
+                    concat(onx.sm,decode(onx.PCJG,'0',NULL,'1',NULL,onx.pcjg)) sm
+                    FROM yx_pc_pcx onx
+                    WHERE onx.pcjg != '0'
+                    <if test="xtdm !=null and xtdm!=''">
+                        AND onx.xtdm = #{xtdm}
+                    </if>
+                    <if test="flxtdm !=null and flxtdm!=''">
+                        AND onx.flxtdm = #{flxtdm}
+                    </if>
+                    UNION ALL
+                    SELECT ofx.pcslbm,ofx.xtdm,ofx.pcjg,ofx.flxtdm,ofx.PCJG,
+                    concat(ofx.sm,decode(ofx.PCJG,'0',NULL,'1',NULL,ofx.pcjg)) sm
+                    FROM yx_pc_offline_pcx ofx
+                    WHERE ofx.pcjg != '0'
+                    <if test="xtdm !=null and xtdm!=''">
+                        AND ofx.xtdm = #{xtdm}
+                    </if>
+                    <if test="flxtdm !=null and flxtdm!=''">
+                        AND ofx.flxtdm = #{flxtdm}
+                    </if>
+                ) WHERE  sm = #{sm}
+        ) pcx
+        ON pcx.pcslbm = ajxx.PCSLBM
+        where 1=1
         <if test="wcrqnf !=null and wcrqnf!=''">
             AND ajxx.wcrq_nf in (${wcrqnf})
         </if>
         <if test="ajtjlb !=null and ajtjlb!=''">
             AND ajxx.stajbs in (${ajtjlb})
         </if>
-        <if test="cbrsf !=null and cbrsf!=''">
+        <if test="cbrsf !=null and cbrsf !=''">
             AND ajxx.sfldba in (${cbrsf})
-        </if>
-        <if test="sm !=null and sm!=''">
-            AND pcx.sm = #{sm}
-        </if>
-        <if test="xtdm !=null and xtdm!=''">
-            AND pcx.xtdm = #{xtdm}
         </if>
         <if test="ywtx !=null and ywtx!=''">
             AND ajxx.ywtx in (${ywtx})
@@ -1131,44 +1152,7 @@
         <if test="dwbm !=null and dwbm!=''">
             AND ajxx.bpc_dwbm in (${dwbm})
         </if>
-        <if test="flxtdm !=null and flxtdm!=''">
-            AND pcx.flxtdm = #{flxtdm}
-        </if>
-        )
-        union all
-        select * from(select distinct ajxx.bmsah, ajxx.ajmc, ajxx.ajlb_mc ajlbmc, ajxx.bpc_dwmc dwmc, ajxx.pcdwbm,
-        ajxx.bpc_mc cbrmc,
-        ajxx.pcr_dwmc, ajxx.cjsj, '' cz, ajxx.pcflbm, ajxx.pcslbm, ajxx.pcr_mc, ajxx.bpc_wcrq, ajxx.bpc_dwbm from
-        v_pcajxx ajxx
-        inner join yx_pc_offline_pcx pcx on pcx.pcslbm = ajxx.pcslbm WHERE 1 = 1 and pcx.pcjg != '0'
-        <if test="wcrqnf !=null and wcrqnf!=''">
-            AND ajxx.wcrq_nf in (${wcrqnf})
-        </if>
-        <if test="ajtjlb !=null and ajtjlb!=''">
-            AND ajxx.stajbs in (${ajtjlb})
-        </if>
-        <if test="cbrsf !=null and cbrsf!=''">
-            AND ajxx.sfldba in (${cbrsf})
-        </if>
-        <if test="sm !=null and sm!=''">
-            AND pcx.sm = #{sm}
-        </if>
-        <if test="xtdm !=null and xtdm!=''">
-            AND pcx.xtdm = #{xtdm}
-        </if>
-        <if test="ywtx !=null and ywtx!=''">
-            AND ajxx.ywtx in (${ywtx})
-        </if>
-        <if test="pcflbm !=null and pcflbm!=''">
-            AND ajxx.pcflbm in (${pcflbm})
-        </if>
-        <if test="dwbm !=null and dwbm!=''">
-            AND ajxx.bpc_dwbm in (${dwbm})
-        </if>
-        <if test="flxtdm !=null and flxtdm!=''">
-            AND pcx.flxtdm = #{flxtdm}
-        </if>
-        )
+        ORDER BY ajxx.bmsah
     </select>
     <select id="loadGeneralPersonalNum" resultType='map' parameterType="map">
         select

@@ -1078,7 +1078,10 @@
                     <if test="flxtdm !=null and flxtdm!=''">
                         AND ofx.flxtdm = #{flxtdm}
                     </if>
-                ) WHERE  sm = #{sm}
+                ) WHERE
+               <if test="sm != null and sm != '' ">
+                     sm = #{sm}
+               </if>
         ) pcx
         ON pcx.pcslbm = ajxx.PCSLBM
         where 1=1

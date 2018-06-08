@@ -726,6 +726,15 @@ function getDhcdValues() {
             gndz: '/view/analysis/tccwxc/cwfx.html',
             gnIndex: '2',
             tabheads:'错误项, 错误占比, 占比, 错误数'
+        }, {
+            id: '16',
+            group: '(突出项目)',
+            name: '问题汇总',
+            imageOneUrl: 'image/icon/tcxm_tree_xz.png',
+            imageTwoUrl: 'image/icon/tcxm_tree.png',
+            gndz: '/view/statistics/ajwt_hz/index.html',
+            gnIndex: '3',
+            tabheads:'业务条线, 评查标准, 评查项, 问题案件数'
         }]}
     ];
     return dhArrays;

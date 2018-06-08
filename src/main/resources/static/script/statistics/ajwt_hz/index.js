@@ -26,7 +26,7 @@ function init_echarts() {
         yAxis: {},
         series: [
             {
-                type: 'bar', barMinHeight: 1, barGap: '10%', itemStyle: {
+                type: 'bar', barMinHeight: 1,barWidth : '15%' , barGap: '5%', itemStyle: {
                 normal: {
                     label: {
                         show: true,  //柱头数字
@@ -41,7 +41,7 @@ function init_echarts() {
             }
             },
             {
-                type: 'bar', barMinHeight: 1, barGap: '10%', itemStyle: {
+                type: 'bar', barMinHeight: 1, barWidth : '15%' ,barGap: '5%', itemStyle: {
                 normal: {
                     label: {
                         show: true,  //柱头数字
@@ -587,7 +587,7 @@ function pcWinPage_offline(index, id, type) {
         type = 0;
     }
     var obj = new Object();
-    obj.PCSLBM = rowDatas.PCSLBM
+    obj.PCSLBM = rowDatas.PCSLBM;
     obj.BMSAH = rowDatas.BMSAH;
     obj.DWBM = rowDatas.PCDWBM;
     obj.PCCZLX = '0'; //0.只读 1.评查办理 2.评查审批 3.评查反馈 4.部门反馈

@@ -469,7 +469,7 @@ public class AnalysisController extends ArchivesSystemBaseController{
             PageInfo page = new PageInfo(list);
             resultStr = EasyUIHelper.buildDataGridDataSource(page.getList(),Math.toIntExact(page.getTotal()));
         }catch (Exception e){
-            return "";
+            return e.toString();
         }
         return resultStr;
     }

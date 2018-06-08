@@ -199,25 +199,6 @@ public interface AnalysisMapper {
      */
     List<Map> getPcxLists(Map map);
 
-    /**
-     * 获取导出数据条线分析评查项
-     * @param map
-     * @return
-     */
-    List<Map> loadTxPcFlCountExcel(Map map);
-    /**
-     * 获取导出数据时间分析评查项
-     * @param map
-     * @return
-     */
-    List<Map> loadDatePcFlCountExcel(Map map);
-
-    /**
-     * 获取导出数据地区分析评查项
-     * @param map
-     * @return
-     */
-    List<Map> loadDqPcFlCountExcel(Map map);
 
     /**
      * 根据系统代码获取评查项备注说明

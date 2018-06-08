@@ -77,13 +77,13 @@
     </select>
     <select id="loadDatePcFlCount" resultType ='map' parameterType="map">
         select wcrq_nf name,wcrq_nf id,zyywtx,dm,mc,sum(num) num from (
-        select jb.wcrq_nf,dm.zyywtx, dm.dm, dm.mc, count(DISTINCT pcx.pcslbm) num
+        select jb.wcrq_nf,dm.zyywtx, dm.dm, dm.mc, count( pcx.pcslbm) num
         from yx_pc_pcx pcx left join XT_PC_DM dm on pcx.fflxtdm = dm.dm
         left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
         <include refid="seachPcxFx"/>
         group by jb.wcrq_nf, dm.zyywtx,dm.dm, dm.mc
         union all
-        select jb.wcrq_nf,dm.zyywtx, dm.dm, dm.mc, count(DISTINCT pcx.pcslbm) num
+        select jb.wcrq_nf,dm.zyywtx, dm.dm, dm.mc, count( pcx.pcslbm) num
         from yx_pc_offline_pcx pcx left join XT_PC_DM dm on pcx.fflxtdm = dm.dm
         left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
         <include refid="seachPcxFx"/>
@@ -149,12 +149,12 @@
     </select>
     <select id="loadTxPcFlCount" resultType ='map' parameterType="map">
         select id , pid, pmc,zyywtx,dm,mc,sum(num) num from (
-        select * from (select pcx.pcslbm, jb.AJLB_BM id,jb.ywtx pid, YWTX_MC pmc,dm.zyywtx, dm.dm, dm.mc, count(DISTINCT pcx.pcslbm) num
+        select * from (select pcx.pcslbm, jb.AJLB_BM id,jb.ywtx pid, YWTX_MC pmc,dm.zyywtx, dm.dm, dm.mc, count( pcx.pcslbm) num
         from yx_pc_pcx pcx left join XT_PC_DM dm on pcx.fflxtdm = dm.dm left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
         <include refid="seachPcxFx"/>
         group by pcx.pcslbm,jb.AJLB_BM ,jb.ywtx, YWTX_MC ,dm.zyywtx, dm.dm, dm.mc )
         union all
-        select * from ( select pcx.pcslbm,jb.AJLB_BM id,jb.ywtx pid, YWTX_MC pmc,dm.zyywtx,dm.dm, dm.mc, count(DISTINCT pcx.pcslbm) num
+        select * from ( select pcx.pcslbm,jb.AJLB_BM id,jb.ywtx pid, YWTX_MC pmc,dm.zyywtx,dm.dm, dm.mc, count( pcx.pcslbm) num
         from yx_pc_offline_pcx pcx left join XT_PC_DM dm on pcx.fflxtdm = dm.dm left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
         <include refid="seachPcxFx"/>
         group by pcx.pcslbm,jb.AJLB_BM ,jb.ywtx, YWTX_MC ,dm.zyywtx, dm.dm, dm.mc)
@@ -226,7 +226,7 @@
     </select>
     <select id="loadDqPcFlCount" resultType ='map' parameterType="map">
         select dwbm id ,zyywtx,dm,mc,sum (num) num from (
-        select * from (select pcx.pcslbm, jb.bpc_dwbm dwbm,dm.zyywtx, dm.dm, dm.mc, count(DISTINCT pcx.pcslbm) num
+        select * from (select pcx.pcslbm, jb.bpc_dwbm dwbm,dm.zyywtx, dm.dm, dm.mc, count( pcx.pcslbm) num
         from yx_pc_pcx pcx
         left join XT_PC_DM dm on pcx.fflxtdm = dm.dm
         left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
@@ -234,7 +234,7 @@
         group by pcx.pcslbm,jb.bpc_dwbm , dm.zyywtx, dm.dm, dm.mc order by bpc_dwbm
         )
         union all
-        select * from ( select pcx.pcslbm,jb.bpc_dwbm dwbm,dm.zyywtx,dm.dm, dm.mc, count(DISTINCT pcx.pcslbm) num
+        select * from ( select pcx.pcslbm,jb.bpc_dwbm dwbm,dm.zyywtx,dm.dm, dm.mc, count( pcx.pcslbm) num
         from yx_pc_offline_pcx pcx
         left join XT_PC_DM dm on pcx.fflxtdm = dm.dm
         left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
@@ -759,59 +759,7 @@
         order by fl.dm,p.xtdm
         ) group by  dm,mc,ywtx,xtdm,pcxmc
     </select>
-    <select id="loadTxPcFlCountExcel" resultType ='map' parameterType="map">
-        select id,pid, pmc,zyywtx,dm,mc,xtdm,pcxmc,sum( num) num from (
-        select * from (
-        select jb.AJLB_BM id, jb.ywtx pid,ywtx_mc pmc,dm.zyywtx, dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc, count(DISTINCT pcx.pcslbm) num
-        from yx_pc_pcx pcx left join XT_PC_DM dm on pcx.fflxtdm = dm.dm left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
-        <include refid="seachPcxFx"/>
-        group by jb.AJLB_BM , jb.ywtx ,ywtx_mc ,dm.zyywtx, dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc
-        )
-        union all
-        select * from (
-        select jb.AJLB_BM id, jb.ywtx pid,ywtx_mc pmc,dm.zyywtx,dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc, count(DISTINCT pcx.pcslbm) num
-        from yx_pc_offline_pcx pcx left join XT_PC_DM dm on pcx.fflxtdm = dm.dm left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
-        <include refid="seachPcxFx"/>
-        group by  jb.AJLB_BM ,jb.ywtx ,ywtx_mc ,dm.zyywtx, dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc
-        )
-        )group by id ,pid, pmc,zyywtx,dm,mc,xtdm,pcxmc order by pmc
-    </select>
 
-    <select id="loadDatePcFlCountExcel" resultType ='map' parameterType="map">
-        select wcrq_nf name,wcrq_nf id,zyywtx,dm,mc,xtdm,pcxmc,sum(num) num from (
-        select jb.wcrq_nf,dm.zyywtx, dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc, count(DISTINCT pcx.pcslbm) num
-        from yx_pc_pcx pcx left join XT_PC_DM dm on pcx.fflxtdm = dm.dm
-        left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
-        <include refid="seachPcxFx"/>
-        group by jb.wcrq_nf, dm.zyywtx,dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc
-        union all
-        select jb.wcrq_nf,dm.zyywtx, dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc, count(DISTINCT pcx.pcslbm) num
-        from yx_pc_offline_pcx pcx left join XT_PC_DM dm on pcx.fflxtdm = dm.dm
-        left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
-        <include refid="seachPcxFx"/>
-        group by jb.wcrq_nf,dm.zyywtx,dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc
-        )group by wcrq_nf,zyywtx,dm,mc,xtdm,pcxmc order by wcrq_nf
-    </select>
-
-    <select id="loadDqPcFlCountExcel" resultType ='map' parameterType="map">
-        select dwbm id ,zyywtx,dm,mc,xtdm,pcxmc,sum (num) num from (
-        select * from (select pcx.pcslbm, jb.bpc_dwbm dwbm,dm.zyywtx, dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc, count(DISTINCT pcx.pcslbm) num
-        from yx_pc_pcx pcx
-        left join XT_PC_DM dm on pcx.fflxtdm = dm.dm
-        left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
-        <include refid="seachPcxFx"/>
-        group by pcx.pcslbm,jb.bpc_dwbm , dm.zyywtx, dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc order by bpc_dwbm
-        )
-        union all
-        select * from ( select pcx.pcslbm,jb.bpc_dwbm dwbm,dm.zyywtx,dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc, count(DISTINCT pcx.pcslbm) num
-        from yx_pc_offline_pcx pcx
-        left join XT_PC_DM dm on pcx.fflxtdm = dm.dm
-        left join v_pcajxx jb on jb.pcslbm = pcx.pcslbm
-        <include refid="seachPcxFx"/>
-        group by pcx.pcslbm,jb.bpc_dwbm ,dm.zyywtx, dm.dm, dm.mc,pcx.xtdm,pcx.pcxmc order by bpc_dwbm
-        )
-        )group by dwbm ,zyywtx,dm,mc,xtdm,pcxmc order by dwbm
-    </select>
 
     <!--根据系统代码获取评查项备注说明 需要主要其他的备注不是sm字段是pcjg字段-->
     <select id="getPcxBzByXtdm" parameterType="java.util.Map" resultType="java.util.Map">

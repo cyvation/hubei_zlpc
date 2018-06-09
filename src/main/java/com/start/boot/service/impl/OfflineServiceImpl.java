@@ -265,7 +265,7 @@ public class OfflineServiceImpl implements OfflineService {
         String dw=map.get("dwbm")+"";
         String [] d=dw.split(",");
         map.put("dwbm",d);
-        map.put("bpcdw","".equals(map.get("bpcdw"))?"":(map.get("bpcdw")+"").split(","));
+        map.put("bpcdw",(null==map.get("bpcdw")||"".equals(map.get("bpcdw"))) ? "":(map.get("bpcdw")+"").split(","));
         map.put("page",pagenum);
         map.put("row",row);
         // 操作数据库

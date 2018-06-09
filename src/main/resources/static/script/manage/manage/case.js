@@ -247,7 +247,7 @@ function Init_moniter_random_EasyUiCom() {
                     // } else
                     {
                         //湖北支持节点回退
-                        if('011'==row.PCJDBH)// && userInfo.DWBM == DJDWBM
+                        if('011'==row.PCJDBH && userInfo.DWBM == DJDWBM )// && userInfo.DWBM == DJDWBM
                             d+='<a href="#" onclick="table_manage_manage_backspace(' + index + ')"> 节点回退 </a>';
                         return e + d + f;
                     }

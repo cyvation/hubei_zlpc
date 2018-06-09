@@ -1,5 +1,6 @@
 package com.start.boot.web;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -38,7 +39,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/queryTable")
-public class QueryTableController {
+public class QueryTableController extends ArchivesSystemBaseController{
 
     @Autowired
     QueryTableService queryTableService;
@@ -218,10 +219,10 @@ public class QueryTableController {
     @ApiOperation(" 获取单位案件问题汇总数据 ")
     @PostMapping("/getDwAjwthzTableData")
     @org.springframework.cache.annotation.Cacheable("getDwAjwthzTableData")
-    public MessageResult getDwAjwthzTableData(QueryTable query){
-        PageHelper.startPage(query.getPage(), query.getRows());
+    public MessageResult getDwAjwthzTableData(String json){
         List<AjpcwtxVo> list = null;
         try {
+            Map query=(Map) JSON.parse(json);
            list = ajwthzService.getAjwthzList(query);
         }catch (Exception e){
             e.printStackTrace();
@@ -240,7 +241,7 @@ public class QueryTableController {
         return new MessageResult("获取成功",200,s);
     }
 
-    @ApiOperation(" 获取单位线下评查案件问题汇总数据 ")
+   /* @ApiOperation(" 获取单位线下评查案件问题汇总数据 ")
     @PostMapping("/getDwOfflineAjwthzTableData")
     @org.springframework.cache.annotation.Cacheable("getDwOfflineAjwthzTableData")
     public MessageResult getDwOfflineAjwthzTableData(QueryTable query){
@@ -262,7 +263,7 @@ public class QueryTableController {
         });
         String s = EasyUIHelper.buildDataGridDataSource(resultMap,Math.toIntExact(list.size()));
         return new MessageResult("获取成功",200,s);
-    }
+    }*/
 
     @ApiOperation("获取已评查案件信息")
     @PostMapping("/getAjwthzjbxx")
@@ -273,53 +274,71 @@ public class QueryTableController {
         return s;
     }
 
-    @ApiOperation("获取线下已评查案件信息")
+  /*  @ApiOperation("获取线下已评查案件信息")
     @PostMapping("/getOfflineAjwthzjbxx")
     public String getOfflineAjwthzjbxx(QueryTableAjJbxx query){
         List<Map> ajjbxxs = queryTableService.getOfflineAjwthzjbxx(query);
         PageInfo page = new PageInfo(ajjbxxs);
         String  s = EasyUIHelper.buildDataGridDataSource(page.getList(),Math.toIntExact(page.getTotal()));
         return s;
-    }
+    }*/
 
 
     @ApiOperation("单位案件问题汇总数据excel导出")
     @RequestMapping("/exportDwAjwthzTableDataExcel")
-    public MessageResult exportDwAjwthzTableDataExcel(QueryTable query) throws  Exception {
-        PageHelper.startPage(query.getPage(),query.getRows());
+    public MessageResult exportDwAjwthzTableDataExcel(String json) throws  Exception {
+        Map query=(Map) JSON.parse(json);
         List<AjpcwtxVo> dwTableData = ajwthzService.getAjwthzList(query);;
         String wzbsPath = configService.getSystemConfigValue("wzbsPath");
         String sourceFilePath = wzbsPath + "/File/monitor/moban/案件问题汇总.xls";
         String fileName="案件问题汇总数据导出--"+ DateTime.now().toString("yyyy年MM月dd日");
         String path = exportExcelUtils.exportExcelToBean(dwTableData,2,fileName,"sheet1","", sourceFilePath);
-        return new MessageResult("获取成功",200, path);
+        return new MessageResult("获取成功",200, "");
     }
 
-    @ApiOperation("单位案件问题汇总柱状图数据")
+    @ApiOperation("获取已评查案件信息")
+    @PostMapping("/getAjhzjbxx")
+    public String getAjhzjbxx(String json){
+        String result="";
+        try {
+            Map map= (Map)JSON.parse(json);
+            map.put("page",getParameter("page"));
+            map.put("row",getParameter("rows"));
+            Map data=ajwthzService.getAjhzjbxx(map);
+            result = success(data,"获取列表成功");
+        } catch (Exception e) {
+            super.errMsg("获取列表失败", json, e);
+            result = failure(e.getMessage(), "获取信息列表失败");
+        }
+        return result;
+    }
+
+   /* @ApiOperation("单位案件问题汇总柱状图数据")
     @RequestMapping("/getDwAjwthzBarData")
-    public String getDwAjwthzBarData(QueryTable query){
+    public String getDwAjwthzBarData(String json){
         String result = "";
         try {
+            Map query=(Map) JSON.parse(json);
             result = ajwthzService.getDwAjwthzBarData(query);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
-    }
+    }*/
 
-    @ApiOperation("线下案件问题汇总柱状图数据")
+   /* @ApiOperation("线下案件问题汇总柱状图数据")
     @RequestMapping("/getOfflineDwAjwthzBarData")
     public String getOfflineDwAjwthzBarData(QueryTable query){
         String result = "";
         try {
-            result = ajwthzService.getDwOfflineAjwthzBarData(query);
+            //result = ajwthzService.getDwOfflineAjwthzBarData(query);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
-    }
+    }*/
 
-    @ApiOperation("线下案件问题汇总数据excel导出")
+   /* @ApiOperation("线下案件问题汇总数据excel导出")
     @RequestMapping("/getDwOfflineAjwthzTableDataExcel")
     public MessageResult getDwOfflineAjwthzTableDataExcel(QueryTable query) throws  Exception {
         PageHelper.startPage(query.getPage(),query.getRows());
@@ -329,7 +348,7 @@ public class QueryTableController {
         String fileName="线下案件问题汇总数据导出--"+ DateTime.now().toString("yyyy年MM月dd日");
         String path = exportExcelUtils.exportExcelToBean(dwTableData,2,fileName,"sheet1","", sourceFilePath);
         return new MessageResult("获取成功",200, path);
-    }
+    }*/
 
 //    @ApiOperation("部门excel导出")
 //    @RequestMapping("/exportBmExcel")

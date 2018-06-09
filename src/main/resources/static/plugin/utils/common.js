@@ -575,6 +575,12 @@ function getStajbs() {
         {id: "1", text: '案件化办理'}];
     return stajbArray;
 }
+/获取子项类/
+function flxtdmType() {
+    var stajbArray = [{id: "30002", text: '错误'},
+        {id: "30003", text: '瑕疵'}];
+    return stajbArray;
+}
 /**
  * 获取统计分析导航菜单
  */

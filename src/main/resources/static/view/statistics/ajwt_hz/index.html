@@ -75,29 +75,72 @@
         background: rgba(255,255,255,.0);
         border-color: rgba(255,255,255,.0)
     }
+    /*评查预览*/
+    #pcWin_win_offline {
+        padding: 10px;
+        margin:0 auto;
+        background: #e0ecff;
+    }
+
+    #pcWin_win_offline table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 0px solid #8ac9e6;
+        border-right: 0 !important;
+    }
+
+    #pcWin_win_offline .thead {
+        background: #ecf6fb;
+    }
+
+    #pcWin_win_offline td {
+        height: 30px;
+        line-height: 20px;
+        font-size: 12px;
+        padding: 10px;
+        border: none;
+        border-right: 1px solid #8ac9e6;
+    }
+
+    #pcWin_win_offline tr {
+        border-bottom: 1px solid #8ac9e6;
+    }
+
+    #pcWin_win_offline .thead td {
+        color: #006391;
+        white-space: nowrap !important;
+    }
+
+    /*#pcWin_win .tbody td:nth-child(1) {*/
+    /*white-space: nowrap !important;*/
+    /*}*/
+
+    #pcWin_win_offline .tbody tr:nth-child(2n) {
+        background: #fafafa;
+    }
+
+    #pcWin_win_offline .tbody tr:hover {
+        background: #fcf8e3;
+    }
 </style>
 <div id="ajwt_main_div" class="easyui-layout" style="width:100%;height:100%;">
     <div data-options="region:'west',title:'案件问题项列表',split:true" style="width:50%;">
         <div id="ajwt_tabsBox" style="width: 100%;height: 100%;">
             <div style="width: 100%;overflow: hidden;padding: 5px">
-                <div style="float:left;width:230px;overflow: hidden" id="pop_ups_win_input_ajwt_dw">
-                    承办单位&nbsp;<input id="cbt_win_eval_ajwt_dw"  class="easyui-combotree" style="width: 150px;" />
-                </div>
-                <div style="float:left;width:260px;overflow: hidden">
-                    评查方式&nbsp;<input id="cbt_win_eval_ajwt_pcfl" class="easyui-combotree"  style="width: 150px;" />
-                </div>
-                <div style="float:left;width:260px;overflow: hidden" id="pop_ups_win_input_ajwt_pcmb">
-                    评查模板&nbsp;<input id="cbt_win_eval_ajwt_pcmb"  class="easyui-combotree" style="width: 150px;" />
-                </div>
-                <!--<div style="float:left;width:260px;;overflow: hidden" id="pop_ups_win_input_ajwt_pchd">-->
-                    <!--评查模板&nbsp;<input id="cbt_win_eval_build_pchd"  class="easyui-combotree" style="width: 150px;" />-->
-                <!--</div>-->
-                <div style="float: left;width: 520px;overflow: hidden;margin-top: 5px">
-                    案件完成日期&nbsp;
-                    <input id="ajwt_dw_start" class="easyui-datebox" />
-                    <span>~</span>
-                    <input id="ajwt_dw_end" class="easyui-datebox" />
-                </div>
+                <span>案件完成年份</span>
+                <input id="errorItem_date" class="easyui-combotree"/>
+                <span>承办单位</span>
+                <input id="errorItem_dw_combotree" class="easyui-combotree"  />
+                <span>评查方式</span>
+                <input id="general_pcfl" class="easyui-combotree"  /><br/>
+                <span>评查&emsp;模板</span>
+                <input id="general_pcmb" class="easyui-combotree" />
+                <span>承办人身份</span>
+                <input id="general_cbrsf" class="easyui-combotree" /><br/>
+                <span>案件统计类别</span>
+                <input id="stajbs" class="easyui-combotree"/>
+                <span>子项类别</span>
+                <input id="flxtdmType" class="easyui-combotree" />
                 <div id="btn_ajwt_dw_exp" class="btn" onclick="export_excel_ajwthz()">导出</div>
                 <div id="btn_ajwt_dw_search" class="btn">查询</div>
             </div>
@@ -107,15 +150,27 @@
 
         </div>
     </div>
-    <div id="ajwtZzt" data-options="region:'center',title:'案件问题柱状图'" style="padding:5px;width:50%;">
-        <div id="container" style="height:100%;width:100%">
-
-        </div>
+    <div id="ajwtZzt" data-options="region:'center',title:'备注列表'" style="padding:5px;width:50%;">
+        <table id="table_tccw_cwx_bz" border="0" data-options="fit:true" style="width: 100%;">
+        </table>
     </div>
 </div>
 <div id="win_eval_build_statistics_ajwthz_filter" class="easyui-window" title="评查案件列表"
      data-options="closed:true,collapsible:false,shadow:false,maximizable:false,minimizable:false,modal:true,cache:false,resizable:true,width:1000,height:600">
     <table id="table_eval_build_statistics_ajwthz_filter" ></table>
+</div>
+<!--评查预览弹出框-->
+<div id="pcWin_win_offline" style="padding: 10px;">
+    <div class="pcblPcyl">
+        <div>评查案件：<span id="win_pcWin_ajmc"></span></div>
+        <!--<div>承办检察官：<span id="win_pcWin_cbr"></span></div>-->
+        <div>评查员：<span id="win_pcWin_pcr"></span></div>
+        <div>评查案号：<span id="win_pcWin_pcsah"></span></div>
+        <div>评查时间：<span id="win_pcWin_pcsj"></span></div>
+        <div>案件完成日期：<span id="win_pcWin_ajsj"></span></div>
+        <!-- <div>案由：<span id="win_pcWin_lbl_eval_handle_eval_ay"></span></div>-->
+    </div>
+    <div class="pcylCon" id="pcWin_pcylCon_offline"></div>
 </div>
 </body>
 </html>

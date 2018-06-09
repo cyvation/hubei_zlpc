@@ -1,157 +1,162 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.start.boot.dao.ajpc.AjwthzMapper">
+    <sql id="seachPcxFx">
+        <where>
+            <if test="sfld!=null and sfld!=''">
+                and jb.sfldba =#{sfld}
+            </if>
+            <if test="stajbs!=null and stajbs!=''">
+                and jb.stajbs =#{stajbs}
+            </if>
+            <if test="date!=null and date!=''">
+                and jb.wcrq_nf in
+                <foreach  item="item" collection="date" index="index"  open="(" separator="," close=")">#{item}</foreach>
+            </if>
+            <if test="dwbm!=null and dwbm!=''">
+                and jb.BPC_DWBM in
+                <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+            </if>
+            <if test="pcflbm!=null and pcflbm!=''">
+                and jb.pcflbm in
+                <foreach  item="item" collection="pcflbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+            </if>
+            <if test="ywtx!=null and ywtx!=''">
+                and jb.ywtx in
+                <foreach  item="item" collection="ywtx" index="index"  open="(" separator="," close=")">#{item}</foreach>
+            </if>
+
+        </where>
+    </sql>
     <!--评查案件问题汇总小项查询-->
-    <select id="getAjwthzList" resultType="com.start.boot.pojo.vo.AjpcwtxVo" parameterType="com.start.boot.query.QueryTable">
-        SELECT a.pcxflfbm,a.pcxflbm,a.pcxbm,p.pcxflmc pcxflfmc,a.pcxflmc,a.pcxmc,nvl(c.wts,0) wts from
-        (SELECT f.pcxflfbm, x.pcxflbm,f.pcxflmc,x.pcxbm,x.pcxmc from xt_pc_pcx x
-        LEFT JOIN xt_pc_pcxfl f ON x.pcxflbm=f.pcxflbm
-        WHERE x.pcmbbm=#{pcmbbm}) a
-        LEFT JOIN xt_pc_pcxfl p ON a.pcxflfbm=p.pcxflbm
-        LEFT JOIN (
-        SELECT
-        pcxbm,
-        SUM(CASE
-        WHEN x.pcfs = '1'
-        AND x.pcjg = '1' THEN 1
-        WHEN x.pcfs = '2'
-        AND x.pcjg IS NOT NULL THEN 1
-        ELSE  0
-        END) wts
-        FROM
-        yx_pc_pcx x
-        inner join yx_pc_jbxx jbxx on jbxx.pcmbbm = x.pcmbbm and x.pcslbm = jbxx.pcslbm
-        WHERE x.pcmbbm=#{pcmbbm} and jbxx.sfsc = 'N'
-        <if test="pcflbm !=null and pcflbm!=''">
-          AND jbxx.PCFLBM=#{pcflbm}
+    <select id="getAjwthzList" resultType="com.start.boot.pojo.vo.AjpcwtxVo" parameterType="map">
+        SELECT pcxflfbm,pcxflfmc,pcxflbm,pcxflmc,pcxbm,pcxmc,sum(nvl(wts,0)) wts from
+        (SELECT DISTINCT x.fflxtdm pcxflfbm,d2.mc pcxflfmc, x.flxtdm pcxflbm,d1.mc pcxflmc,x.xtdm pcxbm,d.mc pcxmc from xt_pc_pcx x
+        INNER JOIN xt_pc_dm d ON x.xtdm=d.dm and d.sfsc = 'N'
+        INNER JOIN xt_pc_dm d1 ON x.flxtdm=d1.dm and d.sfsc = 'N'
+        INNER JOIN xt_pc_dm d2 ON x.fflxtdm=d2.dm and d.sfsc = 'N'order by x.fflxtdm, x.flxtdm,x.xtdm) PCX_XTDM
+        left join
+        (select xtdm,flxtdm,fflxtdm,sum(nvl(wts,0)) wts from (
+        select * from (SELECT x.xtdm,x.flxtdm,x.fflxtdm,COUNT(distinct x.pcslbm) wts FROM v_pcajxx jb
+        INNER JOIN yx_pc_pcx x ON x.pcslbm = jb.pcslbm
+        INNER JOIN xt_pc_dm d ON x.xtdm=d.dm and d.sfsc = 'N'
+        INNER JOIN xt_pc_dm d1 ON x.flxtdm=d1.dm and d.sfsc = 'N'
+        INNER JOIN xt_pc_dm d2 ON x.fflxtdm=d2.dm and d.sfsc = 'N'
+        <include refid="seachPcxFx"/>
+        <if test="flxtdm!=null and flxtdm!=''">
+          and x.flxtdm = #{flxtdm}
         </if>
-        <if test="dwbm !=null and dwbm!=''">
-        AND jbxx.BPC_DWBM IN (${dwbm})
+        AND x.pcjg != '0'group by x.fflxtdm, x.flxtdm,x.xtdm order by x.fflxtdm, x.flxtdm,x.xtdm
+        )
+        union all
+        select * from ( SELECT x.xtdm,x.flxtdm,x.fflxtdm,COUNT(distinct x.pcslbm) wts FROM v_pcajxx jb
+        INNER JOIN yx_pc_offline_pcx x ON x.pcslbm = jb.pcslbm
+        INNER JOIN xt_pc_dm d ON x.xtdm=d.dm and d.sfsc = 'N'
+        INNER JOIN xt_pc_dm d1 ON x.flxtdm=d1.dm and d.sfsc = 'N'
+        INNER JOIN xt_pc_dm d2 ON x.fflxtdm=d2.dm and d.sfsc = 'N'
+        <include refid="seachPcxFx"/>
+        <if test="flxtdm!=null and flxtdm!=''">
+            and x.flxtdm = #{flxtdm}
         </if>
-        <if test="startDate !=null and startDate!=''">
-        AND jbxx.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
-        </if>
-        <if test="endDate !=null and endDate!=''">
-        AND jbxx.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
-        </if>
-        GROUP BY x.pcxbm
-        ) c ON a.pcxbm=c.pcxbm
-         ORDER BY a.pcxbm
+        AND x.pcjg != '0' group by x.fflxtdm, x.flxtdm,x.xtdm order by x.fflxtdm, x.flxtdm,x.xtdm
+        )
+        )group by fflxtdm, flxtdm,xtdm order by fflxtdm,flxtdm,xtdm) aj on ( aj.xtdm = PCX_XTDM.pcxbm and aj.flxtdm = PCX_XTDM.pcxflbm and
+        aj.fflxtdm = PCX_XTDM.pcxflfbm)
+        GROUP BY pcxflfbm,pcxflfmc,pcxflbm,pcxflmc,pcxbm,pcxmc ORDER BY pcxflfbm,pcxflbm,pcxbm
     </select>
 
-    <!--线下评查案件问题汇总小项查询-->
-    <select id="getOfflineAjwthzList" resultType="com.start.boot.pojo.vo.AjpcwtxVo" parameterType="com.start.boot.query.QueryTable">
-        SELECT a.pcxflfbm,a.pcxflbm,a.pcxbm,p.pcxflmc pcxflfmc,a.pcxflmc,a.pcxmc,nvl(c.wts,0) wts from
-        (SELECT f.pcxflfbm, x.pcxflbm,f.pcxflmc,x.pcxbm,x.pcxmc from xt_pc_pcx x
-        LEFT JOIN xt_pc_pcxfl f ON x.pcxflbm=f.pcxflbm
-        WHERE x.pcmbbm=#{pcmbbm}) a
-        LEFT JOIN xt_pc_pcxfl p ON a.pcxflfbm=p.pcxflbm
-        LEFT JOIN (
-        SELECT
-        pcxbm,
-        SUM(CASE
-        WHEN x.pcfs = '1'
-        AND x.pcjg = '1' THEN 1
-        WHEN x.pcfs = '2'
-        AND x.pcjg IS NOT NULL THEN 1
-        ELSE  0
-        END) wts
-        FROM
-        yx_pc_offline_pcx x
-        inner join yx_pc_offline_jbxx jbxx on jbxx.pcmbbm = x.pcmbbm and x.pcslbm = jbxx.pcslbm
-        WHERE x.pcmbbm=#{pcmbbm} and jbxx.sfsc = 'N'
-        <if test="pcflbm !=null and pcflbm!=''">
-            AND jbxx.PCFLBM=#{pcflbm}
-        </if>
-        <if test="dwbm !=null and dwbm!=''">
-            AND jbxx.BPC_DWBM IN (${dwbm})
-        </if>
-        <if test="startDate !=null and startDate!=''">
-            AND jbxx.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
-        </if>
-        <if test="endDate !=null and endDate!=''">
-            AND jbxx.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
-        </if>
-        GROUP BY x.pcxbm
-        ) c ON a.pcxbm=c.pcxbm
-        ORDER BY a.pcxbm
-    </select>
 
     <!--评查案件问题汇总大项查询-->
-    <select id="getBarAjwthzList" resultType="com.start.boot.pojo.vo.AjpcwtxVo" parameterType="com.start.boot.query.QueryTable">
-        SELECT pcxflfbm,pcxflbm,pcxflfmc,pcxflmc,wts wts FROM (
-        SELECT a.pcxflfbm,a.pcxflbm,p.pcxflmc pcxflfmc,a.pcxflmc,nvl(c.wts,0) wts from
-        (SELECT f.pcxflfbm, x.pcxflbm,f.pcxflmc from xt_pc_pcx x
-        LEFT JOIN xt_pc_pcxfl f ON x.pcxflbm=f.pcxflbm
-        WHERE x.pcmbbm=#{pcmbbm}) a
-        LEFT JOIN xt_pc_pcxfl p ON a.pcxflfbm=p.pcxflbm
-        LEFT JOIN (
-        SELECT
-        pcxflbm,
-        SUM(CASE
-        WHEN x.pcfs = '1'
-        AND x.pcjg = '1' THEN 1
-        WHEN x.pcfs = '2'
-        AND x.pcjg IS NOT NULL THEN 1
-        ELSE  0
-        END) wts
-        FROM
-        yx_pc_pcx x
-        inner join yx_pc_jbxx jbxx on jbxx.pcmbbm = x.pcmbbm and x.pcslbm = jbxx.pcslbm
-        WHERE x.pcmbbm=#{pcmbbm} and jbxx.sfsc = 'N'
-        <if test="pcflbm !=null and pcflbm!=''">
-            AND jbxx.PCFLBM=#{pcflbm}
-        </if>
-        <if test="dwbm !=null and dwbm!=''">
-            AND jbxx.BPC_DWBM IN (${dwbm})
-        </if>
-        <if test="startDate !=null and startDate!=''">
-            AND jbxx.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
-        </if>
-        <if test="endDate !=null and endDate!=''">
-            AND jbxx.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
-        </if>
-        GROUP BY x.pcxflbm
-        ) c ON a.pcxflbm=c.pcxflbm
-        ORDER BY a.pcxflbm ) T GROUP BY pcxflfbm,pcxflbm,pcxflfmc,pcxflmc,wts ORDER BY pcxflbm
+    <select id="getBarAjwthzList" resultType="com.start.boot.pojo.vo.AjpcwtxVo" parameterType="map">
+        select pcxflfbm,pcxflfmc,pcxflbm,pcxflmc,sum(nvl(wts,0)) wts from (
+select FFLXTDM pcxflfbm,mcf pcxflfmc,flxtdm pcxflbm,mc pcxflmc,nvl(wts,0) wts from (
+ SELECT x.FFLXTDM,dms.mc mcf,x.flxtdm,dmf.mc,
+ SUM(CASE WHEN x.pcfs = '1' AND x.pcjg = '1' THEN 1 WHEN x.pcfs = '2' AND x.pcjg IS NOT NULL THEN 1 ELSE  0 END) wts
+         from yx_pc_pcx x
+        left join v_pcajxx jb on jb.pcslbm = x.pcslbm
+        left join XT_PC_DM dmf on x.flxtdm = dmf.dm
+        left join XT_PC_DM dms on x.FFLXTDM = dms.dm
+        <include refid="seachPcxFx"/>
+        GROUP BY  x.FFLXTDM,dms.mc,x.flxtdm,dmf.mc order by x.FFLXTDM,x.flxtdm )
+        union all
+select FFLXTDM pcxflfbm,mcf pcxflfmc,flxtdm pcxflbm,mc pcxflmc,nvl(wts,0) wts from (
+ SELECT x.FFLXTDM,dms.mc mcf,x.flxtdm,dmf.mc,
+ SUM(CASE WHEN x.pcfs = '1' AND x.pcjg = '1' THEN 1 WHEN x.pcfs = '2' AND x.pcjg IS NOT NULL THEN 1 ELSE  0 END) wts
+         from yx_pc_offline_pcx x
+        left join v_pcjb jb on jb.pcslbm = x.pcslbm
+        left join XT_PC_DM dmf on x.flxtdm = dmf.dm
+        left join XT_PC_DM dms on x.FFLXTDM = dms.dm
+        <include refid="seachPcxFx"/>
+        GROUP BY  x.FFLXTDM,dms.mc,x.flxtdm,dmf.mc order by x.FFLXTDM,x.flxtdm )
+        )
+         GROUP BY pcxflfbm,pcxflfmc,pcxflbm,pcxflmc order by  pcxflfbm,pcxflbm
     </select>
+    <select id="getAjhzjbxx" parameterType="java.util.Map" resultType="java.util.Map">
+        select * from(
+        select PCSLBM,BMSAH,AJMC,AJLBMC, CBDWMC, CBRMC, WCRQ,PCFLBM,CJSJ, CBDWBM，rownum rn from(
+        select distinct PCSLBM,BMSAH,AJMC,AJLBMC, CBDWMC, CBRMC, WCRQ,PCFLBM,CJSJ, CBDWBM from(
+        select distinct jb.PCSLBM,jb.BMSAH,jb.AJMC,jb.AJLB_MC AJLBMC,jb.BPC_DWMC CBDWMC,jb.PCR_MC CBRMC,jb.BPC_MC BCBRMC,jb.BPC_WCRQ
+        WCRQ,jb.PCFLBM,jb.CJSJ,jb.BPC_DWBM CBDWBM from v_pcajxx jb
+        left join yx_pc_pcx x on x.pcslbm=jb.pcslbm
+        <include refid="seachPcxFx"/>
+        <if test="fflxtdm!=null and fflxtdm!=''">
+            and x.fflxtdm=#{fflxtdm}
+        </if>
+        <if test="flxtdm!=null and flxtdm!=''">
+            and x.flxtdm=#{flxtdm}
+        </if>
+        <if test="xtdm!=null and xtdm!=''">
+            and x.xtdm=#{xtdm}
+        </if>
+        group by jb.pcslbm,jb.PCSLBM,jb.BMSAH,jb.AJMC,jb.AJLB_MC,jb.BPC_DWMC,jb.PCR_MC,jb.BPC_MC,jb.BPC_WCRQ,jb.PCFLBM,CJSJ,jb.BPC_DWBM
+        union all
+        select distinct jb.PCSLBM,jb.BMSAH,jb.AJMC,jb.AJLB_MC AJLBMC,jb.BPC_DWMC CBDWMC,jb.PCR_MC CBRMC,jb.BPC_MC BCBRMC,jb.BPC_WCRQ WCRQ,
+        jb.PCFLBM,CJSJ,jb.BPC_DWBM CBDWBM from v_pcajxx jb
+        left join yx_pc_offline_pcx x on x.pcslbm=jb.pcslbm
+        <include refid="seachPcxFx" />
+        <if test="fflxtdm!=null and fflxtdm!=''">
+            and x.fflxtdm=#{fflxtdm}
+        </if>
+        <if test="flxtdm!=null and flxtdm!=''">
+            and x.flxtdm=#{flxtdm}
+        </if>
+        <if test="xtdm!=null and xtdm!=''">
+            and x.xtdm=#{xtdm}
+        </if>
+       group by jb.pcslbm,jb.pcslbm,jb.PCSLBM,jb.BMSAH,jb.AJMC,jb.AJLB_MC,jb.BPC_DWMC,jb.PCR_MC,jb.BPC_MC,jb.BPC_WCRQ,jb.PCFLBM,CJSJ,jb.BPC_DWBM
+        )) where rownum &lt;= #{row} group by PCSLBM,BMSAH,AJMC,AJLBMC, CBDWMC, CBRMC, WCRQ,PCFLBM,CJSJ, CBDWBM,rownum
+        ) where rn>#{page}
+    </select>
+    <select id="getAjhzjbxxCount" parameterType="java.util.Map" resultType="java.util.Map">
+        select count(distinct pcslbm) num from(
+        select distinct jb.pcslbm from v_pcajxx jb
+        left join yx_pc_pcx x on x.pcslbm=jb.pcslbm
+        <include refid="seachPcxFx"/>
+        <if test="fflxtdm!=null and fflxtdm!=''">
+            and x.fflxtdm=#{fflxtdm}
+        </if>
+        <if test="flxtdm!=null and flxtdm!=''">
+            and x.flxtdm=#{flxtdm}
+        </if>
+        <if test="xtdm!=null and xtdm!=''">
+            and x.xtdm=#{xtdm}
+        </if>
+         group by jb.pcslbm
+        union all
+        select distinct jb.pcslbm from v_pcajxx jb
+        left join yx_pc_offline_pcx x on x.pcslbm=jb.pcslbm
+        <include refid="seachPcxFx"/>
+        <if test="fflxtdm!=null and fflxtdm!=''">
+            and x.fflxtdm=#{fflxtdm}
+        </if>
+        <if test="flxtdm!=null and flxtdm!=''">
+            and x.flxtdm=#{flxtdm}
+        </if>
+        <if test="xtdm!=null and xtdm!=''">
+            and x.xtdm=#{xtdm}
+        </if>
+        group by jb.pcslbm
+        )
 
-    <!--线下评查案件问题汇总大项查询-->
-    <select id="getOfflineBarAjwthzList" resultType="com.start.boot.pojo.vo.AjpcwtxVo" parameterType="com.start.boot.query.QueryTable">
-        SELECT pcxflfbm,pcxflbm,pcxflfmc,pcxflmc,wts wts FROM (
-        SELECT a.pcxflfbm,a.pcxflbm,p.pcxflmc pcxflfmc,a.pcxflmc,nvl(c.wts,0) wts from
-        (SELECT f.pcxflfbm, x.pcxflbm,f.pcxflmc from xt_pc_pcx x
-        LEFT JOIN xt_pc_pcxfl f ON x.pcxflbm=f.pcxflbm
-        WHERE x.pcmbbm=#{pcmbbm}) a
-        LEFT JOIN xt_pc_pcxfl p ON a.pcxflfbm=p.pcxflbm
-        LEFT JOIN (
-        SELECT
-        pcxflbm,
-        SUM(CASE
-        WHEN x.pcfs = '1'
-        AND x.pcjg = '1' THEN 1
-        WHEN x.pcfs = '2'
-        AND x.pcjg IS NOT NULL THEN 1
-        ELSE  0
-        END) wts
-        FROM
-        yx_pc_offline_pcx x
-        inner join yx_pc_offline_jbxx jbxx on jbxx.pcmbbm = x.pcmbbm and x.pcslbm = jbxx.pcslbm
-        WHERE x.pcmbbm=#{pcmbbm} and jbxx.sfsc = 'N'
-        <if test="pcflbm !=null and pcflbm!=''">
-            AND jbxx.PCFLBM=#{pcflbm}
-        </if>
-        <if test="dwbm !=null and dwbm!=''">
-            AND jbxx.BPC_DWBM IN (${dwbm})
-        </if>
-        <if test="startDate !=null and startDate!=''">
-            AND jbxx.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
-        </if>
-        <if test="endDate !=null and endDate!=''">
-            AND jbxx.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
-        </if>
-        GROUP BY x.pcxflbm
-        ) c ON a.pcxflbm=c.pcxflbm
-        ORDER BY a.pcxflbm ) T GROUP BY pcxflfbm,pcxflbm,pcxflfmc,pcxflmc,wts ORDER BY pcxflbm
     </select>
 </mapper>

@@ -96,4 +96,5 @@ public interface QueryTableService {
      * @return
      */
     List<Map> getOfflineAjwthzjbxx(QueryTableAjJbxx query);
+
 }

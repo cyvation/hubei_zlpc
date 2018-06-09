@@ -47,11 +47,15 @@ public class Param_Ajqkzlfx {
     @JSONField(name = "XTDM")
     private String xtdm;
 
+    @JSONField(name = "FFLXTDM")
+    private String fflxtdm;
+
     @JSONField(name = "PAGE")
     private int page;
 
     @JSONField(name = "ROWS")
     private int rows;
+
 
 
     public String getDwbm() {
@@ -172,5 +176,13 @@ public class Param_Ajqkzlfx {
 
     public void setSm(String sm) {
         this.sm = sm;
+    }
+
+    public String getFflxtdm() {
+        return fflxtdm;
+    }
+
+    public void setFflxtdm(String fflxtdm) {
+        this.fflxtdm = fflxtdm;
     }
 }

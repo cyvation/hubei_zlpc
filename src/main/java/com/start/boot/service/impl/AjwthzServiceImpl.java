@@ -23,9 +23,13 @@ public class AjwthzServiceImpl implements AjwthzService {
     private AjwthzMapper ajwthzMapper;
 
     @Override
-    public List<AjpcwtxVo> getAjwthzList(QueryTable query) throws Exception {
+    public List<AjpcwtxVo> getAjwthzList(Map query) throws Exception {
         List<AjpcwtxVo> list = null;
         try {
+            query.put("date", "".equals(query.get("date")) ? "" : (query.get("date") + "").split(","));
+            query.put("dwbm", "".equals(query.get("dwbm")) ? "" : (query.get("dwbm") + "").split(","));
+            query.put("pcflbm", "".equals(query.get("pcflbm")) ? "" : (query.get("pcflbm") + "").split(","));
+            query.put("ywtx", "".equals(query.get("ywtx")) ? "" : (query.get("ywtx") + "").split(","));
             list = ajwthzMapper.getAjwthzList(query);
         } catch (Exception e) {
             throw e;
@@ -33,20 +37,15 @@ public class AjwthzServiceImpl implements AjwthzService {
         return list;
     }
 
-    @Override
-    public List<AjpcwtxVo> getOfflineAjwthzList(QueryTable query) throws Exception {
-        List<AjpcwtxVo> list = null;
-        try {
-            list = ajwthzMapper.getOfflineAjwthzList(query);
-        } catch (Exception e) {
-            throw e;
-        }
-        return list;
-    }
+
 
     @Override
-    public String getDwAjwthzBarData(QueryTable query) throws Exception {
+    public String getDwAjwthzBarData(Map query) throws Exception {
         try {
+            query.put("date", "".equals(query.get("date")) ? "" : (query.get("date") + "").split(","));
+            query.put("dwbm", "".equals(query.get("dwbm")) ? "" : (query.get("dwbm") + "").split(","));
+            query.put("pcflbm", "".equals(query.get("pcflbm")) ? "" : (query.get("pcflbm") + "").split(","));
+            query.put("ywtx", "".equals(query.get("ywtx")) ? "" : (query.get("ywtx") + "").split(","));
             return  initBarAjwthzData(ajwthzMapper.getBarAjwthzList(query));
         } catch (Exception e) {
             throw e;
@@ -114,13 +113,21 @@ public class AjwthzServiceImpl implements AjwthzService {
         }
         return jsonObj.toJSONString();
     }
-
     @Override
-    public String getDwOfflineAjwthzBarData(QueryTable query) throws Exception {
-        try {
-            return  initBarAjwthzData(ajwthzMapper.getOfflineBarAjwthzList(query));
-        } catch (Exception e) {
-            throw e;
-        }
+    public Map getAjhzjbxx(Map map) {
+        map.put("date", "".equals(map.get("date")) ? "" : (map.get("date") + "").split(","));
+        map.put("dwbm", "".equals(map.get("dwbm")) ? "" : (map.get("dwbm") + "").split(","));
+        map.put("pcflbm", "".equals(map.get("pcflbm")) ? "" : (map.get("pcflbm") + "").split(","));
+        map.put("ywtx", "".equals(map.get("ywtx")) ? "" : (map.get("ywtx") + "").split(","));
+        int pagenum = (Integer.parseInt(map.get("page") + "") - 1) * Integer.parseInt(map.get("row") + "");
+        int row = Integer.parseInt(map.get("row") + "") + pagenum;
+        map.put("page", pagenum);
+        map.put("row", row);
+        Map dataMap = new HashMap();
+        List<Map> list = ajwthzMapper.getAjhzjbxx(map);
+        Map count = ajwthzMapper.getAjhzjbxxCount(map);
+        dataMap.put("total", count.get("NUM"));
+        dataMap.put("rows", list);
+        return dataMap;
     }
 }

@@ -1,6 +1,8 @@
 package com.start.boot.service;
 
 import java.util.List;
+import java.util.Map;
+
 import com.start.boot.pojo.vo.AjpcwtxVo;
 import com.start.boot.query.QueryTable;
 
@@ -10,11 +12,15 @@ import com.start.boot.query.QueryTable;
  */
 public interface AjwthzService {
 
-    List<AjpcwtxVo> getAjwthzList(QueryTable query) throws Exception;
+    List<AjpcwtxVo> getAjwthzList(Map query) throws Exception;
 
-    List<AjpcwtxVo> getOfflineAjwthzList(QueryTable query) throws Exception;
+    String getDwAjwthzBarData(Map query) throws Exception;
 
-    String getDwAjwthzBarData(QueryTable query) throws Exception;
+    /**
+     * 获取已经评查的 案件基本信息（查ajjbxx）
+     * @param query
+     * @return
+     */
+    Map getAjhzjbxx(Map query);
 
-    String getDwOfflineAjwthzBarData(QueryTable query) throws Exception;
 }

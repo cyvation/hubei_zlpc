@@ -31,6 +31,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/analysis")
+@SuppressWarnings("all")
 public class AnalysisController extends ArchivesSystemBaseController{
     @Autowired
     private AnalysisService analysisService;
@@ -463,6 +464,7 @@ public class AnalysisController extends ArchivesSystemBaseController{
             map.put("sm", param.getSm());
             map.put("xtdm", param.getXtdm());
             map.put("flxtdm", param.getWtType());
+            map.put("fflxtdm", param.getFflxtdm());
             map.put("page", param.getPage());
             map.put("rows", param.getRows());
             List<Map> list = analysisService.getTccwxxPcAjxxByParams(map);

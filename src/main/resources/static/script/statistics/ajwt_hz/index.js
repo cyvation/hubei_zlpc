@@ -142,13 +142,14 @@ function init_seacth_evel() {
         editable: false,
         panelWidth: 160,
         lines: true,
-        multiple: true,
+        multiple: false,
         cascadeCheck: false,
         onShowPanel: index_onShowPanel,
         onHidePanel: index_onHidePanel,
         onLoadSuccess: function (node, data) {
             if (data != null && data.length >= 1) {
-                $('#flxtdmType').combotree('setValues', ['30002','30003']);
+                // $('#flxtdmType').combotree('setValues', ['30002','30003']);
+                $('#flxtdmType').combotree('setValue', '30002');
             }
             index_addMousedownDiv(this, "flxtdmType");
         }
@@ -179,7 +180,7 @@ function init_monitor_statistiscs_dw() {
                 field: 'pcxflfmc',
                 title: '<span  style=\'font-size:16px;\'>项目</span>',
                 rowspan: 2,
-                width: 64,
+                width: 120,
                 align: 'center',
                 halign: 'center'
             },
@@ -189,15 +190,15 @@ function init_monitor_statistiscs_dw() {
             },
             {
                 field: 'wts',
-                width: 100,
-                title: '<span  style=\'font-size:16px\'>问题案件数</span>',
+                width: 120,
+                title: '<span  style=\'font-size:16px\'>存在该问题<br>项的案件数</span>',
                 rowspan: 2,
                 align: 'center',
                 halign: 'center',
                 formatter: function (value, row, index) {
                     var r = '';
                     if (row.dwbm == userInfo.DWBM || userInfo.DWBM == DJDWBM) {
-                        r = '<a href="#"  style="color: #145bae;text-decoration: none;"   onclick="alert_tcxc_cwx_jbxx_window(' + index + ',\'#table_ajwt_statistiscs_dw\')">' + value + '</a> ';
+                        r = '<a id="tgb_a_ajwt_hz_' + index + '" ajs="' + value + '" href="#"  style="color: #145bae;text-decoration: none;"   onclick="alert_tcxc_cwx_jbxx_window(' + index + ',\'#table_ajwt_statistiscs_dw\')">' + value + '</a> ';
                     } else {
                         r = value;
                     }
@@ -215,7 +216,7 @@ function init_monitor_statistiscs_dw() {
             {
                 field: 'pcxmc',
                 title: '<span  style=\'font-size:16px\'>评查项内容</span>',
-                width: 180,
+                // width: 180,
                 align: 'left'
             }
         ]],
@@ -226,6 +227,7 @@ function init_monitor_statistiscs_dw() {
             if (data.rows.length > 0) {
                 //调用mergeCellsByField()合并单元格
                 mergeCellsByField("table_ajwt_statistiscs_dw", "pcxflfmc,pcxflmc");
+                getColorOrderAjwthz();
             }
         },
         onSelect:function (rowIndex, rowData) {
@@ -572,7 +574,43 @@ function export_excel_ajwthz() {
 }
 
 
+//数字大小颜色排序,没有考虑数字重复
+function getColorOrderAjwthz() {
+    var dgRow = $('#table_ajwt_statistiscs_dw').datagrid('getData');
+    //倒序函数
+    function sortNumber(a, b) {
+        return b - a;
+    }
 
+    if (dgRow && dgRow.rows) {
+        var alinks = $("a[id*='tgb_a_ajwt_hz_']");
+        var ajsArr = [];
+        $(alinks).each(function (i) {
+            ajsArr.push(parseInt($(this).attr('ajs')));
+        });
+        //排序
+        ajsArr.sort(sortNumber);
+        // 定义颜色序列
+        var colorArr = ['#ff0000'
+            , '#eF4500'
+            , '#CD5C5C'
+            , '#b60000'
+            , '#660000'];
+        $(ajsArr).each(function (i) {
+            if (i < 5) {//定义排前5的颜色
+                $(alinks).each(function (j) {
+                    if (ajsArr[i]>0 && $(this).attr('ajs') == ajsArr[i]) {
+                        $(this).css('color', colorArr[i]);
+                        $(this).css('font-weight', 'bold');
+                        $(this).css('font-size', (18 - i) < 14 ? 14 : (18 - i) );
+                    }
+                });
+            }
+        });
+
+    }
+
+}
 
 
 

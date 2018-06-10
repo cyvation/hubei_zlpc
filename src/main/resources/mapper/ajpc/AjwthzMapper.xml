@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.start.boot.dao.ajpc.AjwthzMapper">
     <sql id="seachPcxFx">
         <where>
+            1=1
             <if test="sfld!=null and sfld!=''">
                 and jb.sfldba =#{sfld}
             </if>
@@ -22,47 +23,61 @@
                 <foreach  item="item" collection="pcflbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
             </if>
             <if test="ywtx!=null and ywtx!=''">
-                and jb.ywtx in
-                <foreach  item="item" collection="ywtx" index="index"  open="(" separator="," close=")">#{item}</foreach>
+                and jb.ywtx = #{ywtx}
             </if>
 
         </where>
     </sql>
     <!--评查案件问题汇总小项查询-->
     <select id="getAjwthzList" resultType="com.start.boot.pojo.vo.AjpcwtxVo" parameterType="map">
-        SELECT pcxflfbm,pcxflfmc,pcxflbm,pcxflmc,pcxbm,pcxmc,sum(nvl(wts,0)) wts from
-        (SELECT DISTINCT x.fflxtdm pcxflfbm,d2.mc pcxflfmc, x.flxtdm pcxflbm,d1.mc pcxflmc,x.xtdm pcxbm,d.mc pcxmc from xt_pc_pcx x
-        INNER JOIN xt_pc_dm d ON x.xtdm=d.dm and d.sfsc = 'N'
-        INNER JOIN xt_pc_dm d1 ON x.flxtdm=d1.dm and d.sfsc = 'N'
-        INNER JOIN xt_pc_dm d2 ON x.fflxtdm=d2.dm and d.sfsc = 'N'order by x.fflxtdm, x.flxtdm,x.xtdm) PCX_XTDM
-        left join
-        (select xtdm,flxtdm,fflxtdm,sum(nvl(wts,0)) wts from (
-        select * from (SELECT x.xtdm,x.flxtdm,x.fflxtdm,COUNT(distinct x.pcslbm) wts FROM v_pcajxx jb
-        INNER JOIN yx_pc_pcx x ON x.pcslbm = jb.pcslbm
-        INNER JOIN xt_pc_dm d ON x.xtdm=d.dm and d.sfsc = 'N'
-        INNER JOIN xt_pc_dm d1 ON x.flxtdm=d1.dm and d.sfsc = 'N'
-        INNER JOIN xt_pc_dm d2 ON x.fflxtdm=d2.dm and d.sfsc = 'N'
-        <include refid="seachPcxFx"/>
-        <if test="flxtdm!=null and flxtdm!=''">
-          and x.flxtdm = #{flxtdm}
-        </if>
-        AND x.pcjg != '0'group by x.fflxtdm, x.flxtdm,x.xtdm order by x.fflxtdm, x.flxtdm,x.xtdm
-        )
-        union all
-        select * from ( SELECT x.xtdm,x.flxtdm,x.fflxtdm,COUNT(distinct x.pcslbm) wts FROM v_pcajxx jb
-        INNER JOIN yx_pc_offline_pcx x ON x.pcslbm = jb.pcslbm
-        INNER JOIN xt_pc_dm d ON x.xtdm=d.dm and d.sfsc = 'N'
-        INNER JOIN xt_pc_dm d1 ON x.flxtdm=d1.dm and d.sfsc = 'N'
-        INNER JOIN xt_pc_dm d2 ON x.fflxtdm=d2.dm and d.sfsc = 'N'
-        <include refid="seachPcxFx"/>
-        <if test="flxtdm!=null and flxtdm!=''">
-            and x.flxtdm = #{flxtdm}
-        </if>
-        AND x.pcjg != '0' group by x.fflxtdm, x.flxtdm,x.xtdm order by x.fflxtdm, x.flxtdm,x.xtdm
-        )
-        )group by fflxtdm, flxtdm,xtdm order by fflxtdm,flxtdm,xtdm) aj on ( aj.xtdm = PCX_XTDM.pcxbm and aj.flxtdm = PCX_XTDM.pcxflbm and
-        aj.fflxtdm = PCX_XTDM.pcxflfbm)
-        GROUP BY pcxflfbm,pcxflfmc,pcxflbm,pcxflmc,pcxbm,pcxmc ORDER BY pcxflfbm,pcxflbm,pcxbm
+       SELECT pcxflfbm,pcxflfmc,pcxflbm,pcxflmc,pcxbm,pcxmc,nvl(jb.wts,0) wts FROM
+          (SELECT x.fflxtdm pcxflfbm,d2.mc pcxflfmc, x.flxtdm pcxflbm,d1.mc pcxflmc,x.xtdm pcxbm,d.mc pcxmc 
+             FROM xt_pc_pcx x
+            INNER JOIN xt_pc_dm d ON x.xtdm=d.dm and d.sfsc = 'N'
+            INNER JOIN xt_pc_dm d1 ON x.flxtdm=d1.dm and d.sfsc = 'N'
+            INNER JOIN xt_pc_dm d2 ON x.fflxtdm=d2.dm and d.sfsc = 'N'
+            WHERE x.pcflbm='001'
+            <if test="flxtdm!=null and flxtdm!=''">
+                AND x.flxtdm=#{flxtdm}
+            </if>
+            <if test="ywtx!=null and ywtx!=''">
+                AND x.ywtx = #{ywtx}
+            </if>
+          ) PCX_XTDM
+      LEFT JOIN
+         (SELECT pcx.fflxtdm,pcx.flxtdm,pcx.xtdm,COUNT(pcslbm) wts
+                FROM 
+                (
+                  SELECT onx.ywtx,onx.pcxbm,onx.pcslbm,onx.xtdm,onx.pcjg,onx.fflxtdm,onx.flxtdm FROM yx_pc_pcx onx
+                   WHERE onx.pcjg != '0'
+                <if test="flxtdm!=null and flxtdm!=''">
+                    AND onx.flxtdm=#{flxtdm}
+                </if>
+                <if test="ywtx!=null and ywtx!=''">
+                    AND onx.ywtx = #{ywtx}
+                </if>
+                 UNION ALL
+                  SELECT ofx.ywtx,ofx.pcxbm,ofx.pcslbm,ofx.xtdm,ofx.pcjg,ofx.fflxtdm,ofx.flxtdm FROM yx_pc_offline_pcx ofx
+                   WHERE ofx.pcjg != '0'
+                <if test="flxtdm!=null and flxtdm!=''">
+                    AND ofx.flxtdm=#{flxtdm}
+                </if>
+                <if test="ywtx!=null and ywtx!=''">
+                    AND ofx.ywtx = #{ywtx}
+                </if>
+                ) pcx
+            WHERE EXISTS (
+                   SELECT 1 FROM v_pcajxx jb
+                   <include refid="seachPcxFx"/>
+                   AND pcx.pcslbm = jb.PCSLBM
+               )
+               GROUP BY pcx.fflxtdm,pcx.flxtdm,pcx.xtdm
+         ) jb
+        ON jb.xtdm = PCX_XTDM.pcxbm
+       AND jb.fflxtdm = PCX_XTDM.pcxflfbm
+       AND jb.flxtdm = PCX_XTDM.pcxflbm
+     ORDER by PCX_XTDM.pcxflfbm,PCX_XTDM.pcxflbm,decode(PCX_XTDM.pcxbm,'40000','999999',PCX_XTDM.pcxbm)
+
     </select>
 
 

@@ -763,11 +763,11 @@
 
     <!--根据系统代码获取评查项备注说明 需要主要其他的备注不是sm字段是pcjg字段-->
     <select id="getPcxBzByXtdm" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT pcx.sm,pcx.xtdm,pcx.flxtdm,pcx.FFLXTDM FROM v_pcajxx ajxx
+        SELECT pcx.sm,pcx.xtdm FROM v_pcajxx ajxx
         INNER JOIN
           (
-             SELECT pcslbm,flxtdm,xtdm,sm,FFLXTDM from
-                  (SELECT onx.pcslbm,onx.xtdm,onx.pcjg,onx.flxtdm,onx.PCJG,FFLXTDM,
+             SELECT pcslbm,flxtdm,xtdm,sm from
+                  (SELECT onx.pcslbm,onx.xtdm,onx.pcjg,onx.flxtdm,onx.PCJG,
                           concat(onx.sm,decode(onx.PCJG,'0',NULL,'1',NULL,onx.pcjg)) sm
                      FROM yx_pc_pcx onx
                     WHERE onx.pcjg != '0'
@@ -777,11 +777,8 @@
                     <if test="flxtdm !=null and flxtdm!=''">
                         AND onx.flxtdm = #{flxtdm}
                     </if>
-                    <if test="fflxtdm !=null and fflxtdm!=''">
-                        AND onx.fflxtdm = #{fflxtdm}
-                    </if>
                    UNION ALL
-                   SELECT ofx.pcslbm,ofx.xtdm,ofx.pcjg,ofx.flxtdm,ofx.PCJG,FFLXTDM,
+                   SELECT ofx.pcslbm,ofx.xtdm,ofx.pcjg,ofx.flxtdm,ofx.PCJG,
                           concat(ofx.sm,decode(ofx.PCJG,'0',NULL,'1',NULL,ofx.pcjg)) sm
                      FROM yx_pc_offline_pcx ofx
                     WHERE ofx.pcjg != '0'
@@ -790,9 +787,6 @@
                     </if>
                     <if test="flxtdm !=null and flxtdm!=''">
                         AND ofx.flxtdm = #{flxtdm}
-                    </if>
-                    <if test="fflxtdm !=null and fflxtdm!=''">
-                        AND ofx.fflxtdm = #{fflxtdm}
                     </if>
                     ) WHERE  sm IS NOT NULL
           ) pcx
@@ -816,7 +810,7 @@
             <if test="dwbm !=null and dwbm!=''">
                 AND ajxx.bpc_dwbm in (${dwbm})
             </if>
-        GROUP BY pcx.sm, pcx.xtdm,pcx.flxtdm,pcx.FFLXTDM
+        GROUP BY pcx.sm, pcx.xtdm
         ORDER BY pcx.sm
     </select>
 
@@ -829,7 +823,7 @@
         <if test="ajtjlb !=null and ajtjlb!=''">
             AND stajbs in (${ajtjlb})
         </if>
-        <if test="cbrsf !=null and cbrsf!=''">
+        <if test="cbrsf !=null and cbrsf!='' and cbrsf!='N,Y'">
             AND sfldba in (${cbrsf})
         </if>
         <if test="ywtx !=null and ywtx!=''">
@@ -849,7 +843,7 @@
         <if test="ajtjlb !=null and ajtjlb!=''">
             AND stajbs in (${ajtjlb})
         </if>
-        <if test="cbrsf !=null and cbrsf!=''">
+        <if test="cbrsf !=null and cbrsf!='' and cbrsf!='N,Y'">
             AND sfldba in (${cbrsf})
         </if>
         <if test="ywtx !=null and ywtx!=''">
@@ -1035,7 +1029,7 @@
         <if test="ajtjlb !=null and ajtjlb!=''">
             AND stajbs in (${ajtjlb})
         </if>
-        <if test="cbrsf !=null and cbrsf!=''">
+        <if test="cbrsf !=null and cbrsf!='' and cbrsf!='N,Y'">
             AND sfldba in (${cbrsf})
         </if>
         <if test="pcjl !=null and pcjl!=''">
@@ -1090,10 +1084,10 @@
                     <if test="fflxtdm !=null and fflxtdm!=''">
                         AND ofx.fflxtdm = #{fflxtdm}
                     </if>
-                )
-               <if test="sm != null and sm != '' ">
-                   WHERE sm = #{sm}
-               </if>
+                ) WHERE 1=1
+              <if test="sm != null and sm != '' ">
+                   AND sm = #{sm}
+              </if>
         ) pcx
         ON pcx.pcslbm = ajxx.PCSLBM
         where 1=1

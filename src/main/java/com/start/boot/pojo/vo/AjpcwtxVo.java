@@ -41,6 +41,10 @@ public class AjpcwtxVo {
     @ApiModelProperty("总分")
     private Double zf = 0.0;
 
+    @ExcelProperty(name = "百分占比")
+    @ApiModelProperty("百分占比")
+    private String bfzb = "0%";
+
     @ApiModelProperty("序号")
     private Integer xh = 0;
 
@@ -116,4 +120,11 @@ public class AjpcwtxVo {
         this.xh = xh;
     }
 
+    public String getBfzb() {
+        return bfzb;
+    }
+
+    public void setBfzb(String bfzb) {
+        this.bfzb = bfzb;
+    }
 }

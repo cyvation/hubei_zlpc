@@ -572,7 +572,7 @@ function getCbrsfValues() {
 //获取实体案件/
 function getStajbs() {
     var stajbArray = [{id: "0", text: '实体案件'},
-        {id: "1", text: '案件化办理'}];
+        {id: "1", text: '案件化办理的事项'}];
     return stajbArray;
 }
 /获取子项类/
@@ -735,7 +735,7 @@ function getDhcdValues() {
         }, {
             id: '16',
             group: '(突出项目)',
-            name: '问题汇总',
+            name: '按条线分析',
             imageOneUrl: 'image/icon/tcxm_tree_xz.png',
             imageTwoUrl: 'image/icon/tcxm_tree.png',
             gndz: '/view/statistics/ajwt_hz/index.html',

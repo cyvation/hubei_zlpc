@@ -1,20 +1,15 @@
 package com.start.boot.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.start.boot.annotation.ExcelProperty;
 import com.start.boot.dao.ajpc.AjwthzMapper;
+import com.start.boot.pojo.vo.AjpcwtxVo;
 import com.start.boot.service.AjwthzService;
-import jdk.nashorn.internal.runtime.ECMAException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.start.boot.pojo.vo.AjpcwtxVo;
-import com.start.boot.query.QueryTable;
+import java.text.DecimalFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -29,8 +24,17 @@ public class AjwthzServiceImpl implements AjwthzService {
             query.put("date", "".equals(query.get("date")) ? "" : (query.get("date") + "").split(","));
             query.put("dwbm", "".equals(query.get("dwbm")) ? "" : (query.get("dwbm") + "").split(","));
             query.put("pcflbm", "".equals(query.get("pcflbm")) ? "" : (query.get("pcflbm") + "").split(","));
-            query.put("ywtx", "".equals(query.get("ywtx")) ? "" : (query.get("ywtx") + "").split(","));
+//            query.put("ywtx", "".equals(query.get("ywtx")) ? "" : (query.get("ywtx") + ""));
+            //问题案件总数
             list = ajwthzMapper.getAjwthzList(query);
+            int wtajzs = list.stream().mapToInt(AjpcwtxVo::getWts).sum();
+            //算比例
+            if(wtajzs>0) {
+                DecimalFormat decimalFormat = new DecimalFormat("0.00");
+                for (int i = 0; i < list.size(); i++) {
+                    list.get(i).setBfzb(decimalFormat.format((list.get(i).getWts() / wtajzs) * 100) + "%");
+                }
+            }
         } catch (Exception e) {
             throw e;
         }

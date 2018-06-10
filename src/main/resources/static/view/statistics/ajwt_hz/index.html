@@ -124,23 +124,24 @@
     }
 </style>
 <div id="ajwt_main_div" class="easyui-layout" style="width:100%;height:100%;">
-    <div data-options="region:'west',title:'案件问题项列表',split:true" style="width:50%;">
-        <div id="ajwt_tabsBox" style="width: 100%;height: 100%;">
+    <div data-options="region:'west',split:true" style="width:55%;">
+        <div id="ajwt_tabsBox" style="width: 100%;height: 100%;overflow: hidden;">
             <div style="width: 100%;overflow: hidden;padding: 5px">
-                <span>案件完成年份</span>
+                <span>年份</span>
                 <input id="errorItem_date" class="easyui-combotree"/>
                 <span>承办单位</span>
                 <input id="errorItem_dw_combotree" class="easyui-combotree"  />
                 <span>评查方式</span>
                 <input id="general_pcfl" class="easyui-combotree"  /><br/>
-                <span>评查&emsp;模板</span>
+                <span>评查模板</span>
                 <input id="general_pcmb" class="easyui-combotree" />
+                <span>项目类型</span>
+                <input id="flxtdmType" class="easyui-combotree" /><br/>
                 <span>承办人身份</span>
-                <input id="general_cbrsf" class="easyui-combotree" /><br/>
+                <input id="general_cbrsf" class="easyui-combotree" />
                 <span>案件统计类别</span>
                 <input id="stajbs" class="easyui-combotree"/>
-                <span>子项类别</span>
-                <input id="flxtdmType" class="easyui-combotree" />
+
                 <div id="btn_ajwt_dw_exp" class="btn" onclick="export_excel_ajwthz()">导出</div>
                 <div id="btn_ajwt_dw_search" class="btn">查询</div>
             </div>
@@ -150,7 +151,7 @@
 
         </div>
     </div>
-    <div id="ajwtZzt" data-options="region:'center',title:'备注列表'" style="padding:5px;width:50%;">
+    <div id="ajwtZzt" data-options="region:'center',title:'备注列表'" style="padding:5px;width:45%;">
         <table id="table_tccw_cwx_bz" border="0" data-options="fit:true" style="width: 100%;">
         </table>
     </div>

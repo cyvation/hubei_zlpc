@@ -28,11 +28,12 @@ public class AjwthzServiceImpl implements AjwthzService {
             //问题案件总数
             list = ajwthzMapper.getAjwthzList(query);
             int wtajzs = list.stream().mapToInt(AjpcwtxVo::getWts).sum();
+            Double all=Double.valueOf(wtajzs);
             //算比例
             if(wtajzs>0) {
                 DecimalFormat decimalFormat = new DecimalFormat("0.00");
                 for (int i = 0; i < list.size(); i++) {
-                    list.get(i).setBfzb(decimalFormat.format((list.get(i).getWts() / wtajzs) * 100) + "%");
+                    list.get(i).setBfzb(decimalFormat.format((list.get(i).getWts() / all) * 100) + "%");
                 }
             }
         } catch (Exception e) {

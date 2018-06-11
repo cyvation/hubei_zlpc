@@ -102,10 +102,6 @@ function init_seacth_evel() {
             }
         }
     });
-    /*$('#general_pcmb').combotree('loadData', []);
-    $('#general_pcmb').combotree('clear');
-    $('#general_pcmb').combotree('setValue', '');
-*/
     $('#general_pcmb').combotree({
         editable: false,
         method: 'get',
@@ -180,7 +176,7 @@ function init_monitor_statistiscs_dw() {
                 field: 'pcxflfmc',
                 title: '<span  style=\'font-size:16px;\'>项目</span>',
                 rowspan: 2,
-                width: 120,
+                width: 100,
                 align: 'center',
                 halign: 'center'
             },
@@ -204,11 +200,19 @@ function init_monitor_statistiscs_dw() {
                     }
                     return r;
                 }
+            },
+            {
+                field: 'bfzb',
+                width: 60,
+                title: '<span  style=\'font-size:16px\'>占比</span>',
+                rowspan: 2,
+                align: 'center',
+                halign: 'center'
             }
         ], [
             {
                 field: 'pcxflmc',
-                width: 64,
+                width: 60,
                 title: '<span  style=\'font-size:16px\'>子项</span>',
                 align: 'center',
                 halign: 'center'
@@ -355,7 +359,6 @@ function alert_tcxc_cwx_jbxx_window(index, name) {
         obj.wtType=thisRow.FLXTDM;
         obj.fflxtdm =thisRow.FFLXTDM;
     }
-    console.log(obj);
     var ypcUrl = getRootPath() + "/analysis/getTccwxxPcAjxxByParams";
 
     // 已评查案件datagrid

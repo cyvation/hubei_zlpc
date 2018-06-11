@@ -563,7 +563,7 @@ function export_excel_ajwthz() {
     $.ajax({
         url: url,
         type: "get",
-        data: obj,
+        data: {json: JSON.stringify(obj)},
         success: function (data) {
             if (data.code == 200) {
                 window.location.href = getRootPath() + data.data;

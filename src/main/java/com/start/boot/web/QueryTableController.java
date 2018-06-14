@@ -293,7 +293,7 @@ public class QueryTableController extends ArchivesSystemBaseController{
         String sourceFilePath = wzbsPath + "/File/monitor/moban/案件问题汇总.xls";
         String fileName="案件问题汇总数据导出--"+ DateTime.now().toString("yyyy年MM月dd日");
         String path = exportExcelUtils.exportExcelToBean(dwTableData,2,fileName,"sheet1","", sourceFilePath);
-        return new MessageResult("获取成功",200, "");
+        return new MessageResult("获取成功",200, path);
     }
 
     @ApiOperation("获取已评查案件信息")

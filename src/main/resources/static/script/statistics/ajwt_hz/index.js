@@ -568,10 +568,10 @@ function export_excel_ajwthz() {
             if (data.code == 200) {
                 window.location.href = getRootPath() + data.data;
             }
-            CloseProgress();
+           // CloseProgress();
         },
         error: function () {
-            CloseProgress();
+            //CloseProgress();
         }
     });
 }

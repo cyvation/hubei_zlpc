@@ -187,14 +187,14 @@ function eval_keypoint_marksInit(pcxx) {
     //完成日期
     $('#date_eval_build_kp_custom_begin').datebox({
         editable: false,
-        value: '2013-01-01'
-        // value: new Date().getFullYear() + '-01-01'
+        // value: '2013-01-01'
+        value: new Date().getFullYear() + '-01-01'
     });
 
     $('#date_eval_build_kp_custom_end').datebox({
         editable: false,
-        value: '2017-12-31'
-        // value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
+        // value: '2017-12-31'
+        value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
     });
 
     // 样式设置

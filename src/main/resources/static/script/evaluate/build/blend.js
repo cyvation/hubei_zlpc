@@ -1009,26 +1009,26 @@ function eval_special_marksDataBind(pcxx){
     //完成日期
     $('#date_eval_build_sp_begin').datebox({
         editable: false,
-        value: '2013-01-01'
-        // value: new Date().getFullYear() + '-01-01'
+        // value: '2013-01-01'
+        value: new Date().getFullYear() + '-01-01'
     });
 
     $('#date_eval_build_sp_end').datebox({
         editable: false,
-        value: '2017-12-31'
-        // value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
+        // value: '2017-12-31'
+        value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
     });
 
     $('#date_eval_build_sp_assign_begin').datebox({
         editable: false,
-        value: '2013-01-01'
-        // value: new Date().getFullYear() + '-01-01'
+        // value: '2013-01-01'
+        value: new Date().getFullYear() + '-01-01'
     });
 
     $('#date_eval_build_sp_assign_end').datebox({
         editable: false,
-        value: '2017-12-31'
-        // value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
+        // value: '2017-12-31'
+        value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
     });
 }
 

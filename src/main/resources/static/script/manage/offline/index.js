@@ -171,8 +171,8 @@ function load_grid_done_list_pc() {
         'bpcr':bpcr,
         'begin':begin,
         'end':end,
-        'dwbm':dw,
-        'bpcdw':dws
+        'dwbm':dw,//评查单位
+        'bpcdw':dws //承办单位
     };
     $('#grid_done_list_pc').datagrid({
         url: getRootPath() + '/offline/loadOfflineList',

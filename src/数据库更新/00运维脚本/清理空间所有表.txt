@@ -1,0 +1,19 @@
+DECLARE
+  v_name all_tables.table_name%TYPE;
+  CURSOR mycur IS
+    SELECT table_name
+      FROM all_tables
+     WHERE owner = 'SZWL';
+BEGIN
+  OPEN mycur;
+  LOOP
+    FETCH mycur
+      INTO v_name;
+    EXIT WHEN mycur%NOTFOUND OR mycur%NOTFOUND IS NULL;
+    EXECUTE IMMEDIATE 'drop table ' || v_name;
+    COMMIT;
+  END LOOP;
+  CLOSE mycur;
+END;
+
+SELECT 'trucate table ' || table_name || ';'  FROM all_tables WHERE owner = 'SZWL';

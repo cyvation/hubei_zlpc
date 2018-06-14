@@ -171,20 +171,20 @@ function eval_random_marksInit(pcxx) {
 
     //自定义默认查询为当年时间
 
-    if(pcxx.PCFLBM == "001"){
+    if(pcxx.PCFLBM == "001"){//湖北的常规评查
         //完成日期
         $('#date_eval_build_rd_custom_begin').datebox({
             editable: true,
-            value:'2017-01-01'
-            // value: new Date().getFullYear() + '-01-01'
+            // value:'2017-01-01'
+            value: new Date().getFullYear() + '-01-01'
         });
 
         $('#date_eval_build_rd_custom_end').datebox({
             editable: true,
-            value:'2017-12-31'
-            // value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
+            // value:'2017-12-31'
+            value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
         });
-    }else if(pcxx.PCFLBM == "007"){
+    }else if(pcxx.PCFLBM == "007"){//湖北的随机评查
         //完成日期
         $('#date_eval_build_rd_custom_begin').datebox({
             editable: true,

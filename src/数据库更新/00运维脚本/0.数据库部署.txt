@@ -1,0 +1,38 @@
+
+
+-- 1.创建表空间ZLPC：以数据库管理员SYS登录案件质量评查数据库，创建表空间
+CREATE TABLESPACE ZLPC DATAFILE 'C:\app\Administrator\oradata\ZLPC\ZLPC_01.DBF' size 50M reuse autoextend on next 10M maxsize 30G LOGGING EXTENT MANAGEMENT LOCAL SEGMENT SPACE MANAGEMENT AUTO;
+ALTER TABLESPACE ZLPC add DATAFILE 'C:\app\Administrator\oradata\ZLPC\ZLPC_02.DBF' size 50M reuse autoextend on next 10M MAXSIZE 30G;
+ALTER TABLESPACE ZLPC add DATAFILE 'C:\app\Administrator\oradata\ZLPC\ZLPC_03.DBF' size 50M reuse autoextend on next 10M maxsize 30G;
+
+-- 2.创建用户ZLPC：以数据库管理员SYS登录案件质量评查数据库，创建案件质量评查系统用户zlpc 密码默认为zlpc 。
+create role app_zlpc not identified;
+grant create public synonym to app_zlpc;
+grant debug connect session to app_zlpc;
+grant create tablespace to app_zlpc;
+grant drop tablespace to app_zlpc;
+grant alter tablespace to app_zlpc;
+grant create any view to app_zlpc;
+grant create any materialized view to app_zlpc;
+grant create any directory to app_zlpc;
+grant create database link to app_zlpc;
+grant create job to app_zlpc;
+
+create user zlpc identified by zlpc default tablespace zlpc temporary tablespace TEMP;
+alter user zlpc quota unlimited on zlpc quota 0M on system;
+grant connect, resource, app_zlpc to zlpc;
+
+-- 3.导入数据：
+-- 以zlpc用户登录案件质量评查数据库，创建Directory，ORACLE仅创建逻辑目录，需手动创建相应目录
+create or replace directory datapump as 'C:\app\administrator\datapump';
+-- 拷贝dump文件到上面创建的目录，在操作系统中用impdp命令导入数据，因为用户及表空间不同，所以需要转换
+impdp zlpc/zlpc directory=datapump dumpfile=ZLPC.DMP logfile=zlpc.log
+
+-- 4.调整数据库链接
+-- 以zlpc用户登录案件质量评查数据库，创建DBLink
+-- 注：DBLink中HOST = 192.168.1.98，SERVICE_NAME = tyyw.net及连接用户/密码均以部署点实际情况为准
+drop database link TYYW_LINK.NET;
+create database link TYYW_LINK.NET
+  connect to TYYW identified by tyyw
+  using '(DESCRIPTION =    (ADDRESS_LIST =      (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.1.98)(PORT = 1521))    )    (CONNECT_DATA =      (SERVICE_NAME = tyyw.net)    )  )';
+

@@ -1,0 +1,2 @@
+SELECT * from xt_qx_dwgn g WHERE g.gnbm IN (select t.gnbm from xt_qx_gndy t WHERE flbm='4200000004' );
+SELECT * from xt_qx_jsgnfp f WHERE f.gnbm IN (select t.gnbm from xt_qx_gndy t WHERE flbm='4200000004' );

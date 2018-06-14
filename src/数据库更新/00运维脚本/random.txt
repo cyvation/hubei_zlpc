@@ -1,0 +1,4 @@
+if(param.DWBM==userInfo.DWBM && param.CBR==userInfo.MC){
+        Alert("不能评查自己承办的案件！");
+        return ;
+    }

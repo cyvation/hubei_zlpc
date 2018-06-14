@@ -1,0 +1,91 @@
+--更新办结案件表
+--TRUNCATE TABLE tyyw_bjaj;
+--DELETE FROM yx_pc_sxjl_distinct;
+
+--新出现的评查案件类别
+select rownum ,'0',a.ajlb_bm,a.ajlb_mc,'N' from 
+(
+select distinct j.ajlb_bm,j.ajlb_mc  from yx_pc_jbxx j where j.ajlb_bm not in (select s.ajlb_bm from xt_dm_stajbs s)
+) a ;
+
+--完成日期可能为空，用完成标志日期
+UPDATE yx_pc_jbxx j SET j.bpc_wcrq=(SELECT MAX(wcrq) FROM tyyw_gg_ajjbxx@tyyw_link.net) WHERE j.bpc_wcrq IS NULL;
+UPDATE yx_pc_jbxx j SET j.bpc_wcrq=j.bpc_wcbzrq WHERE j.bpc_wcrq IS NULL;
+UPDATE yx_pc_jbxx j SET j.wcrq_nf=to_char(nvl(j.bpc_wcrq,bpc_wcbzrq),'yyyy') WHERE j.wcrq_nf IS NULL;
+
+UPDATE yx_pc_offline_jbxx j SET j.wcrq_nf=to_char(nvl(j.bpc_wcrq,bpc_wcbzrq),'yyyy') WHERE j.bpc_wcrq IS NULL;
+
+--从评查案件表里取-用对模版的
+INSERT INTO tyyw_bjaj 
+(pcflbm,bmsah,tysah,ajmc,ajlb_bm,ajlb_mc,cb_dwbm,cb_dwmc,cb_bmbm,cb_bmmc,cbrgh,cbr,slrq,wcrq,way,sfldba,wcrq_nf,YWTX)
+SELECT 
+  j.pcflbm,bmsah,tysah,ajmc,ajlb_bm,ajlb_mc,j.bpc_dwbm,bpc_dwmc,bpc_bmbm,bpc_bmmc,j.bpc_gh,bpc_mc,bpc_slrq,bpc_wcrq,way,'N' sfldba,wcrq_nf,m.YWTX
+ FROM 
+       (SELECT m.ywtx mb_ywtx,d.ywtx lb_ywtx ,j.* from yx_pc_jbxx j 
+      INNER JOIN xt_pc_mb m ON j.pcmbbm=m.pcmbbm
+      INNER JOIN xt_dm_ajlbbm d ON j.ajlb_bm=d.ajlbbm AND m.ywtx=d.ywtx
+      WHERE j.sfsc='N' AND j.wcrq_nf>='2013' )
+ j
+ INNER JOIN xt_pc_mb m ON j.pcmbbm=m.pcmbbm
+  WHERE    
+    NOT EXISTS (
+     SELECT b.bmsah from tyyw_bjaj b WHERE b.bmsah=j.bmsah
+    ) 
+   AND j.sfsc='N'
+   AND j.wcrq_nf>='2013' ;
+
+
+
+--从评查案件表里取(包括用错模版的)
+INSERT INTO tyyw_bjaj 
+(pcflbm,bmsah,tysah,ajmc,ajlb_bm,ajlb_mc,cb_dwbm,cb_dwmc,cb_bmbm,cb_bmmc,cbrgh,cbr,slrq,wcrq,way,sfldba,wcrq_nf,YWTX)
+SELECT 
+  j.pcflbm,bmsah,tysah,ajmc,ajlb_bm,ajlb_mc,j.bpc_dwbm,bpc_dwmc,bpc_bmbm,bpc_bmmc,j.bpc_gh,bpc_mc,bpc_slrq,bpc_wcrq,way,'N' sfldba,wcrq_nf,m.YWTX
+ FROM yx_pc_jbxx j
+ INNER JOIN xt_pc_mb m ON j.pcmbbm=m.pcmbbm
+  WHERE    
+    NOT EXISTS (
+     SELECT b.bmsah from tyyw_bjaj b WHERE b.bmsah=j.bmsah
+    ) 
+   AND j.sfsc='N'
+   AND j.wcrq_nf>='2013' AND j.wcrq_nf<'2018';
+   
+--筛选记录查询重复的 
+select count(*), t.pcflbm,t.bmsah,t.ywtx from yx_pc_sxjl t
+group by t.pcflbm,t.bmsah,t.ywtx
+having count(*)>1;  
+   
+--筛选记录表数据去重
+/*DELETE  FROM yx_pc_sxjl E 
+ WHERE E.ROWID > (SELECT MIN(X.ROWID)  FROM yx_pc_sxjl X WHERE X.bmsah = E.bmsah AND x.ywtx=e.ywtx AND x.pcflbm=e.pcflbm \*AND x.ajlb_bm=e.ajlb_bm*\)   
+*/
+
+
+--借用中间表,然后删除rn字段，
+ INSERT INTO yx_pc_sxjl_distinct  
+   select a.* from 
+     (select o.*,
+              row_number() over(partition by bmsah,pcflbm, ywtx ORDER  by o.bmsah) rn
+            from yx_pc_sxjl o) a
+   where a.rn =1; 
+ 
+--然后 从筛选记录里取 ,只抽取评查办结有的案件类别
+INSERT INTO tyyw_bjaj 
+(pcflbm,bmsah,tysah,ajmc,ajlb_bm,ajlb_mc,cb_dwbm,cb_dwmc,cb_bmbm,cb_bmmc,cbrgh,cbr,slrq,wcrq,way,sfldba,wcrq_nf,ywtx)
+SELECT s.pcflbm,s.bmsah,s.tysah,s.ajmc,s.ajlb_bm,s.ajlb_mc,s.dwbm ,s.dwmc ,s.bmbm,s.bmmc ,s.cbrgh,s.cbrmc,s.slrq,s.wcrq,'0','N',to_char(s.wcrq,'yyyy'),s.ywtx
+  FROM yx_pc_sxjl_distinct s 
+  WHERE 
+  EXISTS (
+    SELECT 1 from v_pcajxx b WHERE s.ajlb_bm=b.ajlb_bm
+  )--只抽取评查办结有的案件类别 426618
+  AND NOT EXISTS (
+     SELECT b.bmsah from tyyw_bjaj b WHERE b.bmsah=s.bmsah AND b.pcflbm=s.pcflbm
+    ) 
+    AND  s.wcrq_nf>='2013' --AND  s.wcrq_nf<'2018'
+    ;
+    
+    
+    ---------
+    SELECT count(*) from tyyw_bjaj WHERE  wcrq_nf>='2013'  AND wcrq_nf<'2018';
+    SELECT count(*) from yx_pc_offline_jbxx WHERE  wcrq_nf>='2013'  AND wcrq_nf<'2018';
+    SELECT count(*) from v_bjajxx WHERE  wcrq_nf>='2013'  AND wcrq_nf<'2018';

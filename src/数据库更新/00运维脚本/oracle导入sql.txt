@@ -1,0 +1,109 @@
+expdp tyyw/tyyw@hb2 TABLES=XT_AG_AJSLPZ,xt_ws_mbqyjs,XT_AG_BMFLGZ,XT_DM_KGJSDW,XT_AG_LARBM,XT_AG_LAZBM,XT_AG_SABZ,XT_AG_SLBZ,xt_ag_tsajfpgz,xt_ag_yybm,xt_dm_gxdwbm,xt_qx_bmywfp,xt_qx_gly,xt_qx_glyzzjgqx,xt_qx_jbqxqk,xt_qx_jsbm,xt_qx_jsgnfp,xt_qx_rygnfp,xt_qx_ryjsfp,xt_qx_spjsbm,xt_qx_supperadmin,xt_ws_mbsx,xt_ws_tdcwsj,xt_ws_yzbmgx,xt_yh_ajlbyh,xt_yh_dwyh,xt_yh_wsyh,xt_yh_year,xt_yz_gl,xt_zzjg_bmbm,xt_zzjg_bmlbywfp,xt_zzjg_dwbm,xt_zzjg_rybm,xt_zzjg_rydy,xt_zzjg_rygxhpz DIRECTORY=db_bak dumpfile=CustomConfig.dmp ;
+
+
+
+expdp tyyw/tyyw@hb2 DIRECTORY=datapump dumpfile=tyyw20161014.dmp;
+
+impdp sjshare/sjshare@hb2share DIRECTORY=DMPDIR dumpfile=sjshare20140110.dmp;
+
+select * from dba_directories where directory_name='DMPDIR';
+
+sqlplus sys/system@hb2share as sysdba
+
+create or replace directory DMPDIR as 'c:\db_bak';
+
+grant read, write on directory DMPDIR to sjshare;
+
+
+impdp sjshare/sjshare@hb2share schemas=sjshare directory=datapump dumpfile=sjshare20140110.dmp logfile=2014-01-10sjshare.log parallel=8 table_exists_action=replace cluster=n 
+
+
+impdp tyyw/tyyw@hb2 schemas=tyyw directory=datapump dumpfile=20141119.dmp logfile=2014-01-10tyyw.log parallel=8 table_exists_action=replace cluster=n 
+
+impdp tyyw/tyyw@hb2 dumpfile=tj201.dmp directory=datapump table_exists_action=replace logfile=ldddlog.log
+//////////////////////////////
+µ¼Éý¼¶DMPµÄÓï¾ä
+/////////////////////////////////
+impdp tyyw/tyyw@hb2 directory=datapump dumpfile=20141217.dmp DATA_OPTIONS=SKIP_CONSTRAINT_ERRORS TABLE_EXISTS_ACTION=APPEND 
+
+impdp tyyw/tyyw@hb2 DIRECTORY=datapump DUMPFILE =tyyw.DMP DATA_OPTIONS=SKIP_CONSTRAINT_ERRORS TABLE_EXISTS_ACTION=APPEND CONTENT=DATA_ONLY
+
+impdp tyyw/tyyw@hb2 directory=DATAPUMP dumpfile=DCWS.DMP TABLES ='xt_ws_mb' DATA_OPTIONS=SKIP_CONSTRAINT_ERRORS TABLE_EXISTS_ACTION=APPEND CONTENT=DATA_ONLY logfile=20160602.log parallel=8
+
+impdp tyyw/tyyw@hb2 directory=DATAPUMP DUMPFILE= 20161020.DMP DATA_OPTIONS=SKIP_CONSTRAINT_ERRORS TABLE_EXISTS_ACTION=APPEND CONTENT=DATA_ONLY
+
+impdp tyyw/tyyw@hb2 directory=DATAPUMP DUMPFILE=TYYWIMP_292.DMP DATA_OPTIONS=SKIP_CONSTRAINT_ERRORS TABLE_EXISTS_ACTION=APPEND CONTENT=DATA_ONLY
+
+impdp tyyw/tyyw@hb2 directory=DATAPUMP DUMPFILE=TYYWPZ.DMP DATA_OPTIONS=SKIP_CONSTRAINT_ERRORS TABLE_EXISTS_ACTION=APPEND CONTENT=DATA_ONLY
+
+impdp tyyw/tyyw@hb2 directory=DATAPUMP DUMPFILE=TYYWIMP_300.DMP DATA_OPTIONS=SKIP_CONSTRAINT_ERRORS TABLE_EXISTS_ACTION=APPEND CONTENT=DATA_ONLY
+
+impdp tyyw/tyyw@hb2 directory=DATAPUMP DUMPFILE=TYYWIMP_310.DMP DATA_OPTIONS=SKIP_CONSTRAINT_ERRORS TABLE_EXISTS_ACTION=APPEND CONTENT=DATA_ONLY
+
+impdp tyyw/tyyw@hb2 directory=DATAPUMP DUMPFILE=TYYWIMP_311.DMP DATA_OPTIONS=SKIP_CONSTRAINT_ERRORS TABLE_EXISTS_ACTION=APPEND CONTENT=DATA_ONLY
+
+impdp tyyw/tyyw@hb2 directory=DATAPUMP DUMPFILE=TYYWIMP_312.DMP DATA_OPTIONS=SKIP_CONSTRAINT_ERRORS TABLE_EXISTS_ACTION=APPEND CONTENT=DATA_ONLY
+
+impdp tyyw/tyyw@hb2 directory=DATAPUMP DUMPFILE=TYYWIMP_313.DMP DATA_OPTIONS=SKIP_CONSTRAINT_ERRORS TABLE_EXISTS_ACTION=APPEND CONTENT=DATA_ONLY
+
+impdp tyyw/tyyw@hb2 directory=DATAPUMP DUMPFILE=TYYWIMP_1.4.DMP DATA_OPTIONS=SKIP_CONSTRAINT_ERRORS TABLE_EXISTS_ACTION=APPEND CONTENT=DATA_ONLY
+
+impdp tyyw/tyyw@hb2 directory=DATAPUMP DUMPFILE=TYYWIMP_1.4_BC.DMP DATA_OPTIONS=SKIP_CONSTRAINT_ERRORS TABLE_EXISTS_ACTION=APPEND CONTENT=DATA_ONLY
+
+impdp tyyw/tyyw@hb2 directory=DATAPUMP DUMPFILE=TYYWIMP_1.5.DMP DATA_OPTIONS=SKIP_CONSTRAINT_ERRORSTABLE_EXISTS_ACTION=APPEND CONTENT=DATA_ONLY
+
+impdp tyyw/tyyw@hb2 directory=DATAPUMP DUMPFILE=TYYWIMP_1.5V300.DMP DATA_OPTIONS=SKIP_CONSTRAINT_ERRORS TABLE_EXISTS_ACTION=APPEND CONTENT=DATA_ONLY
+
+impdp tyyw/tyyw@hb2 directory=DATAPUMP DUMPFILE=TYYWIMP_1.7.DMP DATA_OPTIONS=SKIP_CONSTRAINT_ERRORS TABLE_EXISTS_ACTION=APPEND CONTENT=DATA_ONLY
+
+truncate table XT_AG_AJSLPZ;
+truncate table XT_AG_BMFLGZ;
+truncate table XT_AG_LARBM;
+truncate table XT_AG_LAZBM;
+truncate table XT_AG_SABZ;
+truncate table XT_AG_SLBZ;
+truncate table xt_ag_tsajfpgz;
+truncate table xt_ag_yybm;
+truncate table xt_dm_gxdwbm;
+truncate table xt_qx_bmywfp;
+truncate table xt_qx_gly;
+truncate table xt_qx_glyzzjgqx;
+truncate table xt_qx_jbqxqk;
+truncate table xt_qx_jsbm;
+truncate table xt_qx_jsgnfp;
+truncate table xt_qx_rygnfp;
+truncate table xt_qx_ryjsfp;
+truncate table xt_qx_spjsbm;
+truncate table xt_qx_supperadmin;
+truncate table xt_ws_mbsx;
+truncate table xt_ws_tdcwsj;
+truncate table xt_ws_yzbmgx;
+truncate table xt_ws_mbqyjs;
+truncate table xt_yh_ajlbyh;
+truncate table xt_yh_dwyh;
+truncate table xt_yh_wsyh;
+truncate table xt_yh_year;
+truncate table xt_yz_gl;
+truncate table xt_zzjg_bmbm;
+truncate table xt_zzjg_bmlbywfp;
+truncate table xt_zzjg_dwbm;
+truncate table xt_zzjg_rybm;
+truncate table xt_zzjg_rydy;
+truncate table xt_zzjg_rygxhpz;
+truncate table XT_DM_KGJSDW;
+truncate table XT_AG_FLGZ;
+truncate table XT_AG_FLMX;
+truncate table XT_AG_SGLARBM;
+truncate table XT_AG_SGLAZBM;
+truncate table XT_AG_TYHCGZ;
+truncate table XT_QX_BADYJSQX;
+truncate table XT_QX_BADYRYFP;
+truncate table XT_QX_BADYRYQX;
+truncate table XT_QX_BADYSFDY;
+truncate table XT_WS_DTSPGZ;
+truncate table XT_ZZJG_BADYDY;
+truncate table XT_AG_AJTXDY;
+truncate table XT_AG_FLPZ;
+truncate table XT_YH_XWSYH;
+truncate table XT_AG_FLFA;
+impdp tyyw/tyyw@hb2 TABLES=XT_AG_AJSLPZ,xt_ws_mbqyjs,XT_AG_BMFLGZ,XT_AG_LARBM,XT_AG_LAZBM,XT_AG_SABZ,XT_AG_SLBZ,xt_ag_tsajfpgz,xt_ag_yybm,xt_dm_gxdwbm,xt_qx_bmywfp,xt_qx_gly,xt_qx_glyzzjgqx,xt_qx_jbqxqk,xt_qx_jsbm,xt_qx_jsgnfp,xt_qx_rygnfp,xt_qx_ryjsfp,xt_qx_spjsbm,xt_qx_supperadmin,xt_ws_mbsx,xt_ws_tdcwsj,xt_ws_yzbmgx,xt_yh_ajlbyh,xt_yh_dwyh,xt_yh_wsyh,xt_yh_year,xt_yz_gl,xt_zzjg_bmbm,xt_zzjg_bmlbywfp,xt_zzjg_dwbm,xt_zzjg_rybm,xt_zzjg_rydy,xt_zzjg_rygxhpz,XT_DM_KGJSDW,XT_AG_FLGZ,XT_AG_FLMX,XT_AG_SGLARBM,XT_AG_SGLAZBM,XT_AG_TYHCGZ,XT_QX_BADYJSQX,XT_QX_BADYRYFP,XT_QX_BADYRYQX,XT_QX_BADYSFDY,XT_WS_DTSPGZ,XT_ZZJG_BADYDY,XT_AG_AJTXDY,XT_AG_FLPZ,XT_YH_XWSYH,XT_AG_FLFA  DIRECTORY=DMPDIR content=data_only DUMPFILE=tyyw.dmp

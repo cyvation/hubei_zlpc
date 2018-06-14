@@ -554,12 +554,11 @@ function index_onHidePanel() {
 
 //获取年份数据
 function getYearRange() {
-    var yearArray = [{id: 2013, text: '2013'},
-        {id: 2014, text: '2014'},
-        {id: 2015, text: '2015'},
-        {id: 2016, text: '2016'},
-        {id: 2017, text: '2017'},
-        {id: 2018, text: '2018'}];
+    var curYear = parseInt(new Date().getFullYear());// 当前年份
+    var yearArray=[];
+    for(i=2013;i<=curYear;i++){
+        yearArray.push({id: i, text: ''+i});
+    }
     return yearArray;
 }
 

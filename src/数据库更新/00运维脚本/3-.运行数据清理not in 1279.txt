@@ -1,0 +1,24 @@
+TRUNCATE TABLE  yx_lc_sl;
+TRUNCATE TABLE  yx_lc_sljd;
+TRUNCATE TABLE  yx_pc_fz;
+TRUNCATE TABLE  yx_pc_grzl;
+TRUNCATE TABLE  yx_pc_hd WHERE pcflbm NOT IN('001', '002', '007', '009'); --不能清理常规重点随机线下的
+TRUNCATE TABLE  yx_pc_jbxx;
+TRUNCATE TABLE  yx_pc_jzwj;
+TRUNCATE TABLE  yx_pc_pcfk;
+TRUNCATE TABLE  yx_pc_pcfzr;
+TRUNCATE TABLE  yx_pc_pcx;
+TRUNCATE TABLE  yx_pc_pcxfl;
+TRUNCATE TABLE  yx_pc_pczl;
+TRUNCATE TABLE  yx_pc_sp;
+TRUNCATE TABLE  yx_pc_sxjl;
+TRUNCATE TABLE  yx_pc_tzgg;
+TRUNCATE TABLE  yx_pc_xzrydy;
+TRUNCATE TABLE  yx_pc_yj;
+TRUNCATE TABLE  yx_pc_zdpc;
+TRUNCATE TABLE  yx_pc_zdpccx;
+TRUNCATE TABLE  yx_rz_cz;
+TRUNCATE TABLE  yx_rz_xt;
+TRUNCATE TABLE  yx_xt_xxjl;
+
+--序列重置

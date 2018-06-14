@@ -1,0 +1,24 @@
+expdp zlpc/zlpc directory=dmpdir dumpfile=88zlpc04111.dmp parallel=4  compression=all
+
+imdp zlpc/zlpc directory=dmpdir dumpfile=127zlpc0410.dmp parallel=4 DATA_OPTIONS=SKIP_CONSTRAINT_ERRORS table_exists_action=replace
+
+impdp tyyw/tyyw@hb2 TABLES=XT_AG_AJSLPZ,xt_ws_mbqyjs,XT_AG_BMFLGZ,XT_AG_LARBM,XT_AG_LAZBM,XT_AG_SABZ,XT_AG_SLBZ,xt_ag_tsajfpgz,xt_ag_yybm,xt_dm_gxdwbm,xt_qx_bmywfp,xt_qx_gly,xt_qx_glyzzjgqx,xt_qx_jbqxqk,xt_qx_jsbm,xt_qx_jsgnfp,xt_qx_rygnfp,xt_qx_ryjsfp,xt_qx_spjsbm,xt_qx_supperadmin,xt_ws_mbsx,xt_ws_tdcwsj,xt_ws_yzbmgx,xt_yh_ajlbyh,xt_yh_dwyh,xt_yh_wsyh,xt_yh_year,xt_yz_gl,xt_zzjg_bmbm,xt_zzjg_bmlbywfp,xt_zzjg_dwbm,xt_zzjg_rybm,xt_zzjg_rydy,xt_zzjg_rygxhpz,XT_DM_KGJSDW  DIRECTORY=DMPDIR content=data_only DUMPFILE=tyyw.dmp
+
+
+XT_WS_DTSPGZ
+XT_QX_BADYSFDY
+XT_QX_BADYRYQX
+XT_QX_BADYRYFP
+XT_QX_BADYJSQX
+XT_AG_TYHCGZ
+XT_AG_SGLAZBM
+XT_AG_SGLARBM
+XT_AG_FLMX
+XT_AG_FLGZ
+XT_AG_FLFA
+XT_YH_XWSYH
+XT_AG_FLPZ
+XT_AG_AJTXDY
+XT_ZZJG_BADYDY
+
+impdp tyyw/tyyw@hb2 TABLES=XT_WS_DTSPGZ,XT_QX_BADYSFDY,XT_QX_BADYRYQX,XT_QX_BADYRYFP,XT_QX_BADYJSQX,XT_AG_TYHCGZ,XT_AG_SGLAZBM,XT_AG_SGLARBM,XT_AG_FLMX,XT_AG_FLGZ,XT_AG_FLFA,XT_YH_XWSYH,XT_AG_FLPZ,XT_AG_AJTXDY,XT_ZZJG_BADYDY DIRECTORY=DMPDIR content=data_only DUMPFILE=tyyw.dmp

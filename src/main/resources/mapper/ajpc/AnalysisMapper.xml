@@ -1057,7 +1057,7 @@
         (
         SELECT pcslbm,flxtdm,xtdm,sm from
                 (
-                    SELECT onx.pcslbm,onx.xtdm,onx.pcjg,onx.flxtdm,onx.PCJG,
+                    SELECT onx.pcslbm,onx.xtdm,onx.pcjg,onx.flxtdm,onx.FFLXTDM,
                     concat(onx.sm,decode(onx.PCJG,'0',NULL,'1',NULL,onx.pcjg)) sm
                     FROM yx_pc_pcx onx
                     WHERE onx.pcjg != '0'
@@ -1071,7 +1071,7 @@
                         AND onx.fflxtdm = #{fflxtdm}
                     </if>
                     UNION ALL
-                    SELECT ofx.pcslbm,ofx.xtdm,ofx.pcjg,ofx.flxtdm,ofx.PCJG,
+                    SELECT ofx.pcslbm,ofx.xtdm,ofx.pcjg,ofx.flxtdm,ofx.FFLXTDM,
                     concat(ofx.sm,decode(ofx.PCJG,'0',NULL,'1',NULL,ofx.pcjg)) sm
                     FROM yx_pc_offline_pcx ofx
                     WHERE ofx.pcjg != '0'

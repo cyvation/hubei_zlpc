@@ -147,4 +147,9 @@ public class PcAjServiceImpl implements PcAjService {
         return true;
     }
 
+    @Override
+    public void delPcajLog(Map map) {
+        pcMapper.delPcajLog(map);
+    }
+
 }

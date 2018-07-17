@@ -92,6 +92,7 @@ public interface PcMapper {
     void backspace(Map map);
 
     void addBackspaceLog(Map map);
+    void delPcajLog(Map map);
 
     int htPcaj(String pcslbm);
 

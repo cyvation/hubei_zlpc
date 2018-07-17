@@ -1000,7 +1000,16 @@ public class PcController extends ArchivesSystemBaseController {
         try {
             boolean isSuccess = pcAjService.delPcaj(pcslbm,pcflbm);
             result = success(isSuccess, "删除评查案件成功");
-
+            Map map = new HashMap();
+            map.put("pcslbm",pcslbm);
+//            map.put("bmsah",);
+            map.put("dwbm",getCurrentDwbm());
+            map.put("dwmc",getCurrentDwmc());
+            map.put("gh",getCurrentGh());
+            map.put("mc",getCurrentMC());
+            map.put("czsm","案件【"+pcslbm+"】被删除");
+            //日志
+            pcAjService.delPcajLog(map);
         } catch (Exception e) {
 
             super.errMsg("删除评查案件失败", pcslbm, e);

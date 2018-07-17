@@ -576,6 +576,35 @@
 
     </insert>
 
+    <insert id="delPcajLog" parameterType="map" >
+        <selectKey keyProperty="logid" resultType="string" order="BEFORE">
+            select seq_yx_rz_cz.nextval from dual
+        </selectKey>
+        INSERT INTO yx_rz_cz
+        (logid,
+        czsj,
+        czlx,
+        czsm,
+        czrdwbm,
+        czrdwmc,
+        czrgh,
+        czrmc,
+        pcslbm,
+        gnmc)
+        VALUES
+        (#{logid},
+        SYSDATE,
+        '1',
+        #{czsm,jdbcType=VARCHAR},
+        #{dwbm,jdbcType=VARCHAR},
+        #{dwmc,jdbcType=VARCHAR},
+        #{gh,jdbcType=VARCHAR},
+        #{mc,jdbcType=VARCHAR},
+        #{pcslbm,jdbcType=VARCHAR},
+        '评查管理删除评查案件')
+
+    </insert>
+
     <resultMap id="getPcbgMap" type="java.util.Map">
         <id column="JZWJBH" jdbcType="VARCHAR" property="jzwjbh"/>
         <result column="DWBM" jdbcType="CHAR" property="dwbm"/>

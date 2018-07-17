@@ -25,4 +25,6 @@ public interface PcAjService {
     List<Map> getPczry(String pczbm) throws Exception;
 
     boolean updPcr(YX_PC_JBXX jxbbParam) throws Exception;
+
+    void delPcajLog(Map map);
 }

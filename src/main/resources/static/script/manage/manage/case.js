@@ -299,13 +299,14 @@ table_manage_manage_pcaj_drop = function(index) {
 
     var rowDatas = $('#datagrid_easyui_manage_manage_pcaj').datagrid('getRows');
     var pcslbm = rowDatas[index].PCSLBM;
+    var bmsah = rowDatas[index].BMSAH;
     var pcflbm = rowDatas[index].PCFLBM;
 
     Confirm("确认", "是否删除？", function (r) {
         if (r) {
             $.ajax({
                 url: getRootPath() + "/manage/delPcaj",
-                data: {pcslbm: pcslbm,pcflbm:pcflbm},
+                data: {pcslbm: pcslbm,pcflbm:pcflbm,bmsah:bmsah},
                 type: 'post',
                 async: true,
                 dataType: 'json',

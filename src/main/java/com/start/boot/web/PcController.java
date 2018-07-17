@@ -994,7 +994,7 @@ public class PcController extends ArchivesSystemBaseController {
 
     // 删除评查案件
     @RequestMapping("/delPcaj")
-    public String delPcaj(String pcslbm,String pcflbm) {
+    public String delPcaj(String pcslbm,String pcflbm,String bmsah) {
         String result = "";
 
         try {
@@ -1002,12 +1002,12 @@ public class PcController extends ArchivesSystemBaseController {
             result = success(isSuccess, "删除评查案件成功");
             Map map = new HashMap();
             map.put("pcslbm",pcslbm);
-//            map.put("bmsah",);
+            map.put("bmsah",bmsah);
             map.put("dwbm",getCurrentDwbm());
             map.put("dwmc",getCurrentDwmc());
             map.put("gh",getCurrentGh());
             map.put("mc",getCurrentMC());
-            map.put("czsm","案件【"+pcslbm+"】被删除");
+            map.put("czsm","案件【"+bmsah+"】被删除");
             //日志
             pcAjService.delPcajLog(map);
         } catch (Exception e) {

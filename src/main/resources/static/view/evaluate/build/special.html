@@ -56,42 +56,62 @@
         <button class="ZXpc_pcfa_tj_2" onclick="alert_win_eval_build_sp_pcz()">新建</button>
         <div class="ZXpc_pcfa_but"></div>
         <!--评查组弹窗-->
-        <div id="win_eval_build_sp_pcz" class="easyui-window" title="评查组" style="width:700px; height:405px;position: relative;"
+        <div id="win_eval_build_sp_pcz" class="easyui-window" title="评查组" style="width:1000px; height:435px;position: relative;"
              data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
             <div style="background: #ffffff;padding: 10px;overflow: hidden;height: calc(100%);">
-                <div class="ZXpc_pcfa_sj_all_1" style="width: 50%">
-                    <div style="float: left">名称</div>
-                    <input id="txt_win_eval_build_sp_pcz_mc" class="easyui-textbox" style="width:250px;height: 28px">
-                </div>
-                <div class="ZXpc_pcfa_sj_all_1"  style="width: 50%">
-                    <div style="margin-left: 17px">备注</div>
-                    <input id="txt_win_eval_build_sp_pcz_bz" class="easyui-textbox" style="width:270px;height: 28px">
-                </div>
-                <div class="window_kjrk_content_tj_box">
-                    <div class="window_kjrk_content_tj_title">
-                        <div style="float: left;padding-top: 8px;">人员库</div>
-                        <div style="float: right; margin-right: 17px; width: 200px;font-size: 12px; margin-top: 5px;">
-                            <input id="window_kjrk_content_tj_dw" data-options="wincom:true" class="easyui-combotree" style="width: 100%;height: 27px;">
-                        </div>
+
+
+                <div class="window_kjrk_content_tj_box" style="border: 1px solid #C0CFDB; position: relative;margin-top: 20px;">
+                    <!--<div style=" height: 60px;border: 1px solid #C0CFDB; position: relative; padding-top: 15px;">-->
+                    <span style="display: inline-block;position: absolute; top: -11px;left: 5px; background: #fff; padding: 0 5px;color: #084C7B;">人员库</span>
+                    <div style="margin: 20px 0 14px 0;padding-left: 10px;">
+
+                       <span>单位</span>  <input id="window_kjrk_content_tj_dw" data-options="wincom:true" class="easyui-combotree" style="width: 70px;height: 27px;">
+                        <span>条线</span>  <input id="div_eval_build_sp_ryk_combotree" data-options="wincom:true" class="easyui-combotree" style="width: 70px; height: 26px;" />&nbsp;
+                        <span style= "margin-left: 10px;">名称</span> <input id="div_eval_build_sp_ryk_mc" class="easyui-textbox" style="width: 72px; height: 26px;" />&nbsp;
+                        <!--<button id="btn_eval_build_sp_ryk_search" class="window_kjrk_button">查询</button>-->
+                        <button id="btn_eval_build_sp_ryk_search"  class="window_kjrk_button" style="cursor: pointer;">查询</button>
                     </div>
-                    <div id="window_kjrk_content_ktj_ul" style="margin-top: 35px; height: 240px;">
+                    <!--<div class="window_kjrk_content_tj_title">-->
+                        <!--<div style="float: left;padding-top: 8px;">人员库</div>-->
+                        <!--<div style="float: left; margin-right: 17px; width: 200px;font-size: 12px; margin-top: 5px;">-->
+                            <!--单位 <input id="window_kjrk_content_tj_dw" data-options="wincom:true" class="easyui-combotree" style="width: 70px;height: 27px;">-->
+                            <!--条线 <input id="div_eval_build_sp_ryk_combotree" data-options="wincom:true" class="easyui-combotree" style="width: 70px; height: 26px;" />&nbsp;-->
+                            <!--名称 <input id="div_eval_build_sp_ryk_mc" class="easyui-textbox" style="width: 72px; height: 26px;" />&nbsp;-->
+                            <!--&lt;!&ndash;<button id="btn_eval_build_sp_ryk_search" class="window_kjrk_button">查询</button>&ndash;&gt;-->
+                            <!--<a id="btn_eval_build_sp_ryk_search" class="easyui-linkbutton" style="padding:0 20px;margin-right:10px">查询</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div id="window_kjrk_content_ktj_ul" style=" height: 240px;  width: 100%;border: none;border-radius: 0;">
                         <table id="table_eval_build_sp_pcz_ryk" border="0" style="height: 100%"></table>
                     </div>
+                    <!--</div>-->
                 </div>
-                <div id="window_kjrk_content_tj_button" style="width: 48px">
-                    <button id="btn_win_eval_build_sp_pcz_add" class="window_kjrk_button" style="margin-top: 123px">添加</button>
-                    <button id="btn_win_eval_build_sp_pcz_yc" class="window_kjrk_button">移除</button>
+                <div id="window_kjrk_content_tj_button" style="width: 48px;  margin: 0 5px;">
+                    <button id="btn_win_eval_build_sp_pcz_add" class="window_kjrk_button" style="margin-top: 123px;cursor: pointer;">添加</button>
+                    <button id="btn_win_eval_build_sp_pcz_yc" class="window_kjrk_button" style="cursor: pointer;">移除</button>
                 </div>
-                <div class="window_kjrk_content_tj_box" style="margin-right: 0">
-                    <div class="window_kjrk_content_tj_title">
-                        <div style="float: left;padding-top: 8px;">已添加</div>
+                <div class="window_kjrk_content_tj_box" style="height: calc(100% - 64px);margin-right: 0;border: 1px solid #C0CFDB; position: relative;width: calc(50% - 29px);margin-top: 20px;">
+                    <span style="display: inline-block;position: absolute; top: -11px;left: 5px; background: #fff; padding: 0 5px;color: #084C7B;">评查组</span>
+                    <div style=" margin-top: 20px;padding-left: 10px;">
+                        <div class="ZXpc_pcfa_sj_all_1" style="width: 50%;margin-bottom: 11px;">
+                            <div style="float: left">评查小组</div>
+                            <input id="txt_win_eval_build_sp_pcz_mc" class="easyui-textbox" style="width:140px;height: 28px">
+                        </div>
+                        <div class="ZXpc_pcfa_sj_all_1"  style="width: 50%">
+                            <div style="margin-left: 17px">备注</div>
+                            <input id="txt_win_eval_build_sp_pcz_bz" class="easyui-textbox" style="width:160px;height: 28px">
+                        </div>
                     </div>
-                    <div id="window_kjrk_content_ytj_ul" style="margin-top: 35px; height: 240px;width:calc(100% + 9px);">
+                    <!--<div class="window_kjrk_content_tj_title">-->
+                        <!--<div style="float: left;padding-top: 8px;">已添加</div>-->
+                    <!--</div>-->
+                    <div id="window_kjrk_content_ytj_ul" style=" height: 240px;  width: 100%;border: none;border-radius: 0;">
                         <table id="table_eval_build_sp_pcz_ry" border="0" class="easyui-datagrid" style="height: 100%"></table>
                     </div>
                 </div>
-                <div id="btn_eval_build_sp_pcz_confirm" style="float: right;margin-right: 8px;margin-top: 5px">
-                    <a class="easyui-linkbutton" style="padding: 0 10px">确定</a>
+                <div id="btn_eval_build_sp_pcz_confirm" style="float: right;margin-right: 8px;margin-top: 16px">
+                    <a class="easyui-linkbutton" style="padding: 0 20px;">确定</a>
                 </div>
             </div>
         </div>

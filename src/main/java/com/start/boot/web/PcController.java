@@ -2,12 +2,15 @@ package com.start.boot.web;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.start.boot.common.MessageResult;
 import com.start.boot.common.Param_Pager;
 import com.start.boot.common.SystemConfiguration;
+import com.start.boot.dao.ajpc.YX_PC_JBXXMapper;
 import com.start.boot.domain.*;
 import com.start.boot.query.DbrwQuery;
 import com.start.boot.query.Query;
+import com.start.boot.service.FilterService;
 import com.start.boot.service.PcAjService;
 import com.start.boot.service.PcService;
 import com.start.boot.service.PcmbService;
@@ -21,7 +24,9 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,6 +53,8 @@ public class PcController extends ArchivesSystemBaseController {
     @Autowired
     private PcService pcService;
     @Autowired
+    private FilterService filterService;
+    @Autowired
     private WebServiceUtils webServiceUtils;
     @Autowired
     private PcAjService pcAjService;
@@ -57,6 +64,8 @@ public class PcController extends ArchivesSystemBaseController {
     SfInvoke sfInvoke;
     @Autowired
     QueryUtils queryUtils;
+    @Autowired
+    YX_PC_JBXXMapper yxPcJbxxMapper;
 
 
     /**
@@ -120,6 +129,39 @@ public class PcController extends ArchivesSystemBaseController {
             ryk.setRykdwbm(getCurrentDwbm());
             Param_Ryk pckry = pcService.getPckryAll(ryk);
             result = success(pckry.getList(), "获取评查人员库人员列表成功");
+
+        } catch (Exception e) {
+            super.errMsg("获取评查人员库人员列表失败", json, e);
+            result = failure(e.getMessage(), "获取评查人员库人员列表失败");
+        }
+
+        return result;
+    }
+
+    /**
+     * 获取评查小组可评查人员列表
+     * @param json
+     * @return
+     */
+    @RequestMapping("/getPcry")
+    public String getPcry(String json){
+        String result = "";
+
+        int page = parsePage();
+        int rows = parseRows();
+
+        try {
+
+
+            Param_Ryk ryk = FastJsonUtils.toObject(Param_Ryk.class, json);
+            ryk.setRykdwbm(getCurrentDwbm());
+            PageHelper.startPage(page,rows);
+
+            Param_Ryk pckry = pcService.getPcry(ryk);
+            com.github.pagehelper.PageInfo pageInfo = new PageInfo(pckry.getList());
+            String s = EasyUIHelper.buildDataGridDataSource(pageInfo.getList(), Math.toIntExact(pageInfo.getTotal()));
+
+            result = success(s, "获取评查人员库人员列表成功");
 
         } catch (Exception e) {
             super.errMsg("获取评查人员库人员列表失败", json, e);
@@ -358,6 +400,27 @@ public class PcController extends ArchivesSystemBaseController {
     }
 
     /**
+     * 获取业务条线树数据
+     * @return
+     */
+    @RequestMapping("/getYwtxTree")
+    public MessageResult getYwtxTree() {
+        MessageResult messageResult ;
+        String result = "";
+        try {
+            List<Map> list = pcService.getYwtxTree();
+
+            result = EasyUIHelper.buildTreeDataSourceWithoutIconCol(list,"BM","FBM","MC",  "-1");
+            messageResult = new MessageResult("获取业务条线树数据成功",200,result);
+        } catch (Exception e) {
+            messageResult = new MessageResult(e.getMessage(),500,"获取业务条线树数据失败");
+            super.errMsg(e.getMessage(),"获取业务条线树数据失败",e);
+        }
+
+        return messageResult;
+    }
+
+    /**
      * 获取当前单位组织机构人员和人员库的人员列表
      *
      * @param json
@@ -429,6 +492,26 @@ public class PcController extends ArchivesSystemBaseController {
         }
 
         return AjaxHelper.buildResponseDataSource(errmsg, true);
+    }
+
+    /**
+     * 获取所有部门编码
+     *
+     * @return
+     */
+    @RequestMapping("/getAllBm")
+    public String getAllBm(String dwbm) {
+        //响应到页面封装
+        String result = "";
+
+        try {
+            List<Map> bmList = filterService.getAllBm(dwbm);
+            result = EasyUIHelper.buildTreeDataSourceWithoutIconCol(bmList, "BMBM", "FBMBM", "BMMC", "-1");
+
+        } catch (Exception e) {
+            super.errMsg("获取所有部门编码失败", dwbm, new Exception("获取所有部门编码失败"));
+        }
+        return result;
     }
 
     /**
@@ -1161,9 +1244,18 @@ public class PcController extends ArchivesSystemBaseController {
     @RequestMapping("/finishPchd")
     public String finishPchd(String json) {
         String result = "";
+        //评查结束前验证是否所有案件都已办结
+        Param_Hd param = FastJsonUtils.toObject(Param_Hd.class, json);
+
+        YX_PC_JBXXExample example = new YX_PC_JBXXExample();
+        example.createCriteria().andPchdbmEqualTo(param.getPchdbm()).
+                andSfscEqualTo("N").andPcjdbhNotEqualTo("011");
+        List<YX_PC_JBXX> yx_pc_jbxxes = yxPcJbxxMapper.selectByExample(example);
+        if (!CollectionUtils.isEmpty(yx_pc_jbxxes)){
+            return failure("有案件未评查结束", "有案件正在办理中，不能结束评查活动");
+        }
 
         try {
-            Param_Hd param = FastJsonUtils.toObject(Param_Hd.class, json);
             param.setJsr_dwbm(getCurrentDwbm());
             param.setJsr_gh(getCurrentGh());
             param.setJsr_mc(getCurrentMC());

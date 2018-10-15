@@ -1,9 +1,7 @@
 package com.start.boot.dao.ajpc;
 
-import com.start.boot.domain.ParamSx;
-import io.swagger.models.auth.In;
+import com.start.boot.domain.Param_Pcjk;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Map;
@@ -54,4 +52,5 @@ public interface FilterMapper {
 
     List<Map> getSxgzByPcflbmAndYwtx(Map param);
 
+    List<Map> getZdAj(Param_Pcjk pcjkParam);
 }

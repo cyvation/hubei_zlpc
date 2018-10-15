@@ -359,4 +359,99 @@
         UNION  SELECT '-1' gzbm, #{dwbm} dwbm,  #{pcflbm} pcflbm ,'全部' gzmc,'' sxcx ,'' cxcs, '' sm, '0' fgzbm, #{ywtx} ywtx,'N' sfzdy from dual
     </select>
 
+    <!--获取重点案件信息库所有案件信息-->
+    <select id="getZdAj" parameterType="com.start.boot.domain.Param_Pcjk" resultMap="zdinfoMap">
+        SELECT 'Y'  sfpc,
+        jb.pcslbm,
+        jb.cjsj,
+        jb.pcjdms,
+        jb.pcjl,
+        jb.bmsah,
+        jb.ajmc,
+        jb.bpc_dwmc dwmc,
+        jb.bpc_bmmc bmmc,
+        jb.bpc_mc cbr,
+        gz.gzmc sxgzmc
+
+        FROM yx_pc_jbxx jb
+        INNER JOIN xt_pc_sxgz gz
+        ON jb.sxgzbm = gz.gzbm
+        WHERE jb.sfsc='N'
+        and  jb.pcflbm = '008'
+        <if test="cbdwbm!=null and cbdwbm !=''">
+            and  instr(#{cbdwbm}, jb.bpc_dwbm)  &gt;=1
+        </if>
+        <if test="bmbm !=null and bmbm!=''">
+            and  instr(#{bmbm}, jb.bpc_bmbm)  &gt;=1
+        </if>
+
+        <if test="sxgzbm!=null and sxgzbm !=''">
+            and  instr(#{sxgzbm}, jb.sxgzbm)  &gt;=1
+        </if>
+
+        <if test="cbr !=null and cbr!=''">
+            and jb.bpc_mc like '%${cbr}%'
+        </if>
+        <if test="ajmc !=null and ajmc!=''">
+            and jb.ajmc  like '%${ajmc}%'
+        </if>
+
+        <if test="wcrqbng !=null and wcrqbng!=''">
+            and jb.bpc_wcbzrq &gt; to_date(#{wcrqbng},'yyyy-MM-dd')
+        </if>
+
+        <if test="wcrqend !=null and wcrqend!=''">
+            and jb.bpc_wcbzrq &lt; to_date(#{wcrqend},'yyyy-MM-dd')
+        </if>
+
+        union
+
+
+        select 'N'  sfpc,
+        '' pcslbm,
+        null cjsj,
+        '' pcjdms,
+        '' pcjl,
+        jl.bmsah,
+        jl.ajmc,
+        jl.dwmc,
+        jl.bmmc,
+        jl.cbrmc cbr,
+        gz.gzmc
+
+        from yx_pc_sxjl jl
+        inner join xt_pc_sxgz gz
+        ON jl.sxgzbm = gz.gzbm
+        where 1=1  and jl.pcflbm = '008'
+        <if test="cbdwbm!=null and cbdwbm !=''">
+            and  instr(#{cbdwbm}, jl.dwbm)  &gt;=1
+        </if>
+
+        <if test="bmbm !=null and bmbm!=''">
+            and  instr(#{bmbm}, jl.bmbm)  &gt;=1
+        </if>
+
+        <if test="sxgzbm!=null and sxgzbm !=''">
+            and  instr(#{sxgzbm}, gz.gzbm)  &gt;=1
+        </if>
+
+        <if test="cbr !=null and cbr!=''">
+            and jl.cbrmc like '%${cbr}%'
+        </if>
+        <if test="ajmc !=null and ajmc!=''">
+            and jb.ajmc  like '%${ajmc}%'
+        </if>
+
+        <if test="wcrqbng !=null and wcrqbng!=''">
+            and  jl.wcbzrq &gt; to_date(#{wcrqbng},'yyyy-MM-dd')
+        </if>
+
+        <if test="wcrqend !=null and wcrqend!=''">
+            and jl.wcbzrq &lt; to_date(#{wcrqend},'yyyy-MM-dd')
+        </if>
+
+    </select>
+    
+    <resultMap id="zdinfoMap" type="map"/>
+
 </mapper>

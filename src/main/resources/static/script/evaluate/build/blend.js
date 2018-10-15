@@ -182,7 +182,7 @@ function eval_special_marksInit(pcxx) {
                 index_addMousedownDiv(this,'cbt_eval_bulid_sp_pcmb');
             },
             onSelect: function (node) {
-                load_cbt_eval_bulid_sp_sxgz(pcxx.PCFLBM, node.attributes.YWTX);
+                    load_cbt_eval_bulid_sp_sxgz(pcxx.PCFLBM, node.attributes.YWTX);
                 load_cbt_eval_bulid_sp_assign_sxgz(pcxx.PCFLBM, node.attributes.YWTX);
                 $("#table_eval_bulid_sp_filter").datagrid("loadData",{total:0, rows : []});
             }
@@ -228,7 +228,7 @@ function eval_special_marksInit(pcxx) {
         method: 'get',
         lines: true,
         panelWidth:250,
-        multiple: true,  //湖北:禁止多选，改为单选单位
+        multiple: true,  //湖北:只有单位多选
         cascadeCheck:false,
         onShowPanel: index_onShowPanel,
         onHidePanel: index_onHidePanel,
@@ -1717,6 +1717,10 @@ function onClickCell(index, field){
 
 // 评查小组弹窗
 function alert_win_eval_build_sp_pcz(pczbm) {
+
+    //单位、条线下拉框加载
+    load_window_kjrk_content_tj_dw();
+
     // 评查组
     var pcz;
     if (pczbm){
@@ -1742,16 +1746,32 @@ function alert_win_eval_build_sp_pcz(pczbm) {
 
         striped: true,
         fitColumns: true,
+        //singleSelect: true,
         rownumbers: true,
         resizable:false,
         idField: 'ID',
+        pagination:true,
+        pageNumber:1,
+        pageSize:10,
         columns: [[
             {field: 'ID', title: '标识', hidden:true},
             {field: 'DWBM', title: '单位编码', hidden:true},
-            {field: 'DWMC', title: '单位名称',width:150},
+            {field: 'DWMC', title: '单位',width:150},
             {field: 'GH', title: '工号', hidden:true},
-            {field: 'MC', title: '名称',width:120}
+            {field: 'MC', title: '姓名',width:120}
         ]]
+    });
+    $('#table_eval_build_sp_pcz_ryk').datagrid('getPager').pagination({
+        // beforePageText: '第',
+        // afterPageText: '页   共{pages}页',
+        // displayMsg: '共【{total}】条记录',
+        onSelectPage:function (pageNumber, pageSize) {
+            var gridOpts = $("#table_eval_build_sp_pcz_ryk").datagrid('options');
+            gridOpts.pageNumber = pageNumber;
+            gridOpts.pageSize = pageSize;
+
+            get_eval_build_sp_ryk();
+        }
     });
     $('#table_eval_build_sp_pcz_ryk').datagrid('loadData', []);
 
@@ -1761,6 +1781,7 @@ function alert_win_eval_build_sp_pcz(pczbm) {
         striped: true,
         fitColumns: true,
         singleSelect: true,
+        //onClickRow: onClickRow,
         onClickCell: onClickCell,
         rownumbers: true,
         resizable:false,
@@ -1770,9 +1791,9 @@ function alert_win_eval_build_sp_pcz(pczbm) {
             {field: 'DWBM', title: '单位编码', hidden:true},
             {field: 'DWMC', title: '单位名称',width:100},
             {field: 'GH', title: '工号', hidden:true},
-            {field: 'MC', title: '名称',width:90},
+            {field: 'MC', title: '姓名',width:90},
             {field: 'JSMC', title: '角色名称', hidden:true},
-            {field: 'JSBM', title: '角色编码', width: 90,
+            {field: 'JSBM', title: '角色', width: 90,
                 formatter: function (value, row) {
                     return row.JSMC;
                 },
@@ -1796,46 +1817,15 @@ function alert_win_eval_build_sp_pcz(pczbm) {
             }
         ]],
         onAfterEdit: function (rowIndex, rowData, changes) {
-            //endEdit该方法触发此事件，保存代码是否这里写？？？
-            //console.info(rowData);
-            editRow = undefined;
-        }
+        //endEdit该方法触发此事件，保存代码是否这里写？？？
+        //console.info(rowData);
+        editRow = undefined;
+    }
     });
 
     $('#table_eval_build_sp_pcz_ry').datagrid('loadData', pcz.PCYARR);
 
-    var obj = new Object();
-    obj.DWBM_RY = "";
-    obj.YWBM = "";
-    $.ajax({
-        url: getRootPath() + "/blend/getPckryAll",
-        data: { json: JSON.stringify(obj)},
-        type: 'get',
-        async: true,
-        dataType: 'json',
-        success: function (data) {
-            if (data.status == 200){
-                // 人员库列表
-                var rykList = data.value;
-
-                // 排除已添加人员
-                rykList.forEach(function (n) {
-                    if (!is_eval_build_sp_pcz_ry(n.ID)) {
-                        $('#table_eval_build_sp_pcz_ryk').datagrid('appendRow',{
-                            ID: n.ID,
-                            DWBM: n.DWBM,
-                            DWMC: n.DWMC,
-                            GH: n.GH,
-                            MC: n.MC
-                        });
-                    }
-                });
-                $('#table_eval_build_sp_pcz_ryk').datagrid('clearSelections');
-            }else {
-                Alert(data.note);
-            }
-        }
-    });
+    // get_eval_build_sp_ryk();
 
     // 添加
     $("#btn_win_eval_build_sp_pcz_add").unbind( "click" );
@@ -1911,11 +1901,76 @@ function alert_win_eval_build_sp_pcz(pczbm) {
         }
     });
 
-    //单位下拉框加载
-    load_window_kjrk_content_tj_dw();
+
+   // 人员库查询
+    $("#btn_eval_build_sp_ryk_search").unbind('click');
+    $("#btn_eval_build_sp_ryk_search").bind('click',function () {
+        get_eval_build_sp_ryk();
+    });
 
     $("#win_eval_build_sp_pcz").window('open');
 
+}
+
+// 获取评查人员：
+function get_eval_build_sp_ryk(){
+    var dwbm = $("#window_kjrk_content_tj_dw").combotree('getValues').join(",");
+
+    var obj = new Object();
+    obj.dwbm_ry = isNull(dwbm) ? userInfo.DWBM : dwbm;
+    obj.pcr_mc = $("#div_eval_build_sp_ryk_mc").val();
+    obj.ywbm = $("#div_eval_build_sp_ryk_combotree").combotree('getValue');
+
+
+    var gridOpts = $("#table_eval_build_sp_pcz_ryk").datagrid('options');
+    var page = gridOpts.pageNumber;
+    var rows = gridOpts.pageSize;
+
+    // 获取已经评查小组列表的单位编码与工号
+    var pczList ="";
+    // 初次新建专项活动，还没添加评查小组
+    if (PCZ_LIST.length == 0) {
+        var tempPcry = $("#table_eval_build_sp_pcz_ry").datagrid('getRows');
+        for(var index =0; index < tempPcry.length; index ++) {
+            pczList += "," + tempPcry[index].DWBM + tempPcry[index].GH;
+        }
+    }else {
+        for (var pczIndex = 0; pczIndex < PCZ_LIST.length; pczIndex++) {
+            var zyArray = PCZ_LIST[pczIndex].PCYARR;
+            for (var zyIndex = 0; zyIndex < zyArray.length; zyIndex++) {
+                pczList += "," + zyArray[zyIndex].DWBM + zyArray[zyIndex].GH;
+            }
+        }
+        // 建立额外评查小组，还未确定的时候：
+        var otherPcz = $("#table_eval_build_sp_pcz_ry").datagrid('getRows');
+        for(var index =0; index < otherPcz.length; index ++) {
+            pczList += "," + otherPcz[index].DWBM + otherPcz[index].GH;
+        }
+    }
+
+    if (pczList.substr(1).length ==0) {
+        obj.pczList = pczList;
+    }else {
+        pczList = "'" +  pczList.substr(1);
+        obj.pczList = pczList +"'" ;
+    }
+
+
+    $.ajax({
+        // url: getRootPath() + "/manage/getPckryAll",
+        url: getRootPath() + "/manage/getPcry",
+        data: { json: JSON.stringify(obj), page: page, rows: rows},
+        type: 'get',
+        async: true,
+        dataType: 'json',
+        success: function (data) {
+            if (data.status == 200){
+                $('#table_eval_build_sp_pcz_ryk').datagrid('loadData', JSON.parse(data.value));
+            }else {
+                Alert(data.note);
+            }
+        }
+    });
 }
 
 function sortNumber(a,b) {
@@ -1923,10 +1978,13 @@ function sortNumber(a,b) {
 }
 
 //评查小组单位下拉框加载
-function load_window_kjrk_content_tj_dw() {;
+function load_window_kjrk_content_tj_dw() {
     $('#window_kjrk_content_tj_dw').combotree({
         method: 'get',
         lines: true,
+        panelWidth:120,
+        multiple: true,
+        cascadeCheck: false,
         onShowPanel: index_onShowPanel,
         onHidePanel: index_onHidePanel,
         url: getRootPath() + '/organization/getDwbmTree',
@@ -1945,8 +2003,59 @@ function load_window_kjrk_content_tj_dw() {;
             $('#table_eval_build_sp_pcz_ryk').datagrid("loadData", filterData);
         },
         onLoadSuccess: function (node, data) {
+            if (data != null && data.length >= 1) {
+                $('#window_kjrk_content_tj_dw').combotree('setValue', data[0].id); //单位默认选择
+            }
             index_addMousedownDiv(this,'window_kjrk_content_tj_dw');
         }
+        /*onLoadSuccess: function (node, data) {
+         // 读取Cookie值 (单位编码)f
+         var dwbm = getCookie("dwbm");
+         if (isNull(dwbm) && data != null && data.length >= 1){
+         dwbm = data[0].id;
+         }
+         $('#input_login_dwbm').combotree('setValue', dwbm);
+         }*/
+    });
+
+    $('#div_eval_build_sp_ryk_combotree').combotree({
+        method: 'get',
+        lines: true,
+        panelWidth:120,
+        multiple: false,// 单选
+        cascadeCheck: false,
+        onShowPanel: index_onShowPanel,
+        onHidePanel: index_onHidePanel,
+        url: getRootPath()+'/manage/getYwtxTree',
+        loadFilter: function (data) {
+            return data.code == 200 ? JSON.parse(data.data) : [];
+        },
+        onSelect: function (node) {
+            // var selectId = node.id;
+            // var filterData = [];
+            // var rykRows = $('#table_eval_build_sp_pcz_ryk').datagrid("getRows");
+            // for (var i = 0; i < rykRows.length; i++) {
+            //     if (selectId == rykRows[i].DWBM) {
+            //         filterData.push(rykRows[i]);
+            //     }
+            // }
+            // $('#table_eval_build_sp_pcz_ryk').datagrid("loadData", filterData);
+        },
+        onLoadSuccess: function (node, data) {
+            if (data != null && data.length >= 1) {
+                $('#div_eval_build_sp_ryk_combotree').combotree('setValue', data[0].id);
+            }
+            index_addMousedownDiv(this,'div_eval_build_sp_ryk_combotree');
+            get_eval_build_sp_ryk();
+        }
+        /*onLoadSuccess: function (node, data) {
+         // 读取Cookie值 (单位编码)f
+         var dwbm = getCookie("dwbm");
+         if (isNull(dwbm) && data != null && data.length >= 1){
+         dwbm = data[0].id;
+         }
+         $('#input_login_dwbm').combotree('setValue', dwbm);
+         }*/
     });
 }
 
@@ -2325,7 +2434,7 @@ function eval_special_win_filter_marksInit(pcxx) {
         method: 'get',
         lines: true,
         panelWidth:250,
-        multiple: true,//湖北：禁止多选，单选单位
+        multiple: true,//湖北：只有单位多选
         cascadeCheck:false,
         onShowPanel: index_onShowPanel,
         onHidePanel: index_onHidePanel,

@@ -61,6 +61,7 @@ public class PcfkTask {
 
 
     @Scheduled(cron = "0 10 6 * * ?")
+//     @Scheduled(cron = "0 0/1 * * * ?")
      public void invokePcwfk(){
         String pcfk_min_days = systemCoreConfigService.getSystemConfigValue("pcfk_min_days");
         Integer days = Integer.valueOf(pcfk_min_days);

@@ -61,9 +61,13 @@ public interface PcService {
 
     List<Map> getPcsp(Map map) throws Exception;
 
+    List<Map> getYwtxTree();
+
     List<Map> getJsmc(Map map) throws  Exception;
 
     void backspace(Map map);
 
     List<Map> getPcbg(Map map) throws Exception;
+
+    Param_Ryk getPcry(Param_Ryk ryk);
 }

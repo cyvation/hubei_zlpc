@@ -480,20 +480,20 @@ public class HandleController extends ArchivesSystemBaseController {
             messageService.save(message);
 
             //承办人有意见，发送给部门领导
-            if (StringUtils.isNotEmpty(param.getSprxm())){
-                String bt1 = systemConfigService.getSystemConfigValue("message.bm.bt");
-                String nr1 =  systemConfigService.getSystemConfigValue("message.bm.nr");
-                String replace1 = nr1.replace("[cbr]", getCurrentMC()).replace("[ajmc]", jbxx.getAJMC()).replace("[fkjl]", param.getFkjl());
-                Message message1 = new Message();
-                message1.setJsrdwbm(param.getSprdwbm());
-                message1.setJsrgh(param.getSprgh());
-                message1.setGlbmsah(param.getPcslbm());
-                message1.setXxlx("6");
-                message1.setXxbt(bt1);
-                message1.setXxnr(replace1);
-                message1.setDwbm(getCurrentDwbm());
-                messageService.save(message1);
-            }
+//            if (StringUtils.isNotEmpty(param.getSprxm())){
+//                String bt1 = systemConfigService.getSystemConfigValue("message.bm.bt");
+//                String nr1 =  systemConfigService.getSystemConfigValue("message.bm.nr");
+//                String replace1 = nr1.replace("[cbr]", getCurrentMC()).replace("[ajmc]", jbxx.getAJMC()).replace("[fkjl]", param.getFkjl());
+//                Message message1 = new Message();
+//                message1.setJsrdwbm(param.getSprdwbm());
+//                message1.setJsrgh(param.getSprgh());
+//                message1.setGlbmsah(param.getPcslbm());
+//                message1.setXxlx("6");
+//                message1.setXxbt(bt1);
+//                message1.setXxnr(replace1);
+//                message1.setDwbm(getCurrentDwbm());
+//                messageService.save(message1);
+//            }
             param.setBpc_dwbm(getCurrentDwbm());
             param.setBpc_dwmc(getCurrentDwmc());
             param.setBpc_gh(getCurrentGh());

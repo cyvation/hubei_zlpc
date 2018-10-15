@@ -797,6 +797,55 @@ function add_eval_info_approve(wjlj) {
     });
 }
 
+// 检委会意见/小组联席会议
+function add_eval_info_approve_jwh(wjlj, text) {
+    isApproveDoc = true;
+
+    // 打开
+    var obj = new Object();
+    obj.PCYJMC = text + "意见";
+    obj.PCYJSQ = (EVAL_CASE.PCCZLX == "2" ? "SP" : "") + EVAL_CASE.PCSPBM;
+    obj.PCYJLK = userInfo.MC + "    " +  getEndDate();
+    obj.WSCFLJ = wjlj;
+    $.ajax({
+        type: 'POST',
+        url: getRootPath()+'/manage/getApproveDocFile',
+        data: { json: JSON.stringify(obj) },
+        dataType: "json",
+        success: function (result) {
+
+            if (result == null || result == undefined) {
+                CloseProgress();
+                Alert("服务端返回数据为空。");
+                return;
+            }
+
+            if (result.status != 200){
+                CloseProgress();
+                Alert(result.note);
+                return;
+            }
+
+            try {
+                show_eval_doc_panel("doc");
+                CloseProgress();
+
+                var error = OpenFile(getRootPath() + result.value, "TANGER_OCX");
+                if (!isNull(error)) {
+                    Alert(error);
+                }
+                opening_eval_doc_file = result.value;
+
+                // 仅评查报告及流转单可编辑
+                SetSaveButtonState("TANGER_OCX", true);
+            } catch (e) {
+
+                CloseProgress();
+            }
+        }
+    });
+}
+
 // 显示评查卷宗预览区域
 function show_eval_doc_panel(type) {
     $("#pcbl_pcxx_wdck").css('display','block');
@@ -1322,6 +1371,12 @@ function init_eval_handle_bottom_tool(toolID) {
                 var sfldba = $("input[name='rd_eval_info_sfldba']:checked").val();
                 obj.SFLDBA = isNull(sfldba) ? "" : sfldba;
                 var pcjl = $("input[name='rd_eval_info_pcjl_jg']:checked").val();
+
+                if (isNull(pcjl)){
+                    Alert("请勾选结果等次！");
+                    return;
+                }
+
                 obj.PCJL = isNull(pcjl) ? "" : pcjl;
                 obj.SM = $("#txt_eval_info_pcjl_bz").val();
 
@@ -1387,7 +1442,42 @@ function init_eval_handle_bottom_tool(toolID) {
                         return;
                     }
 
-                    send_eval_handle_deal_approve("20");
+                    // 拟认定为合格的案件，由评查人员报请分管该业务条线的检察长审定；拟认定为优质、瑕疵、不合格的案件，报检察长或者检察委员会审定。
+                    // 暂定活动形式俩次审批，先组长审批，然后根据要求评查员再次报审
+                    // 非活动形式 直接按照结论报审不同人员。
+                    // var pcjl = $("input[name='rd_eval_info_pcjl_jg']:checked").val();
+                    var pcjl = EVAL_CASE.PCJL;
+                    var pcflbm = EVAL_CASE.PCFLBM;
+                    var pcjdbh = EVAL_CASE.PCJDBH;
+
+                    // 非活动
+                    if (EVAL_CASE.SFPCFP == 'N'){
+
+                        if (pcjl == '合格案件'){
+                            send_eval_handle_deal_approve("60");
+                        }else{
+                            send_eval_handle_deal_approve("60");
+                        }
+
+
+                    }
+                    // 活动，通过pcjdbh分辨第几次报审
+                    if (EVAL_CASE.SFPCFP == 'Y'){
+
+                        if(pcjdbh == '006'){ // 组长
+                            send_eval_handle_deal_approve("20");
+                        }
+
+                        if (pcjdbh == '007'){
+                            if (pcjl == '合格案件'){
+                                send_eval_handle_deal_approve("60");
+                            }else{
+                                send_eval_handle_deal_approve("60");
+                            }
+                        }
+
+                    }
+
                 });
             });
             $("#btn_eval_handle_deal_fscbr_confirm").unbind( "click" );
@@ -1465,15 +1555,16 @@ function init_eval_handle_bottom_tool(toolID) {
                 deal_eval_handle_deal_approve('0');
             });
 
+            $('#btn_eval_handle_deal_pcsp_sendApp').css('display', 'none');
         /*    // 第一次审批，不显示继续送审按钮
             if (EVAL_CASE.PCSPBM.indexOf("000001") >= 0) {
                 $('#btn_eval_handle_deal_pcsp_sendApp').css('display', 'none');
             } else {*/
-                $('#btn_eval_handle_deal_pcsp_sendApp').css('display', '');
-                $("#btn_eval_handle_deal_pcsp_sendApp").unbind( "click" );
-                $("#btn_eval_handle_deal_pcsp_sendApp").bind("click", function () {
-                    deal_eval_handle_deal_approve('1');
-                });
+                // $('#btn_eval_handle_deal_pcsp_sendApp').css('display', '');
+                // $("#btn_eval_handle_deal_pcsp_sendApp").unbind( "click" );
+                // $("#btn_eval_handle_deal_pcsp_sendApp").bind("click", function () {
+                //     deal_eval_handle_deal_approve('1');
+                // });
             /*}*/
 
             break;
@@ -1527,7 +1618,7 @@ function init_eval_handle_bottom_tool(toolID) {
                 $('#btn_eval_handle_deal_pcsp_confirm').css('display', '');
                 $('#btn_eval_handle_deal_pcsp_save').css('display', '');
             }else{
-                $('#btn_eval_handle_deal_pcsp_sendApp').css('display', '');
+              $('#btn_eval_handle_deal_pcsp_sendApp').css('display', 'none');
                 $('#btn_eval_handle_deal_pcsp_confirm').css('display', '');
                 $('#btn_eval_handle_deal_pcsp_save').css('display', '');
             }
@@ -1884,15 +1975,19 @@ function deal_eval_handle_deal_pcfk(){
 
     save_doc_file(function () {
 
-        if(obj.FKJL == "有异议"){
-            Confirm("确认", "您的反馈意见，将发送给部门负责人，是否确认发送？", function (r) {
-                if (r) {
-                    send_pcfk_approve_ywbmfzr(obj);
-                }
-            });
-        }else{
-            send_eval_info_pcfk(obj);
-        }
+        // if(obj.FKJL == "有异议"){
+        //     Confirm("确认", "您的反馈意见，将发送给部门负责人，是否确认发送？", function (r) {
+        //         if (r) {
+        //             send_pcfk_approve_ywbmfzr(obj);
+        //         }
+        //     });
+        // }else{
+        //     send_eval_info_pcfk(obj);
+        // }
+
+
+        // 湖北检察官反馈到评查员，不走部门反馈
+        send_eval_info_pcfk(obj);
     });
 }
 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -394,6 +395,12 @@ public class PcServiceImpl implements PcService {
 
     }
 
+    // 获取业务条线树数据
+    @Override
+    public List<Map> getYwtxTree() {
+        return pcMapper.getYwtxTree();
+    }
+
     // 获取评查人员库人员列表
     @Override
     public Param_Ryk getZzjgry(Param_Ryk ryk) throws Exception {
@@ -725,5 +732,24 @@ public class PcServiceImpl implements PcService {
     public List<Map> getPcbg(Map map) throws Exception {
         List<Map> result =  pcMapper.getPcbg(map);
         return result;
+    }
+
+    /**
+     * 获取评查小组可评查人员列表
+     * @param ryk
+     * @return
+     */
+    @Override
+    public Param_Ryk getPcry(Param_Ryk ryk) {
+
+        if(!StringUtils.isEmpty(ryk.getYwbm())){
+            String[] split = ryk.getYwbm().split(",");
+            List<String> strings = Arrays.asList(split);
+            ryk.setYwbmlist(strings);
+        }
+
+        List<Map> list =  pcMapper.getPcry(ryk);
+        ryk.setList(list);
+        return ryk;
     }
 }

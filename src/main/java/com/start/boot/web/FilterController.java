@@ -1,6 +1,8 @@
 package com.start.boot.web;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.start.boot.common.MessageResult;
 import com.start.boot.common.Param_Pager;
 import com.start.boot.common.SystemConfiguration;
@@ -825,6 +827,32 @@ public class FilterController extends ArchivesSystemBaseController {
         } catch (Exception e) {
             super.errMsg("评查筛选规则列表获取失败", pcflbm, e);
         }
+        return result;
+    }
+
+    /**
+     * 获取系统中的所有重点案件
+     */
+    @RequestMapping("/getZdAj")
+    public String getZdAj(String json) {
+
+        //响应到页面封装
+        String result = "";
+        try {
+            Param_Pcjk pcjkParam = FastJsonUtils.toObject(Param_Pcjk.class, json);
+            pcjkParam.setDwbm(getCurrentDwbm());
+            pcjkParam.setGh(getCurrentGh());
+            pcjkParam.setPage(parsePage(getParameter("page")));
+            pcjkParam.setRows(parseRows(getParameter("rows")));
+            PageHelper.startPage(pcjkParam.getPage(),pcjkParam.getRows());
+            Param_Pager data = filterService.getZdAj(pcjkParam);
+            PageInfo  pageInfo = new PageInfo<>(data.getList());
+            result = EasyUIHelper.buildDataGridDataSource(pageInfo.getList(), Math.toIntExact(pageInfo.getTotal()));
+        } catch (Exception e) {
+            super.errMsg("评查监控获取失败", json, e);
+            result = failure(e.getMessage(), "获取评查监控失败");
+        }
+
         return result;
     }
 

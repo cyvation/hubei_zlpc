@@ -1,5 +1,6 @@
 package com.start.boot.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.start.boot.common.Param_Pager;
 import com.start.boot.dao.ajpc.FilterMapper;
 import com.start.boot.dao.ajpc.Yx_Pc_PcxFlMapper;
@@ -599,4 +600,13 @@ public class FilterServiceImpl implements FilterService {
             throw e;
         }
     }
+
+    @Override
+    public Param_Pager getZdAj(Param_Pcjk pcjkParam) {
+
+        List<Map>  list= filterMapper.getZdAj(pcjkParam);
+
+        pcjkParam.setList(list);
+        return pcjkParam;
+        }
 }

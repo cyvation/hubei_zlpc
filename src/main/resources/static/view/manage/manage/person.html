@@ -5,68 +5,128 @@
     <title>评查人员库</title>
 </head>
 <body>
-<style>
-    .radiopcs{
-        float: left;
-        margin-left: 15px;
-        cursor: pointer;
-    }
-</style>
-<!--页面JS加载，放在头部不能正确加载-->
-<script type="text/javascript">
-    AddScript("text/javascript", "./script/manage/manage/person.js");
-</script>
-<div style="height: 100%;">
-    <div style="margin-bottom: 20px;height: 30px;"id="radio_manage_manage_choose" >
-        <div style="margin-top:5px;margin-right:15px;overflow: hidden;width: auto;padding: 0 8px;border-radius:3px;float: left;height:32px;">
-            <!--<input id="combo_manage_manage_choose" style="height: 30px;width:190px; margin-right: 20px"/>-->
-            <div class="radiopcs" id="hd_radio"><div class="redio_click" data-value="1"></div>评查活动管理</div>
-            <div class="radiopcs" id="aj_radio"><div class="redio_click" data-value="2"></div>评查案件管理</div>
-            <div class="radiopcs" id="ry_radio"><div class="redio_click redio_click_no" data-value="3"></div>评查组员管理</div>
-        </div>
-        <!--评查人员库管理-->
-        <div id="tool_eval_pool_list" style="height: 30px;line-height: 30px;padding:5px 0px 5px 8px; width: 1000px; display: inline">
-            <div style="float: left;margin-left:5px">
-                <span style="height:30px;line-height:30px;float: left;"> 姓名&nbsp; </span>
-                <input id="txt_eval_pool_xm" class="easyui-textbox" style="height: 30px;width:150px;"/>
+    <!--页面JS加载，放在头部不能正确加载-->
+    <script type="text/javascript">
+        AddScript("text/javascript", "./script/manage/manage/person.js");
+    </script>
+    <style>
+        #btn_eval_manage_person_unit_search{
+            outline: none;
+            padding: 0 20px;
+            margin-right: 10px;
+            background: #277CB6;
+            color: #fff;
+            height: 26px;
+            border-radius: 5px;
+            float: right;
+            line-height: 26px;
+            cursor: pointer;
+        }
+    </style>
+    <div style="height: 100%;">
+        <div style="height: 48.6px;padding: 10px 0 9px 0;border: 1px solid #A1C9E6;border-bottom: none"id="radio_manage_manage_choose" >
+            <div style="margin-right:15px;overflow: hidden;width: auto;padding: 0 8px;border-radius:3px;float: left;height:32px;background:#fff;">
+                <!--<input id="combo_manage_manage_choose" style="height: 30px;width:190px; margin-right: 20px"/>-->
+                <div class="radio" id="hd_radio"><div class="redio_click" data-value="1"></div>评查活动管理</div>
+                <div class="radio" id="aj_radio"><div class="redio_click" data-value="2"></div>评查案件管理</div>
+                <div class="radio" id="ry_radio"><div class="redio_click redio_click_no" data-value="3"></div>评查人才管理</div>
             </div>
-            <!--占位标签-->
-            <label style="margin-left: 30px"></label>
-            <a id="btn_eval_pool_search" class="easyui-linkbutton" style="padding: 0 15px;background: #258eea;color: #ffffff;">查询</a>
-            <a id="btn_eval_pool_add" class="easyui-linkbutton" style="padding-left: 25px">新增</a>
-            <a id="btn_eval_pool_delete" class="easyui-linkbutton" style="padding-left: 25px">删除</a>
+            <!--评查人员库管理-->
+            <div id="tool_eval_pool_list" style="height: 30px;line-height: 30px;padding:5px 0px 5px 8px; width: 1000px; display: inline">
+                <div style="float: left;margin-left:5px">
+                    <span style="height:30px;line-height:30px;float: left;"> 姓名&nbsp; </span>
+                    <input id="txt_eval_pool_xm" class="easyui-textbox" style="height: 30px;width:150px;"/>
+                </div>
+                <!--占位标签-->
+                <label style="margin-left: 30px"></label>
+                <a id="btn_eval_pool_search" class="easyui-linkbutton" style="padding: 0 15px;background: #258eea;color: #ffffff;">查询</a>
+                <a id="btn_eval_pool_add" class="easyui-linkbutton" style="padding-left: 25px">新增</a>
+                <a id="btn_eval_pool_delete" class="easyui-linkbutton" style="padding-left: 25px">删除</a>
+            </div>
+        </div>
+        <div id="layout_manage_main" class="easyui-layout" data-options="fit:'true'" style="height: calc(100% - 50px);">
+            <!--业务条线树-->
+            <div id="layout_manage_main_west" data-options="region:'west',title:'业务条线',border:true,split:true" style="width: 200px; height: calc(100% - 50px);">
+                <div id="manage_ywtx_div" style="width: calc(100% - 20px);height: calc(100% - 15px);margin:5px 10px 10px 10px;">
+                    <ul id="tree_manage_ywtx" style="width: 100%;margin-top:5px;"></ul>
+                </div>
+            </div>
+            <!--人员列表-->
+            <div id="layout_manage_main_center" data-options="region:'center',border:false,split:true" style="width: calc(100% - 200px);height: 100%;">
+                <div id="pnl_eval_pool_list" style="height:calc(100% - 50px);">
+                    <table id="grid_eval_pool_list" border="0" style="height: 100%;"></table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!--弹出框：添加评查库人员-->
+    <div id="win_eval_pool_add" class="easyui-window" title="添加人员" style="width: 790px;height: 490px;"
+         data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,resizable:false">
+        <div id="tool_win_eval_pool_add" style="padding:5px 0px 5px 8px">
+            类型&nbsp;
+            <select id="cbx_win_eval_pool_type" data-options="wincom:true" class="easyui-combobox" style="width:80px;">
+                <option value="1">全部人员</option>
+                <option value="2">人员库人员</option>
+            </select>
+            单位&nbsp;<input id="cbt_win_eval_pool_xzdw" data-options="wincom:true" class="easyui-combotree" style="width: 150px;"/>
+            <label id="tpe">部门</label>&nbsp;<input id="cbt_win_eval_pool_bmbm" data-options="wincom:true" class="easyui-combotree" style="width: 150px;">
+            <div style="display: inline;">姓名&nbsp;<input id="txt_win_eval_pool_mc" class="easyui-textbox" style="width: 80px;"/></div>
+            <label style="width: 40px;"></label>
+            <a id="btn_win_eval_pool_search" class="easyui-linkbutton"  style="padding: 0 15px;background: #258eea;color: #ffffff;">查询</a>
+            <a id="btn_win_eval_pool_asign" class="easyui-linkbutton"  style="padding-left: 25px">添加</a>
+        </div>
+
+        <div id="pnl_win_eval_pool_user_list"
+             style="width: 100%;height: calc(100% - 36px); border-left:0px; border-right:0px; border-bottom:0px;">
+            <table id="grid_win_eval_pool_user_list" border="0"></table>
+        </div>
+    </div>
+    <!--办案单元弹窗-->
+    <div id="win_manage_person_unit" class="easyui-window" title="办案单元" style="width:1000px; height:435px;position: relative;"
+         data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+        <div style="background: #ffffff;padding: 10px;overflow: hidden;height: calc(100%);">
+
+            <div class="window_kjrk_content_tj_box" style="border: 1px solid #C0CFDB; position: relative;margin-top: 20px;">
+                <!--<div style=" height: 60px;border: 1px solid #C0CFDB; position: relative; padding-top: 15px;">-->
+                <span style="display: inline-block;position: absolute; top: -11px;left: 5px; background: #fff; padding: 0 5px;color: #084C7B;"></span>
+                <div style="margin: 20px 0 14px 0;padding-left: 10px;">
+                    <span>单位</span><input id="div_manage_person_unit_dwbm" data-options="wincom:true" class="easyui-combotree" style="width: 150px;height: 27px;">
+                    <span style= "margin-left: 10px;">姓名</span> <input id="div_manage_person_unit_person_mc" class="easyui-textbox" style="width: 90px; height: 26px;" />&nbsp;
+                    <!--<button id="btn_eval_build_sp_ryk_search" class="window_kjrk_button">查询</button>-->
+                   <div id="btn_eval_manage_person_unit_search" >查询</div>
+                </div>
+                <div id="window_kjrk_content_ktj_ul" style=" height: 240px;  width: 100%;border: none;border-radius: 0;">
+                    <table id="table_manage_person_unit_person" border="0" style="height: 100%"></table>
+                </div>
+            </div>
+            <div id="window_kjrk_content_tj_button" style="width: 48px;  margin: 0 5px;">
+                <button id="btn_eval_manage_person_unit_add" class="window_kjrk_button" style="margin-top: 123px;cursor: pointer;">添加</button>
+                <button id="btn_eval_manage_person_unit_delete" class="window_kjrk_button" style="cursor: pointer;">移除</button>
+            </div>
+            <div class="window_kjrk_content_tj_box" style="height: calc(100% - 64px);margin-right: 0;border: 1px solid #C0CFDB; position: relative;width: calc(50% - 29px);margin-top: 20px;">
+                <span style="display: inline-block;position: absolute; top: -11px;left: 5px; background: #fff; padding: 0 5px;color: #084C7B;">办案单元</span>
+                <div style=" margin-top: 20px;padding-left: 10px;">
+                    <div class="ZXpc_pcfa_sj_all_1" style="width: 50%;margin-bottom: 11px;">
+                        <div style="float: left">名称</div>
+                        <input id="txt_win_manage_person_unit_mc" class="easyui-textbox" style="width:160px;height: 28px">
+                    </div>
+                    <div class="ZXpc_pcfa_sj_all_1"  style="width: 50%">
+                        <div style="margin-left: 17px">备注</div>
+                        <input id="txt_win_manage_person_unit_bz" class="easyui-textbox" style="width:160px;height: 28px">
+                    </div>
+                </div>
+                <div id="window_kjrk_content_ytj_ul" style=" height: 240px;  width: 100%;border: none;border-radius: 0;">
+                    <table id="table_manage_person_unit_assistant_ready" border="0" class="easyui-datagrid" style="height: 100%"></table>
+                </div>
+            </div>
+            <div id="btn_win_manage_person_unit_confirm" style="float: right;margin-right: 8px;margin-top: 16px">
+                <a class="easyui-linkbutton" style="padding: 0 20px;">确定</a>
+            </div>
         </div>
     </div>
 
-    <!--人员列表-->
-    <div style="height: calc(100% - 50px);">
-        <div id="pnl_eval_pool_list" class="easyui-panel" data-options="fit:true">
-            <table id="grid_eval_pool_list" border="0" style="height: 100%;"></table>
-        </div>
-    </div>
-</div>
-
-
-<!--弹出框：添加评查库人员-->
-<div id="win_eval_pool_add" class="easyui-window" title="添加人员" style="width: 890px;height: 490px;"
-     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,resizable:false">
-    <div id="tool_win_eval_pool_add" style="padding:5px 0px 5px 8px">
-        类型&nbsp;<select id="cbx_win_eval_pool_type" data-options="wincom:true" class="easyui-combobox" style="width:120px;">
-        <option value="1">全部人员</option>
-        <option value="2">人员库人员</option>
-    </select>
-        单位&nbsp;<input id="cbt_win_eval_pool_xzdw" data-options="wincom:true" class="easyui-combotree" style="width: 150px;"/>
-        姓名&nbsp;<input id="txt_win_eval_pool_mc" class="easyui-textbox" style="width: 100px;"/>
-        角色名称&nbsp;<input id="cbt_win_eval_pool_jsmc"   data-options="wincom:true" class="easyui-combobox" style="width: 180px;"/>
-        <label style="width: 150px;"></label>
-        <a id="btn_win_eval_pool_search" class="easyui-linkbutton"  style="padding: 0 15px;background: #258eea;color: #ffffff;">查询</a>
-        <a id="btn_win_eval_pool_asign" class="easyui-linkbutton"  style="padding-left: 25px">添加</a>
-    </div>
-
-    <div id="pnl_win_eval_pool_user_list"
-         style="width: 100%;height: calc(100% - 36px); border-left:0px; border-right:0px; border-bottom:0px;">
-        <table id="grid_win_eval_pool_user_list" border="0"></table>
-    </div>
-</div>
 </body>
 </html>

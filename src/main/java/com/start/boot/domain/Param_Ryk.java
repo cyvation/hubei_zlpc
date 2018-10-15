@@ -3,6 +3,8 @@ package com.start.boot.domain;
 
 import com.start.boot.common.Param_Pager;
 
+import java.util.List;
+
 /**
  * 人员库实体
  * Created by lei on 2017/11/4.
@@ -32,6 +34,10 @@ public class Param_Ryk extends Param_Pager {
     private String yddhhm;
     //电子邮件
     private String dzyj;
+
+    private String pczList; // 单位编码+ 工号
+
+    private List<String> ywbmlist; // 人员库多选业务编码
 
     public String getYddhhm() {
         return yddhhm;
@@ -127,5 +133,21 @@ public class Param_Ryk extends Param_Pager {
 
     public void setJsmc(String jsmc) {
         this.jsmc = jsmc;
+    }
+
+    public String getPczList() {
+        return pczList;
+    }
+
+    public void setPczList(String pczList) {
+        this.pczList = pczList;
+    }
+
+    public List<String> getYwbmlist() {
+        return ywbmlist;
+    }
+
+    public void setYwbmlist(List<String> ywbmlist) {
+        this.ywbmlist = ywbmlist;
     }
 }

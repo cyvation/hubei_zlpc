@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.YxlcSljdMapper">
+  <resultMap id="BaseResultMap" type="com.start.boot.domain.YxlcSljd">
+    <id column="PCSLBM" jdbcType="CHAR" property="pcslbm" />
+    <id column="LCSLBH" jdbcType="CHAR" property="lcslbh" />
+    <id column="LCSLJDBH" jdbcType="CHAR" property="lcsljdbh" />
+    <result column="LCBM" jdbcType="CHAR" property="lcbm" />
+    <result column="LCJDBM" jdbcType="CHAR" property="lcjdbm" />
+    <result column="LCJDMC" jdbcType="VARCHAR" property="lcjdmc" />
+    <result column="JDLX" jdbcType="CHAR" property="jdlx" />
+    <result column="JDSX" jdbcType="CHAR" property="jdsx" />
+    <result column="GJLCBH" jdbcType="CHAR" property="gjlcbh" />
+    <result column="FJDBH" jdbcType="CHAR" property="fjdbh" />
+    <result column="JDSXH" jdbcType="CHAR" property="jdsxh" />
+    <result column="SFYXHT" jdbcType="CHAR" property="sfyxht" />
+    <result column="SFYHKZ" jdbcType="CHAR" property="sfyhkz" />
+    <result column="JDHTCS" jdbcType="DECIMAL" property="jdhtcs" />
+    <result column="JDTSSM" jdbcType="VARCHAR" property="jdtssm" />
+    <result column="JDJRSJ" jdbcType="TIMESTAMP" property="jdjrsj" />
+    <result column="JDLKSJ" jdbcType="TIMESTAMP" property="jdlksj" />
+    <result column="JDZXZGH" jdbcType="CHAR" property="jdzxzgh" />
+    <result column="JDZXZ" jdbcType="VARCHAR" property="jdzxz" />
+    <result column="JDZXZT" jdbcType="CHAR" property="jdzxzt" />
+    <result column="JDJRYY" jdbcType="CHAR" property="jdjryy" />
+    <result column="LCMC" jdbcType="VARCHAR" property="lcmc" />
+    <result column="JDZXZDWBM" jdbcType="CHAR" property="jdzxzdwbm" />
+    <result column="JDZXZDWMC" jdbcType="VARCHAR" property="jdzxzdwmc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    PCSLBM, LCSLBH, LCSLJDBH, LCBM, LCJDBM, LCJDMC, JDLX, JDSX, GJLCBH, FJDBH, JDSXH, 
+    SFYXHT, SFYHKZ, JDHTCS, JDTSSM, JDJRSJ, JDLKSJ, JDZXZGH, JDZXZ, JDZXZT, JDJRYY, LCMC, 
+    JDZXZDWBM, JDZXZDWMC
+  </sql>
+  <select id="selectByExample" parameterType="com.start.boot.domain.YxlcSljdExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YX_LC_SLJD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.start.boot.domain.YxlcSljdKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from YX_LC_SLJD
+    where PCSLBM = #{pcslbm,jdbcType=CHAR}
+      and LCSLBH = #{lcslbh,jdbcType=CHAR}
+      and LCSLJDBH = #{lcsljdbh,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.start.boot.domain.YxlcSljdKey">
+    delete from YX_LC_SLJD
+    where PCSLBM = #{pcslbm,jdbcType=CHAR}
+      and LCSLBH = #{lcslbh,jdbcType=CHAR}
+      and LCSLJDBH = #{lcsljdbh,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.start.boot.domain.YxlcSljdExample">
+    delete from YX_LC_SLJD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.start.boot.domain.YxlcSljd">
+    insert into YX_LC_SLJD (PCSLBM, LCSLBH, LCSLJDBH, 
+      LCBM, LCJDBM, LCJDMC, JDLX, 
+      JDSX, GJLCBH, FJDBH, JDSXH, 
+      SFYXHT, SFYHKZ, JDHTCS, JDTSSM, 
+      JDJRSJ, JDLKSJ, JDZXZGH, 
+      JDZXZ, JDZXZT, JDJRYY, LCMC, 
+      JDZXZDWBM, JDZXZDWMC)
+    values (#{pcslbm,jdbcType=CHAR}, #{lcslbh,jdbcType=CHAR}, #{lcsljdbh,jdbcType=CHAR}, 
+      #{lcbm,jdbcType=CHAR}, #{lcjdbm,jdbcType=CHAR}, #{lcjdmc,jdbcType=VARCHAR}, #{jdlx,jdbcType=CHAR}, 
+      #{jdsx,jdbcType=CHAR}, #{gjlcbh,jdbcType=CHAR}, #{fjdbh,jdbcType=CHAR}, #{jdsxh,jdbcType=CHAR}, 
+      #{sfyxht,jdbcType=CHAR}, #{sfyhkz,jdbcType=CHAR}, #{jdhtcs,jdbcType=DECIMAL}, #{jdtssm,jdbcType=VARCHAR}, 
+      #{jdjrsj,jdbcType=TIMESTAMP}, #{jdlksj,jdbcType=TIMESTAMP}, #{jdzxzgh,jdbcType=CHAR}, 
+      #{jdzxz,jdbcType=VARCHAR}, #{jdzxzt,jdbcType=CHAR}, #{jdjryy,jdbcType=CHAR}, #{lcmc,jdbcType=VARCHAR}, 
+      #{jdzxzdwbm,jdbcType=CHAR}, #{jdzxzdwmc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.start.boot.domain.YxlcSljd">
+    insert into YX_LC_SLJD
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pcslbm != null">
+        PCSLBM,
+      </if>
+      <if test="lcslbh != null">
+        LCSLBH,
+      </if>
+      <if test="lcsljdbh != null">
+        LCSLJDBH,
+      </if>
+      <if test="lcbm != null">
+        LCBM,
+      </if>
+      <if test="lcjdbm != null">
+        LCJDBM,
+      </if>
+      <if test="lcjdmc != null">
+        LCJDMC,
+      </if>
+      <if test="jdlx != null">
+        JDLX,
+      </if>
+      <if test="jdsx != null">
+        JDSX,
+      </if>
+      <if test="gjlcbh != null">
+        GJLCBH,
+      </if>
+      <if test="fjdbh != null">
+        FJDBH,
+      </if>
+      <if test="jdsxh != null">
+        JDSXH,
+      </if>
+      <if test="sfyxht != null">
+        SFYXHT,
+      </if>
+      <if test="sfyhkz != null">
+        SFYHKZ,
+      </if>
+      <if test="jdhtcs != null">
+        JDHTCS,
+      </if>
+      <if test="jdtssm != null">
+        JDTSSM,
+      </if>
+      <if test="jdjrsj != null">
+        JDJRSJ,
+      </if>
+      <if test="jdlksj != null">
+        JDLKSJ,
+      </if>
+      <if test="jdzxzgh != null">
+        JDZXZGH,
+      </if>
+      <if test="jdzxz != null">
+        JDZXZ,
+      </if>
+      <if test="jdzxzt != null">
+        JDZXZT,
+      </if>
+      <if test="jdjryy != null">
+        JDJRYY,
+      </if>
+      <if test="lcmc != null">
+        LCMC,
+      </if>
+      <if test="jdzxzdwbm != null">
+        JDZXZDWBM,
+      </if>
+      <if test="jdzxzdwmc != null">
+        JDZXZDWMC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pcslbm != null">
+        #{pcslbm,jdbcType=CHAR},
+      </if>
+      <if test="lcslbh != null">
+        #{lcslbh,jdbcType=CHAR},
+      </if>
+      <if test="lcsljdbh != null">
+        #{lcsljdbh,jdbcType=CHAR},
+      </if>
+      <if test="lcbm != null">
+        #{lcbm,jdbcType=CHAR},
+      </if>
+      <if test="lcjdbm != null">
+        #{lcjdbm,jdbcType=CHAR},
+      </if>
+      <if test="lcjdmc != null">
+        #{lcjdmc,jdbcType=VARCHAR},
+      </if>
+      <if test="jdlx != null">
+        #{jdlx,jdbcType=CHAR},
+      </if>
+      <if test="jdsx != null">
+        #{jdsx,jdbcType=CHAR},
+      </if>
+      <if test="gjlcbh != null">
+        #{gjlcbh,jdbcType=CHAR},
+      </if>
+      <if test="fjdbh != null">
+        #{fjdbh,jdbcType=CHAR},
+      </if>
+      <if test="jdsxh != null">
+        #{jdsxh,jdbcType=CHAR},
+      </if>
+      <if test="sfyxht != null">
+        #{sfyxht,jdbcType=CHAR},
+      </if>
+      <if test="sfyhkz != null">
+        #{sfyhkz,jdbcType=CHAR},
+      </if>
+      <if test="jdhtcs != null">
+        #{jdhtcs,jdbcType=DECIMAL},
+      </if>
+      <if test="jdtssm != null">
+        #{jdtssm,jdbcType=VARCHAR},
+      </if>
+      <if test="jdjrsj != null">
+        #{jdjrsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jdlksj != null">
+        #{jdlksj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jdzxzgh != null">
+        #{jdzxzgh,jdbcType=CHAR},
+      </if>
+      <if test="jdzxz != null">
+        #{jdzxz,jdbcType=VARCHAR},
+      </if>
+      <if test="jdzxzt != null">
+        #{jdzxzt,jdbcType=CHAR},
+      </if>
+      <if test="jdjryy != null">
+        #{jdjryy,jdbcType=CHAR},
+      </if>
+      <if test="lcmc != null">
+        #{lcmc,jdbcType=VARCHAR},
+      </if>
+      <if test="jdzxzdwbm != null">
+        #{jdzxzdwbm,jdbcType=CHAR},
+      </if>
+      <if test="jdzxzdwmc != null">
+        #{jdzxzdwmc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.start.boot.domain.YxlcSljdExample" resultType="java.lang.Long">
+    select count(*) from YX_LC_SLJD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update YX_LC_SLJD
+    <set>
+      <if test="record.pcslbm != null">
+        PCSLBM = #{record.pcslbm,jdbcType=CHAR},
+      </if>
+      <if test="record.lcslbh != null">
+        LCSLBH = #{record.lcslbh,jdbcType=CHAR},
+      </if>
+      <if test="record.lcsljdbh != null">
+        LCSLJDBH = #{record.lcsljdbh,jdbcType=CHAR},
+      </if>
+      <if test="record.lcbm != null">
+        LCBM = #{record.lcbm,jdbcType=CHAR},
+      </if>
+      <if test="record.lcjdbm != null">
+        LCJDBM = #{record.lcjdbm,jdbcType=CHAR},
+      </if>
+      <if test="record.lcjdmc != null">
+        LCJDMC = #{record.lcjdmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jdlx != null">
+        JDLX = #{record.jdlx,jdbcType=CHAR},
+      </if>
+      <if test="record.jdsx != null">
+        JDSX = #{record.jdsx,jdbcType=CHAR},
+      </if>
+      <if test="record.gjlcbh != null">
+        GJLCBH = #{record.gjlcbh,jdbcType=CHAR},
+      </if>
+      <if test="record.fjdbh != null">
+        FJDBH = #{record.fjdbh,jdbcType=CHAR},
+      </if>
+      <if test="record.jdsxh != null">
+        JDSXH = #{record.jdsxh,jdbcType=CHAR},
+      </if>
+      <if test="record.sfyxht != null">
+        SFYXHT = #{record.sfyxht,jdbcType=CHAR},
+      </if>
+      <if test="record.sfyhkz != null">
+        SFYHKZ = #{record.sfyhkz,jdbcType=CHAR},
+      </if>
+      <if test="record.jdhtcs != null">
+        JDHTCS = #{record.jdhtcs,jdbcType=DECIMAL},
+      </if>
+      <if test="record.jdtssm != null">
+        JDTSSM = #{record.jdtssm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jdjrsj != null">
+        JDJRSJ = #{record.jdjrsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.jdlksj != null">
+        JDLKSJ = #{record.jdlksj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.jdzxzgh != null">
+        JDZXZGH = #{record.jdzxzgh,jdbcType=CHAR},
+      </if>
+      <if test="record.jdzxz != null">
+        JDZXZ = #{record.jdzxz,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jdzxzt != null">
+        JDZXZT = #{record.jdzxzt,jdbcType=CHAR},
+      </if>
+      <if test="record.jdjryy != null">
+        JDJRYY = #{record.jdjryy,jdbcType=CHAR},
+      </if>
+      <if test="record.lcmc != null">
+        LCMC = #{record.lcmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jdzxzdwbm != null">
+        JDZXZDWBM = #{record.jdzxzdwbm,jdbcType=CHAR},
+      </if>
+      <if test="record.jdzxzdwmc != null">
+        JDZXZDWMC = #{record.jdzxzdwmc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update YX_LC_SLJD
+    set PCSLBM = #{record.pcslbm,jdbcType=CHAR},
+      LCSLBH = #{record.lcslbh,jdbcType=CHAR},
+      LCSLJDBH = #{record.lcsljdbh,jdbcType=CHAR},
+      LCBM = #{record.lcbm,jdbcType=CHAR},
+      LCJDBM = #{record.lcjdbm,jdbcType=CHAR},
+      LCJDMC = #{record.lcjdmc,jdbcType=VARCHAR},
+      JDLX = #{record.jdlx,jdbcType=CHAR},
+      JDSX = #{record.jdsx,jdbcType=CHAR},
+      GJLCBH = #{record.gjlcbh,jdbcType=CHAR},
+      FJDBH = #{record.fjdbh,jdbcType=CHAR},
+      JDSXH = #{record.jdsxh,jdbcType=CHAR},
+      SFYXHT = #{record.sfyxht,jdbcType=CHAR},
+      SFYHKZ = #{record.sfyhkz,jdbcType=CHAR},
+      JDHTCS = #{record.jdhtcs,jdbcType=DECIMAL},
+      JDTSSM = #{record.jdtssm,jdbcType=VARCHAR},
+      JDJRSJ = #{record.jdjrsj,jdbcType=TIMESTAMP},
+      JDLKSJ = #{record.jdlksj,jdbcType=TIMESTAMP},
+      JDZXZGH = #{record.jdzxzgh,jdbcType=CHAR},
+      JDZXZ = #{record.jdzxz,jdbcType=VARCHAR},
+      JDZXZT = #{record.jdzxzt,jdbcType=CHAR},
+      JDJRYY = #{record.jdjryy,jdbcType=CHAR},
+      LCMC = #{record.lcmc,jdbcType=VARCHAR},
+      JDZXZDWBM = #{record.jdzxzdwbm,jdbcType=CHAR},
+      JDZXZDWMC = #{record.jdzxzdwmc,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.start.boot.domain.YxlcSljd">
+    update YX_LC_SLJD
+    <set>
+      <if test="lcbm != null">
+        LCBM = #{lcbm,jdbcType=CHAR},
+      </if>
+      <if test="lcjdbm != null">
+        LCJDBM = #{lcjdbm,jdbcType=CHAR},
+      </if>
+      <if test="lcjdmc != null">
+        LCJDMC = #{lcjdmc,jdbcType=VARCHAR},
+      </if>
+      <if test="jdlx != null">
+        JDLX = #{jdlx,jdbcType=CHAR},
+      </if>
+      <if test="jdsx != null">
+        JDSX = #{jdsx,jdbcType=CHAR},
+      </if>
+      <if test="gjlcbh != null">
+        GJLCBH = #{gjlcbh,jdbcType=CHAR},
+      </if>
+      <if test="fjdbh != null">
+        FJDBH = #{fjdbh,jdbcType=CHAR},
+      </if>
+      <if test="jdsxh != null">
+        JDSXH = #{jdsxh,jdbcType=CHAR},
+      </if>
+      <if test="sfyxht != null">
+        SFYXHT = #{sfyxht,jdbcType=CHAR},
+      </if>
+      <if test="sfyhkz != null">
+        SFYHKZ = #{sfyhkz,jdbcType=CHAR},
+      </if>
+      <if test="jdhtcs != null">
+        JDHTCS = #{jdhtcs,jdbcType=DECIMAL},
+      </if>
+      <if test="jdtssm != null">
+        JDTSSM = #{jdtssm,jdbcType=VARCHAR},
+      </if>
+      <if test="jdjrsj != null">
+        JDJRSJ = #{jdjrsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jdlksj != null">
+        JDLKSJ = #{jdlksj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jdzxzgh != null">
+        JDZXZGH = #{jdzxzgh,jdbcType=CHAR},
+      </if>
+      <if test="jdzxz != null">
+        JDZXZ = #{jdzxz,jdbcType=VARCHAR},
+      </if>
+      <if test="jdzxzt != null">
+        JDZXZT = #{jdzxzt,jdbcType=CHAR},
+      </if>
+      <if test="jdjryy != null">
+        JDJRYY = #{jdjryy,jdbcType=CHAR},
+      </if>
+      <if test="lcmc != null">
+        LCMC = #{lcmc,jdbcType=VARCHAR},
+      </if>
+      <if test="jdzxzdwbm != null">
+        JDZXZDWBM = #{jdzxzdwbm,jdbcType=CHAR},
+      </if>
+      <if test="jdzxzdwmc != null">
+        JDZXZDWMC = #{jdzxzdwmc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PCSLBM = #{pcslbm,jdbcType=CHAR}
+      and LCSLBH = #{lcslbh,jdbcType=CHAR}
+      and LCSLJDBH = #{lcsljdbh,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.start.boot.domain.YxlcSljd">
+    update YX_LC_SLJD
+    set LCBM = #{lcbm,jdbcType=CHAR},
+      LCJDBM = #{lcjdbm,jdbcType=CHAR},
+      LCJDMC = #{lcjdmc,jdbcType=VARCHAR},
+      JDLX = #{jdlx,jdbcType=CHAR},
+      JDSX = #{jdsx,jdbcType=CHAR},
+      GJLCBH = #{gjlcbh,jdbcType=CHAR},
+      FJDBH = #{fjdbh,jdbcType=CHAR},
+      JDSXH = #{jdsxh,jdbcType=CHAR},
+      SFYXHT = #{sfyxht,jdbcType=CHAR},
+      SFYHKZ = #{sfyhkz,jdbcType=CHAR},
+      JDHTCS = #{jdhtcs,jdbcType=DECIMAL},
+      JDTSSM = #{jdtssm,jdbcType=VARCHAR},
+      JDJRSJ = #{jdjrsj,jdbcType=TIMESTAMP},
+      JDLKSJ = #{jdlksj,jdbcType=TIMESTAMP},
+      JDZXZGH = #{jdzxzgh,jdbcType=CHAR},
+      JDZXZ = #{jdzxz,jdbcType=VARCHAR},
+      JDZXZT = #{jdzxzt,jdbcType=CHAR},
+      JDJRYY = #{jdjryy,jdbcType=CHAR},
+      LCMC = #{lcmc,jdbcType=VARCHAR},
+      JDZXZDWBM = #{jdzxzdwbm,jdbcType=CHAR},
+      JDZXZDWMC = #{jdzxzdwmc,jdbcType=VARCHAR}
+    where PCSLBM = #{pcslbm,jdbcType=CHAR}
+      and LCSLBH = #{lcslbh,jdbcType=CHAR}
+      and LCSLJDBH = #{lcsljdbh,jdbcType=CHAR}
+  </update>
+</mapper>

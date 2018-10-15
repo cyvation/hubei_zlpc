@@ -1,6 +1,8 @@
 package com.start.boot.dao.ajpc;
 
 
+import com.start.boot.domain.Param_Ryk;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
@@ -87,6 +89,8 @@ public interface PcMapper {
 
     void getPcsp(Map map);
 
+    List<Map> getYwtxTree();
+
     List<Map> getJsmc(Map map);
 
     void backspace(Map map);
@@ -99,4 +103,6 @@ public interface PcMapper {
     int htRZ(Map map);
 
     List<Map> getPcbg(Map map);
+
+    List<Map> getPcry(Param_Ryk ryk);
 }

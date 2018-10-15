@@ -22,10 +22,12 @@
         SELECT
           <include refid="Base_Column_List" />
          FROM xt_pc_mb
-        WHERE dwbm = #{dwbm, jdbcType=VARCHAR} AND
-              pcflbm = #{pcflbm, jdbcType=VARCHAR} AND
-              pcmbbm = #{pcmbbm, jdbcType=VARCHAR} AND
-              sfqy = 'Y'
+        WHERE dwbm = #{dwbm, jdbcType=VARCHAR}
+            AND pcflbm = #{pcflbm, jdbcType=VARCHAR}
+        <if test="pcmbbm !=null">
+            AND pcmbbm = #{pcmbbm, jdbcType=VARCHAR}
+        </if>
+            AND sfqy = 'Y'
     </select>
 
     <resultMap id="pcmbMap" type="map"></resultMap>

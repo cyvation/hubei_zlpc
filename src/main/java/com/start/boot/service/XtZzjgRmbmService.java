@@ -3,6 +3,7 @@ package com.start.boot.service;/**
  */
 
 import com.start.boot.common.PageInfo;
+import com.start.boot.domain.XtQxRyJsfp;
 import com.start.boot.domain.XtZzjgRmbm;
 
 import java.util.List;
@@ -28,4 +29,12 @@ public interface XtZzjgRmbmService {
      * @return
      */
     List<XtZzjgRmbm> getDwBmRmTreeList(String dwbm,String bmbm,PageInfo query);
+
+    /**
+     * 获取角色权限分配信息
+     * @param dwbm
+     * @param gh
+     * @return
+     */
+    List<XtQxRyJsfp>getXtQxRyJsfp(String dwbm, String gh);
 }

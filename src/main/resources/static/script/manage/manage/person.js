@@ -2,20 +2,23 @@
  * Created by user on 2017/11/4.
  */
 var bmarr = [];
+var selectedIndex;
+//var badybm;
+
 $(function () {
 
     //控件初始化及初始数据加载
     init_tool_eval_pool_list();
 
     //初始化人员库列表
-    init_grid_eval_pool_list();
+    // init_grid_eval_pool_list();
 
 
-    $('.radiopcs').click(function () {
+    $('.radio').click(function () {
         $(this).children().addClass('redio_click_no');
         $(this).siblings().children().removeClass('redio_click_no');
         // var type =  $(this).attr("data-value");
-        var type = $(".radiopcs .redio_click_no").attr('data-value');
+        var type = $(".redio_click_no").attr('data-value');
         if (type == '1') {
             load_function("评查管理","view/manage/manage/index.html");
         }
@@ -56,7 +59,7 @@ function init_tool_eval_pool_list() {
     });
     $("#cbx_win_eval_pool_type").combobox({
         editable:false,
-        width:120,
+        width:100,
         valueField: 'type',
         textField: 'text',
         data: [{
@@ -74,24 +77,31 @@ function init_tool_eval_pool_list() {
         }
     });
 
+    // 业务条线树
+    var obj = new Object(); //业务条线树后台参数obj
+    $('#tree_manage_ywtx').tree({
+        url: getRootPath()+'/manage/getYwtxTree',
+        method: 'get',
+        lines: true,
+        loadFilter:function (data) {
+            return data.code==200?JSON.parse(data.data):[];
+        },
+        onLoadSuccess: function (node, data) {
+            if (data != null && data.length >= 1) {
+                var n = $('#tree_manage_ywtx').tree('find', data[0].id);
+                $('#tree_manage_ywtx').tree('select', n.target);
+            }
+        },
+        onSelect: function (node) {
+            init_grid_eval_pool_list();
+        }
+
+    });
+
 }
 
 // 初始化人员库列表
 function init_grid_eval_pool_list() {
-
-    $("#cbt_win_eval_pool_jsmc").combobox({
-        editable:true,
-        limitToList:true,
-        valueField:'id',
-        textField: 'text',
-        // onShowPanel: index_onShowPanel,
-        // onHidePanel: index_onHidePanel,
-        url: getRootPath()+'/manage/getJsmc',
-        onLoadSuccess: function (node, data) {
-            // index_addMousedownDiv(this,'cbt_win_eval_pool_jsmc');
-        }
-    });
-
     $('#grid_eval_pool_list').datagrid({
         striped: true,
         fitColumns: true,
@@ -107,7 +117,7 @@ function init_grid_eval_pool_list() {
             { field: 'CK', width: 30, checkbox: true },
             { field: 'ID', title: '唯一标示', hidden: true },
             { field: 'DWMC', title: '单位名称', width: 120 },
-            { field: 'MC', title: '姓名', width: 100 },
+            { field: 'MC', title: '名称', width: 100 },
             { field: 'BMMC', title: '部门名称', width: 120 },
             { field: 'JSMC', title: '角色名称', width: 110 },
             { field: 'GZZH', title: '工作证号', width: 110 },
@@ -117,15 +127,11 @@ function init_grid_eval_pool_list() {
                 field: 'action', title: '操作', width: 50, align: 'center',
                 formatter: function (value, row, index) {
                     var d = '<a href="#" onclick="delete_eval_pool_evaluator(' + index + ')">删除</a> ';
-                    return d;
+                    return  d;
                 }
             }
         ]],
-        loadMsg: '数据加载中，请稍后...',
-        onClickRow: function (rowIndex, rowData) {
-            $('#grid_eval_pool_list').datagrid('clearSelections');
-            $('#grid_eval_pool_list').datagrid('highlightRow', rowIndex);
-        }
+        loadMsg: '数据加载中，请稍后...'
     });
 
     $('#grid_eval_pool_list').datagrid('getPager').pagination({
@@ -144,19 +150,21 @@ function init_grid_eval_pool_list() {
 // 加载人员库列表
 function load_grid_eval_pool_list() {
     var mc = trim($('#txt_eval_pool_xm').textbox('getValue'));
+    var ywtxbm = $('#tree_manage_ywtx').tree('getSelected').id;
 
     // JS对象
     var obj = new Object();
     obj.DWBM_RY = '';
     obj.YWBM = '';
     obj.PCR_MC = mc;
+    obj.YWBM = ywtxbm;
 
     $('#grid_eval_pool_list').datagrid({
         url:getRootPath()+ '/manage/get_pckry',
         queryParams: {
-        name: 'easyui',
+            name: 'easyui',
             json: JSON.stringify(obj)
-    },
+        },
 
     // json=' + JSON.stringify(obj)
 
@@ -166,12 +174,12 @@ function load_grid_eval_pool_list() {
 
 // 设置人员库列表大小
 function resize_grid_eval_pool_list() {
-    var width = $('#pnl_eval_pool_list').width();
-    $('#grid_eval_pool_list').datagrid('options').width = width - 10;
+    /*var width = $('#pnl_eval_pool_list').width();
+    $('#grid_eval_pool_list').datagrid('options').width = width - 100;
     var height = $('#pnl_eval_pool_list').height();
     var h = $('#tool_eval_pool_list').height() + 10;
     $('#grid_eval_pool_list').datagrid('options').height = height - h;
-    $('#grid_eval_pool_list').datagrid('resize');
+    $('#grid_eval_pool_list').datagrid('resize');*/
 }
 
 //////////////////////////////*组织机构人员信息加载*/////////////////////////////
@@ -199,6 +207,7 @@ function init_win_eval_pool_add() {
     $('#cbt_win_eval_pool_xzdw').combotree({
         method: 'get',
         multiple: true,
+        panelWidth:250,
         animate: true,
         cascadeCheck: false,
         onShowPanel: index_onShowPanel,
@@ -208,16 +217,28 @@ function init_win_eval_pool_add() {
             return data.status==200?JSON.parse(data.value):[];
         },
         onLoadSuccess: function (node,data) {
-           // var bmarr = [];
-            for(o in data) {
-                bmarr.push(data[o].id);
-                dgDwbm(bmarr, data[o].children);
-                $('#cbt_win_eval_pool_xzdw').combotree('setValues', bmarr);
-            }
-            // if ($('#cbt_win_eval_pool_xzdw').combobox('getValue') == "") {
-            //     $('#cbt_win_eval_pool_xzdw').combotree('setValue', userInfo.DWBM); //单位默认选择
-            // }
+            $('#cbt_win_eval_pool_xzdw').combotree('setValue', data[0].id); //单位默认选择
+            init_bmbm(data[0].id);
             index_addMousedownDiv(this,'cbt_win_eval_pool_xzdw');
+
+        },
+        onCheck: function (node, checked) {
+            var selectedDwbm = $('#cbt_win_eval_pool_xzdw').combotree('getValues').join(',');
+            var dwbmarray = selectedDwbm.split(",");
+            var type = $("#cbx_win_eval_pool_type").combobox('getValue');
+            if (type == '1'){
+                if (dwbmarray.length > 1 ) {
+                    $('#cbt_win_eval_pool_bmbm').combotree('clear');
+                    $('#cbt_win_eval_pool_bmbm').combotree({disabled: true, url: ''});
+                    return;
+
+                } else {
+                    $('#cbt_win_eval_pool_bmbm').combotree('clear');
+                    $('#cbt_win_eval_pool_bmbm').combotree({disabled: false, url: getRootPath() + '/manage/getAllBm',queryParams: {dwbm: selectedDwbm}});
+                    return;
+                }
+            }
+
         }
     });
 
@@ -229,10 +250,77 @@ function init_win_eval_pool_add() {
 
         }
     });
+
+    $("#tpe").html('部门');
+
+    //切换事件
+    $("#cbx_win_eval_pool_type").combobox({
+        onSelect:function(data){
+            if (data.type == '1'){ //选择所有人员
+
+                $("#tpe").html('部门');
+
+                var selectedDwbm = $('#cbt_win_eval_pool_xzdw').combotree('getValues').join(',');
+                var dwbmarray = selectedDwbm.split(",");
+                if (dwbmarray.length > 1) {
+                    $('#cbt_win_eval_pool_bmbm').combotree('clear');
+                    $('#cbt_win_eval_pool_bmbm').combotree({disabled: true, url: ''});
+                    return;
+
+                } else {
+                    init_bmbm(selectedDwbm);
+
+                }
+
+            }
+
+            if (data.type == '2'){  // 选择人才库
+                $("#tpe").html('业务');
+                // 选择人才库
+                $("#cbt_win_eval_pool_bmbm").combotree({
+                    url: getRootPath()+'/manage/getYwtxTree',
+                    loadFilter:function (data) {
+                        return data.code==200?JSON.parse(data.data):[];
+                    }
+
+                });
+
+            }
+        }
+    });
+
     $('#win_eval_pool_add').window('open');
+
 
     // 新增人员列表，子弹出框grid
     init_grid_eval_win_list();
+}
+
+// 初始化部门编码树
+function init_bmbm(dwbm) {
+    // 办案部门下拉树
+    // $("#cbt_win_eval_pool_bmbm").combotree('loadData',[]);
+    $('#cbt_win_eval_pool_bmbm').combotree('clear');
+    $("#cbt_win_eval_pool_bmbm").combotree({
+        //method: 'get',
+        panelWidth:200,
+        onShowPanel: index_onShowPanel,
+        onHidePanel: index_onHidePanel,
+        url: getRootPath() + '/manage/getAllBm',
+        async: false,
+        queryParams: {
+            dwbm: dwbm
+        },
+        loadFilter:function (data) {
+            return data;
+        },
+        onLoadSuccess: function (node, data) {
+            if (data !=null && data.length >0) {
+                $('#cbt_win_eval_pool_bmbm').combotree('setValue', data[0].id); //部门默认选择
+            }
+            index_addMousedownDiv(this,'cbt_win_eval_pool_bmbm');
+        }
+    });
 }
 
 // 新增人员列表，子弹出框grid
@@ -289,30 +377,31 @@ function load_grid_eval_win_list() {
     //组织机构人员查询
     $('#btn_win_eval_pool_search').linkbutton({
         onClick: function () {
-            var mc = $('#txt_win_eval_pool_mc').textbox("getValue").trim();
-            var jsmc = $('#cbt_win_eval_pool_jsmc').textbox("getText").trim();
+            var mc = $('#txt_win_eval_pool_mc').textbox("getValue");
             var temp = $('#cbt_win_eval_pool_xzdw').combotree('getValues').join(',');
             if(temp == null || temp ==''){
                 $('#cbt_win_eval_pool_xzdw').combotree('setValues', bmarr);
             }
             var dwbm = $('#cbt_win_eval_pool_xzdw').combotree('getValues').join(',');
+            var bmbm = $('#cbt_win_eval_pool_bmbm').combotree('getValue');
             var type = $('#cbx_win_eval_pool_type').combobox("getValue");
-            load_grid_win_eval_pool_user_list(dwbm, mc, type, jsmc);
+            load_grid_win_eval_pool_user_list(dwbm, mc, type, bmbm);
         }
     });
 }
 
 // 载入组织机构人员grid数据
-function load_grid_win_eval_pool_user_list(dwbm, mc, type, jsmc) {
+function load_grid_win_eval_pool_user_list(dwbm, mc, type, bmbm) {
+    var ywtxbm = $('#tree_manage_ywtx').tree('getSelected').id;
 
     // JS对象
     var obj = new Object();
     obj.PCR_MC = mc;
     obj.DWBM_RY = dwbm;
     obj.TYPE = type;
-    obj.YWBM = '00';
-    obj.BMBM = '';
-    obj.JSMC = jsmc;
+    obj.YWBM = type == '2'? $("#cbt_win_eval_pool_bmbm").combobox('getValue'): ywtxbm;
+    obj.BMBM = type == '1'? bmbm: '';
+    obj.JSMC = '';
 
     $('#grid_win_eval_pool_user_list').datagrid({
         url:getRootPath()+ '/manage/get_zzjgry',
@@ -324,6 +413,7 @@ function load_grid_win_eval_pool_user_list(dwbm, mc, type, jsmc) {
 
 // 添加评查人员到评查人员库
 function add_eval_pool_evaluators() {
+    var ywtxbm = $('#tree_manage_ywtx').tree('getSelected').id;
     var rows = $('#grid_win_eval_pool_user_list').datagrid('getChecked');
     if (rows.length == 0) {
         Alert("请选择人员！");
@@ -342,7 +432,7 @@ function add_eval_pool_evaluators() {
             obj.BMMC=rows[i].BMMC;
             obj.JSBM=rows[i].JSBM;
             obj.JSMC=rows[i].JSMC;
-            obj.YWBM = '00';
+            obj.YWBM = ywtxbm;
             array[i] = obj;
         }
     }
@@ -371,15 +461,19 @@ function add_eval_pool_evaluators() {
 //删除人员操作
 function delete_eval_pool_evaluator(index) {
     var rows = $('#grid_eval_pool_list').datagrid('getRows');
+    var ywtxbm = $('#tree_manage_ywtx').tree('getSelected').id;
+
 
     $.messager.confirm('确认?', '您确定要删除当前选中的评查员?', function (p) {
         if (p) {
+            selectedIndex = index;
+
             var array = new Array();
             // JS对象
             var obj = new Object();
             obj.RYK_DWBM = rows[index].RYK_DWBM;
             obj.DWBM_RY = rows[index].DWBM;
-            obj.YWBM = '00';
+            obj.YWBM = ywtxbm;
             obj.PCR_GH = rows[index].GH;
             array[0] = obj;
             $.ajax({
@@ -414,7 +508,7 @@ function delete_eval_pool_evaluators() {
                 var obj = new Object();
                 obj.RYK_DWBM = rows[i].RYK_DWBM;
                 obj.DWBM_RY = rows[i].DWBM;
-                obj.YWBM = '00';
+                obj.YWBM = rows[i].YWBM;
                 obj.PCR_GH = rows[i].GH;
                 array[i] = obj;
             }

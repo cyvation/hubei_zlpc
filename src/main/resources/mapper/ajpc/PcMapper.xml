@@ -534,6 +534,49 @@
     </insert>
 
     <resultMap id="getPcspMap" type="map"/>
+
+    <select id="getPcry" parameterType="com.start.boot.domain.Param_Ryk" resultMap="xzryMap">
+        SELECT (ryk.dwbm || ryk.gh) ID, ryk.dwbm DWBM, ryk.gh GH, ryk.ywbm YWBM, ry.mc MC, dw.DWMC, ry.dzyj, ry.yddhhm
+        FROM xt_pc_ryk ryk
+        INNER JOIN xt_zzjg_rybm ry
+        ON ryk.dwbm = ry.dwbm
+        AND ryk.gh = ry.gh
+        AND ry.sfsc = 'N'
+        INNER JOIN xt_zzjg_dwbm dw
+        ON ry.dwbm = dw.dwbm
+        AND dw.sfsc = 'N'
+        WHERE ryk.ryk_dwbm = #{rykdwbm}
+        <if test="dwbm_ry !=null and dwbm_ry !=''">
+            AND INSTR(#{dwbm_ry},ryk.dwbm) &gt;=1
+        </if>
+
+        <if test="ywbmlist !=null and ywbmlist.size() >0">
+            AND ryk.ywbm in
+            <foreach collection="ywbmlist" item="ywbm" open="(" separator="," close=")">
+                #{ywbm}
+            </foreach>
+        </if>
+
+        <if test="pczList !=null and pczList != ''">
+            and instr(#{pczList}, ryk.dwbm ||ryk.gh) &lt;1
+        </if>
+
+        <if test="pcr_mc !=null and pcr_mc !=''">
+            and ry.mc like '%${pcr_mc}%'
+        </if>
+
+    </select>
+    <resultMap id="xzryMap" type="map"/>
+
+    <!--获取业务条线树数据-->
+    <select id="getYwtxTree" resultType="map">
+
+        select dm BM,
+               MC,
+               '-1' FBM
+               from xt_pc_dm t where fdm = '1' order by dm
+    </select>
+
     <!--获取角色名称-->
     <select id="getJsmc" parameterType="java.util.Map" resultMap="jsmcMap">
         SELECT jsmc,rownum jsbm FROM (

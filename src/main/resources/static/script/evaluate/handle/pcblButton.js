@@ -86,6 +86,29 @@ function butAddPcyj(num) {
     add_eval_info_approve(obj.wjlj);
 }
 
+// 小组联席会议
+function butAddXzlxhy(num) {
+    var obj = get_eval_info_doc(PCLZDLX);
+    if(isNull(obj)){
+        Alert("请确认是否已生成评查流转单！");
+        return;
+    }
+
+    add_eval_info_approve_jwh(obj.wjlj, '小组联席会议');
+}
+
+// 新增检委会意见
+function butAddJwhyj(num) {
+    var obj = get_eval_info_doc(PCLZDLX);
+    if(isNull(obj)){
+        Alert("请确认是否已生成评查流转单！");
+        return;
+    }
+
+    add_eval_info_approve_jwh(obj.wjlj, '检委会意见');
+}
+
+
 // 创建或者打开评查流转单
 function addOrOpenApproveDoc() {
     var obj = get_eval_info_doc(PCLZDLX);
@@ -124,6 +147,25 @@ function addOrOpenApproveDoc() {
 // 评查报审（评查员，评查办理阶段）
 function butPcblPcbs(num) {
 
+    var obj = get_eval_info_doc(PCBGLX);
+    if(isNull(obj)){
+        Alert("未生成评查报告，请先生成报告！");
+        return;
+    }
+    /*$.ajax({
+        type: 'get',
+        url: getRootPath()+'/handle/IsCreatePcbg',
+        async:false,
+        data: {pcslbm:EVAL_CASE.PCSLBM},
+        success: function (result) {
+            if (result.code == 200) {
+                if(result.data==false){
+                    Alert("未生成评查报告，请先生成报告！");
+                    return;
+                }
+            }
+        }
+    });*/
     addOrOpenApproveDoc();
 
     isSendApprove = "1";
@@ -145,8 +187,26 @@ function butPcbs(num) {
     //     Alert("未生成评查流转单！");
     //     return;
     // }
-    save_edit_document();
-    send_eval_handle_deal_approve("20");
+   // save_edit_document();
+    addOrOpenApproveDoc();
+
+    var pcjl = EVAL_CASE.PCJL;
+    var pcflbm = EVAL_CASE.PCFLBM;
+    var pcjdbh = EVAL_CASE.PCJDBH;
+   // send_eval_handle_deal_approve("20");
+    if(pcjdbh == '006'){ // 组长
+        send_eval_handle_deal_approve("20");
+    }
+
+    if (pcjdbh == '007'){
+        if (pcjl == '合格案件'){
+            send_eval_handle_deal_approve("60");
+        }else{
+            send_eval_handle_deal_approve("60");
+        }
+    }
+
+  //  isSendApprove = "1";
 }
 
 // 评查报审（负责人）
@@ -506,7 +566,7 @@ function generate_doc_file(wsCon) {
             }
 
             try {
-                show_rpt_doc_panel("doc");
+                show_eval_doc_panel("doc");
                 CloseProgress();
 
                 var error = OpenFile(getRootPath() + result.value, "TANGER_OCX");
@@ -575,7 +635,7 @@ function generate_auto_doc_file(wsCon) {
             }
 
             try {
-                show_rpt_doc_panel("doc");
+                show_eval_doc_panel("doc");
                 CloseProgress();
 
                 var error = OpenFile(getRootPath() + result.value, "TANGER_OCX");

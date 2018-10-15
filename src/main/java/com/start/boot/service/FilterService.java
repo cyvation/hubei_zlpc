@@ -64,4 +64,6 @@ public interface FilterService {
     ParamSx getSjsxAdvance(ParamSx paramSx) throws Exception;
 
     List<Map> getSxgzByPcflbmAndYwtx(Map param) throws Exception;
+
+    Param_Pager getZdAj(Param_Pcjk pcjkParam);
 }

@@ -62,4 +62,12 @@ public class XtZzjgRmbmServiceImpl implements XtZzjgRmbmService {
         return null;
     }
 
+    @Override
+    public List<XtQxRyJsfp> getXtQxRyJsfp(String dwbm, String gh) {
+        XtQxRyJsfpExample example = new XtQxRyJsfpExample();
+        example.createCriteria().andDwbmEqualTo(dwbm).andGhEqualTo(gh);
+        List<XtQxRyJsfp> xtQxRyJsfps = xtQxRyJsfpMapper.selectByExample(example);
+        return xtQxRyJsfps;
+    }
+
 }

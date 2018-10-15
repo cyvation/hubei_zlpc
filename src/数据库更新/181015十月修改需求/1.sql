@@ -14,7 +14,7 @@ update xt_pc_wsmb set wsmblj = 'WORD/专项评查报告模板.doc' where wsmbbh 
 -- 4. 移除部门反馈
 delete from xt_pc_dbrw where gnbm = '4200000005';
 
--- 4. 按钮添加 报审、二次报审、发送检察官
+-- 4. 按钮添加 报审、二次报审、发送检察官、小组联席会议、检委会意见
 insert into xt_pc_dzzy (DZBH, PCFLBM, LCMBBM, LCJDBH, CZLXBM, DZMC, ICON, CLCX, CLCXCS, DZXH, SM, XYCX, XYCXCS)
 values ('002', '000', '0000000001', '006', '1', '评查报审', 'pcbs', 'butPcblPcbs', '', 3, '', 'validatePcbs', '');
 
@@ -23,6 +23,12 @@ values ('007', '000', '0000000001', '007', '1', '评查报审', 'pcbs', 'butPcbs
 
 insert into xt_pc_dzzy (DZBH, PCFLBM, LCMBBM, LCJDBH, CZLXBM, DZMC, ICON, CLCX, CLCXCS, DZXH, SM, XYCX, XYCXCS)
 values ('008', '000', '0000000001', '007', '1', '发送承办人', 'fscbr', 'butFscbr', '', 5, '', 'validateSpJdFscbr', '');
+
+insert into xt_pc_dzzy (DZBH, PCFLBM, LCMBBM, LCJDBH, CZLXBM, DZMC, ICON, CLCX, CLCXCS, DZXH, SM, XYCX, XYCXCS)
+values ('089', '000', '0000000001', '010', '1', '小组联席会议', '', 'butAddXzlxhy', '', 1, '', 'validatefXzlxhy', '');
+
+insert into xt_pc_dzzy (DZBH, PCFLBM, LCMBBM, LCJDBH, CZLXBM, DZMC, ICON, CLCX, CLCXCS, DZXH, SM, XYCX, XYCXCS)
+values ('090', '000', '0000000001', '010', '1', '检委会意见', '', 'butAddJwhyj', '', 1, '', 'validatefJwhyj', '');
 
 
 -- 5.检察官默认5天发聩，反馈意见修改

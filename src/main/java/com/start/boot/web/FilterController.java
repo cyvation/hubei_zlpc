@@ -1,6 +1,7 @@
 package com.start.boot.web;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.start.boot.common.MessageResult;
@@ -10,12 +11,14 @@ import com.start.boot.dao.ajpc.YX_PC_JBXXMapper;
 import com.start.boot.dao.ajpc.Yx_Pc_PcxFlMapper;
 import com.start.boot.dao.ajpc.Yx_Pc_PcxMapper;
 import com.start.boot.domain.*;
+import com.start.boot.domain.JxpcAj;
 import com.start.boot.pojo.vo.PcxVoList;
 import com.start.boot.pojo.vo.Yx_Pc_PcxFlVo;
 import com.start.boot.service.FilterService;
+import com.start.boot.service.PcAjService;
+import com.start.boot.service.XtZzjgDwbmService;
 import com.start.boot.support.utils.EasyUIHelper;
 import com.start.boot.support.utils.FastJsonUtils;
-import io.swagger.models.auth.In;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Row;
@@ -55,6 +58,8 @@ public class FilterController extends ArchivesSystemBaseController {
     @Autowired
     YX_PC_JBXXMapper yx_pc_jbxxMapper;
 
+    @Autowired
+    XtZzjgDwbmService zzjgDwbmService;
 
     /**
      * 评查筛选规则列表
@@ -854,6 +859,92 @@ public class FilterController extends ArchivesSystemBaseController {
         }
 
         return result;
+    }
+
+
+    @RequestMapping("/getSxgzByPcflbmAndPcmb")
+    public String getSxgzByPcflbmAndPcmb(String pcflbm, String pcmbmb){
+        //响应到页面封装
+        String result = "";
+        try {
+            List<Map> list = filterService.getSxgzByPcflbmAndPcmb(pcflbm, pcmbmb);
+
+            result = EasyUIHelper.buildTreeDataSourceWithoutIconCol(list, "GZBM", "FGZBM", "GZMC", "-1");
+        }catch (Exception e){
+            super.errMsg("交叉分配案件获取规则失败", String.format("pcflbm: %pcflbm,pcmbbm: %pcmbbm",pcflbm,pcmbmb), e);
+            result = failure(e.getMessage(), "交叉分配案件获取规则失败");
+        }
+       return result;
+
+    }
+
+
+    @RequestMapping("/getJsdw")
+    public String getJsdw(String dwbm) {
+
+        //响应到页面封装
+        String result = "";
+        try {
+
+            List<Map>  list=zzjgDwbmService.getSibligDwbm(dwbm);
+
+            result = EasyUIHelper.buildTreeDataSourceWithoutIconCol(list,"DWBM","FDWBM","DWMC","-1");
+        } catch (Exception e) {
+            super.errMsg("获取接受单位失败", dwbm, e);
+            result = failure(e.getMessage(), "获取接受单位失败");
+        }
+
+        return result;
+    }
+
+
+    /**
+     * 交叉案件分配
+     * @param jxpcAj
+     * @return
+     */
+    @RequestMapping("/assignJxAj")
+    public String getJxAj(JxpcAj jxpcAj) {
+
+        //响应到页面封装
+        String result = "";
+        try {
+
+            boolean isSuccess = filterService.assignJxAj(jxpcAj);
+
+
+            result = success(isSuccess,"开放成功");
+        } catch (Exception e) {
+            super.errMsg("开放失败", null, e);
+            result = failure(e.getMessage(), "开放失败");
+        }
+
+        return result;
+    }
+
+    /**
+     * 交叉案件移除
+     * @param jxpcAj
+     * @return
+     */
+    @RequestMapping("/removeAssignJxaj")
+    public String removeAssignJxaj(JxpcAj jxpcAj){
+
+        //响应到页面封装
+        String result = "";
+        try {
+
+            boolean isSuccess = filterService.removeAssignJxaj(jxpcAj);
+
+            result = success(isSuccess,"移除成功");
+        } catch (Exception e) {
+            super.errMsg("移除失败", null, e);
+            result = failure(e.getMessage(), "移除失败");
+        }
+
+        return result;
+
+
     }
 
 }

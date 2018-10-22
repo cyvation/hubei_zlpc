@@ -5,6 +5,7 @@ package com.start.boot.service;/**
 import com.start.boot.domain.XtZzjgDwbm;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author caomin
@@ -19,4 +20,6 @@ public interface XtZzjgDwbmService {
      * @return
      */
     List<XtZzjgDwbm> getDwbmTreeList(String dwbm);
+
+    List<Map> getSibligDwbm(String dwbm);
 }

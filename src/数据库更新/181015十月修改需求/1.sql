@@ -40,3 +40,37 @@ where key = 'pcfk_zd_fkyj';
 update xt_yx_pz
 set value = '5'
 where key = 'pcfk_min_days';
+
+
+
+DECLARE
+  v_sql    VARCHAR2(3000);
+  v_cursor SYS_REFCURSOR;
+  v_dwbm   CHAR(6) DEFAULT '420000';
+  v_record xt_zzjg_dwbm%ROWTYPE;
+BEGIN
+
+
+  -- 查询本单位及所有下级单位
+  v_sql := 'SELECT *
+                FROM xt_zzjg_dwbm
+               START WITH dwbm = :dwbm
+                      AND sfsc = ''N''
+             CONNECT BY fdwbm = PRIOR dwbm
+                    AND sfsc = ''N''';
+
+  OPEN v_cursor FOR v_sql
+  USING v_dwbm;
+
+  LOOP
+    FETCH v_cursor
+    INTO v_record;
+    EXIT WHEN v_cursor%NOTFOUND;
+
+    -- 新增重点案件信息库
+    insert into xt_qx_dwgn(dwbm, gnbm, sfsc) values(v_record.dwbm, '4200000029', 'N');
+    -- 某个单位某个角色具有权限
+    insert into xt_qx_jsgnfp(dwbm, jsbm, gnbm, bz, gncs, bmbm) values(v_record.dwbm, '100', '4200000029', null, null, '9191');
+
+  END LOOP;
+END;

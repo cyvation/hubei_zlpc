@@ -246,4 +246,15 @@
     start with DWBM =#{dwbm}
     connect by prior DWBM=FDWBM
   </select>
+
+  <select id="getSibligDwbm" resultMap="siblingdwbmMap">
+
+    select dw.dwbm, dw.dwmc, '-1' fdwbm
+    from xt_zzjg_dwbm dw
+
+    where dw.fdwbm = (select fdwbm from xt_zzjg_dwbm where dwbm = #{dwbm})
+    and   dw.dwbm != #{dwbm}
+  </select>
+    
+    <resultMap id="siblingdwbmMap" type="map"/>
 </mapper>

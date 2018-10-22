@@ -360,6 +360,68 @@ function eval_special_marksInit(pcxx) {
         displayMsg: '当前显示【{from} ~ {to}】条记录   共【{total}】条记录'
     });
 
+    // 切换选择交叉案件
+    $('#eval_sp__is_jxpc').switchbutton({
+        checked: false,
+
+        onChange: function(checked){
+            //console.log(checked);
+            if(checked){
+
+                var dw = $("#cbt_eval_bulid_sp_dwbm").combotree('getValue');
+                dw = userInfo.DWBM; // 交叉暂时只能查询当前人兄弟单位分配的案件
+                // 接收单位,与承办单位平级
+                $('#cbt_eval_bulid_sp_dwbm').combotree({
+                    method: 'get',
+                    editable: false,
+                    lines: true,
+                    panelWidth:270,
+                    // multiple: true,
+                    //cascadeCheck: false,
+                    onShowPanel: index_onShowPanel,
+                    onHidePanel: index_onHidePanel,
+                    url: getRootPath() + '/filter/getJsdw',
+                    queryParams: {
+                        dwbm:  dw
+                    },
+                    async: false,
+                    loadFilter: function (data) {
+                        return isNull(data) ? []  : data;
+                    },
+                    onLoadSuccess: function (node, data) {
+                        if (data != null && data.length >= 1) {
+                            $('#cbt_eval_bulid_sp_dwbm').combotree('setValue', data[0].id); //单位默认选择
+                        }
+                        index_addMousedownDiv(this,'cbt_eval_bulid_sp_dwbm');
+                    }
+                });
+
+            }else{
+                $('#cbt_eval_bulid_sp_dwbm').combotree({
+                    method: 'get',
+                    editable: false,
+                    lines: true,
+                    panelWidth:270,
+                    // multiple: true,
+                    //cascadeCheck: false,
+                    onShowPanel: index_onShowPanel,
+                    onHidePanel: index_onHidePanel,
+                    url: getRootPath() + '/organization/getDwbmTree',
+                    async: false,
+                    loadFilter: function (data) {
+                        return data.status == 200 ? JSON.parse(data.value) : [];
+                    },
+                    onLoadSuccess: function (node, data) {
+                        if (data != null && data.length >= 1) {
+                            $('#cbt_eval_bulid_sp_dwbm').combotree('setValue', data[0].id); //单位默认选择
+                        }
+                        index_addMousedownDiv(this,'cbt_eval_bulid_sp_dwbm');
+                    }
+                });
+            }
+        }
+    })
+
     // 查询
     $("#btn_eval_build_sp_search").unbind( "click" );
     $("#btn_eval_build_sp_search").bind("click", function () {
@@ -1075,6 +1137,10 @@ function load_table_eval_bulid_sp_filter(pcxx) {
     obj.GZRQBNG = $('#date_eval_build_sp_begin').datebox('getValue');
     obj.GZRQEND = $('#date_eval_build_sp_end').datebox('getValue');
     obj.ZDYCXTJ = get_eval_build_sp_zdycxtj();
+
+    // 判断是否交叉评查
+    var isjxkf = $("#eval_sp__is_jxpc").switchbutton("options").checked;
+    obj.type = isjxkf ? 'Y' : 'N';
 
     $('#table_eval_bulid_sp_filter').datagrid({
         url: getRootPath()+'/filter/getSjsx',

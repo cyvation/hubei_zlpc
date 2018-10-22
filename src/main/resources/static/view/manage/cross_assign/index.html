@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>交叉案件分配 </title>
+</head>
+<body>
+<!--页面JS加载，放在头部不能正确加载-->
+<script type="text/javascript">
+    AddScript("text/javascript", "script/manage/cross_assign/index.js");
+</script>
+
+<div class="pcajsx">
+
+    <!-- 自定义 -->
+    <div id="page_eval_build_rd_custom" style="left:0%">
+        <div class="pcajsx_zdy_sj">
+            <div class="pcajsx_zdy_sj_all">
+                <div id="cbt_eval_build_rd_custom_pcdw_div" class="pcajsx_zdy_sj_all_1">
+                    <span>承办单位</span>
+                    <input id="cbt_manage_cross_cbdw" class="easyui-combotree" style="height: 28px;width:200px;">
+                </div>
+
+                <div class="pcajsx_zdy_sj_all_1">
+                    <span>评查方式</span>
+                    <input id="cbt_manage_cross_lb" class="easyui-textbox" style="width:200px;height: 28px;" />
+                </div>
+
+                <div class="pcajsx_zdy_sj_all_1">
+                    <span>评查模板</span>
+                    <input id="cbt_manage_cross_pcmb" class="easyui-combotree" style="width:200px;height: 28px;" />
+                </div>
+
+
+
+                <div class="pcajsx_zdy_sj_all_1">
+                    <span>筛选规则</span>
+                    <input id="cbt_manage_cross_sxgz" class="easyui-combotree" style="width:200px;height: 28px;" />
+                </div>
+
+                <div class="pcajsx_zdy_sj_all_1" style="width: 22%">
+                    <span>完成日期</span>
+                    <input id="date_manage_cross_start" class="easyui-datebox" style="height: 28px;width:120px;"/>
+                    <span style=" width: 20px;display: inline-block; text-align: center;">~ </span>
+                    <input id="date_manage_cross_end" class="easyui-datebox" style="height: 28px;width:120px;"/>
+                </div>
+
+            </div>
+            <div  class="pcajsx_zdy_sj_all">
+                <!--<div class="pcajsx_zdy_sj_all_1" >-->
+                    <!--<span>接收单位</span>-->
+                    <!--<input id="cbt_manage_cross_jsdw" class="easyui-combotree"  style="width:200px;height: 30px;"/>-->
+                <!--</div>-->
+
+                <div class="pcajsx_zdy_sj_all_1">
+                    <span>案件名称</span>
+                    <input id="txt_manage_cross_cbdw" class="easyui-textbox" style="width:200px;height: 28px;" />
+                </div>
+
+                <div class="pcajsx_zdy_sj_all_1">
+                    <span>部门受案号</span>
+                    <input id="txt_manage_cross_bmsah" class="easyui-textbox" style="width:200px;height: 28px;" />
+                </div>
+
+                <div class="pcajsx_zdy_sj_all_1">
+                    <span>承办检察官</span>
+                    <input id="txt_manage_cross_stuff" class="easyui-textbox"  style="width:200px;height: 30px;"/>
+                </div>
+                <div class="pcajsx_zdy_sj_all_1">
+                    <button id="btn_manage_cross_search" class="pcajsx_sj_2">查询</button>
+                    <button id="btn_manage_cross_batchassign" class="pcajsx_sj_2" style="display: none">批量开放</button>
+                    <button id="btn_manage_cross_batchremove" class="pcajsx_sj_2" style="display: none">批量移除</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="pcajsx_content_tree">
+            <div class="pcajsx_content_1">
+                <div id="table_manage_jxpcaj"></div>
+            </div>
+        </div>
+    </div>
+
+    <!--案件详细信息-->
+    <div id="win_eval_build_rd_caseinfo">
+    </div>
+
+
+    <div id="win_manage_crossassign_jsdw" class="easyui-window" title="接收单位"  style="width:340px;height:150px"
+         data-options="closed:true,collapsible:false,shadow:false,maximizable:false,minimizable:false,modal:true,cache:false,resizable:true">
+
+        <div id="div_eval_random_mb" style="width:100%;height:calc(100% - 50px);float: left;overflow: hidden; ">
+            <!--单位列表-->
+            &nbsp;&nbsp;<span>接收单位</span>
+            <input id="cbt_manage_cross_jsdw" class="easyui-combotree"  style="width:200px;height: 30px;"/>
+        </div>
+
+        <div style="text-align:center;margin: 10px 0;width: 100%;height: 30px;float: left">
+            <button id="btn_manage_jxpc_assign_confirm" class="ZXpc_pcfa_2" style="background-color: #258EEA;">确定
+            </button>
+            <button id="btn_manage_jxpc_assign_cancle" class="ZXpc_pcfa_2" style="background-color: #258EEA;">取消</button>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

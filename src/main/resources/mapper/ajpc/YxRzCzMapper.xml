@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.YxRzCzMapper">
+  <resultMap id="BaseResultMap" type="com.start.boot.domain.YxRzCz">
+    <result column="LOGID" jdbcType="DECIMAL" property="logid" />
+    <result column="CZSJ" jdbcType="DATE" property="czsj" />
+    <result column="CZLX" jdbcType="VARCHAR" property="czlx" />
+    <result column="GNBM" jdbcType="VARCHAR" property="gnbm" />
+    <result column="CZSM" jdbcType="VARCHAR" property="czsm" />
+    <result column="CZRDWBM" jdbcType="CHAR" property="czrdwbm" />
+    <result column="CZRGH" jdbcType="VARCHAR" property="czrgh" />
+    <result column="CZRMC" jdbcType="VARCHAR" property="czrmc" />
+    <result column="IP" jdbcType="VARCHAR" property="ip" />
+    <result column="PCLBBM" jdbcType="VARCHAR" property="pclbbm" />
+    <result column="PCSLBM" jdbcType="VARCHAR" property="pcslbm" />
+    <result column="GNMC" jdbcType="VARCHAR" property="gnmc" />
+    <result column="CZRDWMC" jdbcType="VARCHAR" property="czrdwmc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    LOGID, CZSJ, CZLX, GNBM, CZSM, CZRDWBM, CZRGH, CZRMC, IP, PCLBBM, PCSLBM, GNMC, CZRDWMC
+  </sql>
+  <select id="selectByExample" parameterType="com.start.boot.domain.YxRzCzExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ZLPC.YX_RZ_CZ
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.start.boot.domain.YxRzCzExample">
+    delete from ZLPC.YX_RZ_CZ
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.start.boot.domain.YxRzCz">
+    insert into ZLPC.YX_RZ_CZ (LOGID, CZSJ, CZLX, 
+      GNBM, CZSM, CZRDWBM, CZRGH, 
+      CZRMC, IP, PCLBBM, 
+      PCSLBM, GNMC, CZRDWMC
+      )
+    values (#{logid,jdbcType=DECIMAL}, #{czsj,jdbcType=DATE}, #{czlx,jdbcType=VARCHAR}, 
+      #{gnbm,jdbcType=VARCHAR}, #{czsm,jdbcType=VARCHAR}, #{czrdwbm,jdbcType=CHAR}, #{czrgh,jdbcType=VARCHAR}, 
+      #{czrmc,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{pclbbm,jdbcType=VARCHAR}, 
+      #{pcslbm,jdbcType=VARCHAR}, #{gnmc,jdbcType=VARCHAR}, #{czrdwmc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.start.boot.domain.YxRzCz">
+    <selectKey keyProperty="logid" resultType="DECIMAL" order="BEFORE">
+      select seq_yx_rz_cz.nextval from dual
+    </selectKey>
+
+    insert into ZLPC.YX_RZ_CZ
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logid != null">
+        LOGID,
+      </if>
+      <if test="czsj != null">
+        CZSJ,
+      </if>
+      <if test="czlx != null">
+        CZLX,
+      </if>
+      <if test="gnbm != null">
+        GNBM,
+      </if>
+      <if test="czsm != null">
+        CZSM,
+      </if>
+      <if test="czrdwbm != null">
+        CZRDWBM,
+      </if>
+      <if test="czrgh != null">
+        CZRGH,
+      </if>
+      <if test="czrmc != null">
+        CZRMC,
+      </if>
+      <if test="ip != null">
+        IP,
+      </if>
+      <if test="pclbbm != null">
+        PCLBBM,
+      </if>
+      <if test="pcslbm != null">
+        PCSLBM,
+      </if>
+      <if test="gnmc != null">
+        GNMC,
+      </if>
+      <if test="czrdwmc != null">
+        CZRDWMC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="logid != null">
+        #{logid,jdbcType=DECIMAL},
+      </if>
+      <if test="czsj != null">
+        #{czsj,jdbcType=DATE},
+      </if>
+      <if test="czlx != null">
+        #{czlx,jdbcType=VARCHAR},
+      </if>
+      <if test="gnbm != null">
+        #{gnbm,jdbcType=VARCHAR},
+      </if>
+      <if test="czsm != null">
+        #{czsm,jdbcType=VARCHAR},
+      </if>
+      <if test="czrdwbm != null">
+        #{czrdwbm,jdbcType=CHAR},
+      </if>
+      <if test="czrgh != null">
+        #{czrgh,jdbcType=VARCHAR},
+      </if>
+      <if test="czrmc != null">
+        #{czrmc,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="pclbbm != null">
+        #{pclbbm,jdbcType=VARCHAR},
+      </if>
+      <if test="pcslbm != null">
+        #{pcslbm,jdbcType=VARCHAR},
+      </if>
+      <if test="gnmc != null">
+        #{gnmc,jdbcType=VARCHAR},
+      </if>
+      <if test="czrdwmc != null">
+        #{czrdwmc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.start.boot.domain.YxRzCzExample" resultType="java.lang.Long">
+    select count(*) from ZLPC.YX_RZ_CZ
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ZLPC.YX_RZ_CZ
+    <set>
+      <if test="record.logid != null">
+        LOGID = #{record.logid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.czsj != null">
+        CZSJ = #{record.czsj,jdbcType=DATE},
+      </if>
+      <if test="record.czlx != null">
+        CZLX = #{record.czlx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gnbm != null">
+        GNBM = #{record.gnbm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.czsm != null">
+        CZSM = #{record.czsm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.czrdwbm != null">
+        CZRDWBM = #{record.czrdwbm,jdbcType=CHAR},
+      </if>
+      <if test="record.czrgh != null">
+        CZRGH = #{record.czrgh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.czrmc != null">
+        CZRMC = #{record.czrmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ip != null">
+        IP = #{record.ip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pclbbm != null">
+        PCLBBM = #{record.pclbbm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pcslbm != null">
+        PCSLBM = #{record.pcslbm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gnmc != null">
+        GNMC = #{record.gnmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.czrdwmc != null">
+        CZRDWMC = #{record.czrdwmc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ZLPC.YX_RZ_CZ
+    set LOGID = #{record.logid,jdbcType=DECIMAL},
+      CZSJ = #{record.czsj,jdbcType=DATE},
+      CZLX = #{record.czlx,jdbcType=VARCHAR},
+      GNBM = #{record.gnbm,jdbcType=VARCHAR},
+      CZSM = #{record.czsm,jdbcType=VARCHAR},
+      CZRDWBM = #{record.czrdwbm,jdbcType=CHAR},
+      CZRGH = #{record.czrgh,jdbcType=VARCHAR},
+      CZRMC = #{record.czrmc,jdbcType=VARCHAR},
+      IP = #{record.ip,jdbcType=VARCHAR},
+      PCLBBM = #{record.pclbbm,jdbcType=VARCHAR},
+      PCSLBM = #{record.pcslbm,jdbcType=VARCHAR},
+      GNMC = #{record.gnmc,jdbcType=VARCHAR},
+      CZRDWMC = #{record.czrdwmc,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

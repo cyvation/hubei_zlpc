@@ -5,6 +5,7 @@ import com.start.boot.domain.XtZzjgDwbmExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface XtZzjgDwbmMapper {
     long countByExample(XtZzjgDwbmExample example);
@@ -31,4 +32,6 @@ public interface XtZzjgDwbmMapper {
 
 
     List<XtZzjgDwbm>   getDwbmTreeList(@Param("dwbm")String dwbm);
+
+    List<Map> getSibligDwbm(@Param("dwbm") String dwbm);
 }

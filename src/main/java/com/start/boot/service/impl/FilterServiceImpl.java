@@ -1,11 +1,12 @@
 package com.start.boot.service.impl;
 
-import com.github.pagehelper.PageHelper;
 import com.start.boot.common.Param_Pager;
 import com.start.boot.dao.ajpc.FilterMapper;
+import com.start.boot.dao.ajpc.YxRzCzMapper;
 import com.start.boot.dao.ajpc.Yx_Pc_PcxFlMapper;
 import com.start.boot.dao.ajpc.Yx_Pc_PcxMapper;
 import com.start.boot.domain.*;
+import com.start.boot.domain.JxpcAj;
 import com.start.boot.service.FilterService;
 import com.start.boot.support.utils.DataAccessHelper;
 import com.start.boot.support.utils.OracleTimeUtils;
@@ -16,7 +17,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +39,9 @@ public class FilterServiceImpl implements FilterService {
 
     @Autowired
     Yx_Pc_PcxFlMapper yx_pc_pcxFlMapper;
+
+    @Autowired
+    YxRzCzMapper yxRzCzMapper;
 
     // 评查筛选规则列表
     @Override
@@ -116,6 +122,7 @@ public class FilterServiceImpl implements FilterService {
         map.put("p_ajmc",paramSx.getAjmc());//案件名称
         map.put("p_cbrxm",paramSx.getCbrxm());//承办人姓名
         map.put("p_ay",paramSx.getAy());//案由
+        map.put("p_sfkf",paramSx.getType());//交叉评查
 
         map.put("p_slrqbng", OracleTimeUtils.format(paramSx.getSlrqbng()));//受理日期开始时间
         map.put("p_slrqend",OracleTimeUtils.format(paramSx.getSlrqend()));//受理日期结束时间
@@ -569,6 +576,7 @@ public class FilterServiceImpl implements FilterService {
         map.put("p_bmsah",paramSx.getBmsah());//部门受案号
         map.put("p_ajmc",paramSx.getAjmc());//案件名称
         map.put("p_cbrxm",paramSx.getCbrxm());//承办人姓名
+        map.put("p_sfkf",paramSx.getType());//交叉评查
 
         map.put("p_wcrqbng",OracleTimeUtils.format(paramSx.getWcrqbng()));//完成日期开始时间
         map.put("p_wcrqend",OracleTimeUtils.format(paramSx.getWcrqend()));//完成日期结束时间
@@ -609,4 +617,71 @@ public class FilterServiceImpl implements FilterService {
         pcjkParam.setList(list);
         return pcjkParam;
         }
+
+
+    @Override
+    public List<Map> getSxgzByPcflbmAndPcmb(String pcflbm, String pcmbmb) {
+        return filterMapper.getSxgzByPcflbmAndPcmb(pcflbm, pcmbmb);
+    }
+
+    // 开放案件给某个单位
+   @Override
+    public boolean assignJxAj(JxpcAj jxpcAj) throws Exception {
+
+        // 获取案件列表
+       List<JxpcAj.Aj>  list = filterMapper.getAj(jxpcAj);
+
+        if (CollectionUtils.isEmpty(list)){
+            throw  new Exception("没有案件可供分配");
+        }
+
+        jxpcAj.setAjList(list);
+
+        filterMapper.assignJxAj(jxpcAj);
+
+
+        // 添加日志
+        YxRzCz rz = new YxRzCz();
+        rz.setCzrdwbm(jxpcAj.getCzr_dwbm());
+        rz.setCzrdwmc(jxpcAj.getCzr_dwmc());
+        rz.setCzrgh(jxpcAj.getCzr_gh());
+        rz.setCzrmc(jxpcAj.getCzr_mc());
+
+        rz.setCzlx("1");
+        rz.setCzsm(jxpcAj.getDwmc() + "开放【" + jxpcAj.getBmsahlist().size() + "】件案件给" + jxpcAj.getJsdwmc() );
+        rz.setGnmc("案件开放");
+        rz.setCzsj(new Date());
+
+        yxRzCzMapper.insertSelective(rz);
+
+        return true;
+    }
+
+    // 移除案件开放
+    @Override
+    public boolean removeAssignJxaj(JxpcAj jxpcAj) throws Exception {
+
+        if (CollectionUtils.isEmpty(jxpcAj.getBmsahlist())){
+            throw  new Exception("没有开放的案件可供移除");
+        }
+
+        filterMapper.removeAssignJxaj(jxpcAj);
+
+        // 添加日志
+        YxRzCz rz = new YxRzCz();
+        rz.setCzrdwbm(jxpcAj.getCzr_dwbm());
+        rz.setCzrdwmc(jxpcAj.getCzr_dwmc());
+        rz.setCzrgh(jxpcAj.getCzr_gh());
+        rz.setCzrmc(jxpcAj.getCzr_mc());
+
+        rz.setCzlx("1");
+        rz.setCzsm(jxpcAj.getDwmc() + "移除【" +  jxpcAj.getBmsahlist().size() + "】件案件" );
+        rz.setGnmc("案件开放移除");
+        rz.setCzsj(new Date());
+
+        yxRzCzMapper.insertSelective(rz);
+
+        return true;
+
+    }
 }

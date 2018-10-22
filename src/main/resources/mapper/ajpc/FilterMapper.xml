@@ -56,6 +56,7 @@
                                         #{p_ajmc,mode=IN,jdbcType=VARCHAR},
                                         #{p_cbrxm,mode=IN,jdbcType=VARCHAR},
                                         #{p_ay,mode=IN,jdbcType=VARCHAR},
+                                        #{p_sfkf,mode=IN,jdbcType=VARCHAR},
                                         #{p_slrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
                                         #{p_slrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
                                         #{p_bjrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
@@ -88,6 +89,7 @@
                                         #{p_bmsah,mode=IN,jdbcType=VARCHAR},
                                         #{p_ajmc,mode=IN,jdbcType=VARCHAR},
                                         #{p_cbrxm,mode=IN,jdbcType=VARCHAR},
+                                        #{p_sfkf,mode=IN,jdbcType=VARCHAR},
                                         #{p_wcrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
                                         #{p_wcrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
                                         #{p_zdycxtj,mode=IN,jdbcType=VARCHAR},
@@ -453,5 +455,121 @@
     </select>
     
     <resultMap id="zdinfoMap" type="map"/>
+
+    <select id="getSxgzByPcflbmAndPcmb" resultMap="pcsxgzMap">
+
+        select  gzbm,
+                gzmc,
+                nvl2(fgzbm, fgzbm, '-1' ) fgzbm,
+                SFZDY
+        from xt_pc_sxgz
+        where pcflbm = #{pcflbm} and pcmbj = #{pcmbbm}
+
+    </select>
+
+    <resultMap id="pcsxgzMap" type="map"/>
+
+    <!--获取待分配案件列表-->
+    <select id="getAj" parameterType="com.start.boot.domain.JxpcAj" resultType="com.start.boot.domain.JxpcAj$Aj">
+
+
+        SELECT sxjl.dwbm,
+               sxjl.dwmc,
+               sxjl.bmsah,
+               sxjl.ajmc,
+               sxjl.pcflbm,
+               sxjl.ajlb_bm,
+               sxjl.ajlb_mc
+
+            from yx_pc_sxjl sxjl
+        where NOT EXISTS (SELECT 1 FROM yx_pc_jbxx jb WHERE sxjl.bmsah = jb.bmsah AND jb.sfsc='N')
+        and  sxjl.pcflbm = #{pcflbm}
+        and
+        <foreach collection="bmsahlist" item="bmsah" open="(" separator="," close=")">
+            sxjl.bmsah in #{bmsah}
+        </foreach>
+
+        union
+
+
+        select  aj.cbdw_bm dwbm,
+                aj.cbdw_mc dwmc,
+                aj.bmsah,
+                aj.ajmc,
+                '000' pcflbm,
+                aj.ajlb_bm,
+                aj.ajlb_mc
+
+        from tyyw_gg_ajjbxx@tyyw_link.net aj
+        where NOT EXISTS (SELECT 1 FROM yx_pc_jbxx jb WHERE aj.bmsah = jb.bmsah AND jb.sfsc='N')
+        and   NOT EXISTS (SELECT 1 FROM yx_pc_sxjl jl WHERE aj.bmsah = jl.bmsah )
+        and aj.sfsc = 'N'
+        and
+        <foreach collection="bmsahlist" item="bmsah" open="(" separator="," close=")">
+            aj.bmsah in #{bmsah}
+        </foreach>
+
+
+    </select>
+    
+    <!--案件分配-->
+    <insert id="assignJxAj" parameterType="com.start.boot.domain.JxpcAj" useGeneratedKeys="false" >
+
+        insert into yx_pc_jxpcaj
+        (dwbm,
+        dwmc,
+
+        bmsah,
+        ajmc,
+        pcflbm,
+        ajlb_bm,
+        ajlb_mc,
+        jsdw,
+        jsdwmc,
+        cjsj,
+        sm,
+        czr_dwbm,
+        czr_dwmc,
+        czr_gh,
+        czr_mc)
+
+        select A.*
+        from (
+        <foreach collection="ajList" item="aj" index="index"  separator="UNION ALL">
+            select
+            #{dwbm, jdbcType=CHAR},
+            #{dwmc, jdbcType = VARCHAR},
+
+            #{aj.bmsah, jdbcType= VARCHAR},
+            #{aj.ajmc, jdbcType= VARCHAR},
+            #{aj.pcflbm, jdbcType= CHAR},
+            #{aj.ajlb_bm, jdbcType= CHAR},
+            #{aj.ajlb_mc, jdbcType= VARCHAR},
+            #{jsdw, jdbcType= CHAR},
+            #{jsdwmc, jdbcType=VARCHAR},
+            SYSDATE,
+            #{sm, jdbcType= VARCHAR},
+            #{czr_dwbm, jdbcType= CHAR},
+            #{czr_dwmc, jdbcType= VARCHAR},
+            #{czr_gh, jdbcType= CHAR},
+            #{czr_mc, jdbcType= VARCHAR}
+            from dual
+
+        </foreach>
+        )A
+    </insert>
+
+
+    <!--撤回案件开放-->
+    <delete id="removeAssignJxaj" parameterType="com.start.boot.domain.JxpcAj">
+
+        delete from yx_pc_jxpcaj jxpcaj
+        where 1 =1 
+        and jxpcaj.dwbm = #{dwbm}
+        and  jxpcaj.bmsah in
+            <foreach collection="bmsahlist" item="bmsah" open="(" separator="," close=")">
+                  #{bmsah}
+            </foreach>
+    </delete>
 
 </mapper>

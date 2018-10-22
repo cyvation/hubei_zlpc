@@ -1,6 +1,8 @@
 package com.start.boot.dao.ajpc;
 
 import com.start.boot.domain.Param_Pcjk;
+import com.start.boot.domain.JxpcAj;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -53,4 +55,12 @@ public interface FilterMapper {
     List<Map> getSxgzByPcflbmAndYwtx(Map param);
 
     List<Map> getZdAj(Param_Pcjk pcjkParam);
+
+    List<Map> getSxgzByPcflbmAndPcmb(@Param("pcflbm") String pcflbm,@Param("pcmbbm") String pcmbmb);
+
+    void assignJxAj(JxpcAj jxpcAj);
+
+    List<JxpcAj.Aj> getAj(JxpcAj jxpcAj);
+
+    void removeAssignJxaj(JxpcAj jxpcAj);
 }

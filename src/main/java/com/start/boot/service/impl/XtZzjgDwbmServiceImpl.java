@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author caomin
@@ -27,5 +28,13 @@ public class XtZzjgDwbmServiceImpl implements XtZzjgDwbmService {
             throw new RuntimeException("单位编码为空");
         }
          return   xtZzjgDwbmMapper.getDwbmTreeList(dwbm);
+    }
+
+    @Override
+    public List<Map> getSibligDwbm(String dwbm) {
+        if (StringUtils.isEmpty(dwbm)){
+            throw new RuntimeException("单位编码为空");
+        }
+        return   xtZzjgDwbmMapper.getSibligDwbm(dwbm);
     }
 }

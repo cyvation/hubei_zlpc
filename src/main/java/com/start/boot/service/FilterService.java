@@ -5,6 +5,7 @@ import com.start.boot.common.Param_Pager;
 import com.start.boot.domain.ParamSx;
 import com.start.boot.domain.Param_Ajsx;
 import com.start.boot.domain.Param_Pcjk;
+import com.start.boot.domain.JxpcAj;
 import com.start.boot.pojo.vo.PcxVoList;
 
 import java.util.List;
@@ -66,4 +67,10 @@ public interface FilterService {
     List<Map> getSxgzByPcflbmAndYwtx(Map param) throws Exception;
 
     Param_Pager getZdAj(Param_Pcjk pcjkParam);
+
+    List<Map> getSxgzByPcflbmAndPcmb(String pcflbm, String pcmbmb);
+
+    boolean assignJxAj(JxpcAj jxpcAj) throws Exception;
+
+    boolean removeAssignJxaj(JxpcAj jxpcAj) throws Exception;
 }

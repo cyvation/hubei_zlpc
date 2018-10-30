@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>评查报告审批-审批意见</title>
+</head>
+<body>
+<!--页面JS加载，放在头部不能正确加载-->
+<script type="text/javascript">
+    AddScript("text/javascript", "script/evaluate/report/report_spyj.js");
+</script>
+<style>
+    .redGrid .tdtitle {
+        border: 1px solid #D0130F;
+    }
+    .redGrid tr {
+        height: 40px;
+        font-size: 18px;
+        color: #ff130F;
+        font-weight: bold;
+        font-family: 楷体;
+    }
+    .redGrid {
+        text-align: center;
+        vertical-align: middle;
+        border: 1px solid #D0130F;
+    }
+    .redGrid .tdcontent {
+        border: 1px solid #D0130F;
+        text-align: left;
+        font-weight: normal;
+        color: #000000;
+        padding-left: 10px;
+    }
+    .redGrid .luokuan {
+        text-align: right;
+        color: Black;
+        font-weight: normal;
+        margin-top: 6px;
+        margin-right: 10px;
+    }
+    #win_approve_report_spyj .panel{
+        height: 100%;
+    }
+    #win_anyscx_xr .l-btn-text{
+        display: initial;
+    }
+    #table_approve_report_spyj tr td div.radio_checkbox{
+        float: left;
+        margin-right: 10px;
+        color: #406b95;
+
+    }
+    .radio_checkbox>.redio_click>input {
+        margin-top: 0;
+        float: left;
+        opacity: 0;
+        filter: alpha(opacity=0);
+        width: 30px;
+        display: inline-block;
+        cursor: pointer;
+    }
+</style>
+<div id="div_approve_report_spyj" class="easyui-panel" style="margin-top: 0px; width: 99%;height: 100%;
+            padding-left: 10px;" data-options="border:false">
+
+    <div style="color: Red; text-align: center; font-size: 18px; font-weight: bold; margin: 0px 0px 12px 0px;">
+        案件质量评查报告审批表
+    </div>
+    <table id="table_approve_report_spyj" cellpadding="0" cellspacing="0" class="redGrid" style="width: 99%;">
+        <tr>
+            <td class="tdtitle">
+                报告名称
+            </td>
+            <td class="tdcontent" colspan="3">
+                <span id="lb_approve_report_spyj_bgmc"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdtitle">
+                评查名称
+            </td>
+            <td class="tdcontent" colspan="3">
+                <span id="lb_approve_report_spyj_pcmc"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdtitle" style="width: 140px;">
+                制作单位
+            </td>
+            <td class="tdcontent" style="width: 300px;">
+                <span id="lb_approve_report_spyj_zzdwmc"></span>
+            </td>
+            <td class="tdtitle" style="width: 140px;">
+                制作人
+            </td>
+            <td class="tdcontent" style="width: 180px;">
+                <span id="lb_approve_report_spyj_zzr"></span>
+            </td>
+        </tr>
+
+    </table>
+    <div id="win_anyscx_xr" style="text-align: right; color: Black; font-weight: normal; margin-top: 10px;margin-right: 1px;">
+        <a id="btn_approve_report_spyj_goback" class="easyui-linkbutton" style="height: 30px;"><span style="font-weight: bold;font-size: 12px;">退回</span></a>
+        <a id="btn_approve_report_spyj_agree" class="easyui-linkbutton" style="height: 30px;"><span style="font-weight: bold;font-size: 12px;">审批完成</span></a>
+        <a id="btn_approve_report_spyj_sendAgain" class="easyui-linkbutton" style="height: 30px;"><span style="font-weight: bold;font-size: 12px;">继续送审</span></a>
+    </div>
+
+    <div id="win_send_check_rept" class="easyui-window" title="审批人" style="width:460px; height:380px;"
+         data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+        <div id="tool_search_win_send_check_rept" style="margin-bottom:15px; width:440px; text-align:center; ">
+            <!--案管负责人列表-->
+            <table id="dg_spry_win_send_check_rept" border="0"></table>
+        </div>
+        <div style="text-align:center;">
+            <button id="btn_ok_win_send_check_rept" class="easyui-linkbutton" style="background-color: #258EEA;">确定
+            </button>
+            <button id="btn_cancel_win_send_check_rept" class="easyui-linkbutton" style="background-color: #258EEA;">取消</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

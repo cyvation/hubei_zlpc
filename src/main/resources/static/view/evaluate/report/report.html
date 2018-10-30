@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>评查审批-评查报告</title>
+</head>
+<body>
+<!--页面JS加载，放在头部不能正确加载-->
+<script type="text/javascript">
+    AddScript("text/javascript", "script/document/JScriptDoc.js");
+    AddScript("text/javascript", "script/document/ntkoofficecontrol_pcbg.js");
+    AddScript("text/javascript", "script/evaluate/report/report.js");
+</script>
+
+<div id="pnl_approve_report" class="easyui-panel" data-options="fit:true,border:false">
+    <div id="tool_approve_report" style="text-align: right; margin-top: 10px; margin-right: 20px;">
+        <table id="table_approve_report_info" style="margin-top: 10px; margin-left: 10px;">
+            <tr>
+                <td>
+                    评查报告名称：
+                </td>
+                <td>
+                    <input id="txt_approve_report_bgmc" class="easyui-textbox" style="width: 280px;" data-options="disabled:true" />
+                </td>
+                <td>
+                    &nbsp拟制人：
+                </td>
+                <td>
+                    <input id="txt_approve_report_cjr" class="easyui-textbox" style="width: 110px" data-options="disabled:true" />
+                </td>
+                <td>
+                    拟制时间：
+                </td>
+                <td>
+                    <input id="txt_approve_report_cjsj" class="easyui-textbox" style="width: 110px" data-options="disabled:true" />
+                </td>
+                <td>
+                    <a id="txt_approve_report_spyj" style="margin-left:30px;" class="easyui-linkbutton">审批意见</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="divDoc_bg" style="height: 635px; margin-top: 10px;">
+    </div>
+</div>
+<div id="win_approve_report_spyj" class="easyui-window " style="width: 790px;height: 500px;overflow: hidden;"
+     data-options="closed:true,title:'评查报告审批意见', collapsible:false, minimizable:false,maximizable:false,modal:true,resizable:false">
+
+</div>
+</body>
+</html>

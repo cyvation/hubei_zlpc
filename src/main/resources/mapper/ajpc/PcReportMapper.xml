@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.start.boot.dao.ajpc.PcReportMapper">
+
+    <select id="getPcbgMb" resultType="map">
+        SELECT wsmb.wsmbbh,
+        wsmb.dwbm,
+        wsmb.pcflbm,
+        wsmb.wsmbmc,
+        wsmb.wsmblb,
+        wsmb.wsmblj,
+        wsmb.wsmbnr,
+        wsmb.wspx,
+        wsmb.spbbm,
+        wsmb.sfgx,
+        wsmb.sm,
+        wsmb.jzmlh,
+        wsmb.sm,
+        '-1' fbm
+        FROM xt_pc_wsmb wsmb
+        WHERE 1= 1
+        <if test="pcflbm !=null and pcflbm !=''">
+            and wsmb.pcflbm = #{pcflbm}
+        </if>
+        and wsmb.wsmblb = #{wsmblb}
+        order by wsmb.sm asc
+    </select>
+
+
+    <!--获取报告开头信息[单位、年份、]-->
+    <select id="getBgKt" parameterType="com.start.boot.domain.YxPcJzwj" resultMap="bgMap">
+        SELECT     #{nzrdwmc} as PCDWMC,
+        to_char(max(jb.zhxgsj),'yyyy"年')  AS PCSJ,
+        to_char(min(jb.zhxgsj),'yyyy"年"MM"月"dd"日"')  AS PCKSSJ,
+        to_char(max(jb.zhxgsj),'yyyy"年"MM"月"dd"日"')  AS PCJSSJ,
+        to_char(min(jb.zhxgsj),'yyyy"年"') ||  to_char(min(jb.zhxgsj),'q') || '季度' PCJD,
+        to_char(min(jb.zhxgsj),'yyyy"年"') ||  to_char(min(jb.zhxgsj),'q') || '季度' PCJD1,
+        COUNT(jb.pcslbm) AJCOUNT
+        FROM yx_pc_jbxx jb
+        INNER JOIN xt_zzjg_dwbm dw
+        ON jb.pcdwbm = dw.dwbm
+        WHERE jb.sfsc = 'N'
+        AND   INSTR(#{dwbm},jb.pcdwbm) &gt;=1
+        AND   jb.pcjdbh = '011'
+        <if test="startDate!=null and startDate!=''">
+            AND jb.zhxgsj &gt;= "TO_DATE"(#{startDate},'yyyy-mm-dd')
+        </if>
+
+        <if test="endDate!=null and endDate!=''">
+            AND jb.zhxgsj &lt;= "TO_DATE"(#{endDate},'yyyy-mm-dd')
+        </if>
+
+    </select>
+
+    <resultMap id="bgMap" type="map"/>
+
+    <!--获取报告基本情况、分类统计-->
+    <select id="getPcflAj" parameterType="com.start.boot.domain.Param_Jzwj" resultType="String">
+        SELECT
+        wmsys.wm_concat( lb.pcflmc || COUNT(jb.pcslbm) || '件') PCFLAJ
+        FROM yx_pc_jbxx jb
+        INNER JOIN xt_pc_lb lb
+        ON jb.pcflbm = lb.pcflbm
+        WHERE jb.sfsc = 'N'
+        AND   jb.pcjdbh = '011'
+        AND   INSTR(#{dwbm},jb.pcdwbm) &gt;=1
+        <if test="startDate!=null and startDate!=''">
+            AND jb.zhxgsj &gt;= "TO_DATE"(#{startDate},'yyyy-mm-dd')
+        </if>
+
+        <if test="endDate!=null and endDate!=''">
+            AND jb.zhxgsj &lt;= "TO_DATE"(#{endDate},'yyyy-mm-dd')
+        </if>
+        GROUP BY lb.pcflbm,lb.pcflmc
+    </select>
+
+    <!--获取报告基本情况、结论统计-->
+    <select id="getPcjlAj" parameterType="com.start.boot.domain.Param_Jzwj" resultType="String">
+        SELECT
+        wmsys.wm_concat(nvl2(jb.pcjl,jb.pcjl,'无结论') || COUNT(jb.pcslbm) || '件') PCJLAJ
+        FROM yx_pc_jbxx jb
+        INNER JOIN xt_pc_lb lb
+        ON jb.pcflbm = lb.pcflbm
+        WHERE jb.sfsc = 'N'
+        AND   jb.pcjdbh = '011'
+        AND   INSTR(#{dwbm},jb.pcdwbm) &gt;=1
+        <if test="startDate!=null and startDate!=''">
+            AND jb.zhxgsj &gt;= "TO_DATE"(#{startDate},'yyyy-mm-dd')
+        </if>
+
+        <if test="endDate!=null and endDate!=''">
+            AND jb.zhxgsj &lt;= "TO_DATE"(#{endDate},'yyyy-mm-dd')
+        </if>
+        GROUP BY jb.pcjl
+    </select>
+
+    <!--获取办案数量,办案件数，办案人数-->
+    <select id="getCount" parameterType="com.start.boot.domain.YxPcJzwj" resultMap="bgCountMap">
+        SELECT COUNT(jbxx.pcslbm) ajcount,
+        COUNT(DISTINCT jbxx.bpc_dwbm || jbxx.bpc_gh) rycount
+        from yx_pc_jbxx jbxx
+        WHERE jbxx.sfsc = 'N'
+        AND jbxx.pcflbm = #{pcflbm}
+        AND INSTR(#{dwbm},jbxx.pcdwbm) &gt;=1
+        AND jbxx.pcjdbh = '011'
+        <if test="startDate!=null and startDate!=''">
+            AND jbxx.zhxgsj &gt;= "TO_DATE"(#{startDate},'yyyy-mm-dd')
+        </if>
+
+        <if test="endDate!=null and endDate!=''">
+            AND jbxx.zhxgsj &lt;= "TO_DATE"(#{endDate},'yyyy-mm-dd')
+        </if>
+
+    </select>
+
+    <resultMap id="bgCountMap" type="map"/>
+
+    <!--获取年度报告下的部门办案详细信息-->
+    <select id="getbmAj" parameterType="com.start.boot.domain.YxPcJzwj" resultType="String">
+        SELECT
+        wmsys.wm_concat(jb.bpc_bmmc || COUNT(jb.pcslbm) || '件') BMAJ
+        FROM yx_pc_jbxx jb
+        INNER JOIN xt_pc_lb lb
+        ON jb.pcflbm = lb.pcflbm
+        WHERE jb.sfsc = 'N'
+        AND   jb.pcflbm = #{pcflbm}
+        AND   jb.pcjdbh = '011'
+        AND   INSTR(#{dwbm},jb.pcdwbm) &gt;=1
+        <if test="startDate!=null and startDate!=''">
+            AND jb.zhxgsj &gt;= "TO_DATE"(#{startDate},'yyyy-mm-dd')
+        </if>
+
+        <if test="endDate!=null and endDate!=''">
+            AND jb.zhxgsj &lt;= "TO_DATE"(#{endDate},'yyyy-mm-dd')
+        </if>
+        GROUP BY jb.bpc_bmbm,jb.bpc_bmmc
+    </select>
+
+    <!--获取年度报告下的结论详细信息-->
+    <select id="getJlAj" parameterType="com.start.boot.domain.YxPcJzwj" resultType="String">
+        SELECT
+        wmsys.wm_concat(jb.pcjl || COUNT(jb.pcslbm) || '件') JLAJ
+        FROM yx_pc_jbxx jb
+        INNER JOIN xt_pc_lb lb
+        ON jb.pcflbm = lb.pcflbm
+        WHERE jb.sfsc = 'N'
+        AND   jb.pcflbm = #{pcflbm}
+        AND   jb.pcjdbh = '011'
+        AND   INSTR(#{dwbm},jb.pcdwbm) &gt;=1
+        <if test="startDate!=null and startDate!=''">
+            AND jb.zhxgsj &gt;= "TO_DATE"(#{startDate},'yyyy-mm-dd')
+        </if>
+
+        <if test="endDate!=null and endDate!=''">
+            AND jb.zhxgsj &lt;= "TO_DATE"(#{endDate},'yyyy-mm-dd')
+        </if>
+        GROUP BY jb.pcjl
+    </select>
+
+    <!--获取专项评查开展次数-->
+    <select id="specialKz" parameterType="com.start.boot.domain.YxPcJzwj" resultMap="specialMap">
+        SELECT to_char(min(jb.zhxgsj),'yyyy"年"') zxNd,
+        COUNT(DISTINCT hd.pchdbm) hdcount,
+        COUNT(jb.pcslbm) ajcount
+
+        FROM yx_pc_hd hd
+        INNER JOIN yx_pc_jbxx jb
+        ON hd.pchdbm = jb.pchdbm
+        AND hd.pcflbm = jb.pcflbm
+        WHERE jb.sfsc = 'N'
+        AND   hd.sfsc = 'N'
+        AND jb.pcflbm = #{pcflbm}
+        AND INSTR(#{dwbm},jb.pcdwbm) &gt;=1
+        AND jb.pcjdbh = '011'
+        <if test="startDate!=null and startDate!=''">
+            AND jb.zhxgsj &gt;= "TO_DATE"(#{startDate},'yyyy-mm-dd')
+        </if>
+
+        <if test="endDate!=null and endDate!=''">
+            AND jb.zhxgsj &lt;= "TO_DATE"(#{endDate},'yyyy-mm-dd')
+        </if>
+    </select>
+    <resultMap id="specialMap" type="map"/>
+
+    <!--获取有问题的案件列表-->
+    <select id="getAjlb" parameterType="com.start.boot.domain.YxPcJzwj" resultType="com.start.boot.pojo.vo.BgAjlb">
+        SELECT rownum      xh,
+        jb.pcslbm   pcslbm,
+        jb.bpc_dwmc badw,
+        jb.ajmc     ajmc,
+        jb.bpc_mc   cbr,
+        jb.pcr_mc   pcy,
+        jb.pcr_dwmc pcdw,
+        jb.pcjl     pcjl
+
+        FROM yx_pc_jbxx jb
+        WHERE jb.sfsc = 'N'
+        AND jb.pcjl IS NOT NULL
+        AND jb.pcjl IN ('瑕疵案件','优质案件','不合格案件')
+        AND jb.pcjdbh = '011'
+        AND INSTR(#{dwbm},jb.pcdwbm) &gt;=1
+        <if test="startDate!=null and startDate!=''">
+            AND jb.zhxgsj &gt;= "TO_DATE"(#{startDate},'yyyy-mm-dd')
+        </if>
+
+        <if test="endDate!=null and endDate!=''">
+            AND jb.zhxgsj &lt;= "TO_DATE"(#{endDate},'yyyy-mm-dd')
+        </if>
+
+    </select>
+
+    <!--获取案件问题项-->
+    <select id="getwtx" parameterType="com.start.boot.domain.YxPcJzwj" resultType="com.start.boot.pojo.vo.BgAjVo">
+        select MAX(jb.pcslbm) pcslbm,
+        --         MAX(jb.bpc_dwmc) badw,
+        --         MAX(jb.ajmc) ajmc,
+        --         MAX(jb.bpc_mc) cbr,
+        --         MAX(jb.pcr_mc) pcy,
+        --         MAX(jb.pcr_dwmc) pcdw,
+        --         MAX(jb.pcjl) pcjl,
+        pcxfl2.pcxflbm,
+        pcxfl2.pcxflmc,
+        wmsys.wm_concat(pcx.pcxmc) pcxmc
+        FROM yx_pc_jbxx jb
+        LEFT JOIN yx_pc_pcx pcx
+        ON jb.pcslbm = pcx.pcslbm
+        AND ((pcx.pcfs = '1' AND pcx.pcjg = '1')
+        OR(pcx.pcfs = '2' AND pcx.pcjg IS NOT NULL))
+        LEFT JOIN yx_pc_pcxfl pcxfl
+        ON pcx.pcslbm = pcxfl.pcslbm
+        AND pcx.pcxflbm = pcxfl.pcxflbm
+        AND pcxfl.pcjg = '1'
+        LEFT JOIN yx_pc_pcxfl pcxfl2
+        ON pcxfl.pcslbm = pcxfl2.pcslbm
+        AND pcxfl.pcxflfbm = pcxfl2.pcxflbm
+        AND pcxfl2.pcjg IS NULL
+        WHERE jb.sfsc = 'N'
+        AND jb.pcjl IS NOT NULL
+        AND jb.pcjl IN ('瑕疵案件','优质案件','不合格案件')
+        AND jb.pcjdbh = '011'
+        AND jb.pcdwbm = #{dwbm}
+        <if test="startDate!=null and startDate!=''">
+            AND jb.zhxgsj &gt;= "TO_DATE"(#{startDate},'yyyy-mm-dd')
+        </if>
+
+        <if test="endDate!=null and endDate!=''">
+            AND jb.zhxgsj &lt;= "TO_DATE"(#{endDate},'yyyy-mm-dd')
+        </if>
+
+        GROUP BY jb.pcslbm, pcxfl2.pcxflbm, pcxfl2.pcxflmc
+        ORDER BY jb.pcslbm
+
+    </select>
+
+    <!--根据选中的模板加载对应的报告文件-->
+    <select id="getReportList" parameterType="com.start.boot.query.ReportQuery" resultMap="ReportMap">
+        WITH table_pcsp AS(
+        SELECT sp.pcspbm,sp.spwjbm,sp.spjl,sp.sprxm,sp.spjsmc
+        FROM yx_pc_sp sp
+        INNER JOIN (SELECT
+        MAX(sp.pcspbm)  AS pcspbm
+        FROM yx_pc_jzwj jzwj
+        INNER JOIN yx_pc_sp sp
+        ON jzwj.jzwjbh = sp.spwjbm
+        WHERE jzwj.sfsc = 'N'
+        AND jzwj.wjlx = '4'
+        AND sp.spwjlx = '2'
+        AND sp.sfsc = 'N'
+        GROUP BY sp.spwjbm)s
+        ON sp.pcspbm = s.pcspbm
+        )
+        SELECT distinct
+        jzwj.*,
+        NVL2(t.pcspbm,DECODE(t.spjl,'不同意',t.spjsmc||'已退回','同意',t.spjsmc ||'已审批'，null,'待'||t.spjsmc || '审批'),nvl2(cz.czsj,cz.czrmc || '已退回','未送审')) sszt
+
+        FROM yx_pc_jzwj jzwj
+        inner join xt_pc_wsmb wsmb
+        ON jzwj.jzmlh = wsmb.jzmlh
+        AND jzwj.wsmbbh = wsmb.wsmbbh
+        left join xt_pc_lb lb
+        on wsmb.pcflbm = lb.pcflbm
+        AND jzwj.wjlx = wsmb.wsmblb
+        LEFT JOIN table_pcsp t
+        ON jzwj.jzwjbh = t.spwjbm
+        left join yx_rz_cz cz
+        on jzwj.jzwjbh = cz.pcslbm
+        and cz.czlx = '3'
+        WHERE  jzwj.sfsc = 'N'
+        AND jzwj.wsmbbh = #{wsmbbh}
+
+        <if test="dwbm !=null and dwbm.size() >0">
+            AND   jzwj.nzrdwbm in
+            <foreach collection="dwbm" item="dw" open="(" separator="," close=")">
+                #{dw}
+            </foreach>
+        </if>
+
+        <if test="startDate!=null and startDate!=''">
+            AND jzwj.cjsj &gt;= "TO_DATE"(#{startDate},'yyyy-mm-dd')
+        </if>
+
+        <if test="endDate!=null and endDate!=''">
+            AND jzwj.cjsj &lt;= "TO_DATE"(#{endDate},'yyyy-mm-dd')
+        </if>
+
+        <if test="sfsp!=null and sfsp =='0'.toString() ">
+            AND((t.SPWJBM IS NULL)
+            OR (t.SPWJBM IS NOT NULL AND t.SPJL is  NULL)
+            )
+        </if>
+        <if test="sfsp!=null and sfsp =='1'.toString() ">
+            AND t.SPWJBM IS NOT NULL
+            AND t.SPJL is not NULL
+        </if>
+        <if test="bszt !=null and bszt=='9'.toString()">
+            AND ((jzwj.nzrdwbm = #{nzr_dwbm} and  jzwj.nzrgh = #{nzr_gh} and jzwj.bszt ='9')
+            or (jzwj.bszt = '1'))
+        </if>
+        <if test="bszt !=null and bszt=='0'.toString()">
+            AND jzwj.nzrdwbm = #{nzr_dwbm} and  jzwj.nzrgh = #{nzr_gh} and jzwj.bszt !='9'
+        </if>
+        order by jzwj.cjsj desc
+    </select>
+    <resultMap id="ReportMap" type="map"/>
+
+
+    <!--查询活动-->
+    <select id="getReportHd" parameterType="com.start.boot.query.ReportQuery" resultMap="reportHdMap">
+
+        WITH table_pcsp AS(
+        SELECT sp.pcspbm,sp.spwjbm,sp.spjl,sp.sprxm,sp.spjsmc,sp.sfsc,sp.SPWJLX
+        FROM yx_pc_sp sp
+        INNER JOIN (SELECT
+        MAX(sp.pcspbm)  AS pcspbm
+        FROM yx_pc_jzwj jzwj
+        INNER JOIN yx_pc_sp sp
+        ON jzwj.jzwjbh = sp.spwjbm
+        WHERE jzwj.sfsc = 'N'
+        AND jzwj.wjlx = '4'
+        AND sp.spwjlx = '2'
+        AND sp.sfsc = 'N'
+        GROUP BY sp.spwjbm)s
+        ON sp.pcspbm = s.pcspbm
+        )
+
+        SELECT  distinct hd.pchdbm,
+        hd.pchdmc,
+        lb.pcflbm,
+        lb.pcflmc,
+        hd.cjrmc,
+        jzwj.jzwjbh,
+        jzwj.wscflj,
+        jzwj.nzrdwbm,
+        jzwj.nzrdwmc,
+        jzwj.nzrgh,
+        jzwj.nzrxm,
+        jzwj.wjmc,
+        jzwj.cjsj,
+        jzwj.bszt,
+        NVL2(t.pcspbm,DECODE(t.spjl,'不同意',t.spjsmc||'已退回','同意',t.spjsmc ||'已审批',null,'待'||t.spjsmc || '审批'),nvl2(cz.czsj,cz.czrmc || '已退回','未送审')) sszt
+
+
+        FROM yx_pc_hd hd
+        LEFT JOIN xt_pc_lb lb
+        ON hd.pcflbm = lb.pcflbm
+        LEFT JOIN yx_pc_jzwj jzwj
+        ON hd.pchdbm = jzwj.pczybm
+        AND  jzwj.wjlx = '4'
+        AND jzwj.wsmbbh = #{wsmbbh}
+        AND jzwj.SFSC = 'N'
+        <if test="startDate!=null and startDate!=''">
+            AND jzwj.cjsj &gt;= "TO_DATE"(#{startDate},'yyyy-mm-dd')
+        </if>
+
+        <if test="endDate!=null and endDate!=''">
+            AND jzwj.cjsj &lt;= "TO_DATE"(#{endDate},'yyyy-mm-dd')
+        </if>
+        LEFT JOIN table_pcsp t
+        ON jzwj.JZWJBH = t.SPWJBM
+        AND t.SPWJLX = '2'
+        AND t.sfsc = 'N'
+        left join yx_rz_cz cz
+        on jzwj.jzwjbh = cz.pcslbm
+        and cz.czlx = '3'
+        WHERE hd.sfsc = 'N'
+        AND   hd.pcflbm = #{pcflbm}
+        <if test="dwbm !=null and dwbm.size() >0">
+            AND   hd.pcdwbm in
+            <foreach collection="dwbm" item="dw" open="(" separator="," close=")">
+                #{dw}
+            </foreach>
+        </if>
+
+        <if test="sfsp!=null and sfsp =='0'.toString() ">
+            AND((t.SPWJBM IS NULL)
+            OR (t.SPWJBM IS NOT NULL AND t.SPJL is  NULL)
+            )
+        </if>
+        <if test="sfsp!=null and sfsp =='1'.toString() ">
+            AND t.SPWJBM IS NOT NULL
+            AND t.SPJL is not NULL
+        </if>
+        <if test="bszt !=null and bszt=='9'.toString()">
+            AND ((jzwj.nzrdwbm = #{nzr_dwbm} and  jzwj.nzrgh = #{nzr_gh} and jzwj.bszt ='9')
+            or (jzwj.bszt = '1'))
+        </if>
+        <if test="bszt !=null and bszt=='0'.toString()">
+            AND jzwj.nzrdwbm = #{nzr_dwbm} and  jzwj.nzrgh = #{nzr_gh} and jzwj.bszt in ('0','1')
+        </if>
+    </select>
+
+    <resultMap id="reportHdMap" type="map"/>
+
+    <select id="getPcspbgInfo" resultType="map" parameterType="com.start.boot.domain.YxPcSp"  >
+        SELECT PCSPBM,
+        SPWJLX,
+        SPWJBM,
+        SSRDWBM,
+        SSRDWMC,
+        SSRGH,
+        SSRXM,
+        SSRQ,
+        SPRDWBM,
+        SPRDWMC,
+        SPRGH,
+        SPRXM,
+        SPRQ,
+        SPJL,
+        SPYJ,
+        SFSC,
+        CJSJ,
+        ZHXGSJ,
+        SPJSBM,
+        SPJSMC
+        FROM YX_PC_SP WHERE SPWJBM =  #{spwjbm,jdbcType=VARCHAR}
+        and sfsc = 'N'
+        order by cjsj asc
+    </select>
+
+    <!--获取送审人员列表-->
+    <select id="getPcsp" resultMap="spryMap">
+        SELECT ry.dwbm,
+        dwbm.dwmc,
+        ry.gh,
+        ry.mc,
+        jsbm.jsbm,
+        jsbm.jsmc,
+        jsbm.spjsbm
+        FROM xt_qx_ryjsfp fp
+        INNER JOIN xt_zzjg_rybm ry
+        ON fp.dwbm = ry.dwbm
+        AND fp.gh = ry.gh
+        inner join xt_zzjg_dwbm dwbm
+        on ry.dwbm = dwbm.dwbm
+        INNER JOIN xt_qx_jsbm jsbm
+        ON  fp.jsbm = jsbm.jsbm
+        AND fp.bmbm = jsbm.bmbm
+        AND jsbm.jsbm IN ('104','107','120')
+        WHERE fp.dwbm = #{dwbm}
+        AND   jsbm.spjsbm != '30'
+        <if test=" spjsbm &lt;50">
+            and jsbm.spjsbm = '50'
+        </if>
+        <if test="spjsbm &gt;=50">
+            AND   jsbm.spjsbm = #{spjsbm} + 10
+        </if>
+        AND   fp.dwbm || fp.gh != #{dwbm} || #{gh}
+    </select>
+
+    <resultMap id="spryMap" type="map"/>
+
+    <!--发送评查审批-->
+    <update id="sendPcbgSp" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+              call pkg_pclc.proc_add_spjl(#{p_spwjlx,mode=IN,jdbcType=VARCHAR},
+                                           #{p_spwjbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_ssrdwbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_ssrdwmc, mode=IN, jdbcType=VARCHAR},
+                                           #{p_ssrgh, mode=IN, jdbcType=VARCHAR},
+                                           #{p_ssrxm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_sprdwbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_sprdwmc, mode=IN, jdbcType=VARCHAR},
+                                           #{p_sprgh, mode=IN, jdbcType=VARCHAR},
+                                           #{p_sprxm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_spjsbm, mode=IN, jdbcType=VARCHAR},
+                                           #{p_spjsmc, mode=IN, jdbcType=VARCHAR},
+                                           #{p_pcspbm,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </update>
+
+
+    <!--更新审批记录-->
+    <update id="updatePcsp" parameterType="com.start.boot.domain.YxPcSp">
+        UPDATE yx_pc_sp
+        SET sprq = sysdate,
+        spjl = #{spjl},
+        spyj = #{spyj}
+        WHERE pcspbm = #{pcspbm}
+    </update>
+
+    <!--更新下级院报告报送状态-->
+    <update id="sendDoc">
+        update yx_pc_jzwj
+        set bszt = '1'
+        where jzwjbh = #{jzwjbh}
+        and bszt = '0'
+    </update>
+
+    <!--更新市院报送状态-->
+    <update id="updateJzwj" parameterType="com.start.boot.domain.YxPcJzwj">
+        update yx_pc_jzwj
+        set bszt = '9'
+        where jzwjbh = #{jzwjbh}
+        and bszt = '0'
+    </update>
+
+    <!--删除审批记录-->
+    <update id="backDoc" parameterType="com.start.boot.domain.YxPcSp">
+        update  yx_pc_sp
+        set sfsc = 'Y'
+        where spwjbm = #{spwjbm}
+
+    </update>
+
+
+    <!--添加退回报告日志-->
+    <insert id="addCzrz" parameterType="com.start.boot.domain.YxPcSp">
+
+        INSERT INTO yx_rz_cz
+        (czlx,
+        gnbm,
+        czsm,
+        czrdwbm,
+        czrgh,
+        czrmc,
+        ip,
+        pclbbm,
+        pcslbm,
+        gnmc,
+        czrdwmc)
+        VALUES
+        ('3',
+        '',
+        #{sm},
+        #{sprdwbm},
+        #{sprgh},
+        #{sprxm},
+        '',
+        '',
+        #{spwjbm},
+        '报告退回',
+        #{sprdwmc})
+
+    </insert>
+
+
+</mapper>

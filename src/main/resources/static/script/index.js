@@ -206,6 +206,18 @@ function get_userJsbm() {
         success: function (data) {
             //将角色编码信息放入userinfo中
             userInfo.JSBMS = data.value;
+
+            var spjsbm = '0';
+            var jsbmj = userInfo.JSBM;
+            for(var i = 0; i < jsbmj.length; i++){
+                var jsbm = jsbmj[i];
+                if (jsbm.SPJSBM > spjsbm){
+                    spjsbm = jsbm.SPJSBM;
+                }
+            }
+
+            userInfo.spjsbm = spjsbm;
+
             if (data.status != 200) {
             }
         }

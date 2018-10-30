@@ -96,6 +96,7 @@ function show_eval_approve_window(index) {
             goto_eval_handle_page(row.PCSPBM, row.SPWJBM, row.SPJSMC);
             break;
         case "2":
+            goto_eval_pcbg_page(row.SPWJBM,row.PCSPBM);
             break;
         case "3":
             goto_eval_pcfa_page(row.SPWJBM);
@@ -144,4 +145,14 @@ function goto_eval_handle_page(pcspbm, pcslbm, spjsmc) {
     obj.PCYJMC = spjsmc; //评查意见名称，案管负责人/分管副检察长
     var url = "view/evaluate/handle/deal.html"
     load_function("评查审批", url, obj)
+}
+
+function goto_eval_pcbg_page(spwjbm,pcspbm) {
+
+    var obj = new Object();
+    obj.SPWJBM = spwjbm;
+    obj.PCSPBM = pcspbm; //仅评查审批阶段有
+    var url = "view/evaluate/report/report.html";
+    load_function("报告审批", url, obj);
+
 }

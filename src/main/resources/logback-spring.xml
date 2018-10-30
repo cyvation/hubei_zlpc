@@ -39,7 +39,7 @@
  <!--   <logger name="com.start.boot" level="info"/>
     <logger name="org.springframework.*" level="error"/>-->
     <!-- 日志输出级别 -->
-    <root level="info">
+    <root level="debug">
         <!--<appender-ref ref="FILE"/>-->
         <appender-ref ref="STDOUT" />
     </root>

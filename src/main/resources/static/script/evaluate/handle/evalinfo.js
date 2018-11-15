@@ -1328,9 +1328,9 @@ function alert_new_pcx() {
 
                     var data;
                     if (value >= 1) {
-                        data = '<input  type="checkbox"  checked="checked"></div>';
+                        data = '<input  type="checkbox"  checked="checked" onclick="click_handle_grade_checkbox_pcx(\'' + index + '\',this)" ></div>';
                     } else {
-                        data = '<input  type="checkbox"></div>';
+                        data = '<input  type="checkbox" onclick="click_handle_grade_checkbox_pcx(\'' + index + '\',this)" ></div>';
                     }
                     return data
                 }
@@ -1502,6 +1502,7 @@ function alert_new_pcx() {
 
 
     $("#pcWin_win_new_pcx").css('display','');
+    $('#pcWin_win_new_pcx').window("resize",{top:$(document).scrollTop() + ($(window).height()-600) * 0.5});//居中显示 600窗体高度
     $('#pcWin_win_new_pcx').window('open');
 }
 
@@ -1670,28 +1671,26 @@ function OneWordLine(text, fontsize) {
 
 // 勾选样式事件
 function click_handle_grade_checkbox_pcx(index, event) {
-    if (event.checked) {
-        event.parentNode.classList.add('img_cancel_checkbox');
-
-    } else {
-        event.parentNode.classList.add('img_ok_checkbox');
-        event.parentNode.classList.remove('img_cancel_checkbox');
-    }
+    // if (event.checked) {
+    //     event.parentNode.classList.add('img_cancel_checkbox');
+    //
+    // } else {
+    //     event.parentNode.classList.add('img_ok_checkbox');
+    //     event.parentNode.classList.remove('img_cancel_checkbox');
+    // }
 
     // 更新评查项结果
-    // $('#table_handle_new_pcx').datagrid('updateRow', {
-    //     index: index,
-    //     row: {
-    //         pcjg: event.checked ? '1' : '0'
-    //     }
-    // });
+    $('#table_handle_new_pcx').datagrid('updateRow', {
+        index: index,
+        row: {
+            pcjg: event.checked ? '1' : '0'
+        }
+    });
     // 激活评查理由输入框
   //  grid_handle_grade_list_click_cell(index, '', '');
     // 更新当前问题数
     //update_handle_grade_problems();
   //  grid_handle_grade_list_load_success();
-    // 记录变更状态
-    tagScoreChange = true;
 }
 var editIndex = undefined; //当前编辑行
 
@@ -1720,8 +1719,8 @@ function addClickListener() {
         toggleShow();
     });
 
-    $(".pcjg_redio").unbind("click");
-    $(".pcjg_redio").bind("click", function () {
+    $("#loadPcjg .radio").unbind("click");
+    $("#loadPcjg .radio").bind("click", function () {
         alert_new_pcx();
     });
 }

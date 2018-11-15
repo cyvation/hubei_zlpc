@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.start.boot.dao.ajpc.PdxMapper">
+
+    <select id="getPdx" parameterType="com.start.boot.query.PdxQuery" resultMap="pdxMap">
+
+        select
+            pdxfl2.pdxflbm f3flbm,
+            pdxfl2.pdxflmc f3flmc,
+            pdxfl.pdxflbm f2flbm,
+            pdxfl.pdxflmc f2flmc,
+            pdx.pdxbm pdxbm,
+            pdx.pdxmc pcxmc,
+            pdx.bz,
+            mb.dcmbbm,
+            NVL2(yxpdx.pdxlx,yxpdx.pdxlx, '-1') pcjg,
+            NVL2(yxpdx.pdyj,yxpdx.pdyj, '') pcyj
+
+
+        from xt_dc_ajlb ajlb
+            inner join xt_dc_mb mb
+                on ajlb.dcmbbm = mb.dcmbbm
+                   and mb.sfqy = 'Y'
+                   and mb.sfty = 'N'
+                   and ajlb.ajlbbm = #{ajlbbm}
+            inner join xt_dc_pdx pdx
+                on mb.dcmbbm = pdx.dcmbbm
+
+            left join yx_dc_pdx yxpdx
+                on pdx.pdxbm = yxpdx.pdxbm
+                   and yxpdx.pcslbm = #{pcslbm}
+
+            inner join xt_dc_pdxfl pdxfl
+                on pdx.pdxflbm = pdxfl.pdxflbm
+            inner join xt_dc_pdxfl pdxfl2
+                on pdxfl.pdxflfbm = pdxfl2.pdxflbm
+                   and pdxfl2.pdxflfbm is null
+
+        where 1=1
+              and pdxfl.pdxflmc = #{pcjl}
+
+        -- 通用模板
+        union all
+
+        select
+            pdxfl2.pdxflbm f3flbm,
+            pdxfl2.pdxflmc f3flmc,
+            pdxfl.pdxflbm f2flbm,
+            pdxfl.pdxflmc f2flmc,
+            pdx.pdxbm pdxbm,
+            pdx.pdxmc pcxmc,
+            pdx.bz,
+            mb.dcmbbm,
+            NVL2(yxpdx.pdxlx,yxpdx.pdxlx, '-1') pcjg,
+            NVL2(yxpdx.pdyj,yxpdx.pdyj, '') pcyj
+
+
+
+        from  xt_dc_mb mb
+            inner join xt_dc_pdx pdx
+                on mb.dcmbbm = pdx.dcmbbm
+                   and mb.sfqy = 'Y'
+                   and mb.sfty = 'Y'
+
+            left join yx_dc_pdx yxpdx
+                on pdx.pdxbm = yxpdx.pdxbm
+                   and yxpdx.pcslbm = #{pcslbm}
+
+            inner join xt_dc_pdxfl pdxfl
+                on pdx.pdxflbm = pdxfl.pdxflbm
+            inner join xt_dc_pdxfl pdxfl2
+                on pdxfl.pdxflfbm = pdxfl2.pdxflbm
+                   and pdxfl2.pdxflfbm is null
+
+        where 1=1
+              and pdxfl.pdxflmc = #{pcjl}
+
+    </select>
+    
+    <resultMap id="pdxMap" type="map">
+        <result property="f3flbm" column="F3FLBM"/>
+        <result property="f3flmc" column="F3FLMC"/>
+        <result property="f2flbm" column="F2FLBM"/>
+        <result property="f2flmc" column="F2FLMC"/>
+        <result property="pdxbm" column="PDXBM"/>
+        <result property="pcxmc" column="PCXMC"/>
+        <result property="bz" column="BZ"/>
+        <result property="dcmbbm" column="DCMBBM"/>
+        <result property="pcjg" column="PCJG"/>
+        <result property="pcyj" column="PCYJ"/>
+    </resultMap>
+
+    <!--获取勾选的评定项用于生成评定报告-->
+    <select id="getSelectedPdx" resultType="com.start.boot.domain.YxDcPdx">
+
+        select max(pdxfl.pdxflmc) pdxflbm,
+            wmsys.wm_concat(yxpdx.pdxmc) pdxmc
+        from yx_dc_pdx yxpdx
+            inner join xt_dc_pdxfl pdxfl
+                on yxpdx.pdxflbm = pdxfl.pdxflbm
+        where yxpdx.pcslbm = #{pcslbm}
+        and   yxpdx.pdxlx = '1'
+
+        group by pdxfl.pdxflbm
+
+    </select>
+
+</mapper>

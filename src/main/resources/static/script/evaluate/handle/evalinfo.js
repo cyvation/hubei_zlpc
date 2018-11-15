@@ -1228,6 +1228,480 @@ function toggleShow() {
     }
 }
 
+// 弹出新的评查标准
+// 评查表（预览）
+function alert_new_pcx() {
+
+    var pcjl = $("input[name='rd_eval_info_pcjl_jg']:checked").val();
+
+    var obj = new Object();
+    obj.pcslbm = EVAL_CASE.PCSLBM;
+    obj.ajlbbm = EVAL_CASE.AJLB_BM;
+    obj.pcjl = pcjl.substring(0,pcjl.length -2);
+
+
+    // 预览评分表初始化
+    $('#table_handle_new_pcx').datagrid({
+        fitColumns: true,
+        fit: true,
+        striped: true,
+        nowrap: false,
+        rownumbers: true,  <!-- 是否显示序列号注释！！！！ -->
+        singleSelect: false,
+        idField: 'pcxbm',
+        loadMsg: '数据加载中，请稍后...',
+        //toolbar: $('#div_win_pcblPcyl'),
+        pagination: false,
+        rowStyler: function(index,row){
+            if (row.listprice>80){
+                return 'background-color:#6293BB;color:#fff; border:1px;';
+            }
+        },
+        columns: [[
+            {
+                field: 'f3flmc',
+                title: '<span class=\'headPCTitle\' style=\'font-size:16px\'>项目</span>',
+                width: 80,
+                rowspan: 1,
+                align: 'center',
+                halign: 'center',
+                formatter: function (value, row, index) {
+                    return OneWordLine(value, '16') //一字一行，字大小为16
+                },
+                styler: function (value, row, index) {
+                    return ' border-right: 1px solid #d6eaf4 !important;border-left: 1px solid #d6eaf4 !important;';
+                }
+            },
+            // {title: '<span class=\'headPCTitle\' style=\'font-size:16px\'></span>', colspan: 3},
+            {
+                field: 'f2flmc',
+                title: '<span class=\'headPCTitle\' style=\'font-size:16px\'>子项</span>',
+                width: 60,
+                align: 'center',
+                hidden: true,
+                formatter: function (value, row, index) {
+                    return TwoWordLine(value, '14');  //两字一行，字体大小为14
+                },
+                styler: function (value, row, index) {
+                    return "padding:5px 0px 5px 0px; border-right: 1px solid #d6eaf4 !important;"
+                }
+            },
+            {
+                field: 'f1flmc', width: 40, align: 'center',hidden: true,
+                formatter: function (value, row, index) {
+                    return TwoWordLine(value, '14');  //两字一行，字体大小为14
+                },
+                styler: function (value, row, index) {
+                    return "padding:5px 0px 5px 0px; border-right: 1px solid #d6eaf4 !important;"
+                }
+            },
+            //Code1:在这里可以继续增加子项，添加列。
+            {
+                field: 'pcxmc',
+                title: '<span class=\'headPCTitle\'  style=\'font-size:16px;display: inline-block;width: 100%;  text-align: center;\'>具体内容及扣分标准</span>',
+                width: 430,
+                styler: function (value, row, index) {
+                    return "padding:8px 0px 8px 0px;"
+                }
+            },
+            {
+                field: 'fz_gd',
+                title: '<span class=\'headPCTitle\' style=\'font-size:16px\'>分值</span>',
+                width: 75,
+                rowspan: 1,
+                align: 'center',
+                halign: 'center',
+                hidden: true,
+                formatter: function (value, row, index) {
+                    return TwoWordLine(value, '14');  //两字一行，字体大小为14
+                }
+            },
+            {
+                field: 'pcjg',
+               // checkbox:true,
+                title: '<span class=\'headPCTitle\' style=\'font-size:16px\'>勾选</span>',
+                width: 75,
+                rowspan: 1,
+                align: 'center',
+                halign: 'center',
+                formatter: function (value, row, index) {
+
+                    var data;
+                    if (value >= 1) {
+                        data = '<input  type="checkbox"  checked="checked"></div>';
+                    } else {
+                        data = '<input  type="checkbox"></div>';
+                    }
+                    return data
+                }
+            },
+            {
+                field: 'pcyj', title: '<span class=\'headPCTitle\' >具体理由</span>', width: 235, height: '100%',
+                formatter: function (value, row, index) {
+                    value=(value==null?"":value);
+                    var data = '<textarea style="resize:none;height:'+(value.length==0||value.length<45?65:value.length*1.8 + 5)+'px; width:90% ;outline: none;margin-top: 5px;margin-left: 1px; padding: 5px;' +
+                        '        border:none;"  onfocus="editText(this,'+index+')"  >'+value+'</textarea>' +
+                        '<img style="margin-bottom:'+(value.length==0||value.length<45?25:value.length/1.3)+'px;margin-left:6px;cursor: pointer;" src="plugin/jquery-easyui-1.4.3/themes/icons/pencil.png" />';
+                    return data
+                }
+                /* editor: {type: 'textbox', options: {height: 65, multiline: 'true'}}//,*/
+                /*styler: function (value, row, index) {
+                 return "height:100%"
+                 },*/
+
+            }
+            /*{
+             field: 'action',
+             title: '<span class=\'headPCTitle\' style=\'font-size:16px\'>自动评查<br>调整</span>',
+             width: 70,
+             align: 'center',
+             rowspan: 2,
+             formatter: function (value, row, index) {
+             var e = '<a href="#" onclick="alert_win_handle_grade_adjust(\'' + index + '\')">调整</a> ';
+             return isNull(row.ZDPCCX) ? "" : e;
+             }
+             }*/
+        ]],
+        method: 'get',
+        url: getRootPath() + '/pdx/getPdx',
+        // url: getRootPath() + '/pcxdata.json',
+        queryParams: obj,
+        loadFilter: function (data, parent) {
+            if(data.code == 200){
+                return JSON.parse(data.data);
+                // return data.data;
+            }else {
+                return [];
+            }
+        },
+       onLoadSuccess: grid_handle_pcyl_load_success
+    });
+
+
+    // 保存新评查标准
+    $("#save_new_pcx").unbind('click');
+    $("#save_new_pcx").bind('click',function () {
+        var pcjl = $("input[name='rd_eval_info_pcjl_jg']:checked").val();
+
+
+        var arr = [];
+        var rowData = $("#table_handle_new_pcx").datagrid("getRows");
+        for(var i = 0 ; i < rowData.length; i++){
+            var singleData = rowData[i];
+            // 只保存勾选的项
+            if (singleData.pcjg && singleData.pcjg >=1){
+                var pdx = new Object();
+                pdx.pcslbm =  EVAL_CASE.PCSLBM;
+                pdx.pdxbm = singleData.pdxbm;
+                pdx.pdxmc = singleData.pcxmc;
+                pdx.pdxflbm = singleData.f3flbm;
+                pdx.dcmbbm = singleData.dcmbbm;
+                pdx.ajlbbm = EVAL_CASE.AJLB_BM;
+                pdx.ajlbmc = EVAL_CASE.AJLB_MC;
+                pdx.pdxlx = singleData.pcjg;
+                pdx.pcfs = '1';
+                pdx.pcjlbm = '';
+                pdx.xh = i;
+                pdx.bz = singleData.bz;
+                pdx.pdjg = pcjl.substr(0, pcjl.length -2 );
+                pdx.pdyj = singleData.pcyj;
+                pdx.pcrdwbm = userInfo.DWBM;
+                pdx.pcrdwmc = userInfo.DWMC;
+                pdx.pcrgh = userInfo.GH;
+                pdx.pcrmc = userInfo.MC;
+
+                arr.push(pdx);
+            }
+        }
+
+        if(arr.length == 0){
+            Alert("请选择一个评定项！");
+            return;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: getRootPath()+'/pdx/savePdx',
+            data: {"pcslbm":EVAL_CASE.PCSLBM,"json":JSON.stringify(arr)},
+            dataType: "json",
+            success: function (result) {
+                if (result && result.code == 200){
+                    Alert("保存成功！");
+                }else{
+                    Alert("保存失败");
+                }
+            }
+        });
+
+
+
+    });
+
+
+    // 生成评定报告
+    $("#generate_pdx_doc").unbind('click');
+    $("#generate_pdx_doc").bind('click',function () {
+
+        var flag = false;
+        var rowData = $("#table_handle_new_pcx").datagrid("getRows");
+        for(var i = 0 ; i < rowData.length; i++){
+            if (rowData[i].pcjg == '1' ){
+                 flag = true;
+                 break;
+            }
+        }
+
+        if (!flag){
+            Alert("请至少选择一个评定项并保存!");
+            return;
+        }
+
+
+        $.ajax({
+            type: 'POST',
+            url: getRootPath()+'/pdx/generatePdxDoc',
+            data: {"pcslbm":EVAL_CASE.PCSLBM},
+            dataType: "json",
+            success: function (result) {
+                if (result == null || result == undefined) {
+                    CloseProgress();
+                    Alert("服务端返回数据为空。");
+                    return;
+                }
+
+                if (result.code != 200){
+                    CloseProgress();
+                    Alert(result.note);
+                    return;
+                }
+                try {
+                     $("#pcWin_win_new_pcx").window('close');
+                    show_eval_doc_panel("doc");
+                    CloseProgress();
+
+                    var error = OpenFile(getRootPath() + "/Files/PCJZ/" + result.data, "TANGER_OCX");
+                    if (!isNull(error)) {
+                        Alert(error);
+                        return;
+                    }
+
+                    load_tree_eval_doc_files();
+                    isApproveDoc = obj.WJLX == PCLZDLX; //是否评查流转单
+                    editDocPath = result.data;
+                    opening_eval_doc_file = result.value;
+                    SetSaveButtonState("TANGER_OCX", true);
+
+                } catch (e) {
+                    CloseProgress();
+                }
+
+            }
+        });
+
+    });
+
+
+    $("#pcWin_win_new_pcx").css('display','');
+    $('#pcWin_win_new_pcx').window('open');
+}
+
+// 单元格内容换行，两字一行
+function TwoWordLine(text, fontsize) {
+    //return text;
+    if(isNull(text))
+        return "";
+    var len = text.length;
+    var add = 2;
+    if (len > 4 && len < 6) add = 3;
+    if (len >= 6 && len < 9) add = 4;
+    if (len >= 9) add = 5;
+    var result = text.substring(0, add);
+    for (i = add; i < len; i += add) {
+        result = result + '<br>' + text.substring(i, i + add);
+    }
+    return '<span class="headPCFLTitle" style="font-size:' + fontsize + 'px">' + result + '</span>';
+}
+
+function grid_handle_pcyl_load_success(data) {
+    var rowDatas = $('#table_handle_new_pcx').datagrid('getRows');
+    var len = rowDatas.length;
+    //合并单元格----开始------
+    var rowspanF3 = 1;
+    var indexF3 = 0;
+    var rowspanF2 = 1;
+    var colspanF2 = 1;
+    var indexF2 = 0;
+    var rowspanF1 = 1;
+    var indexF1 = 0;
+
+    var sourceF3 = '';
+    var sourceF2 = '';
+    var sourceF1 = '';
+    if (len > 0) sourceF3 = rowDatas[0].f3flmc;
+    if (len > 0) sourceF2 = rowDatas[0].f2flmc;
+    if (len > 0) sourceF1 = rowDatas[0].f1flmc;
+    for (i = 1; i < len; i++) {
+        //合并单元格----第一列【项目】------
+        if (sourceF3 == rowDatas[i].f3flmc) {
+            rowspanF3++;
+        }
+        else {
+            $(this).datagrid('mergeCells', {
+                index: indexF3,
+                field: 'f3flmc',
+                rowspan: rowspanF3
+            });
+            indexF3 = i;
+            sourceF3 = rowDatas[i].f3flmc;
+            rowspanF3 = 1;
+        }
+        //合并单元格----第二列【子项】--如子项为空，列合并----
+        //Code2:修改这里的colspan值，增加判断。
+        if (sourceF2.length > 0 && sourceF2 == rowDatas[i].f2flmc) {
+            rowspanF2++;
+        }
+        else {
+            //if(sourceF2.length == 0 && rowDatas[indexF2].f1flmc.length == 0){
+            //    rowDatas[indexF2].f2flmc = rowDatas[indexF2].PCX_MC;
+            //    colspanF2 = 3;
+            //}
+            if (rowDatas[indexF2].f1flmc.length == 0)
+                colspanF2 = 2;
+            $(this).datagrid('mergeCells', {
+                index: indexF2,
+                field: 'f2flmc',
+                rowspan: rowspanF2,
+                colspan: colspanF2
+            });
+            indexF2 = i;
+            sourceF2 = rowDatas[i].f2flmc;
+            rowspanF2 = 1;
+            colspanF2 = 1;
+        }
+        //合并单元格----第三列【子项】------
+        //Code3:修改这里的colspan值，增加判断。
+        if (sourceF1 == rowDatas[i].f1flmc) {
+            rowspanF1++;
+        }
+        else {
+            $(this).datagrid('mergeCells', {
+                index: indexF1,
+                field: 'f1flmc',
+                rowspan: rowspanF1
+            });
+            indexF1 = i;
+            sourceF1 = rowDatas[i].f1flmc;
+            rowspanF1 = 1;
+        }
+        //Code4:继续增加合并事件。
+    }
+    //最后一次循环后需要做最后的合并处理。
+    $(this).datagrid('mergeCells', {
+        index: indexF3,
+        field: 'f3flmc',
+        rowspan: rowspanF3
+    });
+    // if (rowDatas[indexF2].f1flmc.length == 0)
+    //     colspanF2 = 2;
+    $(this).datagrid('mergeCells', {
+        index: indexF2,
+        field: 'f2flmc',
+        rowspan: rowspanF2,
+        colspan: colspanF2
+    });
+    // $(this).datagrid('mergeCells', {
+    //     index: indexF1,
+    //     field: 'f1flmc',
+    //     rowspan: rowspanF1
+    // });
+    //Code5:继续增加收尾处理合并。
+    //合并单元格----结束------
+
+    //    //让每行处于编辑状态
+    //    for (i = len - 1; i >= 0; i--) {
+    //        $('#grid_handle_grade_list').datagrid('selectRow', i)
+    //							.datagrid('beginEdit', i);
+    //        editIndex = i;
+    //    }
+    //    $('#grid_handle_grade_list').datagrid('clearSelections');
+
+    //初始化计算总分
+    //computeScore();
+
+    // 评分表是否显示浮动框
+    /*if (isDisplayTooltip == 'Y') {
+     for (i = 0; i < len; i++) {
+     $('#tdPCLine' + i).tooltip({
+     position: 'bottom',
+     content: '<div style="padding:5px;width:430px;line-height:18px;color:#000">' + (rowDatas[i].bz == "" ? "&nbsp;" : rowDatas[i].bz) + '</div>',
+     onShow: function () {
+     $(this).tooltip('tip').css({
+     borderColor: '#ff0000',
+     boxShadow: '1px 1px 3px #292929'
+     });
+     },
+     onPosition: function () {
+     $(this).tooltip('tip').css('left', $(this).offset().left);
+     $(this).tooltip('arrow').css('left', 20);
+     }
+     });
+     }
+     }*/
+    //$('#grid_handle_pcyl').datagrid('fixRowHeight');
+}
+// 单元格内容换行，一字一行
+function OneWordLine(text, fontsize) {
+    //return text;
+    if(isNull(text))
+        return "";
+    var len = text.length;
+    if (len > 9) return TwoWordLine(text, fontsize);
+    var result = text.substring(0, 2);
+    for (i = 2; i < len; i += 2) {
+        if (i > 5 && i <= 9) {
+            result = result + '' + text.substring(i, i + 2);
+        }
+        else {
+            result = result + '<br>' + text.substring(i, i + 2);
+        }
+    }
+    return '<span class="headPCFLTitle" style="font-size:' + fontsize + 'px">' + result + '</span>';
+}
+
+// 勾选样式事件
+function click_handle_grade_checkbox_pcx(index, event) {
+    if (event.checked) {
+        event.parentNode.classList.add('img_cancel_checkbox');
+
+    } else {
+        event.parentNode.classList.add('img_ok_checkbox');
+        event.parentNode.classList.remove('img_cancel_checkbox');
+    }
+
+    // 更新评查项结果
+    // $('#table_handle_new_pcx').datagrid('updateRow', {
+    //     index: index,
+    //     row: {
+    //         pcjg: event.checked ? '1' : '0'
+    //     }
+    // });
+    // 激活评查理由输入框
+  //  grid_handle_grade_list_click_cell(index, '', '');
+    // 更新当前问题数
+    //update_handle_grade_problems();
+  //  grid_handle_grade_list_load_success();
+    // 记录变更状态
+    tagScoreChange = true;
+}
+var editIndex = undefined; //当前编辑行
+
+
+function editText(obj,index){
+    $(obj).css("border","1px solid #c1cfda");
+    $(obj).css("margin-top","4px");
+    $(obj).css("margin-left","0px");
+}
+
 // 评查项点击监听事件
 function addClickListener() {
     //console.log($(".switch"));
@@ -1244,6 +1718,11 @@ function addClickListener() {
     $(".switch").bind("click", function () {
         $(this).toggleClass('switch_click');
         toggleShow();
+    });
+
+    $(".pcjg_redio").unbind("click");
+    $(".pcjg_redio").bind("click", function () {
+        alert_new_pcx();
     });
 }
 

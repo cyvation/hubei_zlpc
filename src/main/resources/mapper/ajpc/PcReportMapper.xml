@@ -272,7 +272,7 @@
         )
         SELECT distinct
         jzwj.*,
-        NVL2(t.pcspbm,DECODE(t.spjl,'不同意',t.spjsmc||'已退回','同意',t.spjsmc ||'已审批'，null,'待'||t.spjsmc || '审批'),nvl2(cz.czsj,cz.czrmc || '已退回','未送审')) sszt
+        NVL2(t.pcspbm,DECODE(t.spjl,'不同意',t.spjsmc||'已退回','同意',t.spjsmc ||'已审批',null,'待'||t.spjsmc || '审批'),nvl2(cz.czsj,cz.czrmc || '已退回','未送审')) sszt
 
         FROM yx_pc_jzwj jzwj
         inner join xt_pc_wsmb wsmb

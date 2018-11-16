@@ -1340,7 +1340,7 @@ function alert_new_pcx() {
                 formatter: function (value, row, index) {
                     value=(value==null?"":value);
                     var data = '<textarea style="resize:none;height:'+(value.length==0||value.length<45?65:value.length*1.8 + 5)+'px; width:90% ;outline: none;margin-top: 5px;margin-left: 1px; padding: 5px;' +
-                        '        border:none;"  onfocus="editText(this,'+index+')"  >'+value+'</textarea>' +
+                        '        border:none;" onblur="editOver(this,'+index+')" onfocus="editText(this,'+index+')"  >'+value+'</textarea>' +
                         '<img style="margin-bottom:'+(value.length==0||value.length<45?25:value.length/1.3)+'px;margin-left:6px;cursor: pointer;" src="plugin/jquery-easyui-1.4.3/themes/icons/pencil.png" />';
                     return data
                 }
@@ -1368,14 +1368,15 @@ function alert_new_pcx() {
         // queryParams: obj,
         // loadFilter: function (data, parent) {
         //     if(data.code == 200){
-        //         $('#table_handle_new_pcx').datagrid('loadData', JSON.parse(data.data));
+        //         return JSON.parse(data.data);
+        //         // return data.data;
         //     }else {
-        //         $('#table_handle_new_pcx').datagrid('loadData', {"total":"0",rows:[] });
+        //         return [];
         //     }
         // },
-       onLoadSuccess: grid_handle_pcyl_load_success
+       //onLoadSuccess: grid_handle_pcyl_load_success
     });
-    $('#table_handle_new_pcx').datagrid('loadData', {"total":"0",rows:[] });
+   // $('#table_handle_new_pcx').datagrid('loadData', {"total":"0",rows:[] });
 
 
     $.ajax({
@@ -1710,7 +1711,15 @@ function click_handle_grade_checkbox_pcx(index, event) {
 }
 var editIndex = undefined; //当前编辑行
 
-
+function editOver(obj,index) {
+    $('#table_handle_new_pcx').datagrid('updateRow',{
+        index: index,
+        row: {
+            pcyj:$(obj).val()
+        }
+    });
+    //  grid_handle_grade_list_load_success();
+}
 function editText(obj,index){
     $(obj).css("border","1px solid #c1cfda");
     $(obj).css("margin-top","4px");

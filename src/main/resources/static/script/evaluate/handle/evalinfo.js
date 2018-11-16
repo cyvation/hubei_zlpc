@@ -1362,19 +1362,35 @@ function alert_new_pcx() {
              }
              }*/
         ]],
-        method: 'get',
-        url: getRootPath() + '/pdx/getPdx',
-        // url: getRootPath() + '/pcxdata.json',
-        queryParams: obj,
-        loadFilter: function (data, parent) {
-            if(data.code == 200){
-                return JSON.parse(data.data);
-                // return data.data;
-            }else {
-                return [];
-            }
-        },
+        // method: 'get',
+        // url: getRootPath() + '/pdx/getPdx',
+        // // url: getRootPath() + '/pcxdata.json',
+        // queryParams: obj,
+        // loadFilter: function (data, parent) {
+        //     if(data.code == 200){
+        //         $('#table_handle_new_pcx').datagrid('loadData', JSON.parse(data.data));
+        //     }else {
+        //         $('#table_handle_new_pcx').datagrid('loadData', {"total":"0",rows:[] });
+        //     }
+        // },
        onLoadSuccess: grid_handle_pcyl_load_success
+    });
+    $('#table_handle_new_pcx').datagrid('loadData', {"total":"0",rows:[] });
+
+
+    $.ajax({
+        type: 'get',
+        url: getRootPath() + '/pdx/getPdx',
+        data: obj,
+        dataType: "json",
+        success: function (result) {
+            if (result && result.code == 200){
+
+                $('#table_handle_new_pcx').datagrid('loadData', JSON.parse(result.data));
+            }else{
+                $('#table_handle_new_pcx').datagrid('loadData', {"total":"0",rows:[] });
+            }
+        }
     });
 
 
@@ -1687,7 +1703,7 @@ function click_handle_grade_checkbox_pcx(index, event) {
         }
     });
     // 激活评查理由输入框
-  //  grid_handle_grade_list_click_cell(index, '', '');
+   // grid_handle_grade_list_click_cell(index, '', '');
     // 更新当前问题数
     //update_handle_grade_problems();
   //  grid_handle_grade_list_load_success();
@@ -1711,6 +1727,8 @@ function addClickListener() {
         $(this).siblings().children(".redio_click").removeClass("redio_click_no");
         $(this).siblings(".switch").addClass('switch_click');
         toggleShow();
+
+        alert_new_pcx();
     });
 
     $(".switch").unbind("click");
@@ -1719,10 +1737,10 @@ function addClickListener() {
         toggleShow();
     });
 
-    $("#loadPcjg .radio").unbind("click");
-    $("#loadPcjg .radio").bind("click", function () {
-        alert_new_pcx();
-    });
+    // $("#loadPcjg>.radio").unbind("click");
+    // $("#loadPcjg>.radio").bind("click", function () {
+    //     alert_new_pcx();
+    // });
 }
 
 // 案卡显隐

@@ -1374,9 +1374,9 @@ function alert_new_pcx() {
         //         return [];
         //     }
         // },
-       //onLoadSuccess: grid_handle_pcyl_load_success
+       onLoadSuccess: grid_handle_pcyl_load_success
     });
-   // $('#table_handle_new_pcx').datagrid('loadData', {"total":"0",rows:[] });
+   $('#table_handle_new_pcx').datagrid('loadData', {"total":"0",rows:[] });
 
 
     $.ajax({

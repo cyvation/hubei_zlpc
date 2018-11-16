@@ -318,7 +318,7 @@ public class MenuButtonXxzyValidate {
                 return false;
             }
             //合格案件，分管和检察长。不需要送审
-           /* if ("合格案件".equalsIgnoreCase(jbxx.getPCJL())){
+/*            if ("合格案件".equalsIgnoreCase(jbxx.getPCJL())){
                 if (collect.contains("107") || collect.contains("120")) {
                     return false;
                 }

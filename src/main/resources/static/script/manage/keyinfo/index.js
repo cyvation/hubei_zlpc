@@ -420,7 +420,7 @@ function load_monitor_random_sjpc_filter() {
 
     var obj = new Object();
     //obj.PCDWBM = $('#cbt_moniter_random_pcdw').combotree('getValues').join(",");//评查单位编码
-    obj.CBDWBM = $('#cbt_moniter_random_cbdw').combotree('getValue') == undefined ? userInfo.DWBM : $('#cbt_moniter_random_cbdw').combotree('getValue');//承办单位编码
+    obj.CBDWBM = isNull($('#cbt_moniter_random_cbdw').combotree('getValue')) ? userInfo.DWBM : $('#cbt_moniter_random_cbdw').combotree('getValue');//承办单位编码
     obj.PCFLBM = '008';//评查分类编码
     // var tempPCJL = $('#cbt_moniter_random_pcjl').combotree('getText');
     // var tempArr = tempPCJL.split(",");

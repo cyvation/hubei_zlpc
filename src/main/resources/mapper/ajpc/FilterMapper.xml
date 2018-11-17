@@ -484,9 +484,9 @@
             from yx_pc_sxjl sxjl
         where NOT EXISTS (SELECT 1 FROM yx_pc_jbxx jb WHERE sxjl.bmsah = jb.bmsah AND jb.sfsc='N')
         and  sxjl.pcflbm = #{pcflbm}
-        and
+        and sxjl.bmsah in
         <foreach collection="bmsahlist" item="bmsah" open="(" separator="," close=")">
-            sxjl.bmsah in #{bmsah}
+             #{bmsah}
         </foreach>
 
         union
@@ -504,9 +504,9 @@
         where NOT EXISTS (SELECT 1 FROM yx_pc_jbxx jb WHERE aj.bmsah = jb.bmsah AND jb.sfsc='N')
         and   NOT EXISTS (SELECT 1 FROM yx_pc_sxjl jl WHERE aj.bmsah = jl.bmsah )
         and aj.sfsc = 'N'
-        and
+        and aj.bmsah in
         <foreach collection="bmsahlist" item="bmsah" open="(" separator="," close=")">
-            aj.bmsah in #{bmsah}
+             #{bmsah}
         </foreach>
 
 

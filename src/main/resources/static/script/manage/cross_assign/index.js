@@ -192,7 +192,7 @@ function eval_random_marksInit(pcxx) {
     });
 
     if(DJDWBM != userInfo.DWBM){
-        ("#btn_manage_cross_batchassign").css('display','');
+        $("#btn_manage_cross_batchassign").css('display','');
     }
 
     // 批量移除
@@ -204,7 +204,7 @@ function eval_random_marksInit(pcxx) {
     });
 
     if(DJDWBM != userInfo.DWBM){
-        ("#btn_manage_cross_batchremove").css('display','');
+        $("#btn_manage_cross_batchremove").css('display','');
     }
 
 }

@@ -46,6 +46,67 @@ function butAddWs(num) {
     }
 }
 
+// 生成个案评定报告
+function butAddPdBg(num){
+
+    var obj = get_eval_info_doc(PCBGLX);
+
+    var pcjg = $("input[name='rd_eval_info_pcjl_jg']:checked").val();
+    if(isNull(pcjg)){
+        Alert("未勾选结果等次建议！");
+        return;
+    }
+
+    if(isNull(obj)){
+
+        $.ajax({
+            type: 'POST',
+            url: getRootPath()+'/pdx/generatePdxDoc',
+            data: {"pcslbm":EVAL_CASE.PCSLBM},
+            dataType: "json",
+            success: function (result) {
+                if (result == null || result == undefined) {
+                    CloseProgress();
+                    Alert("服务端返回数据为空。");
+                    return;
+                }
+
+                if (result.code != 200){
+                    CloseProgress();
+                    Alert(result.note);
+                    return;
+                }
+                try {
+                   // $("#pcWin_win_new_pcx").window('close');
+                    show_eval_doc_panel("doc");
+                    CloseProgress();
+
+                    var error = OpenFile(getRootPath() + "/Files/PCJZ/" + result.data, "TANGER_OCX");
+                    if (!isNull(error)) {
+                        Alert(error);
+                        return;
+                    }
+
+                    load_tree_eval_doc_files();
+                    isApproveDoc = false;
+                    editDocPath = result.data;
+                    opening_eval_doc_file = result.value;
+                    SetSaveButtonState("TANGER_OCX", true);
+
+                } catch (e) {
+                    CloseProgress();
+                }
+
+            }
+        });
+    } else {
+        // 打开卷宗文件
+        isApproveDoc = false;
+        open_eval_file(obj.jzwjbh, obj.pczybm, obj.pczylx, obj.wjlx, obj.wjlj);
+    }
+
+}
+
 // 自动评查报告
 function butAddZdpc() {
 
@@ -249,6 +310,13 @@ function butFscbr(num) {
     });
 }
 
+// 办理阶段，新增检察官意见
+function butStuffYj(num){
+    addOrOpenApproveDoc();
+
+    EVAL_CASE.addjcg = '1'
+}
+
 // 评查审批
 function send_eval_handle_deal_approve(spjsbm, callback) {
 
@@ -418,6 +486,12 @@ function finish_eval_handle_deal(sffs) {
     var obj = get_eval_info_doc(PCBGLX);
     if(isNull(obj)){
         Alert("未生成评查报告！");
+        return;
+    }
+
+    // 合格案件可以在办理阶段直接结束。
+    if (EVAL_CASE.PCJDBH == '006' && EVAL_CASE.PCJL !='合格案件' ){
+        Alert("非合格案件请走审批！");
         return;
     }
 

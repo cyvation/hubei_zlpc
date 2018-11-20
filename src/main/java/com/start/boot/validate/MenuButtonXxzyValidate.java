@@ -60,15 +60,19 @@ public class MenuButtonXxzyValidate {
      */
     public boolean validateSfwcscsp(MenuQuery menuQuery){
 
-        // 只有活动形式才能二次送审
-        YX_PC_JBXX jbxx = jbxxService.getJbxx(menuQuery.getPczybm());
+        // 1. 合格案件，报审完毕，可以结束
+        //2.  其他类型，报审完毕，可以结束
+        //3.  活动形式的，二次报审？
 
-        XtPcLbExample example = new XtPcLbExample();
-        example.createCriteria().andPcflbmEqualTo(jbxx.getPCFLBM()).andSfqyEqualTo("Y").andSfpcfpEqualTo("Y");
-        List<XtPcLb> xtPcLbs = xtPcLbMapper.selectByExample(example);
-        if (CollectionUtils.isEmpty(xtPcLbs)){
-            return false;
-        }
+        // 只有活动形式才能二次送审
+//        YX_PC_JBXX jbxx = jbxxService.getJbxx(menuQuery.getPczybm());
+//
+//        XtPcLbExample example = new XtPcLbExample();
+//        example.createCriteria().andPcflbmEqualTo(jbxx.getPCFLBM()).andSfqyEqualTo("Y").andSfpcfpEqualTo("Y");
+//        List<XtPcLb> xtPcLbs = xtPcLbMapper.selectByExample(example);
+//        if (CollectionUtils.isEmpty(xtPcLbs)){
+//            return false;
+//        }
 
         String pczybm = menuQuery.getPczybm();
         if (StringUtils.isNotEmpty(pczybm)){
@@ -263,7 +267,7 @@ public class MenuButtonXxzyValidate {
     public  boolean validatefXzlxhy(MenuQuery menuQuery){
         YX_PC_JBXX jbxx = jbxxService.getJbxx(menuQuery.getPczybm());
         YxlcSljdExample example=new YxlcSljdExample();
-        example.createCriteria().andLcjdbmEqualTo("010").andPcslbmEqualTo(menuQuery.getPczybm());
+        example.createCriteria().andLcjdbmEqualTo("007").andPcslbmEqualTo(menuQuery.getPczybm());
         long l = yxlcSljdMapper.countByExample(example);
         if (l!=0){
                 return true;
@@ -281,7 +285,7 @@ public class MenuButtonXxzyValidate {
     public  boolean validatefJwhyj(MenuQuery menuQuery){
         YX_PC_JBXX jbxx = jbxxService.getJbxx(menuQuery.getPczybm());
         YxlcSljdExample example=new YxlcSljdExample();
-        example.createCriteria().andLcjdbmEqualTo("010").andPcslbmEqualTo(menuQuery.getPczybm());
+        example.createCriteria().andLcjdbmEqualTo("007").andPcslbmEqualTo(menuQuery.getPczybm());
         long l = yxlcSljdMapper.countByExample(example);
         if (l!=0){
                 return true;
@@ -391,6 +395,21 @@ public class MenuButtonXxzyValidate {
         }
 
     }
+
+    /**
+     * 办理阶段，新增检察官意见按钮
+     * @param menuQuery
+     * @return
+     */
+    public boolean validateAddStuff(MenuQuery menuQuery){
+        YX_PC_JBXX jbxx = jbxxService.getJbxx(menuQuery.getPczybm());
+        if ("006".equals(jbxx.getPCJDBH())){
+            return true;
+        }
+        return false;
+    }
+
+
 
 
 }

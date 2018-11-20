@@ -15,7 +15,7 @@
         sm,
         jzmlh
         FROM xt_pc_wsmb
-        WHERE pcflbm = #{pcflbm}and wsmblb = #{wsmblb}
+        WHERE pcflbm = #{pcflbm} and wsmblb = #{wsmblb}
 
     </select>
 

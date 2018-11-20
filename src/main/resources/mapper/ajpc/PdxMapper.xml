@@ -4,76 +4,89 @@
 
     <select id="getPdx" parameterType="com.start.boot.query.PdxQuery" resultMap="pdxMap">
 
-        select
-            pdxfl2.pdxflbm f3flbm,
-            pdxfl2.pdxflmc f3flmc,
-            pdxfl.pdxflbm f2flbm,
-            pdxfl.pdxflmc f2flmc,
-            pdx.pdxbm pdxbm,
-            pdx.pdxmc pcxmc,
-            pdx.bz,
-            mb.dcmbbm,
-            NVL2(yxpdx.pdxlx,yxpdx.pdxlx, '-1') pcjg,
-            NVL2(yxpdx.pdyj,yxpdx.pdyj, '') pcyj
+        WITH tab_pdx AS (
+                SELECT
+                    pdx.pdxbm                                            pdxbm,
+                    pdx.pdxmc                                            pcxmc,
+                    pdxfl.pdxflbm                                        f2flbm,
+                    pdxfl.pdxflmc                                        f2flmc,
+                    pdxfl2.pdxflbm                                       f3flbm,
+                    pdxfl2.pdxflmc                                       f3flmc,
+                    pdx.dcmbbm,
+                    pdx.bz,
+                    NVL2(yxpdx.pdxlx, yxpdx.pdxlx, '-1')                 pcjg,
+                    NVL2(yxpdx.pdyj, yxpdx.pdyj, nvl2(dx.sm, dx.sm, '')) pdyj
+                --yxpdx.pdyj,
+                --pcx.sm
+
+                FROM xt_dc_pdx pdx
+                    LEFT JOIN yx_dc_pdx yxpdx
+                        ON pdx.pdxbm = yxpdx.pdxbm
+                           AND pdx.dcmbbm = yxpdx.dcmbbm
+                           AND yxpdx.pcslbm = #{pcslbm}
+
+                    INNER JOIN xt_dc_pdxfl pdxfl
+                        ON pdx.pdxflbm = pdxfl.pdxflbm
+
+                    INNER JOIN xt_dc_pdxfl pdxfl2
+                        ON pdxfl.pdxflfbm = pdxfl2.pdxflbm
+                           AND pdxfl2.pdxflfbm IS NULL
+
+                    LEFT JOIN (SELECT
+                                   dcpcx.pcx_xtdm,
+                                   dcpcx.dcmbbm,
+                                   dcpcx.pdxbm,
+                                   pcx.sm
+                               FROM XT_DCX_PCX dcpcx
+                                   LEFT JOIN yx_pc_pcx pcx
+                                       ON dcpcx.pcx_xtdm = pcx.xtdm
+                                          AND pcx.pcslbm = #{pcslbm}
+                                          AND ((pcx.pcfs = '1' AND pcjg = '1')
+                                               OR (pcx.pcfs = '2' AND pcjg IS NOT NULL))
+                              ) dx ON pdx.pdxbm = dx.pdxbm
+                                      AND pdx.dcmbbm = dx.dcmbbm
+                WHERE 1 = 1
+                      AND pdxfl.pdxflmc = #{pcjl}
+                      AND exists (
+
+                              select mb.dcmbbm
+                              from
+                                  xt_dc_mb mb
+                                  left join xt_dc_ajlb ajlb
+                                      on mb.dcmbbm = ajlb.dcmbbm
+
+                              where mb.sfqy = 'Y'
+                                    AND ( (mb.sfty='Y')
+                                          OR (mb.sfty='N' and ajlb.ajlbbm = #{ajlbbm})
+                                    )
+
+                                    AND pdx.dcmbbm = mb.dcmbbm
+                      )
+            --pdx.dcmbbm = '420000100'
+        )
+
+        SELECT MAX(tab.f3flbm)  f3flbm,
+               max(tab.f3flmc)  f3flmc,
+               max(tab.f2flbm)  f2flbm,
+               max(tab.f2flmc)  f2flmc,
+               max(tab.pdxbm)   pdxbm,
+               max(tab.pcxmc)  pcxmc,
+               max(tab.bz) bz,
+               max(tab.dcmbbm) dcmbbm,
+               max(tab.pcjg)  pcjg,
+            wmsys.wm_concat(distinct tab.pdyj) pcyj
 
 
-        from xt_dc_ajlb ajlb
-            inner join xt_dc_mb mb
-                on ajlb.dcmbbm = mb.dcmbbm
-                   and mb.sfqy = 'Y'
-                   and mb.sfty = 'N'
-                   and ajlb.ajlbbm = #{ajlbbm}
-            inner join xt_dc_pdx pdx
-                on mb.dcmbbm = pdx.dcmbbm
+        FROM tab_pdx tab
+        GROUP BY
+            tab.f3flbm,
+            tab.f3flmc,
+            tab.f2flbm,
+            tab.f2flmc,
+            tab.pdxbm,
+            tab.pcxmc
 
-            left join yx_dc_pdx yxpdx
-                on pdx.pdxbm = yxpdx.pdxbm
-                   and yxpdx.pcslbm = #{pcslbm}
-
-            inner join xt_dc_pdxfl pdxfl
-                on pdx.pdxflbm = pdxfl.pdxflbm
-            inner join xt_dc_pdxfl pdxfl2
-                on pdxfl.pdxflfbm = pdxfl2.pdxflbm
-                   and pdxfl2.pdxflfbm is null
-
-        where 1=1
-              and pdxfl.pdxflmc = #{pcjl}
-
-        -- 通用模板
-        union all
-
-        select
-            pdxfl2.pdxflbm f3flbm,
-            pdxfl2.pdxflmc f3flmc,
-            pdxfl.pdxflbm f2flbm,
-            pdxfl.pdxflmc f2flmc,
-            pdx.pdxbm pdxbm,
-            pdx.pdxmc pcxmc,
-            pdx.bz,
-            mb.dcmbbm,
-            NVL2(yxpdx.pdxlx,yxpdx.pdxlx, '-1') pcjg,
-            NVL2(yxpdx.pdyj,yxpdx.pdyj, '') pcyj
-
-
-
-        from  xt_dc_mb mb
-            inner join xt_dc_pdx pdx
-                on mb.dcmbbm = pdx.dcmbbm
-                   and mb.sfqy = 'Y'
-                   and mb.sfty = 'Y'
-
-            left join yx_dc_pdx yxpdx
-                on pdx.pdxbm = yxpdx.pdxbm
-                   and yxpdx.pcslbm = #{pcslbm}
-
-            inner join xt_dc_pdxfl pdxfl
-                on pdx.pdxflbm = pdxfl.pdxflbm
-            inner join xt_dc_pdxfl pdxfl2
-                on pdxfl.pdxflfbm = pdxfl2.pdxflbm
-                   and pdxfl2.pdxflfbm is null
-
-        where 1=1
-              and pdxfl.pdxflmc = #{pcjl}
+        order by tab.f3flbm
 
     </select>
     
@@ -93,15 +106,16 @@
     <!--获取勾选的评定项用于生成评定报告-->
     <select id="getSelectedPdx" resultType="com.start.boot.domain.YxDcPdx">
 
-        select max(pdxfl.pdxflmc) pdxflbm,
-            wmsys.wm_concat(yxpdx.pdxmc) pdxmc
+        select pdxfl.pdxflmc pdxflbm,
+               yxpdx.pdxmc pdxmc,
+            yxpdx.pdyj
+
         from yx_dc_pdx yxpdx
             inner join xt_dc_pdxfl pdxfl
                 on yxpdx.pdxflbm = pdxfl.pdxflbm
         where yxpdx.pcslbm = #{pcslbm}
-        and   yxpdx.pdxlx = '1'
+              and   yxpdx.pdxlx = '1'
 
-        group by pdxfl.pdxflbm
 
     </select>
 

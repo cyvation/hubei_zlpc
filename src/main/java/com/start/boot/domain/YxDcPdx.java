@@ -1,5 +1,7 @@
 package com.start.boot.domain;
 
+import org.springframework.util.StringUtils;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -182,7 +184,8 @@ public class YxDcPdx extends YxDcPdxKey implements Serializable {
     }
 
     public void setPdyj(String pdyj) {
-        this.pdyj = pdyj;
+
+        this.pdyj = StringUtils.isEmpty(pdyj) ? "" : pdyj;
     }
 
     public Date getJlsj() {

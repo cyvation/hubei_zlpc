@@ -9,6 +9,7 @@ var editDocPath = ""; //当前打开卷宗路径(流转单/评查报告)
 var isApproveDoc = false; //是否为评查流转单
 var isSendApprove = "0"; //是否为评查报审，在评查员触发报审/发送承办人时使用
 var isFirstLoad = "Y"; //是否首次加载页面，首次加载则默认打开评查流转单，否则刷新卷宗树时不操作文件
+EVAL_CASE.addjcg = '0';// 是否首次未点击保存检察官意见，默认没有，点击了为'1'
 
 $(document).ready(function () {
 
@@ -177,6 +178,34 @@ function eval_info_marksInit() {
     }
 }
 
+// 评查结果校验是否勾选了评查项
+function checkPcx(){
+
+        var count = 0;
+
+        var data = initPostData().pcxFlVos;
+       for1: for(var i =0; i < data.length; i++) {
+            var pcxfl = data[i].children;
+            for(var j =0; j < pcxfl.length; j++){
+                if (pcxfl[j].pcjg == '1' && (pcxfl[j].pcxflmc != '规范' || pcxfl[j].pcxflmc != '正确') ){ //父类勾选了问题
+                       var pcx = pcxfl[j].pcxList;
+                       for(var k =pcx.length -1; k >=0; k--){
+                           if (pcx[k].pcfs == '2' && pcx[k].pcjg != ''){ // 其他
+                                count = count +1;
+                                break for1;
+                           }
+
+                           if (pcx[k].pcfs == '1' && pcx[k].pcjg == '1'){ // 子类勾选
+                               count = count +1;
+                               break for1;
+                           }
+
+                       }
+                }
+            }
+        }
+    return count;
+}
 // 展示评查案卡浮动面板
 function show_eval_info_pcak_area() {
     $("#evalinfo_position_one").show();
@@ -614,7 +643,7 @@ function get_eval_info_doc(wjlx) {
     obj.jzwjbh = node.attributes.BM;
     obj.pczybm = node.attributes.ZYBM;
     obj.pczylx = node.attributes.ZYLX;
-    obj.wjlx = node.attributes.LX; //文件类型（0.附件 1.评查方案 2.评查流转单 3.评查案件报告 4.评查汇总报告 5.自动评查报告）
+    obj.wjlx = node.attributes.LX; //文件类型（0.附件 1.评查方案 2.评查流转单 3.评查案件报告 4.评查汇总报告 5.自动评查报告 ）
     obj.wjlj = node.attributes.WJLJ;
     if (isNull(obj.wjlj)){
         return null;
@@ -912,17 +941,24 @@ function load_cljg_pcjg(bm) {
                     pcjlElement.parent().addClass('redio_click_no');
                     pcjlElement.attr("checked",true);
                 }else {
+                    // 湖北改变逻辑，
+                    // 变成先保存评查标准，才能出现结果等次，勾选结果等次才出现评定项,评查结论交由评定标准保存时才保存。
                     var html='';
                     for(var i=0;i<data.length;i++){
-                        html+='<div class="radio">';
+                        html+='<div class="radio"  >';
                         html+='<div class="redio_click">';
                         html+='<input class="input_radio_pcjg" name="rd_eval_info_pcjl_jg" type="radio" value="'+data[i].mc+'"/>';
                         html+='</div>'+data[i].mc+'</div>';
                     }
                     $('#loadPcjg').append(html);
-                    var pcjgElement = $("input[name='rd_eval_info_pcjl_jg'][value='" + EVAL_CASE.PCJL + "']");
-                    pcjgElement.parent().addClass('redio_click_no');
-                    pcjgElement.attr("checked",true);
+
+                    if (isNull(EVAL_CASE.PCJL) && isNull(EVAL_CASE.PCJG)){ // 仅仅首次未保存评查项的时候隐藏结论radio
+                        $('#loadPcjg').css('display','none');
+                    }else{
+                        var pcjgElement = $("input[name='rd_eval_info_pcjl_jg'][value='" + EVAL_CASE.PCJL + "']");
+                        pcjgElement.parent().addClass('redio_click_no');
+                        pcjgElement.attr("checked",true);
+                    }
                 }
             }else {
                 Alert('getDataDictionaryByLBBM 错误'+data.message)
@@ -1298,7 +1334,7 @@ function alert_new_pcx() {
             //Code1:在这里可以继续增加子项，添加列。
             {
                 field: 'pcxmc',
-                title: '<span class=\'headPCTitle\'  style=\'font-size:16px;display: inline-block;width: 100%;  text-align: center;\'>具体内容及扣分标准</span>',
+                title: '<span class=\'headPCTitle\'  style=\'font-size:16px;display: inline-block;width: 100%;  text-align: center;\'>具体标准</span>',
                 width: 430,
                 styler: function (value, row, index) {
                     return "padding:8px 0px 8px 0px;"
@@ -1336,7 +1372,7 @@ function alert_new_pcx() {
                 }
             },
             {
-                field: 'pcyj', title: '<span class=\'headPCTitle\' >具体理由</span>', width: 235, height: '100%',
+                field: 'pcyj', title: '<span class=\'headPCTitle\' >内容</span>', width: 235, height: '100%',
                 formatter: function (value, row, index) {
                     value=(value==null?"":value);
                     var data = '<textarea style="resize:none;height:'+(value.length==0||value.length<45?65:value.length*1.8 + 5)+'px; width:90% ;outline: none;margin-top: 5px;margin-left: 1px; padding: 5px;' +
@@ -1444,6 +1480,13 @@ function alert_new_pcx() {
             success: function (result) {
                 if (result && result.code == 200){
                     Alert("保存成功！");
+                    EVAL_CASE.PCJL = pcjl;
+
+                    // 如果是合格案件，出现结束按钮
+                    // if (pcjl == '合格案件'){
+                    //
+                    // }
+
                 }else{
                     Alert("保存失败");
                 }
@@ -1737,7 +1780,7 @@ function addClickListener() {
         $(this).siblings(".switch").addClass('switch_click');
         toggleShow();
 
-        alert_new_pcx();
+      //  alert_new_pcx();
     });
 
     $(".switch").unbind("click");
@@ -1746,10 +1789,11 @@ function addClickListener() {
         toggleShow();
     });
 
-    // $("#loadPcjg>.radio").unbind("click");
-    // $("#loadPcjg>.radio").bind("click", function () {
-    //     alert_new_pcx();
-    // });
+  //  $("#loadPcjg>.radio").unbind("click");
+    $("#loadPcjg>.radio").bind("click", function () {
+
+        alert_new_pcx();
+    });
 }
 
 // 案卡显隐
@@ -1851,6 +1895,7 @@ function init_eval_handle_bottom_tool(toolID) {
     $('#tool_eval_handle_deal_pcsp').css('display', 'none'); //评查审批
     $('#tool_eval_handle_deal_pcfk').css('display', 'none'); //评查反馈
     $('#toll_eval_handle_deal_bmfk').css('display', 'none'); //部门反馈
+    $('#tool_eval_handle_deal_xgxx').css('display', 'none'); //保存评查员意见、检察官意见
 
     $('.pcbl_pcxx_cent_bloak').removeClass('pcbl_pcxx_cent_bloak');
     $('.pcbl_pcxx_cent_blo').removeClass('pcbl_pcxx_cent_blo');
@@ -1866,6 +1911,17 @@ function init_eval_handle_bottom_tool(toolID) {
                 // if(bl){
                 //     return;
                 // }
+                // 检查是否勾选评查项
+                var count = checkPcx();
+                if (count == 0){
+                    Alert("请勾选相应的评查项!");
+                    return;
+                }
+
+                // 评查项通过校验，显示评查结果勾选。
+                $('#loadPcjg').css('display','');
+
+
                 var vo = initPostData();
                 // 评查结论
                 var obj = new Object();
@@ -1876,11 +1932,12 @@ function init_eval_handle_bottom_tool(toolID) {
                 var sfldba = $("input[name='rd_eval_info_sfldba']:checked").val();
                 obj.SFLDBA = isNull(sfldba) ? "" : sfldba;
                 var pcjl = $("input[name='rd_eval_info_pcjl_jg']:checked").val();
+                obj.pcjg = 'saved';
 
-                if (isNull(pcjl)){
-                    Alert("请勾选结果等次！");
-                    return;
-                }
+                // if (isNull(pcjl)){
+                //     Alert("请勾选结果等次！");
+                //     return;
+                // }
 
                 obj.PCJL = isNull(pcjl) ? "" : pcjl;
                 obj.SM = $("#txt_eval_info_pcjl_bz").val();
@@ -1898,6 +1955,7 @@ function init_eval_handle_bottom_tool(toolID) {
                             EVAL_CASE.SFLDBA = obj.SFLDBA;
                             EVAL_CASE.PCJL = obj.PCJL;
                             EVAL_CASE.SM = obj.SM;
+                            EVAL_CASE.PCJG = 'saved';
                             Alert("提交成功！");
                         }else{
                             Alert(result.note);
@@ -1910,9 +1968,9 @@ function init_eval_handle_bottom_tool(toolID) {
 
             if (isSendApprove == "0"){
                 $('#btn_eval_handle_deal_pcbs_confirm').text("发送审批");
-                $('#btn_eval_handle_deal_fscbr_confirm').text("发送承办人");
+               // $('#btn_eval_handle_deal_fscbr_confirm').text("发送承办人");
                 $('#btn_eval_handle_deal_pcbs_confirm').css('display', '');
-                $('#btn_eval_handle_deal_fscbr_confirm').css('display', '');
+              //  $('#btn_eval_handle_deal_fscbr_confirm').css('display', '');
             }else if(isSendApprove == "1"){
                 $('#btn_eval_handle_deal_pcbs_confirm').text("提交意见");
                 $('#btn_eval_handle_deal_fscbr_confirm').text("提交意见");
@@ -2035,15 +2093,15 @@ function init_eval_handle_bottom_tool(toolID) {
             $('#tool_eval_handle_deal_pcsp').find(".redio_click").children("input").attr('checked',false);
 
             // 仅评查员直接送审的审批记录可退回
-            if (EVAL_CASE.PCR_DWBM == EVAL_CASE.SSRDWBM && EVAL_CASE.PCR_GH == EVAL_CASE.SSRGH){
-                //$('#rd_eval_handle_deal_pcsp_spyj_reject').css('display', '');
-                //$('#rd_eval_handle_deal_pcsp_spyj_suggest').css('display', 'none');
-                $("#btn_eval_handle_deal_pcsp_sendBack").css('display', '');
-            } else {
-                //$('#rd_eval_handle_deal_pcsp_spyj_reject').css('display', 'none');
-                //$('#rd_eval_handle_deal_pcsp_spyj_suggest').css('display', 'none');
-                $("#btn_eval_handle_deal_pcsp_sendBack").css('display', 'none');
-            }
+            // if (EVAL_CASE.PCR_DWBM == EVAL_CASE.SSRDWBM && EVAL_CASE.PCR_GH == EVAL_CASE.SSRGH){
+            //     //$('#rd_eval_handle_deal_pcsp_spyj_reject').css('display', '');
+            //     //$('#rd_eval_handle_deal_pcsp_spyj_suggest').css('display', 'none');
+            //     $("#btn_eval_handle_deal_pcsp_sendBack").css('display', '');
+            // } else {
+            //     //$('#rd_eval_handle_deal_pcsp_spyj_reject').css('display', 'none');
+            //     //$('#rd_eval_handle_deal_pcsp_spyj_suggest').css('display', 'none');
+            //     $("#btn_eval_handle_deal_pcsp_sendBack").css('display', 'none');
+            // }
 
             $('#tool_eval_handle_deal_pcsp').css('display', '');
             $('.pcbl_pcxx_cent').addClass('pcbl_pcxx_cent_blo');
@@ -2099,6 +2157,35 @@ function init_eval_handle_bottom_tool(toolID) {
                 deal_eval_handle_deal_bmfk();
             });
             break;
+        case "5": //保存评查员意见、检察官意见
+
+            // 取消选中状态
+            $('#tool_eval_handle_deal_xgxx').find(".redio_click").removeClass("redio_click_no");
+            $('#tool_eval_handle_deal_xgxx').find(".redio_click").children("input").attr('checked',false);
+
+            $('#tool_eval_handle_deal_xgxx').css('display', '');
+            $('.pcbl_pcxx_cent').addClass('pcbl_pcxx_cent_blo');
+            $("#btn_eval_handle_deal_xgxx_confirm").unbind( "click" );
+            $("#btn_eval_handle_deal_xgxx_confirm").bind("click", function () {
+                save_doc_file(function () {
+
+                    var jcgyj  = GetMarkValue('PCYYJ').replace(/[\r\n]/g,'');
+                    if(isNull(jcgyj)){
+                        Alert("请填写评查员意见！");
+                        return;
+                    }
+
+                    // var jcgyj  = GetMarkValue('CBJCGYJ').replace(/[\r\n]/g,'');
+                    // if(isNull(jcgyj)){
+                    //     Alert("请填写检察官意见！");
+                    //     return;
+                    // }
+
+                    EVAL_CASE.addjcg = '0';
+                    init_eval_handle_bottom_tool('');
+                });
+            });
+            break;
         default:
             break;
     }
@@ -2116,6 +2203,10 @@ function init_eval_handle_bottom_tool(toolID) {
 
         if(EVAL_CASE.PCCZLX == "1"){
             insert_doc_eval_pcyyj();
+
+            var jcgyj = GetMarkValue("CBJCGYJ");
+            console.log("jcgyj:" + jcgyj);
+            SetBmarkEditable("CBJCGYJ");
         } else {
             var advice = $(this).children(".redio_click").children("input").val();
             if(advice == "退回"){
@@ -2182,7 +2273,7 @@ function documentOpened() {
 // 审批表操作工具栏
 function show_eval_doc_approve_tool() {
 
-    // 评查操作类型：0.只读 1.评查办理 2.评查审批 3.评查反馈 4.部门反馈
+    // 评查操作类型：0.只读 1.评查办理 2.评查审批 3.评查反馈 4.部门反馈 5.检察官意见保存
     switch (EVAL_CASE.PCCZLX){
         case "0":
             SetDocProtect();
@@ -2194,7 +2285,19 @@ function show_eval_doc_approve_tool() {
             }else{
                 if(EVAL_CASE.PCJDBH == "006"){
                     SetDocProtect();
-                    init_eval_handle_bottom_tool('1'); //评查意见菜单栏
+
+                    // 如果点击了新增检察官意见
+                    if(EVAL_CASE.addjcg == '1'){
+                        init_eval_handle_bottom_tool('5'); //评查员、检察官意见保存
+                        insert_doc_eval_pcyyj();
+
+                        var jcgyj = GetMarkValue("CBJCGYJ");
+                        console.log("jcgyj:" + jcgyj);
+                        SetBmarkEditable("CBJCGYJ");
+
+                    }else{
+                        init_eval_handle_bottom_tool('1'); //评查意见菜单栏
+                    }
                 }else{
                     insert_doc_eval_pcyyj();
                 }

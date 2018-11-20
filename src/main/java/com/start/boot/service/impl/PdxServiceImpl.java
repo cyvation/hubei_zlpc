@@ -15,9 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by lei on 2018/11/13.
@@ -63,22 +65,46 @@ public class PdxServiceImpl implements PdxService {
                 yxDcPdxMapper.insertSelective(yxDcPdx);
             }
 
+            YX_PC_JBXX jbxx = new YX_PC_JBXX();
+            jbxx.setPCSLBM(pcslbm);
+            jbxx.setPCJL(yxDcPdxes.get(0).getPdjg() + "案件");
+            yxPcJbxxMapper.updateByPrimaryKeySelective(jbxx);
+
         }
 
     }
 
 
     @Override
+    @Transactional
     public String generatePdxDoc(String pcslbm) throws Exception {
 
         // 获取评定项
         List<YxDcPdx> list= pdxMapper.getSelectedPdx(pcslbm);
+
+
+        // 证据采信、事实认定、、、作为key
+        // 1.证据采信:物证、书证等证据的形式存在瑕疵(有很多问题)，首次讯问、询问笔录没有记录告知被讯问人、证人、被害人有关权利义务（sdfsd）;
+        // 2.事实认定:认定的前科劣迹、自首、坦白、立功等影响量刑的事实或情节有遗漏或者错误,认定的案件基本事实要素有遗漏或者有错误
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < list.size(); i++) {
-            YxDcPdx yxDcPdx = list.get(i);
-            // 1.证据采信:物证、书证等证据的形式存在瑕疵,xxxx
-            // 2.事实认定:认定的前科劣迹、自首、坦白、立功等影响量刑的事实或情节有遗漏或者错误,认定的案件基本事实要素有遗漏或者有错误
-            sb.append(i+ 1).append(".").append(yxDcPdx.getPdxflbm()).append(":").append(yxDcPdx.getPdxmc()).append("\r\n");
+        if (!CollectionUtils.isEmpty(list)){
+            Map<String, List<YxDcPdx>> collect = list.stream().collect(Collectors.groupingBy(YxDcPdx::getPdxflbm));
+            int i = 1;
+            for (String s : collect.keySet()) {
+                sb.append(i).append(".").append(s).append(":");
+                List<YxDcPdx> yxDcPdxes = collect.get(s);
+                for (int j = 0; j < yxDcPdxes.size(); j++) {
+                    YxDcPdx yxDcPdx = yxDcPdxes.get(j);
+                    sb.append(yxDcPdx.getPdxmc()).append("(").append(yxDcPdx.getPdyj()).append(")");
+                    if(j != yxDcPdxes.size() - 1){
+                        sb.append(",");
+                    }
+                }
+
+                sb.append(";");
+                sb.append("\r\n");
+                i++;
+            }
         }
 
        // 获取案件信息
@@ -91,28 +117,23 @@ public class PdxServiceImpl implements PdxService {
         String path = SystemConfiguration.pcjzPath + savePath;
         String target = SystemConfiguration.wzbsPath + path;
 
+        Map<String, String> params = new HashMap<>();
+        params.put("${AJMC}",yx_pc_jbxx.getAJMC());
+        params.put("${BPC_MC}",yx_pc_jbxx.getBPCMC());
+        params.put("${AJLB_MC}",yx_pc_jbxx.getAJLBMC());
+        params.put("${PCR_MC}",yx_pc_jbxx.getPCRMC());
+        params.put("${PCRQ}",DateTime.now().toString("yyyy年MM月dd日"));
+        params.put("${WT}",sb.toString());
+        params.put("${PCJL}", StringUtils.isEmpty(yx_pc_jbxx.getPCJL()) ? "": yx_pc_jbxx.getPCJL());
 
-        if (!CollectionUtils.isEmpty(list)){
-
-            Map<String, String> params = new HashMap<>();
-            params.put("${AJMC}",yx_pc_jbxx.getAJMC());
-            params.put("${BPC_MC}",yx_pc_jbxx.getBPCMC());
-            params.put("${AJLB_MC}",yx_pc_jbxx.getAJLBMC());
-            params.put("${PCR_MC}",yx_pc_jbxx.getPCRMC());
-            params.put("${PCRQ}",DateTime.now().toString("yyyy年MM月dd日"));
-            params.put("${WT}",sb.toString());
-            params.put("${PCJL}",yx_pc_jbxx.getPCJL());
-
-            poiUtils.createBg(source, target, params,null);
+        poiUtils.createBg(source, target, params,null);
 
 
-            Param_Jzwj jzwj = new Param_Jzwj();
-            jzwj.setWscflj(savePath);
-            jzwj.setWjkzm(".doc");
+        Param_Jzwj jzwj = new Param_Jzwj();
+        jzwj.setWscflj(savePath);
+        jzwj.setWjkzm(".doc");
 
-            insertJzwj(jzwj, yx_pc_jbxx);
-
-        }
+        insertJzwj(jzwj, yx_pc_jbxx);
 
 
         return savePath;
@@ -126,7 +147,7 @@ public class PdxServiceImpl implements PdxService {
         // 移除以前的
         YxPcJzwjExample example = new YxPcJzwjExample();
         example.createCriteria().andPczybmEqualTo(yx_pc_jbxx.getPCSLBM())
-                                .andWjlxEqualTo("6");
+                                .andWjlxEqualTo("3").andWsmbbhIsNull();
         YxPcJzwj record = new YxPcJzwj();
         record.setSfsc("Y");
         jzwjMapper.updateByExampleSelective(record, example);
@@ -139,7 +160,7 @@ public class PdxServiceImpl implements PdxService {
         jzwj.setFjzwjbh("-1");
         jzwj.setDwbm(yx_pc_jbxx.getPCDWBM());
         jzwj.setPczybm(yx_pc_jbxx.getPCSLBM());
-        jzwj.setWjlx("6");
+        jzwj.setWjlx("3");
         jzwj.setJzmlh(jzmlh);
         jzwj.setWjmc("评定报告");
         jzwj.setGxlx("1");

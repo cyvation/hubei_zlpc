@@ -73,7 +73,27 @@
                 <div id="divPdf" style="width: 100%; display: none"></div>
             </form>
         </div>
-        <!--评查报审-->
+
+        <!--保存检察官意见-->
+        <div id="tool_eval_handle_deal_xgxx" style="display: none;padding-left: 10px;">
+            <div style="width: calc(100% - 240px);float: left;">
+                <span class="xzspyj">意见：</span>
+                <div class="pcjg_redio" style="float: left;width: calc(100% - 90px);margin-top: 10px;">
+                    <div class="radio bgkjClick">
+                        <div class="redio_click"><input class="input_radio_spyj" name="rd_eval_handle_deal_pcbs_pcyj"
+                                                        type="radio" value="意见" /></div>
+                        意见
+                    </div>
+                </div>
+                <span class="spxzts" title="操作选择(提示:选择意见后，请直接在相应的意见栏中输入详细内容)">操作选择(提示:选择意见后，请直接在相应的意见栏中输入详细内容)</span>
+            </div>
+            <div style="width: 240px;height: 40px;float: left;">
+                <!--保存意见-->
+                <button class="bc_anys" id="btn_eval_handle_deal_xgxx_confirm" >保存意见</button>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+        <!--评查报审->evalinfo-->
         <div id="tool_eval_handle_deal_pcbp" style="display: none;padding-left: 10px;">
             <div style="width: calc(100% - 240px);float: left;">
                 <span class="xzspyj">意见：</span>
@@ -127,7 +147,7 @@
                 <!--<button class="bc_anys" id="btn_eval_handle_deal_pcsp_sendApp">继续审批</button>-->
                 <button class="bc_anys" id="btn_eval_handle_deal_pcsp_confirm">保存并返回</button>
                 <button class="bc_anys" id="btn_eval_handle_deal_pcsp_save">保存</button>
-                <button class="bc_anys" id="btn_eval_handle_deal_pcsp_sendBack">退回</button>
+                <button class="bc_anys" id="btn_eval_handle_deal_pcsp_sendBack" style="display: none">退回</button>
             </div>
             <div style="clear:both;"></div>
         </div>
@@ -371,13 +391,13 @@
 </div>
 
 <!--新评查标准弹出框-->
-<div id="pcWin_win_new_pcx" class="easyui-window" title="新评查标准" style="display: none"
+<div id="pcWin_win_new_pcx" class="easyui-window" title="评定标准" style="display: none"
      data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,cache:false,resizable:true,width:1000,height:600">
     <div style="height: calc(100% - 30px);overflow: auto;">
         <table id="table_handle_new_pcx"></table>
     </div>
     <div style="height: 30px">
-        <div class="pcbl_pcxx_bc" id="generate_pdx_doc" style="float: right;margin-right: 0;">生成评定报告</div>
+        <div class="pcbl_pcxx_bc" id="generate_pdx_doc" style="float: right;margin-right: 0;display: none;">生成评定报告</div>
         <div class="pcbl_pcxx_bc" id="save_new_pcx" style="float: right;margin-right: 0;">保存</div>
     </div>
 </div>

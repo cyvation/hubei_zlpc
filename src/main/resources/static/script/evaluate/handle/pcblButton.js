@@ -213,6 +213,8 @@ function butPcblPcbs(num) {
         Alert("未生成评查报告，请先生成报告！");
         return;
     }
+
+    EVAL_CASE.addjcg = '0'
     /*$.ajax({
         type: 'get',
         url: getRootPath()+'/handle/IsCreatePcbg',
@@ -229,7 +231,7 @@ function butPcblPcbs(num) {
     });*/
     addOrOpenApproveDoc();
 
-    isSendApprove = "1";
+    isSendApprove = "0";
 }
 
 // 发送承办人(评查办理阶段)

@@ -15,7 +15,9 @@
                     pdx.dcmbbm,
                     pdx.bz,
                     NVL2(yxpdx.pdxlx, yxpdx.pdxlx, '-1')                 pcjg,
-                    NVL2(yxpdx.pdyj, yxpdx.pdyj, nvl2(dx.sm, dx.sm, '')) pdyj
+                    NVL2(yxpdx.pdyj, yxpdx.pdyj, nvl2(dx.sm, dx.sm, '')) pdyj,
+                    pdxfl.xh as f2xh,
+                    pdx.xh as xh
                 --yxpdx.pdyj,
                 --pcx.sm
 
@@ -74,6 +76,8 @@
                max(tab.bz) bz,
                max(tab.dcmbbm) dcmbbm,
                max(tab.pcjg)  pcjg,
+               max(tab.f2xh) f2xh,
+               max(tab.xh) xh,
             wmsys.wm_concat(distinct tab.pdyj) pcyj
 
 
@@ -86,7 +90,7 @@
             tab.pdxbm,
             tab.pcxmc
 
-        order by tab.f3flbm
+        order by tab.f3flmc,f2xh,xh
 
     </select>
     
@@ -106,15 +110,23 @@
     <!--获取勾选的评定项用于生成评定报告-->
     <select id="getSelectedPdx" resultType="com.start.boot.domain.YxDcPdx">
 
-        select pdxfl.pdxflmc pdxflbm,
-               yxpdx.pdxmc pdxmc,
-            yxpdx.pdyj
+        with tab_pdx as(
 
-        from yx_dc_pdx yxpdx
-            inner join xt_dc_pdxfl pdxfl
-                on yxpdx.pdxflbm = pdxfl.pdxflbm
-        where yxpdx.pcslbm = #{pcslbm}
-              and   yxpdx.pdxlx = '1'
+                select
+                    pdxfl.pdxflmc pdxflbm,
+                    yxpdx.pdxmc pdxmc,
+                    yxpdx.pdyj
+
+                from yx_dc_pdx yxpdx
+                    inner join xt_dc_pdxfl pdxfl
+                        on yxpdx.pdxflbm = pdxfl.pdxflbm
+                where yxpdx.pcslbm = #{pcslbm}
+                      and   yxpdx.pdxlx = '1'
+                order by pdxfl.pdxflmc,yxpdx.xh)
+        select distinct a.pdxflbm,
+            wmsys.wm_concat(a.pdxmc || '(' ||  a.pdyj || ')'  ) as pdyj
+        from tab_pdx a
+        group by a.pdxflbm
 
 
     </select>

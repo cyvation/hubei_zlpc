@@ -87,24 +87,12 @@ public class PdxServiceImpl implements PdxService {
         // 1.证据采信:物证、书证等证据的形式存在瑕疵(有很多问题)，首次讯问、询问笔录没有记录告知被讯问人、证人、被害人有关权利义务（sdfsd）;
         // 2.事实认定:认定的前科劣迹、自首、坦白、立功等影响量刑的事实或情节有遗漏或者错误,认定的案件基本事实要素有遗漏或者有错误
         StringBuilder sb = new StringBuilder();
-        if (!CollectionUtils.isEmpty(list)){
-            Map<String, List<YxDcPdx>> collect = list.stream().collect(Collectors.groupingBy(YxDcPdx::getPdxflbm));
-            int i = 1;
-            for (String s : collect.keySet()) {
-                sb.append(i).append(".").append(s).append(":");
-                List<YxDcPdx> yxDcPdxes = collect.get(s);
-                for (int j = 0; j < yxDcPdxes.size(); j++) {
-                    YxDcPdx yxDcPdx = yxDcPdxes.get(j);
-                    sb.append(yxDcPdx.getPdxmc()).append("(").append(yxDcPdx.getPdyj()).append(")");
-                    if(j != yxDcPdxes.size() - 1){
-                        sb.append(",");
-                    }
-                }
-
-                sb.append(";");
-                sb.append("\r\n");
-                i++;
-            }
+        for (int i = 0; i < list.size(); i++) {
+            YxDcPdx yxDcPdx = list.get(i);
+            sb.append(i+1).append(".").append(yxDcPdx.getPdxflbm()).append(":");
+            sb.append(yxDcPdx.getPdyj());
+            sb.append(";");
+            sb.append("\r\n");
         }
 
        // 获取案件信息

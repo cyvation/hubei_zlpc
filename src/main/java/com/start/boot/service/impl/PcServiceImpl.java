@@ -409,6 +409,7 @@ public class PcServiceImpl implements PcService {
         Map map = new HashMap();
         map.put("p_rykdwbm",ryk.getRykdwbm());
         map.put("p_dwbm",ryk.getDwbm_ry());
+        map.put("p_bmbm",ryk.getBmbm());
         map.put("p_jsmc", ryk.getJsmc());
         map.put("p_mc",ryk.getPcr_mc());
         map.put("p_ywbm",ryk.getYwbm());

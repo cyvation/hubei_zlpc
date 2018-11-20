@@ -254,6 +254,8 @@
 
     where dw.fdwbm = (select fdwbm from xt_zzjg_dwbm where dwbm = #{dwbm})
     and   dw.dwbm != #{dwbm}
+
+    order by dw.dwbm asc
   </select>
     
     <resultMap id="siblingdwbmMap" type="map"/>

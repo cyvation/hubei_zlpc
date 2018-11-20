@@ -35,6 +35,7 @@
                 call pkg_pcgl.proc_get_ryinfo(#{p_rykdwbm,mode=IN,jdbcType=VARCHAR},
                                                #{p_ywbm,mode=IN,jdbcType=VARCHAR},
                                                #{p_dwbm,mode=IN,jdbcType=VARCHAR},
+                                               #{p_bmbm,mode=IN,jdbcType=VARCHAR},
                                                #{p_jsmc,mode=IN,jdbcType=VARCHAR},
                                                #{p_mc,mode=IN,jdbcType=VARCHAR},
                                                #{p_type,mode=IN,jdbcType=VARCHAR},

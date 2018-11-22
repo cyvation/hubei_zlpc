@@ -547,9 +547,9 @@
         ON ry.dwbm = dw.dwbm
         AND dw.sfsc = 'N'
         WHERE ryk.ryk_dwbm = #{rykdwbm}
-        <if test="dwbm_ry !=null and dwbm_ry !=''">
-            AND INSTR(#{dwbm_ry},ryk.dwbm) &gt;=1
-        </if>
+        <!--<if test="dwbm_ry !=null and dwbm_ry !=''">-->
+            <!--AND INSTR(#{dwbm_ry},ryk.dwbm) &gt;=1-->
+        <!--</if>-->
 
         <if test="ywbmlist !=null and ywbmlist.size() >0">
             AND ryk.ywbm in

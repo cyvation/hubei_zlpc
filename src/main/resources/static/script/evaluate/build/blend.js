@@ -2096,7 +2096,26 @@ function load_window_kjrk_content_tj_dw() {
         onHidePanel: index_onHidePanel,
         url: getRootPath()+'/manage/getYwtxTree',
         loadFilter: function (data) {
-            return data.code == 200 ? JSON.parse(data.data) : [];
+            // 为了兼容以前的未添加业务条线的，组装一个“未分配”业务条线
+            var node = new Object();
+            node.id = '00';
+            node.text = '未分类';
+            node.attributes= {
+                "FBM":'-1',
+                "BM" :'00',
+                "MC":'未分类'
+            }
+
+            var arr = [];
+            arr.push(node);
+            if (data.code == 200){
+                var old = JSON.parse(data.data);
+                for (var i =0; i< old.length; i++){
+                    arr.push(old[i]);
+                }
+            }
+
+            return arr;
         },
         onSelect: function (node) {
             // var selectId = node.id;

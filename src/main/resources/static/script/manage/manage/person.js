@@ -84,7 +84,27 @@ function init_tool_eval_pool_list() {
         method: 'get',
         lines: true,
         loadFilter:function (data) {
-            return data.code==200?JSON.parse(data.data):[];
+
+        // 为了兼容以前的未添加业务条线的，组装一个“未分配”业务条线
+       var node = new Object();
+           node.id = '00';
+           node.text = '未分类';
+           node.attributes= {
+                "FBM":'-1',
+                "BM" :'00',
+                "MC":'未分类'
+           }
+
+       var arr = [];
+       arr.push(node);
+       if (data.code == 200){
+           var old = JSON.parse(data.data);
+           for (var i =0; i< old.length; i++){
+               arr.push(old[i]);
+           }
+       }
+
+            return arr;
         },
         onLoadSuccess: function (node, data) {
             if (data != null && data.length >= 1) {
@@ -280,7 +300,27 @@ function init_win_eval_pool_add() {
                 $("#cbt_win_eval_pool_bmbm").combotree({
                     url: getRootPath()+'/manage/getYwtxTree',
                     loadFilter:function (data) {
-                        return data.code==200?JSON.parse(data.data):[];
+
+                        // 为了兼容以前的未添加业务条线的，组装一个“未分配”业务条线
+                        var node = new Object();
+                        node.id = '00';
+                        node.text = '未分类';
+                        node.attributes= {
+                            "FBM":'-1',
+                            "BM" :'00',
+                            "MC":'未分类'
+                        }
+
+                        var arr = [];
+                        arr.push(node);
+                        if (data.code == 200){
+                            var old = JSON.parse(data.data);
+                            for (var i =0; i< old.length; i++){
+                                arr.push(old[i]);
+                            }
+                        }
+
+                        return arr;
                     }
 
                 });

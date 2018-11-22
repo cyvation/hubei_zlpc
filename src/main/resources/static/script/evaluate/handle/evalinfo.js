@@ -835,6 +835,9 @@ function add_eval_info_approve_jwh(wjlj, text) {
     obj.PCYJMC = text + "意见";
     obj.PCYJSQ = (EVAL_CASE.PCCZLX == "2" ? "SP" : "") + EVAL_CASE.PCSPBM;
     obj.PCYJLK = userInfo.MC + "    " +  getEndDate();
+    if (EVAL_CASE.PCJG == 'jwh'){
+        obj.PCYJLK = userInfo.MC + "(代填)" +"    " +  getEndDate();
+    }
     obj.WSCFLJ = wjlj;
     $.ajax({
         type: 'POST',
@@ -2118,17 +2121,37 @@ function init_eval_handle_bottom_tool(toolID) {
                 deal_eval_handle_deal_approve('0');
             });
 
-            $('#btn_eval_handle_deal_pcsp_sendApp').css('display', 'none');
-        /*    // 第一次审批，不显示继续送审按钮
-            if (EVAL_CASE.PCSPBM.indexOf("000001") >= 0) {
+            // $('#btn_eval_handle_deal_pcsp_sendApp').css('display', 'none');
+            // 检察长审批的时候不显示继续送审按钮
+            var jsbmj = userInfo.JSBM;
+            var flag = false;
+            for(var i =0; i < jsbmj.length; i++){
+                if(jsbmj[i].JSBM == '120'){
+                    flag = true;
+                    EVAL_CASE.JCZ = 'yes';
+                    break;
+                }
+            }
+
+            if (flag){
                 $('#btn_eval_handle_deal_pcsp_sendApp').css('display', 'none');
-            } else {*/
-                // $('#btn_eval_handle_deal_pcsp_sendApp').css('display', '');
-                // $("#btn_eval_handle_deal_pcsp_sendApp").unbind( "click" );
-                // $("#btn_eval_handle_deal_pcsp_sendApp").bind("click", function () {
-                //     deal_eval_handle_deal_approve('1');
-                // });
-            /*}*/
+            }else {
+                $('#btn_eval_handle_deal_pcsp_sendApp').css('display', '');
+                $("#btn_eval_handle_deal_pcsp_sendApp").unbind( "click" );
+                $("#btn_eval_handle_deal_pcsp_sendApp").bind("click", function () {
+                    deal_eval_handle_deal_approve('1');
+                });
+            }
+
+            // if (EVAL_CASE.PCSPBM.indexOf("000001") >= 0) {
+            //     $('#btn_eval_handle_deal_pcsp_sendApp').css('display', 'none');
+            // } else {
+            //     $('#btn_eval_handle_deal_pcsp_sendApp').css('display', '');
+            //     $("#btn_eval_handle_deal_pcsp_sendApp").unbind( "click" );
+            //     $("#btn_eval_handle_deal_pcsp_sendApp").bind("click", function () {
+            //         deal_eval_handle_deal_approve('1');
+            //     });
+            // }
 
             break;
         case "3": //评查反馈
@@ -2210,13 +2233,13 @@ function init_eval_handle_bottom_tool(toolID) {
         } else {
             var advice = $(this).children(".redio_click").children("input").val();
             if(advice == "退回"){
-                $('#btn_eval_handle_deal_pcsp_sendApp').css('display', 'none');
+                // $('#btn_eval_handle_deal_pcsp_sendApp').css('display', 'none');
                 $('#btn_eval_handle_deal_pcsp_confirm').css('display', '');
-                $('#btn_eval_handle_deal_pcsp_save').css('display', '');
+                // $('#btn_eval_handle_deal_pcsp_save').css('display', '');
             }else{
-              $('#btn_eval_handle_deal_pcsp_sendApp').css('display', 'none');
+              // $('#btn_eval_handle_deal_pcsp_sendApp').css('display', 'none');
                 $('#btn_eval_handle_deal_pcsp_confirm').css('display', '');
-                $('#btn_eval_handle_deal_pcsp_save').css('display', '');
+                // $('#btn_eval_handle_deal_pcsp_save').css('display', '');
             }
             if (advice != "意见" && advice != "退回"){
                 SetBookmarkValue((EVAL_CASE.PCCZLX == "2" ? "SP" : "") + EVAL_CASE.PCSPBM, advice + String.fromCharCode(10));
@@ -2289,15 +2312,20 @@ function show_eval_doc_approve_tool() {
                     // 如果点击了新增检察官意见
                     if(EVAL_CASE.addjcg == '1'){
                         init_eval_handle_bottom_tool('5'); //评查员、检察官意见保存
-                        insert_doc_eval_pcyyj();
+                        //insert_doc_eval_pcyyj();
+                        SetDocProtect();
+                        SetBmarkEditable(EVAL_CASE.PCSPBM);
+                        SetBmarkEditable("CBJCGYJ");
+                        SetBmarkEditable("BZXX");
 
                         var jcgyj = GetMarkValue("CBJCGYJ");
                         console.log("jcgyj:" + jcgyj);
-                        SetBmarkEditable("CBJCGYJ");
 
                     }else{
                         init_eval_handle_bottom_tool('1'); //评查意见菜单栏
                     }
+                }else if(EVAL_CASE.PCJG = 'jwh'){
+                    add_eval_info_approve_jwh(editDocPath, '检委会意见');
                 }else{
                     insert_doc_eval_pcyyj();
                 }
@@ -2332,6 +2360,8 @@ function insert_doc_eval_pcyyj() {
     SetBmarkEditable("BZXX");
     SetBmarkEditable(EVAL_CASE.PCSPBM);
 }
+
+// 检委会意见
 
 // 备注信息
 function init_doc_eval_bzxx() {
@@ -2496,6 +2526,12 @@ function deal_eval_handle_deal_approve(type){
                     if (result.status == 200){
 
                         init_eval_handle_bottom_tool('');
+
+                        //如果是检察长审批后，还要判断他是否要走检委会意见
+                        if (EVAL_CASE.JCZ =='yes'  && obj.SPJL =='意见'){
+                            Alert("审批成功！");
+                            return;
+                        }
 
                         // 初始化操作按钮
                         init_eval_handle_deal_toolbar(true);

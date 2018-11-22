@@ -1414,4 +1414,18 @@ public class PcController extends ArchivesSystemBaseController {
 
         return result;
     }
+
+    @RequestMapping("/updateJbxx")
+    public MessageResult updateJbxx(YX_PC_JBXX jbxx){
+
+        MessageResult messageResult = null;
+        try {
+            yxPcJbxxMapper.updateByPrimaryKeySelective(jbxx);
+            messageResult = new MessageResult(200,"更新基本信息成功");
+        }catch (Exception e){
+            messageResult = new MessageResult(500,e.getMessage());
+        }
+
+        return messageResult;
+    }
 }

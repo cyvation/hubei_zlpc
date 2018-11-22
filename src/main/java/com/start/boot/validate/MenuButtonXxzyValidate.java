@@ -277,19 +277,34 @@ public class MenuButtonXxzyValidate {
 
 
     /**
-     * 检委会意见
+     * 检委会意见，仅仅在检察长界面可以显示，并且只是由检察长报送，评查员填写
      *
      * @param menuQuery
      * @return
      */
     public  boolean validatefJwhyj(MenuQuery menuQuery){
         YX_PC_JBXX jbxx = jbxxService.getJbxx(menuQuery.getPczybm());
-        YxlcSljdExample example=new YxlcSljdExample();
-        example.createCriteria().andLcjdbmEqualTo("007").andPcslbmEqualTo(menuQuery.getPczybm());
-        long l = yxlcSljdMapper.countByExample(example);
-        if (l!=0){
-                return true;
+        if (!"007".equals(jbxx.getPCJDBH())){
+            return false;
         }
+
+        List<XtQxRyJsfp> xtQxRyJsfp = xtZzjgRmbmService.getXtQxRyJsfp(menuQuery.getDwbm(), menuQuery.getGh());
+        if (!CollectionUtils.isEmpty(xtQxRyJsfp)){
+            List<String> collect = xtQxRyJsfp.stream().map(x -> x.getJsbm()).collect(Collectors.toList());
+            if (collect.contains("120")){
+
+                SpExample spExample = new SpExample();
+                spExample.createCriteria().andSpwjbmEqualTo(jbxx.getPCSLBM()).andSprdwbmEqualTo(menuQuery.getDwbm()).andSprghEqualTo(menuQuery.getGh());
+                List<Sp> sps = spMapper.selectByExample(spExample);
+                if (!CollectionUtils.isEmpty(sps)){
+                    String spyj = sps.get(0).getSpyj();
+                    if (StringUtils.isEmpty(spyj)){
+                        return true;
+                    }
+                }
+            }
+        }
+
         return false;
     }
 

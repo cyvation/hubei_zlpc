@@ -166,7 +166,29 @@ function butAddJwhyj(num) {
         return;
     }
 
-    add_eval_info_approve_jwh(obj.wjlj, '检委会意见');
+    Confirm("提交检委会","确认提交检委会",function (flag) {
+        if (flag){
+
+            $.ajax({
+                type: "post",
+                url: getRootPath() + '/menu/queryWsmb',
+                data: { PCSLBM: EVAL_CASE.PCSLBM, PCJG: 'jwh' },
+                dataType: "json",
+                success: function(data) {
+                    if(data.code==200){
+                        $("#pcblBut").find('.pcbl_pcxx_top_box').eq(2).css('display','none');
+                        Alert("已经提交检委会！");
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    Alert('提交检委会失败。')
+                }
+            });
+
+        }
+
+    })
+
 }
 
 

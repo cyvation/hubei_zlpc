@@ -1,5 +1,5 @@
 --存储过程更新，检察官意见落款为 xxx（xx评查员代填）  时间
---位置：pkg_pcbg大概22行
+--位置：pkg_pcbg 大概22行
 
 --获取被评查活动基本信息(随机评查报告基本内容，可复用)
 PROCEDURE proc_get_pcjbxx(p_dwbm   IN xt_zzjg_dwbm.dwbm%TYPE, --评查人单位编码

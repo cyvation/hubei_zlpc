@@ -1287,13 +1287,20 @@ function alert_new_pcx() {
         nowrap: false,
         rownumbers: true,  <!-- 是否显示序列号注释！！！！ -->
         singleSelect: false,
+        striped: true,
         idField: 'pcxbm',
         loadMsg: '数据加载中，请稍后...',
         //toolbar: $('#div_win_pcblPcyl'),
         pagination: false,
         rowStyler: function(index,row){
-            if (row.listprice>80){
-                return 'background-color:#6293BB;color:#fff; border:1px;';
+        //     // if (row.listprice>80){
+        //     //     return 'background-color:#6293BB;color:#fff; border:1px;';
+        //     // }
+            if ((index % 2)==0){
+                return 'background-color:rgb(219, 239, 252);border:1px;';
+            }
+            else{
+                return 'background-color:#f9f9f9;border:1px;';
             }
         },
         columns: [[

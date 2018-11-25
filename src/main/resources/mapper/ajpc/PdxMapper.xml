@@ -130,5 +130,34 @@
 
 
     </select>
+    
+    
+    <!--获取勾选的评查项用于生成个案评定报告中的问题项-->
+    <select id="getSelectedPcx" resultType="com.start.boot.domain.Yx_Pc_Pcx">
+      with tab_pcx as (
+        select
+            pcxfl2.pcxflmc as pcxflbm,
+            pcx.pcxmc,
+            pcx.sm
+        from yx_pc_pcx pcx
+            inner join yx_pc_pcxfl pcxfl
+                on pcx.pcslbm = pcxfl.pcslbm
+                   and pcx.pcxflbm = pcxfl.pcxflbm
+                   AND ((pcx.pcfs = '1' AND pcx.pcjg = '1') OR
+                        (pcx.pcfs = '2' AND pcx.pcjg IS NOT NULL))
+            inner join yx_pc_pcxfl pcxfl2
+                on pcxfl.pcslbm = pcxfl2.pcslbm
+                   and pcxfl.pcxflfbm = pcxfl2.pcxflbm
+                   and pcxfl2.pcxflfbm is null
+        where 1=1
+              and pcx.pcslbm = #{pcslbm}
+        order by pcxfl2.xh,pcx.xh)
+
+      select distinct a.pcxflbm,
+          wmsys.wm_concat(a.pcxmc || '(' ||  a.sm || ')'  ) as pcxmc
+      from tab_pcx a
+      group by a.pcxflbm
+
+    </select>
 
 </mapper>

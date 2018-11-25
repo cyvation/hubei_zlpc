@@ -1,10 +1,7 @@
 package com.start.boot.service.impl;
 
 import com.start.boot.common.SystemConfiguration;
-import com.start.boot.dao.ajpc.PdxMapper;
-import com.start.boot.dao.ajpc.YX_PC_JBXXMapper;
-import com.start.boot.dao.ajpc.YxDcPdxMapper;
-import com.start.boot.dao.ajpc.YxPcJzwjMapper;
+import com.start.boot.dao.ajpc.*;
 import com.start.boot.domain.*;
 import com.start.boot.query.PdxQuery;
 import com.start.boot.service.PcService;
@@ -38,6 +35,9 @@ public class PdxServiceImpl implements PdxService {
 
     @Autowired
     private YxPcJzwjMapper jzwjMapper;
+
+    @Autowired
+    private Yx_Pc_PcxMapper yx_pc_pcxMapper;
 
 
     @Autowired
@@ -79,8 +79,14 @@ public class PdxServiceImpl implements PdxService {
     @Transactional
     public String generatePdxDoc(String pcslbm) throws Exception {
 
+        // 获取案件信息
+        YX_PC_JBXX yx_pc_jbxx = yxPcJbxxMapper.selectByPrimaryKey(pcslbm);
+
         // 获取评定项
         List<YxDcPdx> list= pdxMapper.getSelectedPdx(pcslbm);
+
+        // 获取评查意见
+        List<Yx_Pc_Pcx> pcxList = pdxMapper.getSelectedPcx(pcslbm);
 
 
         // 证据采信、事实认定、、、作为key
@@ -95,8 +101,17 @@ public class PdxServiceImpl implements PdxService {
             sb.append("\r\n");
         }
 
-       // 获取案件信息
-        YX_PC_JBXX yx_pc_jbxx = yxPcJbxxMapper.selectByPrimaryKey(pcslbm);
+        //问题项
+        StringBuilder wtx = new StringBuilder();
+        for (int i = 0; i < pcxList.size(); i++) {
+            Yx_Pc_Pcx pcx = pcxList.get(i);
+            wtx.append(i+1).append(".").append(pcx.getPcxflbm()).append(":");
+            wtx.append(pcx.getPcxmc());
+            wtx.append(";");
+            wtx.append("\r\n");
+        }
+
+
 
         // 获取评定报告模板
         String source = SystemConfiguration.wzbsPath + "/Files/json/pcgb/moban/评定报告模板.doc";
@@ -111,7 +126,9 @@ public class PdxServiceImpl implements PdxService {
         params.put("${AJLB_MC}",yx_pc_jbxx.getAJLBMC());
         params.put("${PCR_MC}",yx_pc_jbxx.getPCRMC());
         params.put("${PCRQ}",DateTime.now().toString("yyyy年MM月dd日"));
-        params.put("${WT}",sb.toString());
+        params.put("${BMSAH}",yx_pc_jbxx.getBMSAH());
+        params.put("${WT}",wtx.toString());
+        params.put("${YJ}",sb.toString());
         params.put("${PCJL}", StringUtils.isEmpty(yx_pc_jbxx.getPCJL()) ? "": yx_pc_jbxx.getPCJL());
 
         poiUtils.createBg(source, target, params,null);

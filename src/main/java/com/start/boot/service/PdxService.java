@@ -15,4 +15,6 @@ public interface PdxService {
     void savePdx(String pcslbm, List<YxDcPdx> yxDcPdxes);
 
     String generatePdxDoc(String pcslbm) throws Exception;
+
+    String generateAjpcDoc(String pcslbm) throws Exception;
 }

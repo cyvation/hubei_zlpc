@@ -37,6 +37,8 @@ public class XtZzjgRmbm extends XtZzjgRmbmKey {
 
     private byte[] zp;
 
+    private String sfmc;
+
     public String getDlbm() {
         return dlbm;
     }
@@ -179,5 +181,13 @@ public class XtZzjgRmbm extends XtZzjgRmbmKey {
 
     public void setZp(byte[] zp) {
         this.zp = zp;
+    }
+
+    public String getSfmc() {
+        return sfmc;
+    }
+
+    public void setSfmc(String sfmc) {
+        this.sfmc = sfmc;
     }
 }

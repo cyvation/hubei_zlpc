@@ -19,4 +19,6 @@ public interface PdxMapper {
     List<YxDcPdx> getSelectedPdx(@Param("pcslbm") String pcslbm);
 
     List<Yx_Pc_Pcx> getSelectedPcx(@Param("pcslbm") String pcslbm);
+
+    List<YxDcPdx> getPdxWt(@Param("pcslbm") String pcslbm, @Param("pdxflmc") String s);
 }

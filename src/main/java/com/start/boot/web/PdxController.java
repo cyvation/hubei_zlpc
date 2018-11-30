@@ -71,6 +71,19 @@ public class PdxController extends ArchivesSystemBaseController{
         return result;
     }
 
+    @RequestMapping("/generateAjpcDoc")
+    public MessageResult generateAjpcDoc(String pcslbm){
 
+        MessageResult result = null;
+        try{
+
+            String path =  pdxService.generateAjpcDoc(pcslbm);
+            result = new MessageResult(200, path);
+        }catch (Exception e){
+            result = new MessageResult("生成失败", 500, e.getMessage());
+        }
+
+        return result;
+    }
 
 }

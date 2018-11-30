@@ -107,6 +107,59 @@ function butAddPdBg(num){
 
 }
 
+// 生成评查意见书
+function butAddAjpcDoc(num){
+
+    var obj = get_eval_info_doc(PCBGLX);
+
+    var pcjg = $("input[name='rd_eval_info_pcjl_jg']:checked").val();
+    if(isNull(pcjg)){
+        Alert("未勾选结果等次建议！");
+        return;
+    }
+
+        $.ajax({
+            type: 'POST',
+            url: getRootPath()+'/pdx/generateAjpcDoc',
+            data: {"pcslbm":EVAL_CASE.PCSLBM},
+            dataType: "json",
+            success: function (result) {
+                if (result == null || result == undefined) {
+                    CloseProgress();
+                    Alert("服务端返回数据为空。");
+                    return;
+                }
+
+                if (result.code != 200){
+                    CloseProgress();
+                    Alert(result.note);
+                    return;
+                }
+                try {
+                    // $("#pcWin_win_new_pcx").window('close');
+                    show_eval_doc_panel("doc");
+                    CloseProgress();
+
+                    var error = OpenFile(getRootPath() + "/Files/PCJZ/" + result.data, "TANGER_OCX");
+                    if (!isNull(error)) {
+                        Alert(error);
+                        return;
+                    }
+
+                    load_tree_eval_doc_files();
+                    isApproveDoc = false;
+                    editDocPath = result.data;
+                    opening_eval_doc_file = result.value;
+                    SetSaveButtonState("TANGER_OCX", true);
+
+                } catch (e) {
+                    CloseProgress();
+                }
+
+            }
+        });
+}
+
 // 自动评查报告
 function butAddZdpc() {
 

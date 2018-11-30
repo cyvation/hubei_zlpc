@@ -21,6 +21,7 @@
     <result column="SFZH" jdbcType="VARCHAR" property="sfzh" />
     <result column="SF" jdbcType="CHAR" property="sf" />
     <result column="SSXZBM" jdbcType="CHAR" property="ssxzbm" />
+    <result column="SFMC" jdbcType="VARCHAR" property="sfmc" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.start.boot.domain.XtZzjgRmbm">
     <result column="ZP" jdbcType="BLOB" property="zp" />
@@ -85,7 +86,7 @@
   </sql>
   <sql id="Base_Column_List">
     DWBM, GH, DLBM, KL, MC, GZZH, YDDHHM, DZYJ, YDWBM, YDWMC, SFLSRY, SFSC, SFTZ, XB, 
-    CAID, ZRJCGGH, SFZH, SF, SSXZBM
+    CAID, ZRJCGGH, SFZH, SF, SSXZBM, SFMC
   </sql>
   <sql id="Blob_Column_List">
     ZP
@@ -145,14 +146,14 @@
       MC, GZZH, YDDHHM, DZYJ, 
       YDWBM, YDWMC, SFLSRY, SFSC, 
       SFTZ, XB, CAID, ZRJCGGH, 
-      SFZH, SF, SSXZBM, ZP
-      )
+      SFZH, SF, SSXZBM, SFMC,
+      ZP)
     values (#{dwbm,jdbcType=CHAR}, #{gh,jdbcType=CHAR}, #{dlbm,jdbcType=VARCHAR}, #{kl,jdbcType=VARCHAR}, 
       #{mc,jdbcType=VARCHAR}, #{gzzh,jdbcType=VARCHAR}, #{yddhhm,jdbcType=VARCHAR}, #{dzyj,jdbcType=VARCHAR}, 
       #{ydwbm,jdbcType=CHAR}, #{ydwmc,jdbcType=VARCHAR}, #{sflsry,jdbcType=CHAR}, #{sfsc,jdbcType=CHAR}, 
       #{sftz,jdbcType=CHAR}, #{xb,jdbcType=CHAR}, #{caid,jdbcType=VARCHAR}, #{zrjcggh,jdbcType=CHAR}, 
-      #{sfzh,jdbcType=VARCHAR}, #{sf,jdbcType=CHAR}, #{ssxzbm,jdbcType=CHAR}, #{zp,jdbcType=BLOB}
-      )
+      #{sfzh,jdbcType=VARCHAR}, #{sf,jdbcType=CHAR}, #{ssxzbm,jdbcType=CHAR}, #{sfmc,jdbcType=VARCHAR},
+      #{zp,jdbcType=BLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.start.boot.domain.XtZzjgRmbm">
     insert into XT_ZZJG_RYBM
@@ -213,6 +214,9 @@
       </if>
       <if test="ssxzbm != null">
         SSXZBM,
+      </if>
+      <if test="sfmc != null">
+        SFMC,
       </if>
       <if test="zp != null">
         ZP,
@@ -275,6 +279,9 @@
       </if>
       <if test="ssxzbm != null">
         #{ssxzbm,jdbcType=CHAR},
+      </if>
+      <if test="sfmc != null">
+        #{sfmc,jdbcType=VARCHAR},
       </if>
       <if test="zp != null">
         #{zp,jdbcType=BLOB},
@@ -347,6 +354,9 @@
       <if test="record.ssxzbm != null">
         SSXZBM = #{record.ssxzbm,jdbcType=CHAR},
       </if>
+      <if test="record.sfmc != null">
+        SFMC = #{record.sfmc,jdbcType=VARCHAR},
+      </if>
       <if test="record.zp != null">
         ZP = #{record.zp,jdbcType=BLOB},
       </if>
@@ -376,6 +386,7 @@
       SFZH = #{record.sfzh,jdbcType=VARCHAR},
       SF = #{record.sf,jdbcType=CHAR},
       SSXZBM = #{record.ssxzbm,jdbcType=CHAR},
+      SFMC = #{record.sfmc,jdbcType=VARCHAR},
       ZP = #{record.zp,jdbcType=BLOB}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -401,7 +412,8 @@
       ZRJCGGH = #{record.zrjcggh,jdbcType=CHAR},
       SFZH = #{record.sfzh,jdbcType=VARCHAR},
       SF = #{record.sf,jdbcType=CHAR},
-      SSXZBM = #{record.ssxzbm,jdbcType=CHAR}
+      SSXZBM = #{record.ssxzbm,jdbcType=CHAR},
+      SFMC = #{record.sfmc,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -460,6 +472,9 @@
       <if test="ssxzbm != null">
         SSXZBM = #{ssxzbm,jdbcType=CHAR},
       </if>
+      <if test="sfmc != null">
+        SFMC = #{sfmc,jdbcType=VARCHAR},
+      </if>
       <if test="zp != null">
         ZP = #{zp,jdbcType=BLOB},
       </if>
@@ -486,6 +501,7 @@
       SFZH = #{sfzh,jdbcType=VARCHAR},
       SF = #{sf,jdbcType=CHAR},
       SSXZBM = #{ssxzbm,jdbcType=CHAR},
+      SFMC = #{sfmc,jdbcType=VARCHAR},
       ZP = #{zp,jdbcType=BLOB}
     where DWBM = #{dwbm,jdbcType=CHAR}
       and GH = #{gh,jdbcType=CHAR}
@@ -508,7 +524,8 @@
       ZRJCGGH = #{zrjcggh,jdbcType=CHAR},
       SFZH = #{sfzh,jdbcType=VARCHAR},
       SF = #{sf,jdbcType=CHAR},
-      SSXZBM = #{ssxzbm,jdbcType=CHAR}
+      SSXZBM = #{ssxzbm,jdbcType=CHAR},
+      SFMC = #{sfmc,jdbcType=VARCHAR}
     where DWBM = #{dwbm,jdbcType=CHAR}
       and GH = #{gh,jdbcType=CHAR}
   </update>

@@ -2237,6 +2237,8 @@ function init_eval_handle_bottom_tool(toolID) {
             var jcgyj = GetMarkValue("CBJCGYJ");
             console.log("jcgyj:" + jcgyj);
             SetBmarkEditable("CBJCGYJ");
+            SetBmarkEditable("PCGROUPYJ"); // 评查小组联席会议意见
+            SetBmarkEditable("LDGROUPYJ"); // 评查领导小组办公室会议意见
         } else {
             var advice = $(this).children(".redio_click").children("input").val();
             if(advice == "退回"){
@@ -2332,7 +2334,7 @@ function show_eval_doc_approve_tool() {
                         init_eval_handle_bottom_tool('1'); //评查意见菜单栏
                     }
                 }else if(EVAL_CASE.PCJG = 'jwh'){
-                    add_eval_info_approve_jwh(editDocPath, '检委会意见');
+                    add_eval_info_approve_jwh(editDocPath, '检察长或者检委会意见');
                 }else{
                     insert_doc_eval_pcyyj();
                 }

@@ -2,10 +2,7 @@ package com.start.boot.service;
 
 
 import com.start.boot.common.Param_Pager;
-import com.start.boot.domain.ParamSx;
-import com.start.boot.domain.Param_Ajsx;
-import com.start.boot.domain.Param_Pcjk;
-import com.start.boot.domain.JxpcAj;
+import com.start.boot.domain.*;
 import com.start.boot.pojo.vo.PcxVoList;
 
 import java.util.List;
@@ -73,4 +70,6 @@ public interface FilterService {
     boolean assignJxAj(JxpcAj jxpcAj) throws Exception;
 
     boolean removeAssignJxaj(JxpcAj jxpcAj) throws Exception;
+
+    List<String> getStuffyYwbm(String currentDwbm, String currentGh);
 }

@@ -1,4 +1,4 @@
-
+var ywbm;
 $(document).ready(function () {
 
     // 界面标签样式设置及事件绑定
@@ -21,6 +21,9 @@ function eval_build_marksDataBind() {
 
 	// 加载评查分类
 	load_cbt_win_eval_build_pcfl();
+
+	// 获取当前登陆人的业务编码
+    get_cbr_ywbm();
 	
 	// 下一步点击事件
     $("#btn_wind_eval_next").unbind( "click" );
@@ -57,6 +60,20 @@ function load_cbt_win_eval_build_pcfl() {
 	});
 
 }
+
+function get_cbr_ywbm(){
+    $.ajax({
+        url: getRootPath() + "/filter/getStuffyYwbm",
+        type: 'get',
+        async: false,
+        dataType: "json",
+        success: function (result) {
+            if (result.status == 200) {
+                ywbm = result.value;
+            }
+        }
+    });
+}
 // 下一步点击事件
 function click_btn_wind_eval_next(){
 
@@ -70,6 +87,7 @@ function click_btn_wind_eval_next(){
     var obj = new Object();
     obj.PCFLBM = $('#cbt_win_eval_build_pcfl').combotree('getValue');
     obj.SFJS = node.attributes.SFJS;
+    obj.YWBM = ywbm;
 
     if (isNull(obj.PCFLBM)){
         Alert("请选择评查方式！");

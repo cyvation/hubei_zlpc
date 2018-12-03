@@ -2,7 +2,9 @@ package com.start.boot.dao.ajpc;
 
 import com.start.boot.domain.Param_Pcjk;
 import com.start.boot.domain.JxpcAj;
+import com.start.boot.domain.Param_Ryk;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -63,4 +65,7 @@ public interface FilterMapper {
     List<JxpcAj.Aj> getAj(JxpcAj jxpcAj);
 
     void removeAssignJxaj(JxpcAj jxpcAj);
+
+    @Select(value = "select ywbm from xt_pc_ryk where dwbm = #{dwbm} and gh = #{gh}")
+    List<String> getStuffyYwbm(@Param("dwbm") String currentDwbm, @Param("gh") String currentGh);
 }

@@ -291,7 +291,7 @@ public class MenuButtonXxzyValidate {
         List<XtQxRyJsfp> xtQxRyJsfp = xtZzjgRmbmService.getXtQxRyJsfp(menuQuery.getDwbm(), menuQuery.getGh());
         if (!CollectionUtils.isEmpty(xtQxRyJsfp)){
             List<String> collect = xtQxRyJsfp.stream().map(x -> x.getJsbm()).collect(Collectors.toList());
-            if (collect.contains("120")){
+            if (collect.contains("107")){
 
                 SpExample spExample = new SpExample();
                 spExample.createCriteria().andSpwjbmEqualTo(jbxx.getPCSLBM()).andSprdwbmEqualTo(menuQuery.getDwbm()).andSprghEqualTo(menuQuery.getGh());

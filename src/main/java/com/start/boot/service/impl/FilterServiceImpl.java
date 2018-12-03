@@ -684,4 +684,16 @@ public class FilterServiceImpl implements FilterService {
         return true;
 
     }
+
+    /**
+     * 获取登陆人的所分配的业务编码
+     * @param currentDwbm
+     * @param currentGh
+     * @return
+     */
+    @Override
+    public List<String> getStuffyYwbm(String currentDwbm, String currentGh) {
+
+        return filterMapper.getStuffyYwbm(currentDwbm, currentGh);
+    }
 }

@@ -25,10 +25,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -924,7 +922,7 @@ public class FilterController extends ArchivesSystemBaseController {
 
     /**
      * 交叉案件移除
-     * @param jxpcAj
+     * @param
      * @return
      */
     @RequestMapping("/removeAssignJxaj")
@@ -940,6 +938,33 @@ public class FilterController extends ArchivesSystemBaseController {
         } catch (Exception e) {
             super.errMsg("移除失败", null, e);
             result = failure(e.getMessage(), "移除失败");
+        }
+
+        return result;
+
+
+    }
+
+    /**
+     * 获取登陆人所在业务条线
+     * @return
+     */
+    @GetMapping("/getStuffyYwbm")
+    public String getStuffyYwbm(){
+
+        //响应到页面封装
+        String result = "";
+        try {
+
+            List<String > list = filterService.getStuffyYwbm(getCurrentDwbm(),getCurrentGh());
+            if (CollectionUtils.isEmpty(list)){
+                list = Arrays.asList("00"); // 如果没有添加到人员库默认全部
+            }
+
+            result = success(list,"获取成功");
+        } catch (Exception e) {
+            super.errMsg("获取失败", null, e);
+            result = failure(e.getMessage(), "获取失败");
         }
 
         return result;

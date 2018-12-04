@@ -57,8 +57,6 @@ function butAddPdBg(num){
         return;
     }
 
-    if(isNull(obj)){
-
         $.ajax({
             type: 'POST',
             url: getRootPath()+'/pdx/generatePdxDoc',
@@ -99,11 +97,6 @@ function butAddPdBg(num){
 
             }
         });
-    } else {
-        // 打开卷宗文件
-        isApproveDoc = false;
-        open_eval_file(obj.jzwjbh, obj.pczybm, obj.pczylx, obj.wjlx, obj.wjlj);
-    }
 
 }
 

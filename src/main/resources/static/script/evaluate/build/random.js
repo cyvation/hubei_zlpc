@@ -660,9 +660,32 @@ function init_eval_build_rd_custom_condition(pcxx) {
         queryParams: {
             pcflbm: pcxx.PCFLBM
         },
+        loadFilter:function (data) {
+            if (data != null){
+
+                // 过滤 某个条线下的评查员所能选的评查模板
+                var currentYwbm = pcxx.YWBM;
+                
+                if (isNull(currentYwbm) || currentYwbm == '00'){
+                    return data;
+                }
+                
+                
+                var temp = [];
+                    for(var  i=0; i < data.length; i++){
+                        var targetId = data[i].id;
+                        var target = targetId.substr(targetId.length -2);
+                        if (currentYwbm.join(",").indexOf(target) != -1){
+                            temp.push(data[i]);
+                        }
+                    }
+                return temp;
+
+            }
+        },
         onLoadSuccess:function(node,data){
             if (data != null && data.length >= 1){
-                pchdbm = data[0].id;
+               pchdbm = data[0].id;
                 $('#cbt_eval_build_rd_custom_pcmb').combotree('setValue',  pchdbm);
                 load_cbt_eval_build_rd_custom_sxgz(pchdbm);
             }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Template xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>随机案件评查报告</Name>
+  <ReplaceItem>
+    <Identity>01.评查基本信息</Identity>
+    <Procedure>pkg_pcbg.proc_get_pcjbxx</Procedure>
+    <ReplaceType>0</ReplaceType>
+    <Bookmarks>
+      <Bookmark Name="AJMC" ColumnName="AJMC" />
+      <Bookmark Name="PCAH" ColumnName="PCSAH" />
+      <Bookmark Name="PCYMC" ColumnName="PCR_MC" />
+      <Bookmark Name="PCRQ" ColumnName="PCRQ" />
+      <Bookmark Name="PCFLMC" ColumnName="PCFLMC" />
+      <Bookmark Name="AJJD" ColumnName="AJLB_MC" />
+      <Bookmark Name="CBDWMC" ColumnName="BPC_DWMC" />
+      <Bookmark Name="CBBMMC" ColumnName="BPC_BMMC" />
+      <Bookmark Name="CBJCG" ColumnName="BPC_MC" />
+      <Bookmark Name="JCGLK" ColumnName="JCGLK" />
+      <Bookmark Name="PCGROUPLK" ColumnName="PCGROUPLK" />
+      <Bookmark Name="PCYYJ" ColumnName="PCYYJ" />
+      <Bookmark Name="PCYLK" ColumnName="PCYLK" />
+      <Bookmark Name="LDGROUPLK" ColumnName="LDGROUPLK" />
+    </Bookmarks>
+  </ReplaceItem>
+</Template>

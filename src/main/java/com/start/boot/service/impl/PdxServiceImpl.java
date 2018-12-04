@@ -101,7 +101,7 @@ public class PdxServiceImpl implements PdxService {
             sb.append(i+1).append(".").append(yxDcPdx.getPdxflbm()).append(":");
             sb.append(yxDcPdx.getPdyj());
             sb.append(";");
-            sb.append("\n");
+            sb.append("\r");
         }
 
         //问题项
@@ -111,7 +111,7 @@ public class PdxServiceImpl implements PdxService {
             wtx.append(i+1).append(".").append(pcx.getPcxflbm()).append(":");
             wtx.append(pcx.getPcxmc());
             wtx.append(";");
-            wtx.append("\n");
+            wtx.append("\r");
         }
 
 
@@ -221,7 +221,7 @@ public class PdxServiceImpl implements PdxService {
         }
 
         Map<String, String> params = new HashMap<>();
-        params.put("${BMSAH}",yx_pc_jbxx.getBMSAH());
+        params.put("${BMSAH}",yx_pc_jbxx.getPCSAH()); // 换成评查受案号
         params.put("${AJMC}",yx_pc_jbxx.getAJMC());
         params.put("${BPC_DWMC}",yx_pc_jbxx.getBPCDWMC());
         params.put("${BPC_MC}",yx_pc_jbxx.getBPCMC());
@@ -281,7 +281,7 @@ public class PdxServiceImpl implements PdxService {
             sb.append(i+1).append(".").append(yxDcPdx.getPdxflbm()).append(":");
             sb.append(yxDcPdx.getPdyj());
             sb.append(";");
-            sb.append("\n");
+            sb.append("\r");
         }
         params.put("${PDYJ}",sb.toString());
 

@@ -14,7 +14,8 @@
                     pdxfl2.pdxflmc                                       f3flmc,
                     pdx.dcmbbm,
                     pdx.bz,
-                    NVL2(yxpdx.pdxlx, yxpdx.pdxlx, '-1')                 pcjg,
+--                     NVL2(yxpdx.pdxlx, yxpdx.pdxlx, '-1')                 pcjg,
+                    NVL2(yxpdx.pdxlx, yxpdx.pdxlx,DECODE(dx.pcjg,'0','1','-1'))    pcjg,
                     NVL2(yxpdx.pdyj, yxpdx.pdyj, nvl2(dx.sm, dx.sm, '')) pdyj,
                     pdxfl.xh as f2xh,
                     pdx.xh as xh
@@ -38,7 +39,8 @@
                                    dcpcx.pcx_xtdm,
                                    dcpcx.dcmbbm,
                                    dcpcx.pdxbm,
-                                   pcx.sm
+                                   pcx.sm,
+                                   pcx.pcjg
                                FROM XT_DCX_PCX dcpcx
                                    LEFT JOIN yx_pc_pcx pcx
                                        ON dcpcx.pcx_xtdm = pcx.xtdm

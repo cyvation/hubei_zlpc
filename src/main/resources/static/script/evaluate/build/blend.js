@@ -204,7 +204,7 @@ function eval_special_marksInit(pcxx) {
                     // 过滤 某个条线下的评查员所能选的评查模板
                     var currentYwbm = pcxx.YWBM;
 
-                    if (isNull(currentYwbm) || currentYwbm == '00'){
+                    if (currentYwbm.join(",").indexOf('00') !=-1){
                         return data;
                     }
 

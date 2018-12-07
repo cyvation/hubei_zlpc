@@ -33,6 +33,10 @@ public class Param_Pcjk extends Param_Pager {
     private String wcrqbng;
     //评查结束时间
     private String wcrqend;
+    // 案件办结开始时间
+    private String bjrqbng;
+    // 案件办结结束时间
+    private String bjrqend;
     //类型
     private String type;
     //案件名称
@@ -155,5 +159,21 @@ public class Param_Pcjk extends Param_Pager {
 
     public void setCbdwbm(String cbdwbm) {
         this.cbdwbm = cbdwbm;
+    }
+
+    public String getBjrqbng() {
+        return bjrqbng;
+    }
+
+    public void setBjrqbng(String bjrqbng) {
+        this.bjrqbng = bjrqbng;
+    }
+
+    public String getBjrqend() {
+        return bjrqend;
+    }
+
+    public void setBjrqend(String bjrqend) {
+        this.bjrqend = bjrqend;
     }
 }

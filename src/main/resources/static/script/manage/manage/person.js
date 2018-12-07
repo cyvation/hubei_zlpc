@@ -220,6 +220,7 @@ function init_win_eval_pool_add() {
     $('#win_eval_pool_add').window({
         onClose: function () {
             $('#txt_win_eval_pool_mc').textbox('clear');
+            $("#tpe").css('display','none');
         }
     });
 
@@ -238,26 +239,26 @@ function init_win_eval_pool_add() {
         },
         onLoadSuccess: function (node,data) {
             $('#cbt_win_eval_pool_xzdw').combotree('setValue', data[0].id); //单位默认选择
-            init_bmbm(data[0].id);
+            //init_bmbm(data[0].id);
             index_addMousedownDiv(this,'cbt_win_eval_pool_xzdw');
 
         },
         onCheck: function (node, checked) {
-            var selectedDwbm = $('#cbt_win_eval_pool_xzdw').combotree('getValues').join(',');
-            var dwbmarray = selectedDwbm.split(",");
-            var type = $("#cbx_win_eval_pool_type").combobox('getValue');
-            if (type == '1'){
-                if (dwbmarray.length > 1 ) {
-                    $('#cbt_win_eval_pool_bmbm').combotree('clear');
-                    $('#cbt_win_eval_pool_bmbm').combotree({disabled: true, url: ''});
-                    return;
-
-                } else {
-                    $('#cbt_win_eval_pool_bmbm').combotree('clear');
-                    $('#cbt_win_eval_pool_bmbm').combotree({disabled: false, url: getRootPath() + '/manage/getAllBm',queryParams: {dwbm: selectedDwbm}});
-                    return;
-                }
-            }
+            // var selectedDwbm = $('#cbt_win_eval_pool_xzdw').combotree('getValues').join(',');
+            // var dwbmarray = selectedDwbm.split(",");
+            // var type = $("#cbx_win_eval_pool_type").combobox('getValue');
+            // if (type == '1'){
+            //     if (dwbmarray.length > 1 ) {
+            //         $('#cbt_win_eval_pool_bmbm').combotree('clear');
+            //         $('#cbt_win_eval_pool_bmbm').combotree({disabled: true, url: ''});
+            //         return;
+            //
+            //     } else {
+            //         $('#cbt_win_eval_pool_bmbm').combotree('clear');
+            //         $('#cbt_win_eval_pool_bmbm').combotree({disabled: false, url: getRootPath() + '/manage/getAllBm',queryParams: {dwbm: selectedDwbm}});
+            //         return;
+            //     }
+            // }
 
         }
     });
@@ -271,31 +272,35 @@ function init_win_eval_pool_add() {
         }
     });
 
-    $("#tpe").html('部门');
+  //  $("#tpe").html('部门');
+
 
     //切换事件
     $("#cbx_win_eval_pool_type").combobox({
         onSelect:function(data){
             if (data.type == '1'){ //选择所有人员
-
-                $("#tpe").html('部门');
-
-                var selectedDwbm = $('#cbt_win_eval_pool_xzdw').combotree('getValues').join(',');
-                var dwbmarray = selectedDwbm.split(",");
-                if (dwbmarray.length > 1) {
-                    $('#cbt_win_eval_pool_bmbm').combotree('clear');
-                    $('#cbt_win_eval_pool_bmbm').combotree({disabled: true, url: ''});
-                    return;
-
-                } else {
-                    init_bmbm(selectedDwbm);
-
-                }
+                $("#tpe").css('display','none');
+                return;
+                // $("#tpe").html('部门');
+                //
+                // var selectedDwbm = $('#cbt_win_eval_pool_xzdw').combotree('getValues').join(',');
+                // var dwbmarray = selectedDwbm.split(",");
+                // if (dwbmarray.length > 1) {
+                //     $('#cbt_win_eval_pool_bmbm').combotree('clear');
+                //     $('#cbt_win_eval_pool_bmbm').combotree({disabled: true, url: ''});
+                //     return;
+                //
+                // } else {
+                //     init_bmbm(selectedDwbm);
+                //
+                // }
 
             }
 
             if (data.type == '2'){  // 选择人才库
-                $("#tpe").html('业务');
+                $("#tpe").css('display','inline');
+               // $("#cbt_win_eval_pool_bmbm").css('display','');
+              //  $("#tpe").html('业务');
                 // 选择人才库
                 $("#cbt_win_eval_pool_bmbm").combotree({
                     url: getRootPath()+'/manage/getYwtxTree',
@@ -440,7 +445,7 @@ function load_grid_win_eval_pool_user_list(dwbm, mc, type, bmbm) {
     obj.DWBM_RY = dwbm;
     obj.TYPE = type;
     obj.YWBM = type == '2'? $("#cbt_win_eval_pool_bmbm").combobox('getValue'): ywtxbm;
-    obj.BMBM = type == '1'? bmbm: '';
+    obj.BMBM = '';
     obj.JSMC = '';
 
     $('#grid_win_eval_pool_user_list').datagrid({

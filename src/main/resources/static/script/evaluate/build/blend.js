@@ -204,10 +204,17 @@ function eval_special_marksInit(pcxx) {
                     // 过滤 某个条线下的评查员所能选的评查模板
                     var currentYwbm = pcxx.YWBM;
 
-                    if (currentYwbm.join(",").indexOf('00') !=-1){
-                        return data;
+                    var flag = false; // 是否处于未分类的人员
+                    for (var index =0; index < currentYwbm.length; index++){
+                        if (currentYwbm[index] == '00'){
+                            flag = true;
+                            break;
+                        }
                     }
 
+                    if (flag){
+                        return data;
+                    }
 
                     var temp = [];
                     for(var  i=0; i < data.length; i++){

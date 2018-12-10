@@ -370,6 +370,10 @@
                                           #{p_pczt, mode=IN, jdbcType=VARCHAR},
                                           #{p_pckssj, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
                                           #{p_pcjssj, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+
+                                          #{p_slrq, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                          #{p_wcrj, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+
                                           #{p_pagesize,mode=IN,jdbcType=NUMERIC},
                                           #{p_pageindex,mode=IN,jdbcType=NUMERIC},
                                           #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},

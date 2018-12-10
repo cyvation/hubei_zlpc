@@ -666,11 +666,18 @@ function init_eval_build_rd_custom_condition(pcxx) {
                 // 过滤 某个条线下的评查员所能选的评查模板
                 var currentYwbm = pcxx.YWBM;
 
-                if (currentYwbm.join(",").indexOf('00') !=-1){
+                var flag = false; // 是否处于未分类的人员
+                for (var index =0; index < currentYwbm.length; index++){
+                    if (currentYwbm[index] == '00'){
+                        flag = true;
+                        break;
+                    }
+                }
+
+                if (flag){
                     return data;
                 }
-                
-                
+
                 var temp = [];
                     for(var  i=0; i < data.length; i++){
                         var targetId = data[i].id;
@@ -678,6 +685,7 @@ function init_eval_build_rd_custom_condition(pcxx) {
                         if (currentYwbm.join(",").indexOf(target) != -1){
                             temp.push(data[i]);
                         }
+
                     }
                 return temp;
 

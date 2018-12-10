@@ -99,6 +99,17 @@ function Init_moniter_random_EasyUiCom() {
         editable: false,
         value: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate())
     });
+
+    //办结日期
+    $('#date_manage_manage_pcaj_bjrqbegin').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-01-01'
+    });
+    $('#date_manage_manage_pcaj_bjrqend').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate())
+    });
+
     //评查结论树
     $('#combo_manage_manage_pcaj_pcjl').combotree({
         lines: true,
@@ -282,6 +293,10 @@ function load_manage_manage_pcaj() {
     obj.PCR_MC = $('#txtbo_manage_manage_pcaj_pcy').textbox('getText');
     obj.PCKSSJ = $('#date_manage_manage_pcaj_ksrq').datebox('getValue');
     obj.PCJSSJ = $('#date_manage_manage_pcaj_jsrq').datebox('getValue');
+
+    obj.SLRQ = $('#date_manage_manage_pcaj_bjrqbegin').datebox('getValue');
+    obj.WCBZRQ = $('#date_manage_manage_pcaj_bjrqend').datebox('getValue');
+
     obj.CBR = $('#txtbo_manage_manage_pcaj_cbjcg').textbox('getText');
     var tempSfldba = $('#combo_manage_manage_pcaj_sfldba').combotree('getValues').join(",").trim();
     obj.SFLDBA = getSplitString(tempSfldba, ",");

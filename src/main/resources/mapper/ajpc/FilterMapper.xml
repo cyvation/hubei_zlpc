@@ -181,6 +181,9 @@
                                           #{p_pczt, mode=IN, jdbcType=VARCHAR},
                                           #{p_wcrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
                                           #{p_wcrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+
+                                          #{p_bjrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                          #{p_bjrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
                                           #{p_type, mode=IN, jdbcType=VARCHAR},
                                           #{p_ajmc, mode=IN, jdbcType=VARCHAR},
                                           #{p_pagesize,mode=IN,jdbcType=NUMERIC},

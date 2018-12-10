@@ -295,6 +295,19 @@ function init_moniter_random_EasyUiCom() {
         width: 130
     });
 
+    //办结完成日期
+    $('#date_moniter_wcbr_begin').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-01-01',
+        width: 130
+    });
+
+    $('#date_moniter_wcbr_end').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate()),
+        width: 130
+    });
+
     //radio点击事件
     // init_radio_monitor_Jsbm();
     $('.radio').click(function () {
@@ -551,6 +564,9 @@ function load_monitor_random_sjpc_filter() {
     obj.CBR = $('#cbt_moniter_random_cbjcg').textbox('getValue');//承办检察官
     obj.WCRQBNG = $('#cbt_moniter_random_ksrq').datebox('getValue');//评查日期开始
     obj.WCRQEND = $('#cbt_moniter_random_jsrq').datebox('getValue');//评查日期结束
+
+    obj.BJRQBNG = $('#date_moniter_wcbr_begin').datebox('getValue');//办结日期开始
+    obj.BJRQEND = $('#date_moniter_wcbr_end').datebox('getValue');//办结日期结束
     obj.TYPE = $(".redio_click_no").attr('data-value');//类型
     obj.AJMC = $('#cbt_moniter_random_ajmc').textbox('getValue');//案件名称
     obj.bmbm = $("#cbt_moniter_random_dept").combotree('getValues').join(","); // 部门

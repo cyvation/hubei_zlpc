@@ -263,6 +263,10 @@ public class FilterServiceImpl implements FilterService {
         map.put("p_pczt",pcjkParam.getPczt());//评查状态
         map.put("p_wcrqbng",OracleTimeUtils.format(pcjkParam.getWcrqbng()));//评查开始时间
         map.put("p_wcrqend",OracleTimeUtils.format(pcjkParam.getWcrqend()));//评查结束时间
+
+        map.put("p_bjrqbng",OracleTimeUtils.format(pcjkParam.getBjrqbng()));//案件办结开始时间
+        map.put("p_bjrqend",OracleTimeUtils.format(pcjkParam.getBjrqend()));//案件办结结束时间
+
         map.put("p_type",pcjkParam.getType());//类型
         map.put("p_ajmc", pcjkParam.getAjmc());//案件名称
         map.put("p_pagesize",pcjkParam.getRows());//页大小

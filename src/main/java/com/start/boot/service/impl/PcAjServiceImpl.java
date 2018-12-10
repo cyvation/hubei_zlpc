@@ -52,6 +52,8 @@ public class PcAjServiceImpl implements PcAjService {
         map.put("p_pczt",pcajParam.getPczt());//评查状态
         map.put("p_pckssj", OracleTimeUtils.format(pcajParam.getPckssj()));//评查开始时间
         map.put("p_pcjssj",OracleTimeUtils.format(pcajParam.getPcjssj()));//评查结束时间
+        map.put("p_slrq", OracleTimeUtils.format(pcajParam.getSlrq()));//案件受理开始时间
+        map.put("p_wcrj",OracleTimeUtils.format(pcajParam.getWcbzrq()));//案件受理结束时间
         map.put("p_pagesize",pcajParam.getRows());//页大小
         map.put("p_pageindex",pcajParam.getPage());//页索引
 

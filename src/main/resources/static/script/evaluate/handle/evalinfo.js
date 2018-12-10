@@ -3,6 +3,7 @@ var PCBGLX = "3";
 var ZDPCBG = "5";
 var PCYFJ = "6";
 var JCGFJ = "7";
+var hasAddJwh = false;
 
 var opening_eval_doc_file;
 var editDocPath = ""; //当前打开卷宗路径(流转单/评查报告)
@@ -861,12 +862,15 @@ function add_eval_info_approve_jwh(wjlj, text) {
             try {
                 show_eval_doc_panel("doc");
                 CloseProgress();
+                hasAddJwh = true;
 
                 var error = OpenFile(getRootPath() + result.value, "TANGER_OCX");
                 if (!isNull(error)) {
                     Alert(error);
                 }
                 opening_eval_doc_file = result.value;
+
+                init_eval_handle_bottom_tool('5'); //评查意见菜单栏
 
                 // 仅评查报告及流转单可编辑
                 SetSaveButtonState("TANGER_OCX", true);
@@ -2143,7 +2147,7 @@ function init_eval_handle_bottom_tool(toolID) {
             if (flag){
                 $('#btn_eval_handle_deal_pcsp_sendApp').css('display', 'none');
             }else {
-                $('#btn_eval_handle_deal_pcsp_sendApp').css('display', '');
+                $('#btn_eval_handle_deal_pcsp_sendApp').css('display', 'none');
                 $("#btn_eval_handle_deal_pcsp_sendApp").unbind( "click" );
                 $("#btn_eval_handle_deal_pcsp_sendApp").bind("click", function () {
                     deal_eval_handle_deal_approve('1');
@@ -2333,8 +2337,9 @@ function show_eval_doc_approve_tool() {
                     }else{
                         init_eval_handle_bottom_tool('1'); //评查意见菜单栏
                     }
-                }else if(EVAL_CASE.PCJG = 'jwh'){
+                }else if(EVAL_CASE.PCJG = 'jwh' && !hasAddJwh){
                     add_eval_info_approve_jwh(editDocPath, '检察长或者检委会意见');
+
                 }else{
                     insert_doc_eval_pcyyj();
                 }

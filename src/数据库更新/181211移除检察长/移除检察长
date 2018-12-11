@@ -1,0 +1,4 @@
+
+delete from xt_qx_jsbm where jsbm = '120';
+delete from xt_qx_ryjsfp  where jsbm = '120' ;
+delete from xt_zzjg_jsbm t where jsbm = '120';

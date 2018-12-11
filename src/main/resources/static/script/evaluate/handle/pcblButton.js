@@ -217,7 +217,7 @@ function butAddJwhyj(num) {
 
             $.ajax({
                 type: "post",
-                url: getRootPath() + '/menu/queryWsmb',
+                url: getRootPath() + '/manage/updateJbxx',
                 data: { PCSLBM: EVAL_CASE.PCSLBM, PCJG: 'jwh' },
                 dataType: "json",
                 success: function(data) {

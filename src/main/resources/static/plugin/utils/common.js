@@ -643,7 +643,7 @@ function getDhcdValues() {
             gnIndex: '3',
             tabheads:'条线, 评查情况, 评查结果等次, 办结数, 评查案件数, 评查比, 优质, 合格, 瑕疵, 不合格, 件数, 优质占比,优质比,合格,合格占比,合格比,瑕疵,瑕疵占比,瑕疵比,不合格,不合格占比,不合格比'
         }]},
-        {
+/*        {
             title: '错误项目分析', childs: [{
             id: '7',
             group: '(错误项目)',
@@ -671,39 +671,68 @@ function getDhcdValues() {
             gndz: '/view/analysis/errorItem/index.html',
             gnIndex: '2',
             tabheads:'条线, 评查案件数, 存在错误项的案件数, 存在错误项的案件比例, 错误项个数, 案件平均错误项,平均错误项, 存在错误项案件平均错误项个数, 条线通用, 个别条线适用, 侦监, 公诉, 未检, 证据采信, 事实认定, 法律适用, 办案程序, 法律文书, 司法责任制落实, 系统规范应用, 其他情况, 侦查监督, 出席二审法庭, 特别程序, 出席二审法庭, 法律监督, 合计, 错误项占比, 错误占比, 占比'
-        }]},
+        }]},*/
         {
-            title: '瑕疵项目分析', childs: [{
+            title: '评查问题项分析', childs: [{
             id: '10',
-             group: '(瑕疵项目)',
+             group: '(问题项)',
             name: '按时间分析',
             imageOneUrl: 'image/icon/xcxm_one_xz.png',
             imageTwoUrl: 'image/icon/xcxm_one.png',
             gndz: '/view/analysis/flaw/index.html',
             gnIndex: '0',
-            tabheads:'年份, 评查案件数, 存在瑕疵项的案件数, 存在瑕疵项的案件比例, 瑕疵项个数,瑕疵数, 案件平均瑕疵项,平均瑕疵项, 存在瑕疵项案件平均错误项个数, 条线通用, 个别条线适用, 侦监, 公诉, 未检, 证据采信, 事实认定, 法律适用, 办案程序, 法律文书, 司法责任制落实, 系统规范应用, 其他情况, 侦查监督, 出席二审法庭, 特别程序, 出席二审法庭, 法律监督, 合计, 瑕疵项占比, 瑕疵占比, 占比 '
+            tabheads:'年份, 评查案件数, 存在问题项的案件数, 存在问题项的案件比例, 问题项个数,瑕疵数, 案件平均问题项,平均问题项, 存在问题项案件平均错误项个数, 条线通用, 个别条线适用, 侦监, 公诉, 未检, 证据采信, 事实认定, 法律适用, 办案程序, 法律文书, 司法责任制落实, 系统规范应用, 其他情况, 侦查监督, 出席二审法庭, 特别程序, 出席二审法庭, 法律监督, 合计, 问题项占比, 瑕疵占比, 占比 '
         }, {
             id: '11',
-            group: '(瑕疵项目)',
+            group: '(问题项)',
             name: '按地区分析',
             imageOneUrl: 'image/icon/xcxm_two_xz.png',
             imageTwoUrl: 'image/icon/xcxm_two.png',
             gndz: '/view/analysis/flaw/index.html',
             gnIndex: '1',
-            tabheads:'地区, 评查案件数, 存在瑕疵项的案件数, 存在瑕疵项的案件比例, 瑕疵项个数, 案件平均瑕疵项,平均瑕疵项, 存在瑕疵项案件平均错误项个数, 条线通用, 个别条线适用, 侦监, 公诉, 未检, 证据采信, 事实认定, 法律适用, 办案程序, 法律文书, 司法责任制落实, 系统规范应用, 其他情况, 侦查监督, 出席二审法庭, 特别程序, 出席二审法庭, 法律监督, 合计, 瑕疵项占比,瑕疵占比, 占比 '
+            tabheads:'地区, 评查案件数, 存在问题项的案件数, 存在问题项的案件比例, 问题项个数, 案件平均问题项,平均问题项, 存在问题项案件平均错误项个数, 条线通用, 个别条线适用, 侦监, 公诉, 未检, 证据采信, 事实认定, 法律适用, 办案程序, 法律文书, 司法责任制落实, 系统规范应用, 其他情况, 侦查监督, 出席二审法庭, 特别程序, 出席二审法庭, 法律监督, 合计, 问题项占比,瑕疵占比, 占比 '
         }, {
             id: '12',
-            group: '(瑕疵项目)',
+            group: '(问题项)',
             name: '按条线分析',
             imageOneUrl: 'image/icon/xcxm_tree_xz.png',
             imageTwoUrl: 'image/icon/xcxm_tree.png',
             gndz: '/view/analysis/flaw/index.html',
             gnIndex: '2',
-            tabheads:'条线, 评查案件数, 存在瑕疵项的案件数, 存在瑕疵项的案件比例, 瑕疵项个数, 案件平均瑕疵项,平均瑕疵项, 存在瑕疵项案件平均错误项个数, 条线通用, 个别条线适用, 侦监, 公诉, 未检, 证据采信, 事实认定, 法律适用, 办案程序, 法律文书, 司法责任制落实, 系统规范应用, 其他情况, 侦查监督, 出席二审法庭, 特别程序, 出席二审法庭, 法律监督, 合计, 瑕疵项占比,瑕疵占比, 占比 '
+            tabheads:'条线, 评查案件数, 存在问题项的案件数, 存在问题项的案件比例, 问题项个数, 案件平均问题项,平均问题项, 存在问题项案件平均错误项个数, 条线通用, 个别条线适用, 侦监, 公诉, 未检, 证据采信, 事实认定, 法律适用, 办案程序, 法律文书, 司法责任制落实, 系统规范应用, 其他情况, 侦查监督, 出席二审法庭, 特别程序, 出席二审法庭, 法律监督, 合计, 问题项占比,瑕疵占比, 占比 '
+        }]},
+        {
+            title: '突出项目分析', childs: [{
+            id: '13',
+            group: '(突出项目)',
+            name: '按问题项分析',
+            imageOneUrl: 'image/icon/tcxm_one_xz.png',
+            imageTwoUrl: 'image/icon/tcxm_one.png',
+            gndz: '/view/analysis/tccwxc/xcfx.html',
+            gnIndex: '0',
+            tabheads:'问题项, 问题占比, 占比, 问题数'
+        }, /*{
+            id: '15',
+            group: '(突出项目)',
+            name: '按错误分析',
+            imageOneUrl: 'image/icon/tcxm_two_xz.png',
+            imageTwoUrl: 'image/icon/tcxm_two.png',
+            gndz: '/view/analysis/tccwxc/cwfx.html',
+            gnIndex: '2',
+            tabheads:'错误项, 错误占比, 占比, 错误数'
+        },*/ {
+            id: '14',
+            group: '(突出项目)',
+            name: '按条线分析',
+            imageOneUrl: 'image/icon/tcxm_tree_xz.png',
+            imageTwoUrl: 'image/icon/tcxm_tree.png',
+            gndz: '/view/statistics/ajwt_hz/index.html',
+            gnIndex: '3',
+            tabheads:'业务条线, 评查标准, 评查项, 问题案件数'
         }]},
         {
             title: '承办人案件质量分析', childs: [{
-            id: '13',
+            id: '15',
             group: '',
             name: '承办人案件质量分析',
             imageOneUrl: 'image/icon/cbrnjzl_xz.png',
@@ -713,34 +742,26 @@ function getDhcdValues() {
             tabheads:'办案检察官, 办案单位, 办案部门, 被评查案件数, 被评查数, 优秀案件数,优秀数, 合格案件数量,合格数, 瑕疵案件数, 瑕疵数, 不合格案件数, 不合格数'
         }]},
         {
-            title: '突出项目分析', childs: [{
-            id: '14',
-            group: '(突出项目)',
-            name: '按瑕疵分析',
-            imageOneUrl: 'image/icon/tcxm_one_xz.png',
-            imageTwoUrl: 'image/icon/tcxm_one.png',
-            gndz: '/view/analysis/tccwxc/xcfx.html',
-            gnIndex: '0',
-            tabheads:'瑕疵项, 瑕疵占比, 占比, 瑕疵数'
-        }, {
-            id: '15',
-            group: '(突出项目)',
-            name: '按错误分析',
-            imageOneUrl: 'image/icon/tcxm_two_xz.png',
-            imageTwoUrl: 'image/icon/tcxm_two.png',
-            gndz: '/view/analysis/tccwxc/cwfx.html',
-            gnIndex: '2',
-            tabheads:'错误项, 错误占比, 占比, 错误数'
-        }, {
-            id: '16',
-            group: '(突出项目)',
-            name: '按条线分析',
-            imageOneUrl: 'image/icon/tcxm_tree_xz.png',
-            imageTwoUrl: 'image/icon/tcxm_tree.png',
-            gndz: '/view/statistics/ajwt_hz/index.html',
-            gnIndex: '3',
-            tabheads:'业务条线, 评查标准, 评查项, 问题案件数'
-        }]}
+            title: '重点案件分析',
+            childs: [{
+                id: '16',
+                group: '(重点案件)',
+                name: '重点案件总体情况',
+                imageOneUrl: 'image/icon/imgtree.png',
+                imageTwoUrl: 'image/icon/imgtree_xz.png',
+                gndz: '/view/analysis/pcGeneral/index.html',
+                gnIndex: '2',
+                tabheads:'条线, 办案人数, 办结案件数, 办结数,  评查人员数, 评查案件数评查比例, 评查比例, 承办人平均被评查案件数,被评查, 评查员平均评查案件数,平均评查'
+            }, {
+                id: '17',
+                group: '(重点案件)',
+                name: '重点案件质量分析',
+                imageOneUrl: 'image/icon/zlqk_tree_xz.png',
+                imageTwoUrl: 'image/icon/zlqk_tree.png',
+                gndz: '/view/analysis/ajqkzlfx/txfx.html',
+                gnIndex: '3',
+                tabheads:'条线, 评查情况, 评查结果等次, 办结数, 评查案件数, 评查比, 优质, 合格, 瑕疵, 不合格, 件数, 优质占比,优质比,合格,合格占比,合格比,瑕疵,瑕疵占比,瑕疵比,不合格,不合格占比,不合格比'
+            }]}
     ];
     return dhArrays;
 }

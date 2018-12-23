@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>案件情况质量地区分析</title>
+    <title>重点案件质量分析</title>
 </head>
 
 <body>
 <script type="text/javascript">
-    AddScript("text/javascript", "script/analysis/ajqkzlfx/dqfx.js");
+    AddScript("text/javascript", "script/analysis/zdaj/zlfx.js");
 </script>
 <style>
     .easyui_table_yscx {
@@ -141,102 +141,39 @@
     .easyui_table_yscx .datagrid-body table {
         width: 100%;
     }
-    /*评查预览*/
-    #pcWin_win_offline {
-        padding: 10px;
-        margin:0 auto;
-        background: #e0ecff;
-    }
-
-    #pcWin_win_offline table {
-        width: 100%;
-        border-collapse: collapse;
-        border: 0px solid #8ac9e6;
-        border-right: 0 !important;
-    }
-
-    #pcWin_win_offline .thead {
-        background: #ecf6fb;
-    }
-
-    #pcWin_win_offline td {
-        height: 30px;
-        line-height: 20px;
-        font-size: 12px;
-        padding: 10px;
-        border: none;
-        border-right: 1px solid #8ac9e6;
-    }
-
-    #pcWin_win_offline tr {
-        border-bottom: 1px solid #8ac9e6;
-    }
-
-    #pcWin_win_offline .thead td {
-        color: #006391;
-        white-space: nowrap !important;
-    }
-
-    /*#pcWin_win .tbody td:nth-child(1) {*/
-    /*white-space: nowrap !important;*/
-    /*}*/
-
-    #pcWin_win_offline .tbody tr:nth-child(2n) {
-        background: #fafafa;
-    }
-
-    #pcWin_win_offline .tbody tr:hover {
-        background: #fcf8e3;
-    }
 </style>
 
 <div id="monitor_tabs_box" style="width: 100%;height: 100%;">
     <div style="margin-bottom: 10px">
-        <!--<span>年度</span>-->
-        <!--<input id="monitor_handler_year_combotree" class="easyui-combotree" style="width: 160px;"/>-->
-        <span>案件完成日期</span>
-        <input id="tjfx_nd_wc_start" class="easyui-datebox" style="width:120px; border-color:#95B8E7;"/>~
-        <input id="tjfx_nd_wc_end" class="easyui-datebox" style="width:120px; border-color:#95B8E7;"/>
-        <span>评查日期</span>
-        <input id="tjfx_nd_pc_start" class="easyui-datebox" style="width:120px; border-color:#95B8E7;"/>~
-        <input id="tjfx_nd_pc_end" class="easyui-datebox" style="width:120px; border-color:#95B8E7;"/>
         <span>承办单位</span>
-        <input id="monitor_handler_dw_combotree" class="easyui-combotree" style="width: 220px;"/>
-        <span>评查方式</span>
-        <input id="cbt_win_eval_build_pcfl" class="easyui-combotree" style="width: 220px;"/>
-        <span>评查模板</span>
-        <input id="cbt_win_eval_build_pcmb" class="easyui-combotree" style="width: 160px;"/>
+        <input id="analysis_zdaj_dw" class="easyui-combotree" style="width: 220px;"/>
+        <span>评查日期</span>
+        <input id="analysis_zdaj_pc_start" class="easyui-datebox" style="width:120px; border-color:#95B8E7;"/>~
+        <input id="analysis_zdaj_pc_end" class="easyui-datebox" style="width:120px; border-color:#95B8E7;"/>
+
+        <span>办结日期</span>
+        <input id="analysis_zdaj_bj_start" class="easyui-datebox" style="width:120px; border-color:#95B8E7;"/>~
+        <input id="analysis_zdaj_bj_end" class="easyui-datebox" style="width:120px; border-color:#95B8E7;"/>
+
         <span>承办人身份</span>
-        <input id="cbt_win_eval_build_cbrsf" class="easyui-combotree" style="width: 160px;"/>
+        <input id="analysis_zdaj_cbrsf" class="easyui-combotree" style="width: 160px;"/>
         <span>案件统计类别</span>
-        <input id="tjfx_dq_cbt_build_ajtjlb" class="easyui-combotree" style="width: 160px;"/>
-        <button id="btn_monitor_overview_rd_search" class="pcajsx_sj_2">查询</button>
-        <button id="btn_dq_expExcel" class="pcajsx_sj_2" disabled="disabled">导出</button>
+        <input id="analysis_zdaj_ajtjlb" class="easyui-combotree" style="width: 160px;"/>
+        <span>筛选规则</span>
+        <input id="analysis_zdaj_sxgz" class="easyui-combotree" style="width: 160px;"/>
+        <button id="btn_analysis_zdaj_search" class="pcajsx_sj_2">查询</button>
+        <button id="analysis_zdaj_expExcel" class="pcajsx_sj_2" >导出</button>
     </div>
     <div class="easyui_table_yscx">
-        <table id="table_analysis_ajqkzlfx_dq" border="0" data-options="fit:true" style="width: 100%;">
+        <table id="table_analysis_zdaj" border="0" data-options="fit:true" style="width: 100%;">
         </table>
     </div>
 </div>
 
-<div id="win_analysis_dq_filter" class="easyui-window" title="评查案件列表"
+<div id="win_analysis_zdaj_filter" class="easyui-window" title="评查案件列表"
      data-options="closed:true,collapsible:false,shadow:false,maximizable:false,minimizable:false,modal:true,cache:false,resizable:true,width:1000,height:600">
-    <table id="table_analysis_dq_filter"></table>
+    <table id="table_analysis_zdaj_filter"></table>
 </div>
-<!--评查预览弹出框-->
-<div id="pcWin_win_offline" style="padding: 10px;">
-    <div class="pcblPcyl">
-        <div>评查案件：<span id="win_pcWin_ajmc"></span></div>
-        <div>承办检察官：<span id="win_pcWin_cbr"></span></div>
-        <div>评查员：<span id="win_pcWin_pcr"></span></div>
-        <div>评查案号：<span id="win_pcWin_pcsah"></span></div>
-        <div>评查时间：<span id="win_pcWin_pcsj"></span></div>
-        <div>案件完成日期：<span id="win_pcWin_ajsj"></span></div>
-        <!-- <div>案由：<span id="win_pcWin_lbl_eval_handle_eval_ay"></span></div>-->
-    </div>
-    <div class="pcylCon" id="pcWin_pcylCon_offline"></div>
-</div>
-
 
 </body>
 </html>

@@ -43,23 +43,45 @@ function init_tjfx_nd() {
         }
     });
     //年度
-    $('#tjfx_nd_year_combotree').combotree({
-        editable: false,
-        panelWidth: 160,
-        lines: true,
-        multiple: true,
-        cascadeCheck: false,
-        onShowPanel: index_onShowPanel,
-        onHidePanel: index_onHidePanel,
-        onLoadSuccess: function (node, data) {
-            if (data != null && data.length >= 1) {
-                setAllCheckbox('#tjfx_nd_year_combotree', data);
-            }
-            index_addMousedownDiv(this, "tjfx_nd_year_combotree");
-        }
-    });
-    $('#tjfx_nd_year_combotree').combotree("loadData", getYearRange());
+    // $('#tjfx_nd_year_combotree').combotree({
+    //     editable: false,
+    //     panelWidth: 160,
+    //     lines: true,
+    //     multiple: true,
+    //     cascadeCheck: false,
+    //     onShowPanel: index_onShowPanel,
+    //     onHidePanel: index_onHidePanel,
+    //     onLoadSuccess: function (node, data) {
+    //         if (data != null && data.length >= 1) {
+    //             setAllCheckbox('#tjfx_nd_year_combotree', data);
+    //         }
+    //         index_addMousedownDiv(this, "tjfx_nd_year_combotree");
+    //     }
+    // });
+    // $('#tjfx_nd_year_combotree').combotree("loadData", getYearRange());
     //承办人身份
+
+    $('#tjfx_nd_wc_start').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-01-01'
+    });
+
+    $('#tjfx_nd_wc_end').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
+    });
+
+// 评查日期
+    $('#tjfx_nd_pc_start').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-01-01'
+    });
+
+    $('#tjfx_nd_pc_end').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
+    });
+
     $('#tjfx_nd_cbt_build_cbrsf').combotree({
         editable: false,
         panelWidth: 160,
@@ -323,11 +345,17 @@ function load_cbt_win_eval_ajzlfx_pcmb() {
 // 常规抽查数据获取
 function data_tjfx_nd_search() {
     var obj = new Object();
-    obj.wcrqnf = $('#tjfx_nd_year_combotree').combotree('getValues').join(",").trim();
-    if (obj.wcrqnf == "") {
-        Alert("请选择年度!");
-        return;
-    }
+    // obj.wcrqnf = $('#tjfx_nd_year_combotree').combotree('getValues').join(",").trim();
+    // if (obj.wcrqnf == "") {
+    //     Alert("请选择年度!");
+    //     return;
+    // }
+
+    obj.startDate = $('#tjfx_nd_wc_start').datebox('getValue');
+    obj.endDate = $('#tjfx_nd_wc_end').datebox('getValue');
+    obj.pcstartDate=$('#tjfx_nd_pc_start').datebox('getValue');
+    obj.pcendDate = $('#tjfx_nd_pc_end').datebox('getValue');
+
     var dwbm = $('#tjfx_nd_dw_combotree').combotree('getValues').join(",").trim();
     if (dwbm == "") {
         Alert("请选择承办单位!");
@@ -364,11 +392,16 @@ function data_tjfx_nd_search() {
 
 function ajzlqkfx_nd_expExcel() {
     var obj = new Object();
-    obj.wcrqnf = $('#tjfx_nd_year_combotree').combotree('getValues').join(",").trim();
-    if (obj.wcrqnf == "") {
-        Alert("请选择年度!");
-        return;
-    }
+    // obj.wcrqnf = $('#tjfx_nd_year_combotree').combotree('getValues').join(",").trim();
+    // if (obj.wcrqnf == "") {
+    //     Alert("请选择年度!");
+    //     return;
+    // }
+    obj.startDate = $('#tjfx_nd_wc_start').datebox('getValue');
+    obj.endDate = $('#tjfx_nd_wc_end').datebox('getValue');
+    obj.pcstartDate=$('#tjfx_nd_pc_start').datebox('getValue');
+    obj.pcendDate = $('#tjfx_nd_pc_end').datebox('getValue');
+
     var dwbm = $('#tjfx_nd_dw_combotree').combotree('getValues').join(",").trim();
     if (dwbm == "") {
         Alert("请选择承办单位!");
@@ -416,7 +449,13 @@ function ajzlqkfx_nd_expExcel() {
 function alert_jbxx_nd_tj_window(index, pcjl) {
     var obj = new Object();
     var thisRow = $('#table_analysis_ajqkzlfx_nf').datagrid('getRows')[index];
-    obj.wcrqnf = thisRow.name;
+    //obj.wcrqnf = thisRow.name;
+
+    obj.startDate = $('#tjfx_nd_wc_start').datebox('getValue');
+    obj.endDate = $('#tjfx_nd_wc_end').datebox('getValue');
+    obj.pcstartDate=$('#tjfx_nd_pc_start').datebox('getValue');
+    obj.pcendDate = $('#tjfx_nd_pc_end').datebox('getValue');
+
     obj.dwbm = $('#tjfx_nd_dw_combotree').combotree('getValues').join(",").trim();
     obj.pcflbm = $('#tjfx_nd_cbt_build_pcfl').combotree('getValues').join(",").trim();
     obj.ywtx = $('#tjfx_nd_cbt_build_pcmb').combotree('getValues').join(",").trim();

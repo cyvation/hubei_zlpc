@@ -8,23 +8,23 @@ var option=[
         }
     },
     {
-        field: 'cwajs',title: '<span  style=\'font-size:14px\'>2存在错误项的案件数</span>',width:120,rowspan: 4, align: 'center',
+        field: 'cwajs',title: '<span  style=\'font-size:14px\'>2存在问题的案件数</span>',width:120,rowspan: 4, align: 'center',
         formatter: function (value, row, index) {
             var r= (row.name.indexOf("合计")>0||row.name=='合计') ?value:'<a href="#" data-field={"id":"'+row.id+'","pid":"'+row.pid+'","fl":""} onclick="pcWin_pcList(this,1)">'+value+'</a>';
             return r;
         }
     },
     {
-        field: 'cwBl',title: '<span  style=\'font-size:14px\'>3存在错误项的案件比例（2/1）</span>',width: 100,rowspan: 4,align: 'center'
+        field: 'cwBl',title: '<span  style=\'font-size:14px\'>3存在问题的案件比例（2/1）</span>',width: 100,rowspan: 4,align: 'center'
     },
     {
-        field: 'cws',title: '<span  style=\'font-size:14px\'>4错误项个数</span>',rowspan: 4,width: 120,align: 'center'
+        field: 'cws',title: '<span  style=\'font-size:14px\'>4问题个数</span>',rowspan: 4,width: 120,align: 'center'
     },
     {
-        field: 'ajpjcws',title: '<span  style=\'font-size:14px\'>案件平均错误项个数(4/1)</span>',rowspan: 4,width: 80,align: 'center'
+        field: 'ajpjcws',title: '<span  style=\'font-size:14px\'>案件平均问题个数(4/1)</span>',rowspan: 4,width: 80,align: 'center'
     }
     ,{
-        field: 'pjcws',title: '<span  style=\'font-size:14px\'>存在错误项案件平均错误项个数（4/2）</span>',rowspan: 4,width: 100,align: 'center'
+        field: 'pjcws',title: '<span  style=\'font-size:14px\'>存在问题案件平均问题个数（4/2）</span>',rowspan: 4,width: 100,align: 'center'
     },
     {
         title: '<span  style=\'font-size:14px\'>条线通用</span>',colspan: 16,rowspan: 2,align: 'center'
@@ -457,7 +457,7 @@ function pcWin_pcList(el,type){
                 formatter: function (value) { return tipMessage(value); }},
             {field:'AJLB_MC',title:'案件类别',width:90},
             {field:'CBDWMC',title:'承办单位',width:90},
-            {field:'BCBRMC',title:'承办检察官',width:90},
+            {field:'CBRMC',title:'承办检察官',width:90},
             {field:'WCRQ',title:'完成日期', fixed:true, width: 115 ,
                 formatter: function (value) {
                     return sjzh(value);
@@ -573,11 +573,11 @@ function excel_export_data() {
     obj.stajbs=$('#stajbs').combotree('getValues').length==0||$('#stajbs').combotree('getValues').length==2?"":$('#stajbs').combotree('getValues').join(",");
     var str="";
     if(tabIndex==0)
-       str="错误项目时间分析";
+       str="问题项目时间分析";
     else if(tabIndex==1)
-        str="错误项目地区分析";
+        str="问题项目地区分析";
     else if(tabIndex==2)
-        str="错误项目条线分析";
+        str="问题项目条线分析";
     obj.type=tabIndex;
     obj.excelName=str;
     $.ajax({

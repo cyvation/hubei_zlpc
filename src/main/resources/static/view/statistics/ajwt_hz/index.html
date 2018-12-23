@@ -11,7 +11,7 @@
 <style>
     .easyui_table_yscx{
         width: 100%;
-        height: calc(100% - 69px);
+        height: calc(100% - 100px);
         /*overflow: auto;*/
     }
     .easyui_table_yscx .datagrid-header-inner{
@@ -127,16 +127,24 @@
     <div data-options="region:'west',split:true" style="width:55%;">
         <div id="ajwt_tabsBox" style="width: 100%;height: 100%;">
             <div style="width: 100%;overflow: hidden;padding: 5px">
-                <span>年份</span>
-                <input id="errorItem_date" class="easyui-combotree"/>
+                <!--<span>年份</span>-->
+                <!--<input id="errorItem_date" class="easyui-combotree"/>-->
+                <span>案件完成日期</span>
+                <input id="tcxc_xcx__wc_start" class="easyui-datebox" style="width:120px; border-color:#95B8E7;"/>~
+                <input id="tcxc_xcx__wc_end" class="easyui-datebox" style="width:120px; border-color:#95B8E7;"/>
+                <span>评查日期</span>
+                <input id="tcxc_xcx__pc_start" class="easyui-datebox" style="width:120px; border-color:#95B8E7;"/>~
+                <input id="tcxc_xcx__pc_end" class="easyui-datebox" style="width:120px; border-color:#95B8E7;"/>
+
                 <span>承办单位</span>
                 <input id="errorItem_dw_combotree" class="easyui-combotree"  />
                 <span>评查方式</span>
                 <input id="general_pcfl" class="easyui-combotree"  />
                 <span>评查模板</span>
                 <input id="general_pcmb" class="easyui-combotree" /><br/>
-                <span>项目类型</span>
-                <input id="flxtdmType" class="easyui-combotree" />
+                <!--现在错误项合并到瑕疵项统称问题项，这个条件不需要显示-->
+                <!--<span >项目类型</span>-->
+                <!--<input id="flxtdmType" class="easyui-combotree" />-->
                 <span>承办人身份</span>
                 <input id="general_cbrsf" class="easyui-combotree" />
                 <span>案件统计类别</span>

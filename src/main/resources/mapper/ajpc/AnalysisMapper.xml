@@ -22,10 +22,25 @@
         <if test="sfld!=null and sfld!=''">
             and jb.sfldba =#{sfld}
         </if>
-        <if test="date!=null and date!=''">
-            and wcrq_nf in
-            <foreach  item="item" collection="date" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        <!--<if test="date!=null and date!=''">-->
+            <!--and wcrq_nf in-->
+            <!--<foreach  item="item" collection="date" index="index"  open="(" separator="," close=")">#{item}</foreach>-->
+        <!--</if>-->
+        <if test="startDate!=null and startDate!=''">
+            and jb.BPC_WCRQ &gt;= to_date(#{startDate},'yyyy-MM-dd')
         </if>
+
+        <if test="endDate!=null and endDate!=''">
+            and jb.BPC_WCRQ &lt;= to_date(#{endDate},'yyyy-MM-dd')
+        </if>
+        <if test="pcstartDate!=null and pcstartDate!=''">
+            and jb.CJSJ &gt;= to_date(#{pcstartDate},'yyyy-MM-dd')
+        </if>
+
+        <if test="pcendDate!=null and pcendDate!=''">
+            and jb.CJSJ &lt;= to_date(#{pcendDate},'yyyy-MM-dd')
+        </if>
+
         <if test="dwbm!=null and dwbm!=''">
             and BPC_DWBM in
             <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
@@ -101,10 +116,25 @@
         <if test="sfld!=null and sfld!=''">
             and jb.sfldba =#{sfld}
         </if>
-        <if test="date!=null and date!=''">
-            and jb.wcrq_nf in
-            <foreach  item="item" collection="date" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        <!--<if test="date!=null and date!=''">-->
+            <!--and jb.wcrq_nf in-->
+            <!--<foreach  item="item" collection="date" index="index"  open="(" separator="," close=")">#{item}</foreach>-->
+        <!--</if>-->
+        <if test="startDate!=null and startDate!=''">
+            and jb.BPC_WCRQ &gt;= to_date(#{startDate},'yyyy-MM-dd')
         </if>
+
+        <if test="endDate!=null and endDate!=''">
+            and jb.BPC_WCRQ &lt;= to_date(#{endDate},'yyyy-MM-dd')
+        </if>
+        <if test="pcstartDate!=null and pcstartDate!=''">
+            and jb.CJSJ &gt;= to_date(#{pcstartDate},'yyyy-MM-dd')
+        </if>
+
+        <if test="pcendDate!=null and pcendDate!=''">
+            and jb.CJSJ &lt;= to_date(#{pcendDate},'yyyy-MM-dd')
+        </if>
+
         <if test="dwbm!=null and dwbm!=''">
             and jb.BPC_DWBM in
             <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
@@ -171,10 +201,24 @@
         <if test="sfld!=null and sfld!=''">
             and jb.sfldba =#{sfld}
         </if>
-        <if test="date!=null and date!=''">
-            and wcrq_nf in
-            <foreach  item="item" collection="date" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        <!--<if test="date!=null and date!=''">-->
+            <!--and wcrq_nf in-->
+            <!--<foreach  item="item" collection="date" index="index"  open="(" separator="," close=")">#{item}</foreach>-->
+        <!--</if>-->
+        <if test="startDate !=null and startDate!=''">
+            AND jb.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
         </if>
+        <if test="endDate !=null and endDate!=''">
+            AND jb.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+
+        <if test="pcstartDate !=null and pcstartDate!=''">
+            AND jb.CJSJ &gt;= "TO_DATE" (#{pcstartDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="pcendDate !=null and pcendDate!=''">
+            AND jb.CJSJ &lt;= "TO_DATE" (#{pcendDate}, 'yyyy-mm-dd')
+        </if>
+
         <if test="dwbm!=null and dwbm!=''">
             and BPC_DWBM in
             <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
@@ -251,10 +295,25 @@
             <if test="stajbs!=null and stajbs!=''">
                 and jb.stajbs =#{stajbs}
             </if>
-            <if test="date!=null and date!=''">
-                and jb.wcrq_nf in
-                <foreach  item="item" collection="date" index="index"  open="(" separator="," close=")">#{item}</foreach>
+            <!--<if test="date!=null and date!=''">-->
+                <!--and jb.wcrq_nf in-->
+                <!--<foreach  item="item" collection="date" index="index"  open="(" separator="," close=")">#{item}</foreach>-->
+            <!--</if>-->
+            <if test="startDate!=null and startDate!=''">
+                and jb.BPC_WCRQ &gt;= to_date(#{startDate},'yyyy-MM-dd')
             </if>
+
+            <if test="endDate!=null and endDate!=''">
+                and jb.BPC_WCRQ &lt;= to_date(#{endDate},'yyyy-MM-dd')
+            </if>
+            <if test="pcstartDate!=null and pcstartDate!=''">
+                and jb.CJSJ &gt;= to_date(#{pcstartDate},'yyyy-MM-dd')
+            </if>
+
+            <if test="pcendDate!=null and pcendDate!=''">
+                and jb.CJSJ &lt;= to_date(#{pcendDate},'yyyy-MM-dd')
+            </if>
+
             <if test="dwbm!=null and dwbm!=''">
                 and jb.BPC_DWBM in
                 <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
@@ -277,9 +336,22 @@
     <select id="getNdBjAjCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         SELECT COUNT(bmsah) cnt FROM v_bjajxx ajxx
         WHERE 1=1
-        <if test="wcrqnf !=null and wcrqnf!=''">
-            AND ajxx.wcrq_nf in (${wcrqnf})
+        <!--<if test="wcrqnf !=null and wcrqnf!=''">-->
+            <!--AND ajxx.wcrq_nf in (${wcrqnf})-->
+        <!--</if>-->
+        <if test="startDate !=null and startDate!=''">
+            AND ajxx.wcrq &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
         </if>
+        <if test="endDate !=null and endDate!=''">
+            AND ajxx.wcrq &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+
+        <!--<if test="pcstartDate !=null and pcstartDate!=''">-->
+            <!--AND ajxx.pcrq &gt;= "TO_DATE" (#{pcstartDate}, 'yyyy-mm-dd')-->
+        <!--</if>-->
+        <!--<if test="pcendDate !=null and pcendDate!=''">-->
+            <!--AND ajxx.pcrq &lt;= "TO_DATE" (#{pcendDate}, 'yyyy-mm-dd')-->
+        <!--</if>-->
         <if test="ajtjlb !=null and ajtjlb!=''">
             AND ajxx.stajbs in (${ajtjlb})
         </if>
@@ -314,9 +386,25 @@
     <select id="getNdPcAjCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         SELECT COUNT(bmsah) cnt FROM v_pcajxx ajxx
         WHERE 1=1
-        <if test="wcrqnf !=null and wcrqnf!=''">
-            AND ajxx.wcrq_nf in (${wcrqnf})
+        <!--<if test="wcrqnf !=null and wcrqnf!=''">-->
+            <!--AND ajxx.wcrq_nf in (${wcrqnf})-->
+        <!--</if>-->
+
+        <if test="startDate!=null and startDate!=''">
+            and ajxx.BPC_WCRQ &gt;= to_date(#{startDate},'yyyy-MM-dd')
         </if>
+
+        <if test="endDate!=null and endDate!=''">
+            and ajxx.BPC_WCRQ &lt;= to_date(#{endDate},'yyyy-MM-dd')
+        </if>
+        <if test="pcstartDate!=null and pcstartDate!=''">
+            and ajxx.CJSJ &gt;= to_date(#{pcstartDate},'yyyy-MM-dd')
+        </if>
+
+        <if test="pcendDate!=null and pcendDate!=''">
+            and ajxx.CJSJ &lt;= to_date(#{pcendDate},'yyyy-MM-dd')
+        </if>
+
         <if test="ajtjlb !=null and ajtjlb!=''">
             AND ajxx.stajbs in (${ajtjlb})
         </if>
@@ -351,9 +439,24 @@
     <select id="getNdPcAjCountByPcjl" parameterType="java.util.Map" resultType="java.lang.Integer">
         SELECT COUNT(bmsah) cnt FROM v_pcajxx ajxx
         WHERE 1=1
-        <if test="wcrqnf !=null and wcrqnf!=''">
-            AND ajxx.wcrq_nf in (${wcrqnf})
+        <!--<if test="wcrqnf !=null and wcrqnf!=''">-->
+            <!--AND ajxx.wcrq_nf in (${wcrqnf})-->
+        <!--</if>-->
+
+        <if test="startDate !=null and startDate!=''">
+            AND ajxx.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
         </if>
+        <if test="endDate !=null and endDate!=''">
+            AND ajxx.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+
+        <if test="pcstartDate !=null and pcstartDate!=''">
+            AND ajxx.CJSJ &gt;= "TO_DATE" (#{pcstartDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="pcendDate !=null and pcendDate!=''">
+            AND ajxx.CJSJ &lt;= "TO_DATE" (#{pcendDate}, 'yyyy-mm-dd')
+        </if>
+
         <if test="pcjl !=null and pcjl!=''">
             AND ajxx.pcjl = #{pcjl}
         </if>
@@ -571,10 +674,26 @@
             <if test="sfld!=null and sfld!=''">
                 and c.sfldba =#{sfld}
             </if>
-            <if test="wcrqnf!=null and wcrqnf!=''">
-                and c.wcrq_nf in
-                <foreach  item="item" collection="wcrqnf" index="index"  open="(" separator="," close=")">#{item}</foreach>
+            <!--<if test="wcrqnf!=null and wcrqnf!=''">-->
+                <!--and c.wcrq_nf in-->
+                <!--<foreach  item="item" collection="wcrqnf" index="index"  open="(" separator="," close=")">#{item}</foreach>-->
+            <!--</if>-->
+
+            <if test="startDate!=null and startDate!=''">
+                and c.wcrq &gt;= to_date(#{startDate},'yyyy-MM-dd')
             </if>
+
+            <if test="endDate!=null and endDate!=''">
+                and c.wcrq &lt;= to_date(#{endDate},'yyyy-MM-dd')
+            </if>
+            <!--办结案件没有评查时间-->
+            <!--<if test="pcstartDate!=null and pcstartDate!=''">-->
+                <!--and c.pcrq &gt;= to_date(#{pcstartDate},'yyyy-MM-dd')-->
+            <!--</if>-->
+
+            <!--<if test="pcendDate!=null and pcendDate!=''">-->
+                <!--and c.pcrq &lt;= to_date(#{pcendDate},'yyyy-MM-dd')-->
+            <!--</if>-->
             <if test="dwbm!=null and dwbm!=''">
                 and c.cbdwbm in
                 <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
@@ -587,6 +706,14 @@
                 and c.ywtx in
                 <foreach  item="item" collection="ywtx" index="index"  open="(" separator="," close=")">#{item}</foreach>
             </if>
+
+            <if test="gzbmj!=null and gzbmj!=''">
+                and c.gzbm in
+                <foreach collection="gzbmj" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+
+            </if>
         </where>
     </sql>
     <sql id="seachPC">
@@ -597,10 +724,26 @@
             <if test="sfld!=null and sfld!=''">
                 and c.sfldba =#{sfld}
             </if>
-            <if test="wcrqnf!=null and wcrqnf!=''">
-                and c.wcrq_nf in
-                <foreach  item="item" collection="wcrqnf" index="index"  open="(" separator="," close=")">#{item}</foreach>
+            <!--<if test="wcrqnf!=null and wcrqnf!=''">-->
+                <!--and c.wcrq_nf in-->
+                <!--<foreach  item="item" collection="wcrqnf" index="index"  open="(" separator="," close=")">#{item}</foreach>-->
+            <!--</if>-->
+
+            <if test="startDate!=null and startDate!=''">
+                and c.BPC_WCRQ &gt;= to_date(#{startDate},'yyyy-MM-dd')
             </if>
+
+            <if test="endDate!=null and endDate!=''">
+                and c.BPC_WCRQ &lt;= to_date(#{endDate},'yyyy-MM-dd')
+            </if>
+            <if test="pcstartDate!=null and pcstartDate!=''">
+                and c.CJSJ &gt;= to_date(#{pcstartDate},'yyyy-MM-dd')
+            </if>
+
+            <if test="pcendDate!=null and pcendDate!=''">
+                and c.CJSJ &lt;= to_date(#{pcendDate},'yyyy-MM-dd')
+            </if>
+
             <if test="dwbm!=null and dwbm!=''">
                 and c.bpc_dwbm in
                 <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
@@ -612,6 +755,11 @@
             <if test="ywtx!=null and ywtx!=''">
                 and c.ywtx in
                 <foreach  item="item" collection="ywtx" index="index"  open="(" separator="," close=")">#{item}</foreach>
+            </if>
+
+            <if test="gzbmj!=null and gzbmj!=''">
+                and c.sxgzbm in
+                <foreach  item="item" collection="gzbmj" index="index"  open="(" separator="," close=")">#{item}</foreach>
             </if>
         </where>
     </sql>
@@ -658,9 +806,25 @@
         LEFT JOIN (SELECT COUNT(distinct bmsah) cnt, pcx.xtdm FROM v_pcajxx ajxx
         INNER JOIN yx_pc_pcx pcx ON pcx.pcslbm = ajxx.pcslbm
         WHERE 1=1 AND pcx.pcjg != '0'
-        <if test="wcrqnf !=null and wcrqnf!=''">
-            AND ajxx.wcrq_nf in (${wcrqnf})
+        <!--<if test="wcrqnf !=null and wcrqnf!=''">-->
+            <!--AND ajxx.wcrq_nf in (${wcrqnf})-->
+        <!--</if>-->
+
+        <if test="startDate!=null and startDate!=''">
+            and ajxx.BPC_WCRQ &gt;= to_date(#{startDate},'yyyy-MM-dd')
         </if>
+
+        <if test="endDate!=null and endDate!=''">
+            and ajxx.BPC_WCRQ &lt;= to_date(#{endDate},'yyyy-MM-dd')
+        </if>
+        <if test="pcstartDate!=null and pcstartDate!=''">
+            and ajxx.CJSJ &gt;= to_date(#{pcstartDate},'yyyy-MM-dd')
+        </if>
+
+        <if test="pcendDate!=null and pcendDate!=''">
+            and ajxx.CJSJ &lt;= to_date(#{pcendDate},'yyyy-MM-dd')
+        </if>
+
         <if test="flxtdm !=null and flxtdm!=''">
             AND pcx.flxtdm in (${flxtdm})
         </if>
@@ -792,9 +956,24 @@
           ) pcx
          ON pcx.pcslbm = ajxx.PCSLBM
           where 1=1
-           <if test="wcrqnf !=null and wcrqnf!=''">
-                AND ajxx.wcrq_nf in (${wcrqnf})
-            </if>
+           <!--<if test="wcrqnf !=null and wcrqnf!=''">-->
+                <!--AND ajxx.wcrq_nf in (${wcrqnf})-->
+            <!--</if>-->
+
+        <if test="startDate !=null and startDate!=''">
+            AND ajxx.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="endDate !=null and endDate!=''">
+            AND ajxx.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+
+        <if test="pcstartDate !=null and pcstartDate!=''">
+            AND ajxx.ZHXGSJ &gt;= "TO_DATE" (#{pcstartDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="pcendDate !=null and pcendDate!=''">
+            AND ajxx.ZHXGSJ &lt;= "TO_DATE" (#{pcendDate}, 'yyyy-mm-dd')
+        </if>
+
             <if test="ajtjlb !=null and ajtjlb!=''">
                 AND ajxx.stajbs in (${ajtjlb})
             </if>
@@ -817,9 +996,25 @@
     <select id="getAjzlpcfxByYwtx" parameterType="java.util.Map" resultType="java.util.Map">
         WITH
         bjtab AS (SELECT * from v_bjajxx WHERE 1=1
-        <if test="wcrqnf !=null and wcrqnf!=''">
-            AND wcrq_nf in (${wcrqnf})
+        <!--<if test="wcrqnf !=null and wcrqnf!=''">-->
+            <!--AND wcrq_nf in (${wcrqnf})-->
+        <!--</if>-->
+
+        <if test="startDate !=null and startDate!=''">
+            AND wcrq &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
         </if>
+        <if test="endDate !=null and endDate!=''">
+            AND wcrq &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+
+        <!--办结案件没有评查时间-->
+       <!--<if test="pcstartDate !=null and pcstartDate!=''">-->
+            <!--AND pcrq &gt;= "TO_DATE" (#{pcstartDate}, 'yyyy-mm-dd')-->
+        <!--</if>-->
+        <!--<if test="pcendDate !=null and pcendDate!=''">-->
+            <!--AND pcrq &lt;= "TO_DATE" (#{pcendDate}, 'yyyy-mm-dd')-->
+        <!--</if>-->
+
         <if test="ajtjlb !=null and ajtjlb!=''">
             AND stajbs in (${ajtjlb})
         </if>
@@ -837,9 +1032,24 @@
         </if>
         ),
         pctab AS (SELECT * from v_pcajxx WHERE 1=1
-        <if test="wcrqnf !=null and wcrqnf!=''">
-            AND wcrq_nf in (${wcrqnf})
+        <!--<if test="wcrqnf !=null and wcrqnf!=''">-->
+            <!--AND wcrq_nf in (${wcrqnf})-->
+        <!--</if>-->
+
+        <if test="startDate !=null and startDate!=''">
+            AND BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
         </if>
+        <if test="endDate !=null and endDate!=''">
+            AND BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+
+        <if test="pcstartDate !=null and pcstartDate!=''">
+            AND cjsj &gt;= "TO_DATE" (#{pcstartDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="pcendDate !=null and pcendDate!=''">
+             AND cjsj &lt;= "TO_DATE" (#{pcendDate}, 'yyyy-mm-dd')
+        </if>
+
         <if test="ajtjlb !=null and ajtjlb!=''">
             AND stajbs in (${ajtjlb})
         </if>
@@ -1023,9 +1233,25 @@
     <select id="getPcAjxxByParams" parameterType="java.util.Map" resultType="java.util.Map">
         SELECT ajxx.bmsah, ajxx.ajmc, ajxx.ajlb_mc ajlbmc, ajxx.bpc_dwmc dwmc, ajxx.pcdwbm, ajxx.bpc_mc cbrmc,
         ajxx.pcr_dwmc, ajxx.cjsj, '' cz, ajxx.pcflbm, ajxx.pcslbm, ajxx.pcr_mc, ajxx.bpc_wcrq, ajxx.bpc_dwbm from v_pcajxx ajxx WHERE 1 = 1
-        <if test="wcrqnf !=null and wcrqnf!=''">
-            AND wcrq_nf in (${wcrqnf})
+        <!--<if test="wcrqnf !=null and wcrqnf!=''">-->
+            <!--AND wcrq_nf in (${wcrqnf})-->
+        <!--</if>-->
+
+        <if test="startDate!=null and startDate!=''">
+            and bpc_wcrq &gt;= to_date(#{startDate},'yyyy-MM-dd')
         </if>
+
+        <if test="endDate!=null and endDate!=''">
+            and bpc_wcrq &lt;= to_date(#{endDate},'yyyy-MM-dd')
+        </if>
+        <if test="pcstartDate!=null and pcstartDate!=''">
+            and CJSJ &gt;= to_date(#{pcstartDate},'yyyy-MM-dd')
+        </if>
+
+        <if test="pcendDate!=null and pcendDate!=''">
+            and CJSJ &lt;= to_date(#{pcendDate},'yyyy-MM-dd')
+        </if>
+
         <if test="ajtjlb !=null and ajtjlb!=''">
             AND stajbs in (${ajtjlb})
         </if>
@@ -1091,9 +1317,24 @@
         ) pcx
         ON pcx.pcslbm = ajxx.PCSLBM
         where 1=1
-        <if test="wcrqnf !=null and wcrqnf!=''">
-            AND ajxx.wcrq_nf in (${wcrqnf})
+        <!--<if test="wcrqnf !=null and wcrqnf!=''">-->
+            <!--AND ajxx.wcrq_nf in (${wcrqnf})-->
+        <!--</if>-->
+
+        <if test="startDate !=null and startDate!=''">
+            AND ajxx.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
         </if>
+        <if test="endDate !=null and endDate!=''">
+            AND ajxx.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+        </if>
+
+        <if test="pcstartDate !=null and pcstartDate!=''">
+            AND ajxx.CJSJ &gt;= "TO_DATE" (#{pcstartDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="pcendDate !=null and pcendDate!=''">
+            AND ajxx.CJSJ &lt;= "TO_DATE" (#{pcendDate}, 'yyyy-mm-dd')
+        </if>
+
         <if test="ajtjlb !=null and ajtjlb!=''">
             AND ajxx.stajbs in (${ajtjlb})
         </if>
@@ -1124,4 +1365,224 @@
         select DWBM from XT_ZZJG_DWBM t Start With DWBM = ${dwbm}
         Connect By Prior DWBM = FDWBM
     </select>
+
+    <!--获取重点案件质量分析中的筛选规则-->
+    <select id="getZdSxgz" resultMap="zdSxgzMap">
+       select gz.gzbm BM,
+       gz.gzmc MC,
+       nvl(gz.fgzbm,'-1') FBM
+        from xt_pc_sxgz  gz
+        where gz.sfzdy='N'
+        and gz.dwbm = #{djdwbm}
+        and gz.pcflbm= #{pcflbm}
+    </select>
+
+    <resultMap id="zdSxgzMap" type="map"/>
+
+    <sql id="zdseachBJ">
+        <where>
+
+            <if test="dwbm!=null and dwbm.size() >=1">
+                and c.cbdwbm in
+                <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+            </if>
+
+            <if test="pcflbm!=null and pcflbm.size() >=1">
+                and c.pcflbm in
+                <foreach  item="item" collection="pcflbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+            </if>
+
+            <if test="startDate!=null and startDate!=''">
+                and c.wcrq &gt;= to_date(#{startDate},'yyyy-MM-dd')
+            </if>
+
+            <if test="endDate!=null and endDate!=''">
+                and c.wcrq &lt;= to_date(#{endDate},'yyyy-MM-dd')
+            </if>
+
+            <!--办结案件没有评查时间-->
+            <!--<if test="pcstartDate!=null and pcstartDate!=''">-->
+            <!--and c.pcrq &gt;= to_date(#{pcstartDate},'yyyy-MM-dd')-->
+            <!--</if>-->
+
+            <!--<if test="pcendDate!=null and pcendDate!=''">-->
+            <!--and c.pcrq &lt;= to_date(#{pcendDate},'yyyy-MM-dd')-->
+            <!--</if>-->
+
+            <if test="cbrsf!=null and cbrsf.size() >=1">
+                and c.sfldba in
+                <foreach  item="item" collection="cbrsf" index="index"  open="(" separator="," close=")">#{item}</foreach>
+            </if>
+
+            <if test="ajtjlb!=null and ajtjlb.size()>=1">
+                and c.stajbs in
+                <foreach  item="item" collection="ajtjlb" index="index"  open="(" separator="," close=")">#{item}</foreach>
+            </if>
+
+            <if test="gzbmj!=null  and gzbmj.size() >=1">
+                and c.gzbm in
+                <foreach  item="item" collection="gzbmj" index="index"  open="(" separator="," close=")">#{item}</foreach>
+            </if>
+
+        </where>
+    </sql>
+    <sql id="zdseachPC">
+        <where>
+
+            <if test="dwbm!=null and dwbm.size() >=1">
+                and c.bpc_dwbm in
+                <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+            </if>
+
+            <if test="pcflbm!=null and pcflbm.size()>=1">
+                and c.pcflbm in
+                <foreach  item="item" collection="pcflbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
+            </if>
+
+            <if test="startDate!=null and startDate!=''">
+                and c.BPC_WCRQ &gt;= to_date(#{startDate},'yyyy-MM-dd')
+            </if>
+
+            <if test="endDate!=null and endDate!=''">
+                and c.BPC_WCRQ &lt;= to_date(#{endDate},'yyyy-MM-dd')
+            </if>
+            <if test="pcstartDate!=null and pcstartDate!=''">
+                and c.CJSJ &gt;= to_date(#{pcstartDate},'yyyy-MM-dd')
+            </if>
+
+            <if test="pcendDate!=null and pcendDate!=''">
+                and c.CJSJ &lt;= to_date(#{pcendDate},'yyyy-MM-dd')
+            </if>
+
+            <if test="cbrsf!=null and cbrsf.size() >=1">
+                and c.sfldba in
+                <foreach  item="item" collection="cbrsf" index="index"  open="(" separator="," close=")">#{item}</foreach>
+            </if>
+
+            <if test="ajtjlb!=null  and ajtjlb.size()>=1">
+                and c.stajbs in
+                <foreach  item="item" collection="ajtjlb" index="index"  open="(" separator="," close=")">#{item}</foreach>
+            </if>
+
+            <if test="gzbmj!=null and gzbmj.size()>=1">
+                and c.sxgzbm in
+                <foreach  item="item" collection="gzbmj" index="index"  open="(" separator="," close=")">#{item}</foreach>
+            </if>
+
+            <if test="pcjl!=null and pcjl!=''">
+                and c.pcjl = #{pcjl}
+            </if>
+        </where>
+
+    </sql>
+
+   <!--重点案件总体分析总体情况-->
+    <select id="getZdqk" parameterType="com.start.boot.query.ZdFxQuery" resultType="com.start.boot.pojo.dto.ZdFxZtqkDto">
+        with comm_tab as (
+        select  nvl(max(c.fgzbm),'-1') as pid,
+                max(c.gzbm) as id,
+                count(c.bmsah) as bjcount,
+                0 as pccount,
+                0 pcrcount,
+                count(distinct c.cbdwbm ||c.cbrgh) cbrcount
+
+        FROM V_BJAJXX c <include refid="zdseachBJ" />
+
+        group by c.fgzbm,c.gzbm
+
+        union all
+
+        SELECT  nvl(max(c.fgzbm),'-1') as pid,
+                max(c.sxgzbm) as id,
+                0 as bjcount,
+                count(c.bmsah) as pccount,
+                count(distinct c.PCR_DWBM || c.PCR_GH) pcrcount,
+                count(distinct c.BPC_DWBM || c.BPC_GH) cbrcount
+        from V_PCAJXX c <include refid="zdseachPC" />
+
+        group by  fgzbm,sxgzbm
+
+        )
+        select max(pid) pid,
+        max(gz.gzmc) name,
+        max(id) id,
+        max(bjcount) bjcount,
+        max(pccount) pccount,
+        max(pcrcount) pcrcount,
+        max(cbrcount) cbrcount
+        from  comm_tab tab inner join xt_pc_sxgz gz on tab.id = gz.gzbm
+        group by id,pid
+        having max(pccount) >0
+    </select>
+
+    <!--重点案件质量分析-->
+    <select id="getZdzlfx" parameterType="com.start.boot.query.ZdFxQuery" resultType="com.start.boot.pojo.dto.ZdFxzlfxDto">
+
+        with tab as(
+        select  nvl(max(gz.fgzbm),'-1') pid,
+        max(gz.gzbm) id,
+
+        SUM(case pcjl when '优质案件' then 1 else 0 END)  yzcount,
+        SUM(case pcjl when '合格案件' then 1 else 0 END) hgcount,
+        SUM(case pcjl when '不合格案件' then 1 else 0 END) bhgcount ,
+        SUM(case pcjl when '瑕疵案件' then 1 else 0 END) xccount,
+        0 bjcount
+
+        FROM V_PCAJXX c inner join xt_pc_sxgz gz on c.sxgzbm = gz.gzbm
+
+        <include refid="zdseachPC" />
+
+        group by   gz.fgzbm,gz.gzbm
+
+        union all
+
+        select nvl(max(fgzbm),'-1') pid,
+        max(gzbm) id,
+        0 yzcount,
+        0 hgcount,
+        0 bhgcount,
+        0 xccount,
+        count(c.bmsah) bjcount
+
+        from v_bjajxx c
+      
+        <include refid="zdseachBJ"/>
+
+        group by c.fgzbm,c.gzbm
+
+        )
+        select max(pid) pid,
+        max(id) id,
+        max(gz.gzmc) name,
+        (max(yzcount)+ max(hgcount) + max(bhgcount) + max(xccount)) pccount,
+        max(yzcount) yzcount,
+        max(hgcount) hgcount,
+        max(bhgcount) bhgcount,
+        max(xccount) xccount,
+        max(bjcount) bjcount
+
+
+        from tab inner join xt_pc_sxgz gz on tab.id = gz.gzbm
+        group by pid,id
+        having (max(yzcount)+ max(hgcount) + max(bhgcount) + max(xccount)) >0
+    </select>
+    
+    <!--获取重点案件详细信息-->
+    <select id="getZdAjJbxx" parameterType="com.start.boot.query.ZdFxQuery" resultMap="pcJbxxMap">
+        select  PCSLBM,
+                BMSAH,
+                AJMC,
+                AJLB_MC,
+                BPC_DWMC,
+                BPC_MC,
+                PCR_DWMC,
+                CJSJ
+
+        from v_pcajxx c
+        <include refid="zdseachPC"/>
+        
+    </select>
+
+    <resultMap id="pcJbxxMap" type="map"/>
+
 </mapper>

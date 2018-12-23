@@ -1,6 +1,10 @@
 package com.start.boot.domain;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
+
+import java.util.List;
 
 /**
  * 案件质量情况分析参数类
@@ -22,6 +26,20 @@ public class Param_Ajqkzlfx {
 
     @JSONField(name = "WCRQNF")
     private String wcrqnf;
+
+    private String stajbs;
+
+    private String sfld;
+
+    private String startDate;
+
+    private String endDate;
+
+    private String pcstartDate;
+
+    private String pcendDate;
+
+    private List<String> gzbmj;
 
     @JSONField(name = "TJTYPE")
     private String tjType;
@@ -185,4 +203,68 @@ public class Param_Ajqkzlfx {
     public void setFflxtdm(String fflxtdm) {
         this.fflxtdm = fflxtdm;
     }
+
+    public String getStajbs() {
+        return stajbs;
+    }
+
+    public void setStajbs(String stajbs) {
+        this.stajbs = stajbs;
+    }
+
+    public String getSfld() {
+        return sfld;
+    }
+
+    public void setSfld(String sfld) {
+        this.sfld = sfld;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        if (!StringUtils.isEmpty(endDate)){
+            endDate = DateTime.parse(endDate).plusDays(1).toString("yyyy-MM-dd");
+        }
+        this.endDate = endDate;
+    }
+
+    public String getPcstartDate() {
+        return pcstartDate;
+    }
+
+    public void setPcstartDate(String pcstartDate) {
+        this.pcstartDate = pcstartDate;
+    }
+
+    public String getPcendDate() {
+        return pcendDate;
+    }
+
+    public void setPcendDate(String pcendDate) {
+        if (!StringUtils.isEmpty(pcendDate)){
+            pcendDate =  DateTime.parse(pcendDate).plusDays(1).toString("yyyy-MM-dd");
+        }
+        this.pcendDate = pcendDate;
+    }
+
+    public List<String> getGzbmj() {
+        return gzbmj;
+    }
+
+    public void setGzbmj(List<String> gzbmj) {
+        this.gzbmj = gzbmj;
+    }
+
+
 }

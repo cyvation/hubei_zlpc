@@ -39,22 +39,44 @@ function init_monitor_overview() {
         }
     });
     //年度
-    $('#tcxc_xcx_year_combotree').combotree({
+    // $('#tcxc_xcx_year_combotree').combotree({
+    //     editable: false,
+    //     panelWidth: 160,
+    //     lines: true,
+    //     multiple: true,
+    //     cascadeCheck: false,
+    //     onShowPanel: index_onShowPanel,
+    //     onHidePanel: index_onHidePanel,
+    //     onLoadSuccess: function (node, data) {
+    //         if (data != null && data.length >= 1) {
+    //             setAllCheckbox('#tcxc_xcx_year_combotree', data);
+    //         }
+    //         index_addMousedownDiv(this, "tcxc_xcx_year_combotree");
+    //     }
+    // });
+    // $('#tcxc_xcx_year_combotree').combotree("loadData", getYearRange());
+
+    $('#tcxc_xcx__wc_start').datebox({
         editable: false,
-        panelWidth: 160,
-        lines: true,
-        multiple: true,
-        cascadeCheck: false,
-        onShowPanel: index_onShowPanel,
-        onHidePanel: index_onHidePanel,
-        onLoadSuccess: function (node, data) {
-            if (data != null && data.length >= 1) {
-                setAllCheckbox('#tcxc_xcx_year_combotree', data);
-            }
-            index_addMousedownDiv(this, "tcxc_xcx_year_combotree");
-        }
+        value: new Date().getFullYear() + '-01-01'
     });
-    $('#tcxc_xcx_year_combotree').combotree("loadData", getYearRange());
+
+    $('#tcxc_xcx__wc_end').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
+    });
+
+// 评查日期
+    $('#tcxc_xcx__pc_start').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-01-01'
+    });
+
+    $('#tcxc_xcx__pc_end').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
+    });
+
     //承办人身份
     $('#tcxc_xcx_eval_build_cbrsf').combotree({
         editable: false,
@@ -128,7 +150,12 @@ function init_monitor_overview() {
 
 function xcx_bz_exp_excel(){
     var obj = new Object();
-    obj.wcrqnf = $('#tcxc_xcx_year_combotree').combotree('getValues').join(",").trim();
+    // obj.wcrqnf = $('#tcxc_xcx_year_combotree').combotree('getValues').join(",").trim();
+    obj.startDate = $('#tcxc_xcx__wc_start').datebox('getValue');
+    obj.endDate = $('#tcxc_xcx__wc_end').datebox('getValue');
+    obj.pcstartDate=$('#tcxc_xcx__pc_start').datebox('getValue');
+    obj.pcendDate = $('#tcxc_xcx__pc_end').datebox('getValue');
+
     var dwbm = $('#tcxc_xcx_dw_combotree').combotree('getValues').join(",").trim();
     obj.dwbm = dwbm;
     obj.pcflbm = $('#tcxc_xcx_eval_build_pcfl').combotree('getValues').join(",").trim();
@@ -167,7 +194,7 @@ function init_table_tcxc_xcx() {
         singleSelect: true,
         columns: [[
             {
-                title: '<span  style=\'font-size:16px;\'>瑕疵项目分析报表</span>',
+                title: '<span  style=\'font-size:16px;\'>问题项目分析报表</span>',
                 colspan: 3,
                 align: 'center',
                 halign: 'center'
@@ -176,13 +203,13 @@ function init_table_tcxc_xcx() {
             {
                 field: 'name',
                 width: 240,
-                title: '<span  style=\'font-size:16px\'>瑕疵项</span>',
+                title: '<span  style=\'font-size:16px\'>问题项</span>',
                 align: 'left',
                 halign: 'center'
             },
             {
                 field: 'cnt',
-                title: '<span  style=\'font-size:16px\'>存在该瑕疵项的案件数</span>',
+                title: '<span  style=\'font-size:16px\'>存在该问题项的案件数</span>',
                 width: 64,
                 align: 'center',
                 halign: 'center',
@@ -223,7 +250,7 @@ function init_table_tcxc_xcx_bz() {
         columns: [[
             {
                 field: "SM",
-                title: '<span  style=\'font-size:16px;\'>瑕疵备注说明(已过滤重复内容和空备注)</span>',
+                title: '<span  style=\'font-size:16px;\'>问题备注说明(已过滤重复内容和空备注)</span>',
                 align: 'left',
                 halign: 'center',
                 formatter: function (value, row, index) {
@@ -269,11 +296,15 @@ function load_cbt_win_eval_ajzlfx_pcmb() {
 // 瑕疵项数据获取
 function load_table_tcxc_xcx() {
     var obj = new Object();
-    obj.wcrqnf = $('#tcxc_xcx_year_combotree').combotree('getValues').join(",").trim();
+    /*obj.wcrqnf = $('#tcxc_xcx_year_combotree').combotree('getValues').join(",").trim();
     if(obj.wcrqnf == ""){
         Alert("请选择年度!");
         return;
-    }
+    }*/
+    obj.startDate = $('#tcxc_xcx__wc_start').datebox('getValue');
+    obj.endDate = $('#tcxc_xcx__wc_end').datebox('getValue');
+    obj.pcstartDate=$('#tcxc_xcx__pc_start').datebox('getValue');
+    obj.pcendDate = $('#tcxc_xcx__pc_end').datebox('getValue');
     var dwbm = $('#tcxc_xcx_dw_combotree').combotree('getValues').join(",").trim();
     if(dwbm == ""){
         Alert("请选择承办单位!");
@@ -312,11 +343,16 @@ function load_table_tcxc_xcx() {
 // 瑕疵项备注数据获取
 function load_table_tcxc_xcx_bz(node) {
     var obj = new Object();
-    obj.wcrqnf = $('#tcxc_xcx_year_combotree').combotree('getValues').join(",").trim();
-    if(obj.wcrqnf == ""){
-        Alert("请选择年度!");
-        return;
-    }
+    // obj.wcrqnf = $('#tcxc_xcx_year_combotree').combotree('getValues').join(",").trim();
+    // if(obj.wcrqnf == ""){
+    //     Alert("请选择年度!");
+    //     return;
+    // }
+    obj.startDate = $('#tcxc_xcx__wc_start').datebox('getValue');
+    obj.endDate = $('#tcxc_xcx__wc_end').datebox('getValue');
+    obj.pcstartDate=$('#tcxc_xcx__pc_start').datebox('getValue');
+    obj.pcendDate = $('#tcxc_xcx__pc_end').datebox('getValue');
+
     var dwbm = $('#tcxc_xcx_dw_combotree').combotree('getValues').join(",").trim();
     if(dwbm == ""){
         Alert("请选择承办单位!");
@@ -354,7 +390,13 @@ function alert_tcxc_xcx_jbxx_window(index, name) {
 
     var obj = new Object();
     var thisRow = $(name).datagrid('getRows')[index];
-    obj.wcrqnf = $('#tcxc_xcx_year_combotree').combotree('getValues').join(",").trim();
+
+    //obj.wcrqnf = $('#tcxc_xcx_year_combotree').combotree('getValues').join(",").trim();
+    obj.startDate = $('#tcxc_xcx__wc_start').datebox('getValue');
+    obj.endDate = $('#tcxc_xcx__wc_end').datebox('getValue');
+    obj.pcstartDate=$('#tcxc_xcx__pc_start').datebox('getValue');
+    obj.pcendDate = $('#tcxc_xcx__pc_end').datebox('getValue');
+
     obj.dwbm = $('#tcxc_xcx_dw_combotree').combotree('getValues').join(",").trim();
     obj.pcflbm = $('#tcxc_xcx_eval_build_pcfl').combotree('getValues').join(",").trim();
     obj.ywtx = $('#tcxc_xcx_eval_build_pcmb').combotree('getValues').join(",").trim();

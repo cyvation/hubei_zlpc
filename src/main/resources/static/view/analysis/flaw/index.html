@@ -169,8 +169,15 @@
     }
 </style>
 <div style="margin-bottom: 10px" id="tool">
-    <span>案件完成年份</span>
-    <input id="errorItem_date" class="easyui-combotree"/>
+    <!--湖北1213需求调整，案件完成年份全部改为案件完成日期,并且使用时间控件，默认本年1月1日到今天-->
+    <!--<span>案件完成年份</span>-->
+    <!--<input id="errorItem_date" class="easyui-combotree"/>-->
+    <span>案件完成日期</span>
+    <input id="errorItem_wcdate_start" class="easyui-datebox"/>~
+    <input id="errorItem_wcdate_end" class="easyui-datebox"/>
+    <span>评查日期</span>
+    <input id="errorItem_pcdate_start" class="easyui-datebox"/>~
+    <input id="errorItem_pcdate_end" class="easyui-datebox"/>
     <span>承办单位</span>
     <input id="errorItem_dw_combotree" class="easyui-combotree"  style="width: 220px;" />
     <span>评查方式</span>

@@ -42,23 +42,45 @@ function init_seacth_evel() {
         }
     });
 //年份
-    $('#errorItem_date').combotree({
-        editable: false,
-        panelWidth: 160,
-        lines: true,
-        multiple: true,
-        cascadeCheck: false,
-        onShowPanel: index_onShowPanel,
-        onHidePanel: index_onHidePanel,
-        onLoadSuccess: function (node, data) {
-            if (data != null && data.length >= 1) {
-                setAllCheckbox('#errorItem_date', data);
-            }
-            index_addMousedownDiv(this, "errorItem_date");
-        }
-    });
-    $('#errorItem_date').combotree("loadData", getYearRange());
+//     $('#errorItem_date').combotree({
+//         editable: false,
+//         panelWidth: 160,
+//         lines: true,
+//         multiple: true,
+//         cascadeCheck: false,
+//         onShowPanel: index_onShowPanel,
+//         onHidePanel: index_onHidePanel,
+//         onLoadSuccess: function (node, data) {
+//             if (data != null && data.length >= 1) {
+//                 setAllCheckbox('#errorItem_date', data);
+//             }
+//             index_addMousedownDiv(this, "errorItem_date");
+//         }
+//     });
+//     $('#errorItem_date').combotree("loadData", getYearRange());
     //承办人身份
+
+    $('#tcxc_xcx__wc_start').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-01-01'
+    });
+
+    $('#tcxc_xcx__wc_end').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
+    });
+
+// 评查日期
+    $('#tcxc_xcx__pc_start').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-01-01'
+    });
+
+    $('#tcxc_xcx__pc_end').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
+    });
+
     $('#general_cbrsf').combotree({
         editable: false,
         panelWidth: 160,
@@ -253,16 +275,22 @@ function data_monitor_statistiscs_dw() {
         return;
     }
     obj.dwbm=dwbm;
-    if($('#errorItem_date').combotree('getValues').length==0){
-        Alert("请选择时间");
-        return;
-    }
-    obj.date= $('#errorItem_date').combotree('getValues').length==0?"":$('#errorItem_date').combotree("getValues").join(",");
+    // if($('#errorItem_date').combotree('getValues').length==0){
+    //     Alert("请选择时间");
+    //     return;
+    // }
+    // obj.date= $('#errorItem_date').combotree('getValues').length==0?"":$('#errorItem_date').combotree("getValues").join(",");
+    obj.startDate = $('#tcxc_xcx__wc_start').datebox('getValue');
+    obj.endDate = $('#tcxc_xcx__wc_end').datebox('getValue');
+    obj.pcstartDate=$('#tcxc_xcx__pc_start').datebox('getValue');
+    obj.pcendDate = $('#tcxc_xcx__pc_end').datebox('getValue');
+
     obj.pcflbm =$('#general_pcfl').combotree('getValues').length==0?"":$('#general_pcfl').combotree('getValues').join(",");
     obj.ywtx=$('#general_pcmb').combotree('getValues').length==0||$('#general_pcmb').combotree('getValues').length==8?"":$('#general_pcmb').combotree('getValues').join(",");
     obj.sfld=$('#general_cbrsf').combotree('getValues').length==0||$('#general_cbrsf').combotree('getValues').length==2?"":$('#general_cbrsf').combotree('getValues').join(",");
     obj.stajbs=$('#stajbs').combotree('getValues').length==0||$('#stajbs').combotree('getValues').length==2?"":$('#stajbs').combotree('getValues').join(",");
-    obj.flxtdm=$('#flxtdmType').combotree('getValues').length==0||$('#flxtdmType').combotree('getValues').length==2?"":$('#flxtdmType').combotree('getValues').join(",");
+    // obj.flxtdm=$('#flxtdmType').combotree('getValues').length==0||$('#flxtdmType').combotree('getValues').length==2?"":$('#flxtdmType').combotree('getValues').join(",");
+    obj.flxtdm='30003';
     var url = getRootPath() + "/queryTable/getDwAjwthzTableData";
 
     $('#table_ajwt_statistiscs_dw').datagrid({
@@ -300,11 +328,16 @@ function init_table_tccw_cwx_bz() {
 // 错误项备注数据获取
 function load_table_tccw_cwx_bz(node) {
     var obj=new Object();
-    obj.wcrqnf = $('#errorItem_date').combotree('getValues').join(",").trim();
-    if(obj.wcrqnf == ""){
-        Alert("请选择年度!");
-        return;
-    }
+    // obj.wcrqnf = $('#errorItem_date').combotree('getValues').join(",").trim();
+    // if(obj.wcrqnf == ""){
+    //     Alert("请选择年度!");
+    //     return;
+    // }
+    obj.startDate = $('#tcxc_xcx__wc_start').datebox('getValue');
+    obj.endDate = $('#tcxc_xcx__wc_end').datebox('getValue');
+    obj.pcstartDate=$('#tcxc_xcx__pc_start').datebox('getValue');
+    obj.pcendDate = $('#tcxc_xcx__pc_end').datebox('getValue');
+
     var dwbm = $('#errorItem_dw_combotree').combotree('getValues').join(",").trim();
     if(dwbm == ""){
         Alert("请选择承办单位!");
@@ -341,7 +374,12 @@ function load_table_tccw_cwx_bz(node) {
 function alert_tcxc_cwx_jbxx_window(index, name) {
     var obj = new Object();
     var thisRow = $(name).datagrid('getRows')[index];
-    obj.wcrqnf = $('#errorItem_date').combotree('getValues').join(",").trim();
+   // obj.wcrqnf = $('#errorItem_date').combotree('getValues').join(",").trim();
+    obj.startDate = $('#tcxc_xcx__wc_start').datebox('getValue');
+    obj.endDate = $('#tcxc_xcx__wc_end').datebox('getValue');
+    obj.pcstartDate=$('#tcxc_xcx__pc_start').datebox('getValue');
+    obj.pcendDate = $('#tcxc_xcx__pc_end').datebox('getValue');
+
     obj.dwbm = $('#errorItem_dw_combotree').combotree('getValues').join(",").trim();
     obj.pcflbm = $('#general_pcfl').combotree('getValues').join(",").trim();
     obj.ywtx = $('#general_pcmb').combotree('getValues').join(",").trim();
@@ -548,16 +586,22 @@ function export_excel_ajwthz() {
         return;
     }
     obj.dwbm=dwbm;
-    if($('#errorItem_date').combotree('getValues').length==0){
-        Alert("请选择时间");
-        return;
-    }
-    obj.date= $('#errorItem_date').combotree('getValues').length==0?"":$('#errorItem_date').combotree("getValues").join(",");
+    // if($('#errorItem_date').combotree('getValues').length==0){
+    //     Alert("请选择时间");
+    //     return;
+    // }
+    // obj.date= $('#errorItem_date').combotree('getValues').length==0?"":$('#errorItem_date').combotree("getValues").join(",");
+    obj.startDate = $('#tcxc_xcx__wc_start').datebox('getValue');
+    obj.endDate = $('#tcxc_xcx__wc_end').datebox('getValue');
+    obj.pcstartDate=$('#tcxc_xcx__pc_start').datebox('getValue');
+    obj.pcendDate = $('#tcxc_xcx__pc_end').datebox('getValue');
+
     obj.pcflbm =$('#general_pcfl').combotree('getValues').length==0?"":$('#general_pcfl').combotree('getValues').join(",");
     obj.ywtx=$('#general_pcmb').combotree('getValues').length==0||$('#general_pcmb').combotree('getValues').length==8?"":$('#general_pcmb').combotree('getValues').join(",");
     obj.sfld=$('#general_cbrsf').combotree('getValues').length==0||$('#general_cbrsf').combotree('getValues').length==2?"":$('#general_cbrsf').combotree('getValues').join(",");
     obj.stajbs=$('#stajbs').combotree('getValues').length==0||$('#stajbs').combotree('getValues').length==2?"":$('#stajbs').combotree('getValues').join(",");
-    obj.flxtdm=$('#flxtdmType').combotree('getValues').length==0||$('#flxtdmType').combotree('getValues').length==2?"":$('#flxtdmType').combotree('getValues').join(",");
+    // obj.flxtdm=$('#flxtdmType').combotree('getValues').length==0||$('#flxtdmType').combotree('getValues').length==2?"":$('#flxtdmType').combotree('getValues').join(",");
+    obj.flxtdm='30003';
     var url = getRootPath() + "/queryTable/exportDwAjwthzTableDataExcel";
 
     $.ajax({

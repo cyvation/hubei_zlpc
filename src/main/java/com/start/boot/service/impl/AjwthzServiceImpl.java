@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.start.boot.dao.ajpc.AjwthzMapper;
 import com.start.boot.pojo.vo.AjpcwtxVo;
 import com.start.boot.service.AjwthzService;
+import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,20 @@ public class AjwthzServiceImpl implements AjwthzService {
     public List<AjpcwtxVo> getAjwthzList(Map query) throws Exception {
         List<AjpcwtxVo> list = null;
         try {
-            query.put("date", "".equals(query.get("date")) ? "" : (query.get("date") + "").split(","));
+
+            String endDate = (String) query.get("endDate");
+            if (!StringUtils.isEmpty(endDate)){
+                endDate = DateTime.parse(endDate).plusDays(1).toString("yyyy-MM-dd");
+                query.put("endDate",endDate);
+            }
+
+            String pcendDate = (String) query.get("pcendDate");
+            if (!StringUtils.isEmpty(pcendDate)){
+                pcendDate = DateTime.parse(pcendDate).plusDays(1).toString("yyyy-MM-dd");
+                query.put("pcendDate",pcendDate);
+            }
+
+           // query.put("date", "".equals(query.get("date")) ? "" : (query.get("date") + "").split(","));
             query.put("dwbm", "".equals(query.get("dwbm")) ? "" : (query.get("dwbm") + "").split(","));
             query.put("pcflbm", "".equals(query.get("pcflbm")) ? "" : (query.get("pcflbm") + "").split(","));
 //            query.put("ywtx", "".equals(query.get("ywtx")) ? "" : (query.get("ywtx") + ""));

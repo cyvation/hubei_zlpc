@@ -1,5 +1,9 @@
 package com.start.boot.dao.ajpc;
 
+import com.start.boot.pojo.dto.ZdFxZtqkDto;
+import com.start.boot.pojo.dto.ZdFxzlfxDto;
+import com.start.boot.query.ZdFxQuery;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
@@ -264,4 +268,32 @@ public interface AnalysisMapper {
      * @return
      */
     List<Map> loadGeneralDwNum(Map map);
+
+    /**
+     * 获取重点抽查下的筛选规则
+     * @param djdwbm
+     * @param pcflbm
+     * @return
+     */
+    List<Map> getZdSxgz(@Param("djdwbm")String djdwbm, @Param("pcflbm") String pcflbm);
+
+    /**
+     * 获取重点案件分析总体分析数据
+     * @param zdFxQuery
+     * @return
+     */
+    List<ZdFxZtqkDto> getZdqk(ZdFxQuery zdFxQuery);
+
+    /**
+     * 获取重点案件分析质量分析
+     * @param zdFxQuery
+     * @return
+     */
+    List<ZdFxzlfxDto> getZdzlfx(ZdFxQuery zdFxQuery);
+	/**
+     * 获取重点案件详细信息
+     * @param zdFxQuery
+     * @return
+     */
+    List<Map> getZdAjJbxx(ZdFxQuery zdFxQuery);
 }

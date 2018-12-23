@@ -12,7 +12,7 @@
 <style>
     .easyui_table_yscx {
         width: 100%;
-        height: calc(100% - 40px);
+        height: calc(100% - 60px);
     }
 
     .easyui_table_yscx .datagrid-header-inner {
@@ -196,8 +196,15 @@
     <div data-options="region:'west',title:'案件瑕疵项列表',split:true" style="width:50%;">
         <div id="tcxc_xcx_tabs_box" style="padding:10px;width: 100%;height: 100%;overflow: hidden">
             <div >
-                <span>年度</span>
-                <input id="tcxc_xcx_year_combotree" class="easyui-combotree" style="width: 160px;"/>
+                <!--<span>年度</span>-->
+                <!--<input id="tcxc_xcx_year_combotree" class="easyui-combotree" style="width: 160px;"/>-->
+                <span>案件完成日期</span>
+                <input id="tcxc_xcx__wc_start" class="easyui-datebox" style="width:120px; border-color:#95B8E7;"/>~
+                <input id="tcxc_xcx__wc_end" class="easyui-datebox" style="width:120px; border-color:#95B8E7;"/>
+                <span>评查日期</span>
+                <input id="tcxc_xcx__pc_start" class="easyui-datebox" style="width:120px; border-color:#95B8E7;"/>~
+                <input id="tcxc_xcx__pc_end" class="easyui-datebox" style="width:120px; border-color:#95B8E7;"/>
+
                 <span>承办单位</span>
                 <input id="tcxc_xcx_dw_combotree" class="easyui-combotree" style="width: 220px;"/>
                 <span>评查方式</span>
@@ -216,7 +223,7 @@
             </div>
         </div>
     </div>
-    <div id="tcxc_xcx_bz_list" data-options="region:'center',title:'瑕疵项备注列表'" style="padding:5px;width:50%;">
+    <div id="tcxc_xcx_bz_list" data-options="region:'center',title:'问题项备注列表'" style="padding:5px;width:50%;">
         <div id="tcxc_xcx_container" style="height:100%;width:100%">
             <div id="tcxc_xcx_bz_tabs_box" style="width: 100%;height: 100%;">
                 <div style="margin-bottom: 10px">

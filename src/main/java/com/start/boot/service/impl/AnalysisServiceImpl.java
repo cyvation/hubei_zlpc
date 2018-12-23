@@ -2,26 +2,26 @@ package com.start.boot.service.impl;
 
 
 import com.github.pagehelper.PageHelper;
-import com.start.boot.common.Param_Pager;
+import com.start.boot.common.SystemConfiguration;
 import com.start.boot.dao.ajpc.AnalysisMapper;
 import com.start.boot.domain.*;
-import com.start.boot.pojo.vo.AjqkzlflTreeVo;
-import com.start.boot.pojo.vo.AjqkzlflVo;
-import com.start.boot.pojo.vo.ErrorAndFlawTreeVo;
+import com.start.boot.pojo.dto.ZdFxZtqkDto;
+import com.start.boot.pojo.dto.ZdFxzlfxDto;
+import com.start.boot.pojo.vo.*;
+import com.start.boot.query.ZdFxQuery;
 import com.start.boot.service.AnalysisService;
-import com.start.boot.support.utils.DataAccessHelper;
-import com.start.boot.support.utils.OracleTimeUtils;
+import com.start.boot.utils.ExportExcelUtils;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.DigestUtils;
+import org.springframework.util.CollectionUtils;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 /**
  * 湖北专题报告分析：统计表及报告
@@ -33,9 +33,25 @@ public class AnalysisServiceImpl implements AnalysisService {
     @Autowired
     private AnalysisMapper analysisMapper;
 
+    @Autowired
+    ExportExcelUtils excelUtils;
+
     @Override
     public List<ErrorAndFlawTreeVo> loadDateData(Map seach) throws Exception {
-        seach.put("date", "".equals(seach.get("date")) ? "" : (seach.get("date") + "").split(","));
+       // seach.put("date", "".equals(seach.get("date")) ? "" : (seach.get("date") + "").split(","));
+
+        String endDate = (String) seach.get("endDate");
+        if (!StringUtils.isEmpty(endDate)){
+            endDate = DateTime.parse(endDate).plusDays(1).toString("yyyy-MM-dd");
+            seach.put("endDate",endDate);
+        }
+
+        String pcendDate = (String) seach.get("pcendDate");
+        if (!StringUtils.isEmpty(pcendDate)){
+            pcendDate = DateTime.parse(pcendDate).plusDays(1).toString("yyyy-MM-dd");
+            seach.put("pcdate_end",pcendDate);
+        }
+
         seach.put("dwbm", "".equals(seach.get("dwbm")) ? "" : (seach.get("dwbm") + "").split(","));
         seach.put("pcflbm", "".equals(seach.get("pcflbm")) ? "" : (seach.get("pcflbm") + "").split(","));
         seach.put("ywtx", "".equals(seach.get("ywtx")) ? "" : (seach.get("ywtx") + "").split(","));
@@ -372,14 +388,19 @@ public class AnalysisServiceImpl implements AnalysisService {
         map.put("ajtjlb", params.getAjtjlb());
         try {
             xtdms = getXtdmByLbbm("9102");//获取评查结论
-            String[] wcrqnfs = params.getWcrqnf().split(",");
+//            String[] wcrqnfs = params.getWcrqnf().split(",");
+            String[] wcrqnfs = params.getStartDate().split(","); // 由于以前根据案件年份分开算，现在兼容
             for (int i = 0; i < wcrqnfs.length; i++) {
                 nf = wcrqnfs[i];
-                map.put("wcrqnf", nf);
+               // map.put("wcrqnf", nf);
+                map.put("startDate", params.getStartDate());
+                map.put("endDate", params.getEndDate());
+                map.put("pcstartDate", params.getPcstartDate());
+                map.put("pcendDate", params.getPcendDate());
                 ajqkzlflVo = new AjqkzlflVo();
                 bjajs = analysisMapper.getNdBjAjCount(map);
                 pcajs = analysisMapper.getNdPcAjCount(map);
-                ajqkzlflVo.setName(nf);
+                ajqkzlflVo.setName(nf.split("-")[0]);
                 ajqkzlflVo.setBjs(bjajs);
                 ajqkzlflVo.setPcajs(pcajs);
                 ajqkzlflVo.setPcajZb(calcPercent(pcajs, bjajs));
@@ -603,7 +624,20 @@ public class AnalysisServiceImpl implements AnalysisService {
 
     @Override
     public List<Map> loadDateGeneral(Map map) {
-        map.put("wcrqnf", "".equals(map.get("wcrqnf")) ? "" : (map.get("wcrqnf") + "").split(","));
+
+//        map.put("wcrqnf", "".equals(map.get("wcrqnf")) ? "" : (map.get("wcrqnf") + "").split(","));
+        String endDate = (String) map.get("endDate");
+        if (!StringUtils.isEmpty(endDate)){
+            endDate = DateTime.parse(endDate).plusDays(1).toString("yyyy-MM-dd");
+            map.put("endDate",endDate);
+        }
+
+       String pcendDate = (String) map.get("pcendDate");
+       if (!StringUtils.isEmpty(pcendDate)){
+           pcendDate = DateTime.parse(pcendDate).plusDays(1).toString("yyyy-MM-dd");
+           map.put("pcendDate",pcendDate);
+       }
+
         map.put("dwbm", "".equals(map.get("dwbm")) ? "" : (map.get("dwbm") + "").split(","));
         map.put("pcflbm", "".equals(map.get("pcflbm")) ? "" : (map.get("pcflbm") + "").split(","));
         map.put("ywtx", "".equals(map.get("ywtx")) ? "" : (map.get("ywtx") + "").split(","));
@@ -620,7 +654,20 @@ public class AnalysisServiceImpl implements AnalysisService {
 
     @Override
     public Map getPclbAjJbxx(Map map) {
-        map.put("wcrqnf", "".equals(map.get("wcrqnf")) ? "" : (map.get("wcrqnf") + "").split(","));
+        // map.put("wcrqnf", "".equals(map.get("wcrqnf")) ? "" : (map.get("wcrqnf") + "").split(","));
+
+        String endDate = (String) map.get("endDate");
+        if (!StringUtils.isEmpty(endDate)){
+            endDate = DateTime.parse(endDate).plusDays(1).toString("yyyy-MM-dd");
+            map.put("endDate",endDate);
+        }
+
+        String pcendDate = (String) map.get("pcendDate");
+        if (!StringUtils.isEmpty(pcendDate)){
+            pcendDate = DateTime.parse(pcendDate).plusDays(1).toString("yyyy-MM-dd");
+            map.put("pcendDate",pcendDate);
+        }
+
         map.put("dwbm", "".equals(map.get("dwbm")) ? "" : (map.get("dwbm") + "").split(","));
         map.put("pcflbm", "".equals(map.get("pcflbm")) ? "" : (map.get("pcflbm") + "").split(","));
         map.put("ywtx", "".equals(map.get("ywtx")) ? "" : (map.get("ywtx") + "").split(","));
@@ -645,7 +692,20 @@ public class AnalysisServiceImpl implements AnalysisService {
 
     @Override
     public List<ErrorAndFlawTreeVo> loadDqGeneral(Map map) throws Exception {
-        map.put("wcrqnf", "".equals(map.get("wcrqnf")) ? "" : (map.get("wcrqnf") + "").split(","));
+        String endDate = (String) map.get("endDate");
+        if (!StringUtils.isEmpty(endDate)){
+            endDate = DateTime.parse(endDate).plusDays(1).toString("yyyy-MM-dd");
+            map.put("endDate",endDate);
+        }
+
+        String pcendDate = (String) map.get("pcendDate");
+        if (!StringUtils.isEmpty(pcendDate)){
+            pcendDate = DateTime.parse(pcendDate).plusDays(1).toString("yyyy-MM-dd");
+            map.put("pcendDate",pcendDate);
+        }
+
+
+//        map.put("wcrqnf", "".equals(map.get("wcrqnf")) ? "" : (map.get("wcrqnf") + "").split(","));
         map.put("dwbm", "".equals(map.get("dwbm")) ? "" : (map.get("dwbm") + "").split(","));
         map.put("pcflbm", "".equals(map.get("pcflbm")) ? "" : (map.get("pcflbm") + "").split(","));
         map.put("ywtx", "".equals(map.get("ywtx")) ? "" : (map.get("ywtx") + "").split(","));
@@ -1060,7 +1120,7 @@ public class AnalysisServiceImpl implements AnalysisService {
             dwbms = analysisMapper.getDwbmList(dwbmsParams);
             for (int i = 0; i < dwbms.size(); i++) {
                 dwbmsParams = dwbms.get(i);
-                map.put("wcrqnf", params.getWcrqnf());
+              //  map.put("wcrqnf", params.getWcrqnf());
                 map.put("dwbm", dwbmsParams.get("ID").toString());
                 ajqkzlflVo = new AjqkzlflTreeVo();
                 ajqkzlflVo.setId(dwbmsParams.get("ID").toString());
@@ -1202,7 +1262,11 @@ public class AnalysisServiceImpl implements AnalysisService {
         map.put("pcflbm", params.getPcflbm());
         map.put("cbrsf", params.getCbrsf());
         map.put("dwbm", params.getDwbm());
-        map.put("wcrqnf", params.getWcrqnf());
+       // map.put("wcrqnf", params.getWcrqnf());
+        map.put("startDate",params.getStartDate());
+        map.put("endDate",params.getEndDate());
+        map.put("pcstartDate",params.getPcstartDate());
+        map.put("pcendDate",params.getPcendDate());
         map.put("ywtx", params.getYwtx());
         map.put("ajtjlb", params.getAjtjlb());
         AjqkzlflTreeVo ajqkzlflVo = null; //案件情况
@@ -1249,7 +1313,19 @@ public class AnalysisServiceImpl implements AnalysisService {
 
     @Override
     public List<ErrorAndFlawTreeVo> loadTxData(Map seach) throws Exception {
-        seach.put("date", "".equals(seach.get("date")) ? "" : (seach.get("date") + "").split(","));
+        String endDate = (String) seach.get("endDate");
+        if (!StringUtils.isEmpty(endDate)){
+            String s = DateTime.parse(endDate).plusDays(1).toString("yyyy-MM-dd");
+            seach.put("endDate",s);
+        }
+
+        String pcendDate = (String) seach.get("pcendDate");
+        if (!StringUtils.isEmpty(pcendDate)){
+            String s = DateTime.parse(pcendDate).plusDays(1).toString("yyyy-MM-dd");
+            seach.put("pcendDate",s);
+        }
+
+      //  seach.put("date", "".equals(seach.get("date")) ? "" : (seach.get("date") + "").split(","));
         seach.put("dwbm", "".equals(seach.get("dwbm")) ? "" : (seach.get("dwbm") + "").split(","));
         seach.put("pcflbm", "".equals(seach.get("pcflbm")) ? "" : (seach.get("pcflbm") + "").split(","));
         seach.put("ywtx", "".equals(seach.get("ywtx")) ? "" : (seach.get("ywtx") + "").split(","));
@@ -1271,7 +1347,19 @@ public class AnalysisServiceImpl implements AnalysisService {
 
     @Override
     public List<ErrorAndFlawTreeVo> loadDqData(Map seach) throws Exception {
-        seach.put("date", "".equals(seach.get("date")) ? "" : (seach.get("date") + "").split(","));
+        String endDate = (String) seach.get("endDate");
+        if (!StringUtils.isEmpty(endDate)){
+            String s = DateTime.parse(endDate).plusDays(1).toString("yyyy-MM-dd");
+            seach.put("endDate",s);
+        }
+
+        String pcendDate = (String) seach.get("pcendDate");
+        if (!StringUtils.isEmpty(pcendDate)){
+            String s = DateTime.parse(pcendDate).plusDays(1).toString("yyyy-MM-dd");
+            seach.put("pcendDate",s);
+        }
+
+        // seach.put("date", "".equals(seach.get("date")) ? "" : (seach.get("date") + "").split(","));
         seach.put("dwbm", "".equals(seach.get("dwbm")) ? "" : (seach.get("dwbm") + "").split(","));
         seach.put("pcflbm", "".equals(seach.get("pcflbm")) ? "" : (seach.get("pcflbm") + "").split(","));
         seach.put("ywtx", "".equals(seach.get("ywtx")) ? "" : (seach.get("ywtx") + "").split(","));
@@ -1630,7 +1718,12 @@ public class AnalysisServiceImpl implements AnalysisService {
         map.put("cbrsf", params.getCbrsf());
         map.put("dwbm", params.getDwbm());
         map.put("ywtx", params.getYwtx());
-        map.put("wcrqnf", params.getWcrqnf());
+        map.put("startDate",params.getStartDate());
+        map.put("endDate",params.getEndDate());
+        map.put("pcstartDate",params.getPcstartDate());
+        map.put("pcendDate",params.getPcendDate());
+
+      //  map.put("wcrqnf", params.getWcrqnf());
         map.put("ajtjlb", params.getAjtjlb());
         try {
             map.put("flxtdm", params.getWtType());
@@ -1659,7 +1752,19 @@ public class AnalysisServiceImpl implements AnalysisService {
     /*******************************************************导出excel数据************************************************/
     @Override
     public List<List<String>> excel_export_data(Map seach) throws Exception {
-        seach.put("date", "".equals(seach.get("date")) ? "" : (seach.get("date") + "").split(","));
+        //seach.put("date", "".equals(seach.get("date")) ? "" : (seach.get("date") + "").split(","));
+        String endDate = (String) seach.get("endDate");
+        if (!StringUtils.isEmpty(endDate)){
+            String s = DateTime.parse(endDate).plusDays(1).toString("yyyy-MM-dd");
+            seach.put("endDate",s);
+        }
+
+        String pcendDate = (String) seach.get("pcendDate");
+        if (!StringUtils.isEmpty(pcendDate)){
+            String s = DateTime.parse(pcendDate).plusDays(1).toString("yyyy-MM-dd");
+            seach.put("pcendDate",s);
+        }
+
         seach.put("dwbm", "".equals(seach.get("dwbm")) ? "" : (seach.get("dwbm") + "").split(","));
         seach.put("pcflbm", "".equals(seach.get("pcflbm")) ? "" : (seach.get("pcflbm") + "").split(","));
         seach.put("ywtx", "".equals(seach.get("ywtx")) ? "" : (seach.get("ywtx") + "").split(","));
@@ -1706,12 +1811,24 @@ public class AnalysisServiceImpl implements AnalysisService {
 
     @Override
     public List<List<String>> excel_export_dataPc(Map seach) throws Exception {
+        String endDate = (String) seach.get("endDate");
+        if (!StringUtils.isEmpty(endDate)){
+            String s = DateTime.parse(endDate).plusDays(1).toString("yyyy-MM-dd");
+            seach.put("endDate",s);
+        }
+
+        String pcendDate = (String) seach.get("pcendDate");
+        if (!StringUtils.isEmpty(pcendDate)){
+            String s = DateTime.parse(pcendDate).plusDays(1).toString("yyyy-MM-dd");
+            seach.put("pcendDate",s);
+        }
+
         if ((seach.get("type") + "").equals("0")) {
             List<Map> list = loadDateGeneral(seach);
             List<List<String>> data = resultExcelListZt(list);
             return data;
         } else if ((seach.get("type") + "").equals("1")) {
-            seach.put("wcrqnf", "".equals(seach.get("wcrqnf")) ? "" : (seach.get("wcrqnf") + "").split(","));
+            //seach.put("wcrqnf", "".equals(seach.get("wcrqnf")) ? "" : (seach.get("wcrqnf") + "").split(","));
             seach.put("dwbm", "".equals(seach.get("dwbm")) ? "" : (seach.get("dwbm") + "").split(","));
             seach.put("pcflbm", "".equals(seach.get("pcflbm")) ? "" : (seach.get("pcflbm") + "").split(","));
             seach.put("ywtx", "".equals(seach.get("ywtx")) ? "" : (seach.get("ywtx") + "").split(","));
@@ -1763,7 +1880,7 @@ public class AnalysisServiceImpl implements AnalysisService {
             List<List<String>> data = resultExcelListZt(list);
             return data;
         } else {
-            seach.put("wcrqnf", "".equals(seach.get("wcrqnf")) ? "" : (seach.get("wcrqnf") + "").split(","));
+          //  seach.put("wcrqnf", "".equals(seach.get("wcrqnf")) ? "" : (seach.get("wcrqnf") + "").split(","));
             seach.put("dwbm", "".equals(seach.get("dwbm")) ? "" : (seach.get("dwbm") + "").split(","));
             seach.put("pcflbm", "".equals(seach.get("pcflbm")) ? "" : (seach.get("pcflbm") + "").split(","));
             seach.put("ywtx", "".equals(seach.get("ywtx")) ? "" : (seach.get("ywtx") + "").split(","));
@@ -1908,6 +2025,19 @@ public class AnalysisServiceImpl implements AnalysisService {
     public List<Map> getPcxBzByXtdm(Map map) throws Exception {
         List<Map> list = null;
         try {
+
+            String endDate = (String) map.get("endDate");
+            if (!StringUtils.isEmpty(endDate)){
+                endDate = DateTime.parse(endDate).plusDays(1).toString("yyyy-MM-dd");
+                map.put("endDate",endDate);
+            }
+
+            String pcendDate = (String) map.get("pcendDate");
+            if (!StringUtils.isEmpty(pcendDate)){
+                pcendDate = DateTime.parse(pcendDate).plusDays(1).toString("yyyy-MM-dd");
+                map.put("pcendDate",pcendDate);
+            }
+
             list = analysisMapper.getPcxBzByXtdm(map);
         } catch (Exception e) {
             throw e;
@@ -1917,7 +2047,20 @@ public class AnalysisServiceImpl implements AnalysisService {
 
     @Override
     public Map getErrPclbAjJbxx(Map map) {
-        map.put("wcrqnf", "".equals(map.get("wcrqnf")) ? "" : (map.get("wcrqnf") + "").split(","));
+
+        String endDate = (String) map.get("endDate");
+        if (!StringUtils.isEmpty(endDate)){
+            endDate = DateTime.parse(endDate).plusDays(1).toString("yyyy-MM-dd");
+            map.put("endDate",endDate);
+        }
+
+        String pcendDate = (String) map.get("pcendDate");
+        if (!StringUtils.isEmpty(pcendDate)){
+            pcendDate = DateTime.parse(pcendDate).plusDays(1).toString("yyyy-MM-dd");
+            map.put("pcendDate",pcendDate);
+        }
+
+      //  map.put("wcrqnf", "".equals(map.get("wcrqnf")) ? "" : (map.get("wcrqnf") + "").split(","));
         map.put("dwbm", "".equals(map.get("dwbm")) ? "" : (map.get("dwbm") + "").split(","));
         map.put("pcflbm", "".equals(map.get("pcflbm")) ? "" : (map.get("pcflbm") + "").split(","));
         map.put("ywtx", "".equals(map.get("ywtx")) ? "" : (map.get("ywtx") + "").split(","));
@@ -1988,7 +2131,12 @@ public class AnalysisServiceImpl implements AnalysisService {
             dwbms = analysisMapper.getDwbmList(dwbmsParams);
             for (int i = 0; i < dwbms.size(); i++) {
                 dwbmsParams = dwbms.get(i);
-                map.put("wcrqnf", params.getWcrqnf());
+               // map.put("wcrqnf", params.getWcrqnf());
+                map.put("startDate", params.getStartDate());
+                map.put("endDate", params.getEndDate());
+                map.put("pcstartDate", params.getPcstartDate());
+                map.put("pcendDate", params.getPcendDate());
+
                 map.put("dwbm", dwbmsParams.get("ID").toString());
                 ajqkzlflVo = new AjqkzlflTreeVo();
                 ajqkzlflVo.setId(dwbmsParams.get("ID").toString());
@@ -2067,7 +2215,12 @@ public class AnalysisServiceImpl implements AnalysisService {
         map.put("pcflbm", param.getPcflbm());
         map.put("cbrsf", param.getCbrsf());
         map.put("dwbm", param.getDwbm());
-        map.put("wcrqnf", param.getWcrqnf());
+       // map.put("wcrqnf", param.getWcrqnf());
+        map.put("startDate", param.getStartDate());
+        map.put("endDate", param.getEndDate());
+        map.put("pcstartDate", param.getPcstartDate());
+        map.put("pcendDate", param.getPcendDate());
+
         map.put("ywtx", param.getYwtx());
         map.put("ajtjlb", param.getAjtjlb());
         Map ajMap = null;
@@ -2119,6 +2272,284 @@ public class AnalysisServiceImpl implements AnalysisService {
             throw e;
         }
         return list;
+    }
+
+    @Override
+    public List<Map> getZdSxgz(String djdwbm, String pcflbm) {
+
+        return analysisMapper.getZdSxgz(djdwbm, pcflbm);
+    }
+
+    /**
+     * 获取重点案件分析总体情况
+     * @param
+     * @return
+     */
+    @Override
+    public List<ZdFxTreeVo> loadZdZtqk(ZdFxQuery zdFxQuery) {
+        // 办结案件数、评查案件数、办案人数、评查人数、
+        List<ZdFxZtqkDto> list = analysisMapper.getZdqk(zdFxQuery);
+
+        List<ZdFxTreeVo> nodes = calcAllNode(list);
+
+        List<ZdFxTreeVo> treeNodes = ZdFxTreeVo.buildTree(nodes);
+//        List<ZdFxTreeVo> treeNodes  = ZdFxTreeVo.formatToTree(nodes);
+
+        return treeNodes;
+    }
+
+    private List<ZdFxTreeVo> calcAllNode(List<ZdFxZtqkDto> list) {
+
+        List<ZdFxTreeVo> result = new ArrayList<>();
+
+        if (CollectionUtils.isEmpty(list)){
+            return result;
+        }
+
+        list.stream().forEach(zdFxZtqkDto -> {
+            ZdFxTreeVo node = new ZdFxTreeVo();
+            node.setId(zdFxZtqkDto.getId());
+            node.setName(zdFxZtqkDto.getName());
+            node.setPid(zdFxZtqkDto.getPid());
+
+            node.setCbrcount(zdFxZtqkDto.getCbrcount());
+            node.setBjcount(zdFxZtqkDto.getBjcount());
+            node.setPcrcount(zdFxZtqkDto.getPcrcount());
+            node.setPccount(zdFxZtqkDto.getPccount());
+
+            result.add(node);
+        });
+
+
+        // 构造‘合计’节点：
+        ZdFxTreeVo rootNode = new ZdFxTreeVo();
+        rootNode.setId("-1");
+        rootNode.setPid("-1");
+        rootNode.setName("合计");
+
+        Integer Cbrcount = list.stream().map(childNode -> childNode.getCbrcount()).reduce(0, (a, b) -> a + b);
+        Integer Bjcount = list.stream().map(childNode -> childNode.getBjcount()).reduce(0, (a, b) -> a + b);
+        Integer Pcrcount = list.stream().map(childNode -> childNode.getPcrcount()).reduce(0, (a, b) -> a + b);
+        Integer Pccount = list.stream().map(childNode -> childNode.getPccount()).reduce(0, (a, b) -> a + b);
+
+        rootNode.setCbrcount(Cbrcount);
+        rootNode.setBjcount(Bjcount);
+        rootNode.setPcrcount(Pcrcount);
+        rootNode.setPccount(Pccount);
+
+        result.add(0,rootNode);
+
+        // 父项合并子项
+//        result.stream().filter(parentNode-> parentNode.getPid().equals("-1") && !parentNode.getId().equals("-1") )
+//                .forEach(node->{
+//
+//                    List<ZdFxZtqkDto> allchildNode = list.stream().filter(childNode -> childNode.getPid().equals(node.getId())).collect(Collectors.toList());
+//                    if (!CollectionUtils.isEmpty(allchildNode)){
+//
+//                        Integer childCbrcount = allchildNode.stream().map(childNode -> childNode.getCbrcount()).reduce(0, (a, b) -> a + b);
+//                        Integer chilBjcount = allchildNode.stream().map(childNode -> childNode.getBjcount()).reduce(0, (a, b) -> a + b);
+//                        Integer childPcrcount = allchildNode.stream().map(childNode -> childNode.getPcrcount()).reduce(0, (a, b) -> a + b);
+//                        Integer childPccount = allchildNode.stream().map(childNode -> childNode.getPccount()).reduce(0, (a, b) -> a + b);
+//
+//                        node.setCbrcount(node.getCbrcount() + childCbrcount);
+//                        node.setBjcount(node.getBjcount() + chilBjcount);
+//                        node.setPcrcount(node.getPcrcount() + childPcrcount);
+//                        node.setPccount(node.getPccount() + childPccount);
+//
+//                    }
+//
+//                });
+
+
+        // 计算比率
+        result.stream().forEach(res -> {
+            // 评查比例
+            res.setPcl(calcPercent(res.getPccount(), res.getBjcount()));
+
+            // 承办人被评查案件数量
+            res.setCbrbpcl(calcPercent(res.getPccount(), res.getCbrcount()));
+
+            // 评查人评查案件数量
+            res.setPcrpcl(calcPercent(res.getPccount(), res.getPcrcount()));
+
+        });
+
+
+        return result;
+
+    }
+
+    /**
+     * 获取重点案件分析质量分析
+     * @param zdFxQuery
+     * @return
+     */
+    @Override
+    public List<ZdFxTreeVo> loadZdZlfx(ZdFxQuery zdFxQuery) {
+
+        //办结数、评查数、优质数、合格数、瑕疵数、不合格数
+        List<ZdFxzlfxDto> list = analysisMapper.getZdzlfx(zdFxQuery);
+
+        List<ZdFxTreeVo> nodes = calcZlfx(list);
+
+        List<ZdFxTreeVo> treeNodes = ZdFxTreeVo.buildTree(nodes);
+
+        return treeNodes;
+    }
+
+    private List<ZdFxTreeVo> calcZlfx(List<ZdFxzlfxDto> list) {
+        List<ZdFxTreeVo> result = new ArrayList<>();
+
+        if (CollectionUtils.isEmpty(list)){
+            return result;
+        }
+
+        list.stream().forEach(zdFxZtqkDto -> {
+
+            ZdFxTreeVo node = new ZdFxTreeVo();
+
+            try {
+                BeanUtils.copyProperties(node,zdFxZtqkDto);
+            } catch (Exception e) {
+                e.getMessage();
+                System.out.println("缺少某个成员");
+            }
+
+            result.add(node);
+        });
+
+
+        // 构造‘合计’节点：
+        ZdFxTreeVo rootNode = new ZdFxTreeVo();
+        rootNode.setId("-1");
+        rootNode.setPid("-1");
+        rootNode.setName("合计");
+
+        Integer Bjcount = list.stream().map(childNode -> childNode.getBjcount()).reduce(0, (a, b) -> a + b);
+        Integer Pccount = list.stream().map(childNode -> childNode.getPccount()).reduce(0, (a, b) -> a + b);
+        Integer Yzcount = list.stream().map(childNode -> childNode.getYzcount()).reduce(0, (a, b) -> a + b);
+        Integer Hgcount = list.stream().map(childNode -> childNode.getHgcount()).reduce(0, (a, b) -> a + b);
+        Integer Xccount = list.stream().map(childNode -> childNode.getXccount()).reduce(0, (a, b) -> a + b);
+        Integer Bhgcount = list.stream().map(childNode -> childNode.getBhgcount()).reduce(0, (a, b) -> a + b);
+
+        rootNode.setBjcount(Bjcount);
+        rootNode.setPccount(Pccount);
+        rootNode.setYzcount(Yzcount);
+        rootNode.setHgcount(Hgcount);
+        rootNode.setXccount(Xccount);
+        rootNode.setBhgcount(Bhgcount);
+
+        result.add(0,rootNode);
+
+        result.stream().forEach(res -> {
+            // 评查比例
+            res.setPcl(calcPercent(res.getPccount(), res.getBjcount()));
+
+            // 优质占比
+            res.setYzpcl(calcPercent(res.getYzcount(), res.getPccount()));
+
+            // 合格占比
+            res.setHgpcl(calcPercent(res.getHgcount(), res.getPccount()));
+
+            //瑕疵占比
+            res.setXcpcl(calcPercent(res.getXccount(), res.getPccount()));
+
+            // 不合格占比
+            res.setBhgpcl(calcPercent(res.getBhgcount(), res.getPccount()));
+
+        });
+
+        return result;
+    }
+
+    @Override
+    public List<Map> getZdAjJbxx(ZdFxQuery zdFxQuery) {
+        PageHelper.startPage(zdFxQuery.getPage(), zdFxQuery.getRows());
+        return analysisMapper.getZdAjJbxx(zdFxQuery);
+    }
+
+    @Override
+    public String exportZdFxExcel(ZdFxQuery zdFxQuery) throws IOException {
+
+        String filePath ="";
+
+        switch (zdFxQuery.getExporttype()){
+            case "ztqk": filePath =  exportZtqk(zdFxQuery);break;
+            case "zlfx": filePath =  exportZlfx(zdFxQuery);break;
+        }
+
+        return filePath;
+    }
+
+    private String exportZlfx(ZdFxQuery zdFxQuery) throws IOException {
+
+        List<ZdFxzlfxDto> list = analysisMapper.getZdzlfx(zdFxQuery);
+        List<ZdFxTreeVo> nodes = calcZlfx(list);
+        ArrayList<List<String>> data = new ArrayList<>();
+
+        nodes.stream().forEach(node->{
+            ArrayList<String> singleData = new ArrayList<>();
+            singleData.add(node.getName() +"");
+            singleData.add(node.getBjcount() + "");
+            singleData.add(node.getPccount() + "");
+            singleData.add(node.getPcl() + "");
+            singleData.add(node.getYzcount() + "");
+            singleData.add(node.getYzpcl() + "");
+            singleData.add(node.getHgcount() + "");
+            singleData.add(node.getHgpcl() + "");
+            singleData.add(node.getXccount() + "");
+            singleData.add(node.getXcpcl() + "");
+            singleData.add(node.getBhgcount() + "");
+            singleData.add(node.getBhgpcl() + "");
+
+            data.add(singleData);
+        });
+
+
+        String fileName = "重点案件质量分析";
+        String sourceFile = SystemConfiguration.wzbsPath + "/File/moban/重点案件质量分析.xls";
+//        String sourceFile = "D:\\dev\\hubei_zlpc\\src\\main\\resources\\static\\File\\moban\\重点案件质量分析.xls";
+
+
+        ExcelWriteToFile excelVo = new ExcelWriteToFile();
+        excelVo.setFileName(fileName);
+        excelVo.setData(data);
+        excelVo.setSourcefile(sourceFile);
+        excelVo.setStartLine(2);
+
+        return  excelUtils.exportExcelDataWriteLineNumber(excelVo);
+    }
+
+    private String exportZtqk(ZdFxQuery zdFxQuery) {
+        
+        List<ZdFxZtqkDto> list = analysisMapper.getZdqk(zdFxQuery);
+        List<ZdFxTreeVo> nodes = calcAllNode(list);
+        ArrayList<List<String>> data = new ArrayList<>();
+
+        nodes.stream().forEach(node->{
+            ArrayList<String> singleData = new ArrayList<>();
+            singleData.add(node.getName() +"");
+            singleData.add(node.getCbrcount() + "");
+            singleData.add(node.getBjcount() + "");
+            singleData.add(node.getPcrcount() +"");
+            singleData.add(node.getPccount() + "");
+            singleData.add(node.getPcl() + "");
+            singleData.add(node.getCbrbpcl() + "");
+            singleData.add(node.getPcrpcl() + "");
+
+            data.add(singleData);
+        });
+
+        String fileName = "重点案件总体情况分析";
+
+        List<String> header = Arrays.asList("筛选规则", "1办案人数", "2办结案件数", "3评查人员数", "4评查案件数", "评查比例（4/2）", "承办人平均被评查案件数（4/1）件", "评查员平均评查案件数（4/3）件");
+
+        ExcelVo excelVo = new ExcelVo();
+        excelVo.setFileName(fileName);
+        excelVo.setHeader(header);
+        excelVo.setData(data);
+
+        return  excelUtils.exportExcelData(excelVo);
     }
 }
 

@@ -3,23 +3,21 @@ package com.start.boot.web;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.start.boot.common.MessageResult;
+import com.start.boot.common.SystemConfiguration;
 import com.start.boot.pojo.vo.*;
+import com.start.boot.query.ZdFxQuery;
 import com.start.boot.service.AnalysisService;
-import com.start.boot.service.JbxxService;
 import com.start.boot.service.SystemCoreConfigService;
+import com.start.boot.support.structure.EasyUIDatagrid;
 import com.start.boot.support.utils.EasyUIHelper;
 import com.start.boot.support.utils.HttpContextUtils;
 import com.start.boot.utils.ExportExcelUtils;
 import com.start.boot.utils.ExportWordUtils;
 import io.swagger.annotations.ApiOperation;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.github.pagehelper.PageInfo;
 import com.start.boot.domain.Param_Ajqkzlfx;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.HashMap;
@@ -432,7 +430,12 @@ public class AnalysisController extends ArchivesSystemBaseController{
         try {
             map.put("dwbm", param.getDwbm());
             map.put("cbrsf", param.getCbrsf());
-            map.put("wcrqnf", param.getWcrqnf());
+//            map.put("wcrqnf", param.getWcrqnf());
+            map.put("startDate", param.getStartDate());
+            map.put("endDate", param.getEndDate());
+            map.put("pcstartDate", param.getPcstartDate());
+            map.put("pcendDate", param.getPcendDate());
+
             map.put("pcjl", param.getPcjl());
             map.put("ywtx", param.getYwtx());
             map.put("pcflbm", param.getPcflbm());
@@ -457,7 +460,13 @@ public class AnalysisController extends ArchivesSystemBaseController{
         try {
             map.put("dwbm", param.getDwbm());
             map.put("cbrsf", param.getCbrsf());
-            map.put("wcrqnf", param.getWcrqnf());
+
+           // map.put("wcrqnf", param.getWcrqnf());
+            map.put("startDate", param.getStartDate());
+            map.put("endDate", param.getEndDate());
+            map.put("pcstartDate", param.getPcstartDate());
+            map.put("pcendDate", param.getPcendDate());
+
             map.put("ywtx", param.getYwtx());
             map.put("pcflbm", param.getPcflbm());
             map.put("ajtjlb", param.getAjtjlb());
@@ -474,6 +483,75 @@ public class AnalysisController extends ArchivesSystemBaseController{
             return e.toString();
         }
         return resultStr;
+    }
+
+    @ApiOperation("获取重点案件分析下的筛选规则")
+    @GetMapping("/getSxgz")
+    public MessageResult getSxgz(String pcflbm){
+        MessageResult result = null;
+
+        try {
+            String djdwbm = SystemConfiguration.djdwbm;
+            List<Map> list = analysisService.getZdSxgz(djdwbm,pcflbm);
+            String s = EasyUIHelper.buildTreeDataSourceWithoutIconCol(list, "BM", "FBM", "MC", "-1");
+            result = new MessageResult(200, s);
+        }catch (Exception e){
+            result = new MessageResult(500,e.getMessage());
+        }
+
+        return result;
+    }
+
+
+    @ApiOperation("获取重点案件总体情况")
+    @RequestMapping("/loadZdZtqk")
+    public MessageResult loadZdZtqk( ZdFxQuery zdFxQuery)throws  Exception{
+
+        List<ZdFxTreeVo> list=analysisService.loadZdZtqk(zdFxQuery);
+
+        //String s = EasyUIHelper.buildDataGridDataSource(list,Math.toIntExact(list.size()));
+        return new MessageResult("获取成功",200,list);
+    }
+
+    @ApiOperation("获取重点案件质量分析")
+    @RequestMapping("/loadZdZlfx")
+    public MessageResult loadZdZlfx( ZdFxQuery zdFxQuery)throws  Exception{
+
+        List<ZdFxTreeVo> list=analysisService.loadZdZlfx(zdFxQuery);
+
+        //String s = EasyUIHelper.buildDataGridDataSource(list,Math.toIntExact(list.size()));
+        return new MessageResult("获取成功",200,list);
+    }
+
+    @ApiOperation("获取重点案件详细信息")
+    @RequestMapping("/getZdAjJbxx")
+    public MessageResult getZdAjJbxx( ZdFxQuery zdFxQuery)throws  Exception{
+
+        List<Map> list=analysisService.getZdAjJbxx(zdFxQuery);
+
+        PageInfo pageInfo = new PageInfo(list);
+        EasyUIDatagrid<Map> datagrid = new EasyUIDatagrid<>();
+        datagrid.setTotal(pageInfo.getTotal());
+        datagrid.setRows(pageInfo.getList());
+
+        return new MessageResult("获取成功",200,datagrid);
+    }
+
+    @ApiOperation("导出重点案件分析")
+    @RequestMapping("/exportZdFxExcel")
+    public MessageResult exportZdFxExcel( ZdFxQuery zdFxQuery)throws  Exception{
+
+        MessageResult messageResult =null;
+        try {
+            String filePath = analysisService.exportZdFxExcel(zdFxQuery);
+
+            messageResult = new MessageResult("导出成功", 200, filePath);
+
+        }catch (Exception e){
+            messageResult = new MessageResult("导出失败", 500, e.getMessage() );
+        }
+
+        return messageResult;
     }
 
 

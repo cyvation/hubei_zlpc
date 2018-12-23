@@ -1,12 +1,11 @@
 package com.start.boot.service;
 
 
-import com.start.boot.common.Param_Pager;
 import com.start.boot.domain.*;
-import com.start.boot.pojo.vo.AjqkzlflTreeVo;
-import com.start.boot.pojo.vo.AjqkzlflVo;
-import com.start.boot.pojo.vo.ErrorAndFlawTreeVo;
+import com.start.boot.pojo.vo.*;
+import com.start.boot.query.ZdFxQuery;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -156,4 +155,13 @@ public interface AnalysisService {
 
     List<Map> getTccwxxPcAjxxByParams(Map map) throws  Exception;
 
+    List<Map> getZdSxgz(String djdwbm, String pcflbm);
+
+    List<ZdFxTreeVo> loadZdZtqk(ZdFxQuery zdFxQuery);
+
+    List<ZdFxTreeVo> loadZdZlfx(ZdFxQuery zdFxQuery);
+
+    List<Map> getZdAjJbxx(ZdFxQuery zdFxQuery);
+
+    String exportZdFxExcel(ZdFxQuery zdFxQuery) throws IOException;
 }

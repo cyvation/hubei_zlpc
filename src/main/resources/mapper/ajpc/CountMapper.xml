@@ -18,6 +18,14 @@
         <if test="endDate !=null and endDate!=''">
             AND BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
         </if>
+
+        <if test="pcstartDate !=null and pcstartDate!=''">
+            AND ZHXGSJ &gt;= "TO_DATE" (#{pcstartDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="pcendDate !=null and pcendDate!=''">
+            AND ZHXGSJ &lt;= "TO_DATE" (#{pcendDate}, 'yyyy-mm-dd')
+        </if>
+
         <if test="pcjl !=null and pcjl!='' and pcjl!='allNum'">
             and PCJL=#{pcjl}
         </if>
@@ -90,6 +98,14 @@
         <if test="endDate !=null and endDate!=''">
             AND BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
         </if>
+
+        <if test="pcstartDate !=null and pcstartDate!=''">
+            AND CJSJ &gt;= "TO_DATE" (#{pcstartDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="pcendDate !=null and pcendDate!=''">
+            AND CJSJ &lt;= "TO_DATE" (#{pcendDate}, 'yyyy-mm-dd')
+        </if>
+
         <if test="bmbm !=null and bmbm!='' and bmbm.length>0 " >
             AND BPC_BMBM in <foreach  item="item" collection="bmbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
         </if>
@@ -119,6 +135,14 @@
         <if test="endDate !=null and endDate!=''">
             AND BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
         </if>
+
+        <if test="pcstartDate !=null and pcstartDate!=''">
+            AND ZHXGSJ &gt;= "TO_DATE" (#{pcstartDate}, 'yyyy-mm-dd')
+        </if>
+        <if test="pcendDate !=null and pcendDate!=''">
+            AND ZHXGSJ &lt;= "TO_DATE" (#{pcendDate}, 'yyyy-mm-dd')
+        </if>
+
         <if test="bmbm !=null and bmbm!='' and bmbm.length>0 " >
             AND BPC_BMBM in <foreach  item="item" collection="bmbm" index="index"  open="(" separator="," close=")">#{item}</foreach>
         </if>

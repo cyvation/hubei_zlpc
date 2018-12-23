@@ -91,14 +91,24 @@ function init_control_grid_dw()
     //完成日期
     $('#date_tj_promoters_start').datebox({
         editable: false,
-        value:  '2013-01-01',
+        value: new Date().getFullYear() + '-01-01',
         width: 130
     });
 
     $('#date_tj_promoters_end').datebox({
         editable: false,
-        value: '2017-12-31',//new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate()),
+        value: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate()),
         width: 130
+    });
+    // 评查时间
+    $('#date_pc_promoters_start').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-01-01'
+    });
+
+    $('#date_pc_promoters_end').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
     });
 
     //办案检察官
@@ -215,8 +225,11 @@ function load_grid_promoters() {
     obj.dwbm = $('#cbt_tj_promoters_dw').combotree('getValue') == undefined ? userInfo.DWBM : $('#cbt_tj_promoters_dw').combotree('getValues').join(",");//评查单位编码
     obj.bmbm = $("#cbt_tj_promoters_bm").combotree('getValues').join(",");
     obj.cbrmc = $('#txt_tj_promoters_cbr').textbox('getValue');//办案检察官员
-    obj.startDate = $('#date_tj_promoters_start').datebox('getValue');//评查日期开始
-    obj.endDate = $('#date_tj_promoters_end').datebox('getValue');//评查日期结束
+    obj.startDate = $('#date_tj_promoters_start').datebox('getValue');//完成日期开始
+    obj.endDate = $('#date_tj_promoters_end').datebox('getValue');//完成日期结束
+    obj.pcstartDate = $('#date_pc_promoters_start').datebox('getValue');//评查日期开始
+    obj.pcendDate = $('#date_pc_promoters_end').datebox('getValue');//评查日期结束
+
     obj.cbrsf  =  $("#cbt_win_eval_build_cbrsf").combotree('getValues').join(",").trim();
 
     $('#grid_tj_promoters').datagrid({
@@ -237,8 +250,10 @@ function alert_win_filter(el,index) {
     obj.dwbm = dwbm;
     obj.bmbm =  rowDatas[index].BPC_BMBM;
     obj.cbrmc =  rowDatas[index].BPC_MC;//办案检察官员
-    obj.startDate = $('#date_tj_promoters_start').datebox('getValue');//评查日期开始
-    obj.endDate = $('#date_tj_promoters_end').datebox('getValue');//评查日期结束
+    obj.startDate = $('#date_tj_promoters_start').datebox('getValue');//完成日期开始
+    obj.endDate = $('#date_tj_promoters_end').datebox('getValue');//完成日期结束
+    obj.pcstartDate = $('#date_pc_promoters_start').datebox('getValue');//评查日期开始
+    obj.pcendDate = $('#date_pc_promoters_end').datebox('getValue');//评查日期结束
     obj.pcjl = currField;//评查日期结束
     columns = [[
         {field:'BMSAH',title:'部门受案号',width:160 },

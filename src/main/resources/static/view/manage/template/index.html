@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -30,23 +30,329 @@
         <table id="grid_eval_pool_list" border="0"></table>
     </div>
 
-    <!--弹出框：添加评查库人员-->
-    <div id="win_eval_pool_add" class="easyui-window" title="添加人员" style="width: 790px;height: 490px;"
-         data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,resizable:false">
-        <div id="tool_win_eval_pool_add" style="padding:5px 0px 5px 8px">
-            类型：<input id="cbx_win_eval_pool_type" class="easyui-combobox" />
-            单位:<input id="cbt_win_eval_pool_xzdw" class="easyui-combotree" style="width: 150px;"/>
-            姓名：<input id="txt_win_eval_pool_mc" class="easyui-textbox" style="width: 120px;"/>
-            <label style="width: 150px;"></label>
-            <a id="btn_win_eval_pool_search" class="easyui-linkbutton"  style="padding: 0 15px;background: #258eea;color: #ffffff;">查询</a>
-            <a id="btn_win_eval_pool_asign" class="easyui-linkbutton"  style="padding-left: 25px">添加</a>
-        </div>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--评查项分类与评查项管理模板-->
+                <div id="reg_pcxfl_pcx_tmplet" data-options="region:'center',border:false" style="display: none; width: 100%; height: 100%;">
+                    <div id="pnl_pcxmb_main_tmplet"  class="easyui-panel"  style="width: 100%; height: 100%;border-top:0;"> <!--title="评查分类与评查项信息"-->
+                        <div id="pnl_pcxfl_pcx_tmplet" class="easyui-panel" data-options="fit:true,border:false" >
+                            <div id="tool_pcxfl_pcx_tmplet" data-options="border:false"
+                                 style="padding:5px 0px 5px 8px">
+                                <a id="btn_add_pcxfl_tmplet" class="easyui-linkbutton">新建评查项分类</a>
+                                <a id="btn_add_pcx_tmplet" class="easyui-linkbutton">新建评查项</a>
+                                <a id="btn_preview_tmplet" class="easyui-linkbutton">预览</a>
+                                <a id="btn_copy_tmplet" class="easyui-linkbutton">复制</a>
+                                <a id="btn_export_excel_tmplet" class="easyui-linkbutton">导出</a>
+                            </div>
+                            <!--评查项分类与评查项 信息-->
+                            <table id="grid_pcxfl_pcx_tmplet" class="grid_pcxfl_pcx_tmplet" border="0" >
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <div id="pnl_win_eval_pool_user_list" class="easyui-panel" data-options="border:true,left: 565px,top: 233px;fit:true"
-             style="width: 100%;height: 413px; border-left:0px; border-right:0px; border-bottom:0px;">
-            <table id="grid_win_eval_pool_user_list" border="0"></table>
         </div>
-
     </div>
+</div>
+<!--&lt;!&ndash;预览弹出窗&ndash;&gt;-->
+<!--<div id="win_preview_tmplet" class="easyui-window" title="预览" style="width: 850px; height: 550px;"-->
+     <!--data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">-->
+    <!--&lt;!&ndash;案件评查项&ndash;&gt;-->
+    <!--<div class="easyui-panel" data-options="fit:true,border:false">-->
+        <!--<div id="pnl_grade_card_tmplet" style="margin-left: 40px; margin-top: 20px; border: none;">-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!--评查预览弹出框-->
+<div id="win" class="easyui-window" title="预览" style="width: 780px;height: 600px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true">
+    <div id="div_handle_pcyl" class="easyui-panel" data-options="fit:true,border:false">
+        <table id="grid_handle_pcyl" border="0" style="height: 100%;width: 100%">
+        </table>
+    </div>
+</div>
+<!--新增评分模板-->
+<div id="win_new_pfmb_tmplet" class="easyui-window" title="新建评分模板" style="width: 460px; height: 220px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,resizable:false">
+    <form id="form_pfmb_tmplet" class="easyui-form" method="post" data-options="novalidate:true">
+        <table cellpadding="5" style="border-collapse: separate;border-spacing: 10px">
+            <tr>
+                <td style="text-align: right;width:105px;">
+                    评分模板名称:
+                </td>
+                <td style="width:310px;">
+                    <input id="mc_win_new_pfmb_tmplet" class="easyui-textbox" type="text" style="width: 300px;">
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">
+                    备注:
+                </td>
+                <td>
+                    <input id="bz_win_new_pfmb_tmplet" class="easyui-textbox" name="message" data-options="multiline:true"
+                           style="height: 60px; width: 300px;">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <div style="display: none">
+        <input type="text" id="bm_win_new_pfmb_tmplet"/>
+    </div>
+    <div style="text-align: center; padding: 5px;margin-top: 20px">
+        <a id="btn_ok_win_new_pfmb_tmplet" class="easyui-linkbutton">确定</a>
+        <a id="btn_cancel_win_new_pfmb_tmplet" class="easyui-linkbutton">
+        取消</a>
+    </div>
+</div>
+<!--复制评分模板-->
+<div id="win_copy_pfmb_tmplet" class="easyui-window" title="新建评分模板" style="width: 460px; height: 260px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,resizable:false">
+    <form id="form_copy_pfmb_tmplet" class="easyui-form" method="post" data-options="novalidate:true">
+        <table cellpadding="5" style="border-collapse: separate;border-spacing: 10px">
+            <tr>
+                <td style="text-align: right;width: 105px;">评查分类</td>
+                <td><input id="fl_win_copy_pfmb_tmplet" data-options="wincom:true" style="width:120px"/></td>
+             </tr>
+            <tr>
+                <td style="text-align: right">
+                    评分模板名称:
+                </td>
+                <td style="width:310px;">
+                    <input id="mc_win_copy_pfmb_tmplet" class="easyui-textbox" type="text" style="width: 300px;">
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">
+                    备注:
+                </td>
+                <td>
+                    <input id="bz_win_copy_pfmb_tmplet" class="easyui-textbox" name="message" data-options="multiline:true"
+                           style="height: 60px; width: 300px;">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <div style="text-align: center; padding: 5px;margin-top: 30px">
+        <a id="btn_ok_win_copy_pfmb_tmplet" class="easyui-linkbutton">确定</a>
+        <a id="btn_cancel_win_copy_pfmb_tmplet" class="easyui-linkbutton"> 取消</a>
+    </div>
+</div>
+<!--新增评查项分类-->
+<div id="win_new_pcxfl_tmplet" class="easyui-window" title="新建评查项分类" style="width: 480px; height: 250px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,resizable:false">
+    <form id="form_new_pcxfl_tmplet" class="easyui-form" method="post" data-options="novalidate:true">
+        <table cellpadding="5" style="border-collapse: separate;border-spacing: 10px">
+            <tr>
+                <td style="text-align: right;width:120px;">
+                    评查项分类名:
+                </td>
+                <td style="width:310px;">
+                    <input id="mc_win_new_pcxfl_tmplet" class="easyui-textbox" type="text" style="width: 300px;">
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">
+                    评查项父分类名:
+                </td>
+                <td>
+                    <input id="parent_mc_win_new_pcxfl_tmplet" class="easyui-textbox" type="text" style="width: 300px;"
+                           disabled="disabled">
+                </td>
+            </tr>
+
+            <tr>
+                <td style="text-align: right;">
+                    备注:
+                </td>
+                <td>
+                    <input id="bz_win_new_pcxfl_tmplet" class="easyui-textbox" name="message" data-options="multiline:true"
+                           style="height: 60px; width: 300px;">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <div style="display: none">
+        <input type="text" id="pfmbbm_win_new_pcxfl_tmplet"/>
+        <!--<input type="text" id="pcxfl_fbm_win_new_pcxfl_tmplet"/>-->
+        <input type="text" id="pcxfl_bm_win_new_pcxfl_tmplet"/>
+        <input type="text" id="pcxfl_fmc_win_new_pcxfl_tmplet"/>
+    </div>
+    <div style="text-align: center; padding: 5px;margin-top: 20px">
+        <a id="btn_ok_win_new_pcxfl_tmplet" class="easyui-linkbutton">确定</a>
+        <a id="btn_cancel_win_new_pcxfl_tmplet" class="easyui-linkbutton"> 取消</a>
+    </div>
+</div>
+<!--新增评查项-->
+<div id="win_new_pcx_tmplet" class="easyui-window" title="新建评查项" style="width: 650px; height: 490px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,resizable:false">
+    <form id="form_win_new_pcx_tmplet" class="easyui-form" method="post" data-options="novalidate:true">
+        <table cellpadding="3" style="border-collapse: separate;border-spacing: 10px">
+            <tr>
+                <td style="text-align: right;width:110px;">
+                    评查项:
+                </td>
+                <td style="width:310px;">
+                    <input id="mc_win_new_pcx_tmplet" class="easyui-textbox textbox-f" data-options="multiline:true" type="text"
+                           style="height: 170px; width: 460px;"/>
+                    <div style="margin-top:5px;">
+                        <a id="tag_doc_win_new_pcx_tmplet" class="easyui-linkbutton">文书</a>
+                        <a id="tag_sd_win_new_pcx_tmplet" class="easyui-linkbutton">手动评查</a>
+                        <a id="tag_zd_win_new_pcx_tmplet" class="easyui-linkbutton">自动评查</a>
+                        <a id="tag_htm_win_new_pcx_tmplet" class="easyui-linkbutton">弹出网页</a>
+                        <a id="tag_txt_win_new_pcx_tmplet" class="easyui-linkbutton">弹出信息</a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">
+                    评查项分类名:
+                </td>
+                <td>
+                    <input id="pcxfl_mc_win_new_pcx_tmplet" class="easyui-textbox" type="text" style="width: 460px;"
+                           disabled="disabled">
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">
+                    算法公式名:
+                </td>
+                <td>
+                    <input id="fz_formula_win_new_pcx_tmplet" data-options="wincom:true" class="easyui-combobox" type="text" style="width: 460px;"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">
+                    备注:
+                </td>
+                <td>
+                    <input id="bz_win_new_pcx_tmplet" class="easyui-textbox" name="message" data-options="multiline:true"
+                           style="height: 80px; width: 460px;">
+                </td>
+            </tr>
+        </table>
+        <div style="display: none">
+            <input type="text" id="pcx_bm_win_new_pcx_tmplet"/>
+            <input type="text" id="pcxfl_bm_win_new_pcx_tmplet"/>
+            <input type="text" id="hide_pcxfl_mc_win_new_pcx_tmplet"/>
+        </div>
+    </form>
+    <div style="text-align: center; margin-top: 25px; margin-left: 5px;">
+        <a id="btn_ok_win_new_pcx_tmplet" class="easyui-linkbutton">确定</a>
+        <a id="btn_cancel_win_new_pcx_tmplet" class="easyui-linkbutton"> 取消</a>
+    </div>
+</div>
+
+<!--选择文书-->
+<div id="win_new_wenshu_dispose" class="easyui-window" title="添加文书" style="width: 400px; height:180px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,resizable:false">
+     <table cellpadding="5" style=" padding: 10px 0 0 15px; border-collapse: separate;border-spacing: 10px">
+        <tr>
+            <td style=" text-align:right">业务：</td>
+            <td>
+                <input id="cmb_ywl_dispose" class="easyui-combotree"  data-options="wincom:true" style="width: 280px; height:25px" />
+            </td>
+        </tr>
+        <tr>
+            <td style=" text-align:right">文书：</td>
+            <td>
+                <input id="cbg_wenshu_dispose" class="easyui-combogrid"  data-options="wincom:true" style="width: 280px; height:25px" />
+            </td>
+        </tr>
+     </table>
+    <div style="text-align: center; margin-top: 10px; margin-left: 5px;">
+        <a id="btn_confirm_ws_dispose" class="easyui-linkbutton">确定</a>
+        <a id="btn_cancel_ws_dispose" class="easyui-linkbutton"> 取消</a>
+    </div>
+</div>
+
+<!--手动评查-->
+<div id="win_new_sdpc_dispose" class="easyui-window" title="手动评查项" style="width: 450px; height:250px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,resizable:false">
+     <table cellpadding="5" style=" padding: 10px 0 0 15px; border-collapse: separate;border-spacing: 10px">
+        <tr>
+            <td style=" text-align:right">评查内容：</td>
+            <td>
+                <input id="txt_pcnr_dispose" class="easyui-textbox"  data-options="multiline:true" style="width: 320px; height:50px" />
+            </td>
+        </tr>
+        <tr>
+            <td style=" text-align:right">评查理由：</td>
+            <td>
+                <input id="txt_pcly_dispose" class="easyui-textbox"  data-options="multiline:true" style="width: 320px; height:75px" />
+            </td>
+        </tr>
+     </table>
+    <div style="text-align: center; margin-top: 10px; margin-left: 5px;">
+        <a id="btn_confirm_sdpc_dispose" class="easyui-linkbutton">确定</a>
+        <a id="btn_cancel_sdpc_dispose" class="easyui-linkbutton"> 取消</a>
+    </div>
+</div>
+<!--自动评查-->
+<div id="win_new_zdpc_dispose" class="easyui-window" title="自动评查项" style="width: 450px; height:190px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,resizable:false">
+     <table cellpadding="5" style=" padding: 10px 0 0 15px;border-collapse: separate;border-spacing: 10px">
+        <tr>
+            <td style=" text-align:right">评查内容：</td>
+            <td>
+                <input id="txt_pcnr_zdpc_dispose" class="easyui-textbox"  data-options="multiline:true" style="width: 320px; height:75px" />
+            </td>
+        </tr>
+     </table>
+    <div style="text-align: center; margin-top: 10px; margin-left: 5px;">
+        <a id="btn_confirm_zdpc_dispose" class="easyui-linkbutton">确定</a>
+        <a id="btn_cancel_zdpc_dispose" class="easyui-linkbutton"> 取消</a>
+    </div>
+</div>
+
+<!--弹出页面-->
+<div id="win_new_tcym_dispose" class="easyui-window" title="弹出页面" style="width: 440px; height:220px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,resizable:false">
+     <table cellpadding="5" style=" padding: 10px 0 0 15px;border-collapse: separate;border-spacing: 10px">
+        <tr>
+            <td style=" text-align:right">名称：</td>
+            <td>
+                <input id="txt_mc_tcym_dispose" class="easyui-textbox"  data-options="multiline:true" style="width: 320px; height:50px" />
+            </td>
+        </tr>
+        <tr>
+            <td style=" text-align:right">地址：</td>
+            <td>
+                <input id="txt_dz_tcym_dispose" class="easyui-textbox"  data-options="multiline:true" style="width: 320px; height:50px" />
+            </td>
+        </tr>
+     </table>
+    <div style="text-align: center; margin-top: 10px; margin-left: 5px;">
+        <a id="btn_confirm_tcym_dispose" class="easyui-linkbutton">确定</a>
+        <a id="btn_cancel_tcym_dispose" class="easyui-linkbutton"> 取消</a>
+    </div>
+</div>
+
+<!--弹出信息-->
+<div id="win_new_tcxx_dispose" class="easyui-window" title="弹出信息" style="width: 440px; height:220px;"
+     data-options="closed:true,collapsible:false,maximizable:false,minimizable:false,modal:true,resizable:false">
+     <table cellpadding="5" style=" padding: 10px 0 0 15px;border-collapse: separate;border-spacing: 10px">
+        <tr>
+            <td style=" text-align:right">名称：</td>
+            <td>
+                <input id="txt_mc_tcxx_dispose" class="easyui-textbox"  data-options="multiline:true" style="width: 320px; height:50px" />
+            </td>
+        </tr>
+        <tr>
+            <td style=" text-align:right">内容：</td>
+            <td>
+                <input id="txt_nr_tcxx_dispose" class="easyui-textbox"  data-options="multiline:true" style="width: 320px; height:50px" />
+            </td>
+        </tr>
+     </table>
+    <div style="text-align: center; margin-top: 10px; margin-left: 5px;">
+        <a id="btn_confirm_tcxx_dispose" class="easyui-linkbutton">确定</a>
+        <a id="btn_cancel_tcxx_dispose" class="easyui-linkbutton"> 取消</a>
+    </div>
+</div>
 </body>
 </html>

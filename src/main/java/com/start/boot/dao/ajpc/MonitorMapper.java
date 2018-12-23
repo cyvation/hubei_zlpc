@@ -5,10 +5,12 @@ import com.start.boot.pojo.vo.PcglVo;
 import com.start.boot.query.MonitoryPcjsQuery;
 import com.start.boot.query.PcglQuery;
 import com.start.boot.support.structure.EasyUITree;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
+@Repository
 public interface MonitorMapper {
     /**
      * 评查概览  获取未评查数量

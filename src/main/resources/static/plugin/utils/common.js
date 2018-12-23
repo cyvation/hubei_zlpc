@@ -574,7 +574,7 @@ function getStajbs() {
         {id: "1", text: '案件化办理的事项'}];
     return stajbArray;
 }
-/获取子项类/
+//获取子项类/
 function flxtdmType() {
     var stajbArray = [{id: "30002", text: '错误'},
         {id: "30003", text: '瑕疵'}];
@@ -749,18 +749,18 @@ function getDhcdValues() {
                 name: '重点案件总体情况',
                 imageOneUrl: 'image/icon/imgtree.png',
                 imageTwoUrl: 'image/icon/imgtree_xz.png',
-                gndz: '/view/analysis/pcGeneral/index.html',
-                gnIndex: '2',
-                tabheads:'条线, 办案人数, 办结案件数, 办结数,  评查人员数, 评查案件数评查比例, 评查比例, 承办人平均被评查案件数,被评查, 评查员平均评查案件数,平均评查'
+                gndz: '/view/analysis/zdaj/zlfx.html',
+                gnIndex: '1',
+                tabheads:'筛选规则, 办案人数, 办结案件数, 办结数,  评查人员数, 评查案件数评查比例, 评查比例, 承办人平均被评查案件数,被评查, 评查员平均评查案件数,平均评查'
             }, {
                 id: '17',
                 group: '(重点案件)',
                 name: '重点案件质量分析',
                 imageOneUrl: 'image/icon/zlqk_tree_xz.png',
                 imageTwoUrl: 'image/icon/zlqk_tree.png',
-                gndz: '/view/analysis/ajqkzlfx/txfx.html',
-                gnIndex: '3',
-                tabheads:'条线, 评查情况, 评查结果等次, 办结数, 评查案件数, 评查比, 优质, 合格, 瑕疵, 不合格, 件数, 优质占比,优质比,合格,合格占比,合格比,瑕疵,瑕疵占比,瑕疵比,不合格,不合格占比,不合格比'
+                gndz: '/view/analysis/zdaj/zlfx.html',
+                gnIndex: '2',
+                tabheads:'筛选规则, 评查情况, 评查结果等次, 办结数, 评查案件数, 评查比, 优质, 合格, 瑕疵, 不合格, 件数, 优质占比,优质比,合格,合格占比,合格比,瑕疵,瑕疵占比,瑕疵比,不合格,不合格占比,不合格比'
             }]}
     ];
     return dhArrays;

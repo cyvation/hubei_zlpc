@@ -124,22 +124,45 @@ function init_general_overview() {
         }
     });
 //年份
-    $('#general_date').combotree({
+//     $('#general_date').combotree({
+//         editable: false,
+//         panelWidth: 160,
+//         lines: true,
+//         multiple: true,
+//         cascadeCheck: false,
+//         onShowPanel: index_onShowPanel,
+//         onHidePanel: index_onHidePanel,
+//         onLoadSuccess: function (node, data) {
+//             if (data != null && data.length >= 1) {
+//                 setAllCheckbox('#general_date', data);
+//             }
+//             index_addMousedownDiv(this, "general_date");
+//         }
+//     });
+//     $('#general_date').combotree("loadData", getYearRange());
+
+    $('#general_wcdate_start').datebox({
         editable: false,
-        panelWidth: 160,
-        lines: true,
-        multiple: true,
-        cascadeCheck: false,
-        onShowPanel: index_onShowPanel,
-        onHidePanel: index_onHidePanel,
-        onLoadSuccess: function (node, data) {
-            if (data != null && data.length >= 1) {
-                setAllCheckbox('#general_date', data);
-            }
-            index_addMousedownDiv(this, "general_date");
-        }
+        value: new Date().getFullYear() + '-01-01'
     });
-    $('#general_date').combotree("loadData", getYearRange());
+
+    $('#general_wcdate_end').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
+    });
+
+// 评查日期
+    $('#general_pcdate_start').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-01-01'
+    });
+
+    $('#general_pcdate_end').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
+    });
+
+
     //承办人身份
     $('#general_cbrsf').combotree({
         editable: false,
@@ -237,11 +260,15 @@ function data_general_data(id) {
         return;
     }
     obj.dwbm=dwbm;
-    if($('#general_date').combotree('getValues').length==0){
-        Alert("请选择时间");
-        return;
-    }
-    obj.wcrqnf= $('#general_date').combotree('getValues').length==0?"":$('#general_date').combotree("getValues").join(",");
+    // if($('#general_date').combotree('getValues').length==0){
+    //     Alert("请选择时间");
+    //     return;
+    // }
+    obj.startDate = $('#general_wcdate_start').datebox('getValue');
+    obj.endDate = $('#general_wcdate_end').datebox('getValue');
+    obj.pcstartDate=$('#general_pcdate_start').datebox('getValue');
+    obj.pcendDate = $('#general_pcdate_end').datebox('getValue');
+   // obj.wcrqnf= $('#general_date').combotree('getValues').length==0?"":$('#general_date').combotree("getValues").join(",");
     obj.pcflbm =$('#general_pcfl').combotree('getValues').length==0?"":$('#general_pcfl').combotree('getValues').join(",");
     obj.ywtx=$('#general_pcmb').combotree('getValues').length==0||$('#general_pcmb').combotree('getValues').length==8?"":$('#general_pcmb').combotree('getValues').join(",");
     obj.sfld=$('#general_cbrsf').combotree('getValues').length==0||$('#general_cbrsf').combotree('getValues').length==2?"":$('#general_cbrsf').combotree('getValues').join(",");
@@ -323,7 +350,12 @@ function pcWin_generalList(el,index,type){
         return;
     }
     obj.dwbm=dwbm;
-    obj.wcrqnf= $('#general_date').combotree('getValues').length==0?"":$('#general_date').combotree("getValues").join(",");
+    obj.startDate = $('#general_wcdate_start').datebox('getValue');
+    obj.endDate = $('#general_wcdate_end').datebox('getValue');
+    obj.pcstartDate=$('#general_pcdate_start').datebox('getValue');
+    obj.pcendDate = $('#general_pcdate_end').datebox('getValue');
+
+   // obj.wcrqnf= $('#general_date').combotree('getValues').length==0?"":$('#general_date').combotree("getValues").join(",");
     obj.pcflbm =$('#general_pcfl').combotree('getValues').length==0?"":$('#general_pcfl').combotree('getValues').join(",");
     obj.ywtx=$('#general_pcmb').combotree('getValues').length==0||$('#general_pcmb').combotree('getValues').length==8?"":$('#general_pcmb').combotree('getValues').join(",");
     obj.stajbs=$('#stajbs').combotree('getValues').length==0||$('#stajbs').combotree('getValues').length==2?"":$('#stajbs').combotree('getValues').join(",");
@@ -494,11 +526,16 @@ function excel_export_data() {
         return;
     }
     obj.dwbm=dwbm;
-    if($('#general_date').combotree('getValues').length==0){
-        Alert("请选择时间");
-        return;
-    }
-    obj.wcrqnf= $('#general_date').combotree('getValues').length==0?"":$('#general_date').combotree("getValues").join(",");
+    // if($('#general_date').combotree('getValues').length==0){
+    //     Alert("请选择时间");
+    //     return;
+    // }
+    obj.startDate = $('#general_wcdate_start').datebox('getValue');
+    obj.endDate = $('#general_wcdate_end').datebox('getValue');
+    obj.pcstartDate=$('#general_pcdate_start').datebox('getValue');
+    obj.pcendDate = $('#general_pcdate_end').datebox('getValue');
+
+   // obj.wcrqnf= $('#general_date').combotree('getValues').length==0?"":$('#general_date').combotree("getValues").join(",");
     obj.pcflbm =$('#general_pcfl').combotree('getValues').length==0?"":$('#general_pcfl').combotree('getValues').join(",");
     obj.ywtx=$('#general_pcmb').combotree('getValues').length==0||$('#general_pcmb').combotree('getValues').length==8?"":$('#general_pcmb').combotree('getValues').join(",");
     obj.sfld=$('#general_cbrsf').combotree('getValues').length==0||$('#general_cbrsf').combotree('getValues').length==2?"":$('#general_cbrsf').combotree('getValues').join(",");

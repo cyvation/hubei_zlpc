@@ -20,6 +20,7 @@ import com.start.boot.service.XtDmFldmService;
 import com.start.boot.service.XtPcLbService;
 import com.start.boot.service.XtZzjgDwbmService;
 import com.start.boot.utils.QueryUtils;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -509,6 +510,19 @@ public class CountServiceImpl implements CountService {
 
     @Override
     public Map countPcqkOrBaqk(Map query) {
+
+        String endDate = (String) query.get("endDate");
+        if (!org.apache.commons.lang3.StringUtils.isEmpty(endDate)){
+            endDate = DateTime.parse(endDate).plusDays(1).toString("yyyy-MM-dd");
+            query.put("endDate",endDate);
+        }
+
+        String pcendDate = (String) query.get("pcendDate");
+        if (!org.apache.commons.lang3.StringUtils.isEmpty(pcendDate)){
+            pcendDate = DateTime.parse(pcendDate).plusDays(1).toString("yyyy-MM-dd");
+            query.put("pcendDate",pcendDate);
+        }
+
         query.put("dwbm","".equals(query.get("dwbm"))?"":(query.get("dwbm")+"").split(","));
         query.put("bmbm","".equals(query.get("bmbm"))?"":(query.get("bmbm")+"").split(","));
         int pagenum = (Integer.parseInt(query.get("page") + "") - 1) * Integer.parseInt(query.get("row") + "");
@@ -525,6 +539,19 @@ public class CountServiceImpl implements CountService {
     }
     @Override
     public List<Map> loadPcInfo(Map query) {
+
+        String endDate = (String) query.get("endDate");
+        if (!org.apache.commons.lang3.StringUtils.isEmpty(endDate)){
+            endDate = DateTime.parse(endDate).plusDays(1).toString("yyyy-MM-dd");
+            query.put("endDate",endDate);
+        }
+
+        String pcendDate = (String) query.get("pcendDate");
+        if (!org.apache.commons.lang3.StringUtils.isEmpty(pcendDate)){
+            pcendDate = DateTime.parse(pcendDate).plusDays(1).toString("yyyy-MM-dd");
+            query.put("pcendDate",pcendDate);
+        }
+
         List<Map> list= countMapper.getPcxFlInfo(query);//18524修改：从视图查询
 //        list.addAll(countMapper.getOfflinePcxFlInfo(query));
         return list;

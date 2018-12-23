@@ -8,23 +8,23 @@ var option=[
         }
     },
     {
-        field: 'cwajs',title: '<span  style=\'font-size:14px\'>2存在瑕疵项的案件数</span>',width: 120,rowspan: 4, align: 'center',
+        field: 'cwajs',title: '<span  style=\'font-size:14px\'>2存在问题的案件数</span>',width: 120,rowspan: 4, align: 'center',
         formatter: function (value, row, index) {
             var r= (row.name.indexOf("合计")>0||row.name=='合计') ?value:'<a href="#" data-field={"id":"'+row.id+'","pid":"'+row.pid+'","fl":""} onclick="pcWin_pcList(this,1)">'+value+'</a>';
             return r;
         }
     },
     {
-        field: 'cwBl',title: '<span  style=\'font-size:14px\'>3存在瑕疵项的案件比例（2/1）</span>',width: 100,rowspan: 4,align: 'center'
+        field: 'cwBl',title: '<span  style=\'font-size:14px\'>3存在问题的案件比例（2/1）</span>',width: 100,rowspan: 4,align: 'center'
     },
     {
-        field: 'cws',title: '<span  style=\'font-size:14px\'>4瑕疵项个数</span>',rowspan: 4,width: 120,align: 'center'
+        field: 'cws',title: '<span  style=\'font-size:14px\'>4问题个数</span>',rowspan: 4,width: 120,align: 'center'
     },
     {
-        field: 'ajpjcws',title: '<span  style=\'font-size:14px\'>案件平均瑕疵项个数(4/1)</span>',rowspan: 4,width: 80,align: 'center'
+        field: 'ajpjcws',title: '<span  style=\'font-size:14px\'>案件平均问题个数(4/1)</span>',rowspan: 4,width: 80,align: 'center'
     }
     ,{
-        field: 'pjcws',title: '<span  style=\'font-size:14px\'>存在瑕疵项案件平均瑕疵项个数（4/2）</span>',rowspan: 4,width: 100,align: 'center'
+        field: 'pjcws',title: '<span  style=\'font-size:14px\'>存在问题案件平均问题个数（4/2）</span>',rowspan: 4,width: 100,align: 'center'
     },
     {
         title: '<span  style=\'font-size:14px\'>条线通用</span>',colspan: 16,rowspan: 2,align: 'center'
@@ -239,7 +239,7 @@ function init_errorItem_overview() {
         }
     });
 //年份
-    $('#errorItem_date').combotree({
+    /*$('#errorItem_date').combotree({
         editable: false,
         panelWidth: 160,
         lines: true,
@@ -254,7 +254,31 @@ function init_errorItem_overview() {
             index_addMousedownDiv(this, "errorItem_date");
         }
     });
-    $('#errorItem_date').combotree("loadData", getYearRange());
+    $('#errorItem_date').combotree("loadData", getYearRange());*/
+
+//完成时间与评查时间，默认为本年1月1日---今天
+    $('#errorItem_wcdate_start').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-01-01'
+    });
+
+    $('#errorItem_wcdate_end').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
+    });
+
+// 评查日期
+    $('#errorItem_pcdate_start').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-01-01'
+    });
+
+    $('#errorItem_pcdate_end').datebox({
+        editable: false,
+        value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
+    });
+
+
     //评查方式
     $('#general_pcfl').combotree({
         method: 'get',
@@ -353,11 +377,16 @@ function data_errorItem_data(id) {
         return;
     }
     obj.dwbm=dwbm;
-    if($('#errorItem_date').combotree('getValues').length==0){
-        Alert("请选择时间");
-        return;
-    }
-    obj.date= $('#errorItem_date').combotree('getValues').length==0?"":$('#errorItem_date').combotree("getValues").join(",");
+    // if($('#errorItem_date').combotree('getValues').length==0){
+    //     Alert("请选择时间");
+    //     return;
+    // }
+    // obj.date= $('#errorItem_date').combotree('getValues').length==0?"":$('#errorItem_date').combotree("getValues").join(",");
+    obj.startDate = $('#errorItem_wcdate_start').datebox('getValue');
+    obj.endDate = $('#errorItem_wcdate_end').datebox('getValue');
+    obj.pcstartDate=$('#errorItem_pcdate_start').datebox('getValue');
+    obj.pcendDate = $('#errorItem_pcdate_end').datebox('getValue');
+
     obj.flxtdm='30003';
     obj.pcflbm =$('#general_pcfl').combotree('getValues').length==0?"":$('#general_pcfl').combotree('getValues').join(",");
     obj.ywtx=$('#general_pcmb').combotree('getValues').length==0||$('#general_pcmb').combotree('getValues').length==8?"":$('#general_pcmb').combotree('getValues').join(",");
@@ -418,7 +447,12 @@ function pcWin_pcList(el,type){
         return;
     }
     obj.dwbm=dwbm;
-    obj.wcrqnf= $('#errorItem_date').combotree('getValues').length==0?"":$('#errorItem_date').combotree("getValues").join(",");
+   // obj.wcrqnf= $('#errorItem_date').combotree('getValues').length==0?"":$('#errorItem_date').combotree("getValues").join(",");
+    obj.startDate = $('#errorItem_wcdate_start').datebox('getValue');
+    obj.endDate = $('#errorItem_wcdate_end').datebox('getValue');
+    obj.pcstartDate=$('#errorItem_pcdate_start').datebox('getValue');
+    obj.pcendDate = $('#errorItem_pcdate_end').datebox('getValue');
+
     obj.flxtdm='30003';
     obj.pcflbm =$('#general_pcfl').combotree('getValues').length==0?"":$('#general_pcfl').combotree('getValues').join(",");
     obj.ywtx=$('#general_pcmb').combotree('getValues').length==0||$('#general_pcmb').combotree('getValues').length==8?"":$('#general_pcmb').combotree('getValues').join(",");
@@ -457,7 +491,7 @@ function pcWin_pcList(el,type){
                 formatter: function (value) { return tipMessage(value); }},
             {field:'AJLB_MC',title:'案件类别',width:90},
             {field:'CBDWMC',title:'承办单位',width:90},
-            {field:'BCBRMC',title:'承办检察官',width:90},
+            {field:'CBRMC',title:'承办检察官',width:90},
             {field:'WCRQ',title:'完成日期', fixed:true, width: 115 ,
                 formatter: function (value) {
                     return sjzh(value);
@@ -559,12 +593,16 @@ function excel_export_data() {
         Alert("请选择单位");
         return;
     }
-    if($('#errorItem_date').combotree('getValues').length==0){
-        Alert("请选择时间");
-        return;
-    }
+    // if($('#errorItem_date').combotree('getValues').length==0){
+    //     Alert("请选择时间");
+    //     return;
+    // }
+    //obj.date= $('#errorItem_date').combotree('getValues').length==0?"":$('#errorItem_date').combotree("getValues").join(",");
+    obj.startDate = $('#errorItem_wcdate_start').datebox('getValue');
+    obj.endDate = $('#errorItem_wcdate_end').datebox('getValue');
+    obj.pcstartDate=$('#errorItem_pcdate_start').datebox('getValue');
+    obj.pcendDate = $('#errorItem_pcdate_end').datebox('getValue');
     obj.dwbm=dwbm;
-    obj.date= $('#errorItem_date').combotree('getValues').length==0?"":$('#errorItem_date').combotree("getValues").join(",");
     obj.flxtdm='30003';
     obj.pcflbm =$('#general_pcfl').combotree('getValues').length==0?"":$('#general_pcfl').combotree('getValues').join(",");
     obj.ywtx=$('#general_pcmb').combotree('getValues').length==0||$('#general_pcmb').combotree('getValues').length==8?"":$('#general_pcmb').combotree('getValues').join(",");
@@ -572,11 +610,11 @@ function excel_export_data() {
     obj.stajbs=$('#stajbs').combotree('getValues').length==0||$('#stajbs').combotree('getValues').length==2?"":$('#stajbs').combotree('getValues').join(",");
     var str="";
     if(tabIndex==0)
-        str="瑕疵项目时间分析";
+        str="问题项时间分析";
     else if(tabIndex==1)
-        str="瑕疵项目地区分析";
+        str="问题项地区分析";
     else if(tabIndex==2)
-        str="瑕疵项目条线分析";
+        str="问题项条线分析";
     obj.type=tabIndex;
     obj.excelName=str;
     $.ajax({

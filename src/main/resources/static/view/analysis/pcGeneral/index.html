@@ -167,10 +167,21 @@
     #pcWin_win_offline .tbody tr:hover {
         background: #fcf8e3;
     }
+
+    .easyui-datebox > input{
+        width: 100px;
+    }
 </style>
 <div style="margin-bottom: 10px" id="tool">
-    <span>案件完成年份</span>
-    <input id="general_date" class="easyui-combobox"/>
+    <!--湖北1213需求调整，案件完成年份全部改为案件完成日期,并且使用时间控件，默认本年1月1日到今天-->
+    <!--<span>案件完成年份</span>-->
+    <!--<input id="general_date" class="easyui-combobox"/>-->
+    <span>案件完成日期</span>
+    <input id="general_wcdate_start" class="easyui-datebox"/>~
+    <input id="general_wcdate_end" class="easyui-datebox"/>
+    <span>评查日期</span>
+    <input id="general_pcdate_start" class="easyui-datebox"/>~
+    <input id="general_pcdate_end" class="easyui-datebox"/>
     <span>承办单位</span>
     <input id="general_dw_combotree" class="easyui-combotree"  style="width: 220px;" />
     <span>评查方式</span>

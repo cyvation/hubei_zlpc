@@ -10,10 +10,25 @@
             <if test="stajbs!=null and stajbs!=''">
                 and jb.stajbs =#{stajbs}
             </if>
-            <if test="date!=null and date!=''">
-                and jb.wcrq_nf in
-                <foreach  item="item" collection="date" index="index"  open="(" separator="," close=")">#{item}</foreach>
+            <!--<if test="date!=null and date!=''">-->
+                <!--and jb.wcrq_nf in-->
+                <!--<foreach  item="item" collection="date" index="index"  open="(" separator="," close=")">#{item}</foreach>-->
+            <!--</if>-->
+
+            <if test="startDate !=null and startDate!=''">
+                AND jb.BPC_WCRQ &gt;= "TO_DATE" (#{startDate}, 'yyyy-mm-dd')
             </if>
+            <if test="endDate !=null and endDate!=''">
+                AND jb.BPC_WCRQ &lt;= "TO_DATE" (#{endDate}, 'yyyy-mm-dd')
+            </if>
+
+            <if test="pcstartDate !=null and pcstartDate!=''">
+                AND jb.CJSJ &gt;= "TO_DATE" (#{pcstartDate}, 'yyyy-mm-dd')
+            </if>
+            <if test="pcendDate !=null and pcendDate!=''">
+                AND jb.CJSJ &lt;= "TO_DATE" (#{pcendDate}, 'yyyy-mm-dd')
+            </if>
+
             <if test="dwbm!=null and dwbm!=''">
                 and jb.BPC_DWBM in
                 <foreach  item="item" collection="dwbm" index="index"  open="(" separator="," close=")">#{item}</foreach>

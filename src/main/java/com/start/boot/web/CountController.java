@@ -1126,7 +1126,7 @@ public class CountController  extends ArchivesSystemBaseController{
             ExcelVo excelVo = new ExcelVo();
             excelVo.setFileName("评查监控数据");
             List<String> header ;
-            header = Arrays.asList("评查案号","评查分类名称", "案件名称", "部门受案号", "承办单位", "承办部门", "承办检察官", "评查员单位", "评查员", "评查日期", "评查状态", "筛选规则", "评查结论");
+            header = Arrays.asList("评查案号","评查方式", "案件名称", "部门受案号", "承办单位", "承办部门", "承办检察官", "评查员单位", "评查员", "评查日期", "评查状态", "筛选规则", "评查结论");
             List<List<String>> data = new ArrayList<List<String>>();
             List<Map> list=datas.getList();
             for(int i=0;i<list.size();i++){
@@ -1323,6 +1323,67 @@ public class CountController  extends ArchivesSystemBaseController{
                 sigleData.add((String)m.get("PCJL"));
                 sigleData.add((String)m.get("PCJDMS"));
                 sigleData.add((m.get("CJSJ")+"").split(" ")[0]);
+                data.add(sigleData);
+            }
+            logger.error("开始导出数据");
+            excelVo.setData(data);
+            excelVo.setHeader(header);
+            String fileName  = excelUtils.exportExcelData(excelVo);
+
+            messageResult = new MessageResult(200,fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            messageResult = new MessageResult(e.getMessage(),500);
+        }
+        return messageResult;
+    }
+
+    @ApiOperation("导出评查案件概览")
+    @PostMapping("/exportPcajgl")
+    public MessageResult exportPcajgl(String json){
+        MessageResult messageResult;
+        try {
+            Param_Pcjk pcjkParam = FastJsonUtils.toObject(Param_Pcjk.class, json);
+            if(org.apache.commons.lang3.StringUtils.isEmpty(pcjkParam.getDwbm())){
+                pcjkParam.setDwbm(getCurrentDwbm());
+            }
+            pcjkParam.setGh(getCurrentGh());
+            /* pcjkParam.setPage(parsePage(getParameter("page")));
+            pcjkParam.setRows(parseRows(getParameter("rows")));*/
+
+            Param_Pager datas = filterService.getPcajgl(pcjkParam);
+            if(datas==null || datas.getList().size()==0){
+                return new MessageResult("暂无数据",500);
+            }
+            ExcelVo excelVo = new ExcelVo();
+            excelVo.setFileName("评查案件清单（含问题说明）");
+            List<String> header ;
+            header = Arrays.asList("问题数","问题说明","评查方式","业务条线", "案件名称", "部门受案号", "案件类别", "承办单位", "承办部门", "承办检察官","承办人身份", "案件完成日期", "评查员单位", "评查员", "评查日期", "评查状态", "筛选规则", "评查结论","评查案号");
+            List<List<String>> data = new ArrayList<List<String>>();
+            List<Map> list=datas.getList();
+            for(int i=0;i<list.size();i++){
+                Map m=list.get(i);
+                List<String> sigleData = new ArrayList<>();
+                sigleData.add((String)m.get("WTSL"));
+                sigleData.add((String)m.get("WTMS"));
+                sigleData.add((String)m.get("PCFLMC"));
+                sigleData.add((String)m.get("YWTXMC"));
+                sigleData.add((String)m.get("AJMC"));
+                sigleData.add((String)m.get("BMSAH"));
+                sigleData.add((String)m.get("AJLB_MC"));
+                sigleData.add((String)m.get("BPC_DWMC"));
+                sigleData.add((String)m.get("BPC_BMMC"));
+                sigleData.add((String)m.get("BPC_MC"));
+                sigleData.add((String)m.get("SF_MC"));
+                sigleData.add((m.get("BPC_WCRQ")+"").split(" ")[0]);
+                sigleData.add((String)m.get("PCR_DWMC"));
+                sigleData.add((String)m.get("PCR_MC"));
+                sigleData.add((m.get("CJSJ")+"").split(" ")[0]);
+                sigleData.add((String)m.get("PCJDMS"));
+                sigleData.add((String)m.get("SXGZMC"));
+                sigleData.add((String)m.get("PCJL"));
+                sigleData.add((String)m.get("PCSAH"));
+
                 data.add(sigleData);
             }
             logger.error("开始导出数据");

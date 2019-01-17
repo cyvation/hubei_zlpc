@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案件概览</title>
+</head>
+<body>
+<script type="text/javascript">
+    AddScript("text/javascript", "script/monitor/ovverive/caseview.js")
+</script>
+<div class="ZXpcjks">
+    <!--<div class="ZXpcjks_tj">
+        <div class="ZXpcjks_tj_1">评查案件筛选</div>
+    </div>-->
+    <div class="ZXpcjks_sj" style="height: 133px;">
+        <!--<div id="radio_caseview_choose" style="width: 15%;float: left;height: 100%;">-->
+        <!--<div style="overflow: hidden;width: 100%;float: left;">-->
+<!--        <div class="ZXpcjks_radio" style="float: left;width: 240px;/*margin-right: 20px*/;display: none;">
+            <div style="width:100%;height: 1px"></div>
+            <div class="radio" id="byypc_radio" style="display: none">
+                <div class="redio_click" data-value="3"></div>
+                <span style="cursor: pointer;">单位已评查</span></div>
+            <div class="radio" id="grypc_radio" style="display: none">
+                <div class="redio_click" data-value="1"></div>
+                <span style="cursor: pointer;">个人已评查</span></div>
+            <div class="radio" id="bmbpc_radio" style="display: none">
+                <div class="redio_click" data-value="2"></div>
+                <span style="cursor: pointer;">部门被评查</span></div>
+            <div class="radio" id="grbpc_radio" style="display: none">
+                <div class="redio_click" data-value="0"></div>
+                <span style="cursor: pointer;">个人被评查</span></div>
+        </div>-->
+
+        <div style="float: left;width: calc(100% - 2px);margin-top: 4px;margin-left: 4px">
+            <div class="ZXpcjks_sj_all_1">
+                <span>评查单位</span>
+                <input id="cbt_caseview_random_pcdw" type="text">
+            </div>
+            <div class="ZXpcjks_sj_all_1">
+                <span>承办单位</span>
+                <input id="cbt_caseview_random_cbdw" type="text">
+            </div>
+            <div class="ZXpcjks_sj_all_1" style="display: none">
+                <span>承办部门</span>
+                <input id="cbt_caseview_random_dept" type="text">
+            </div>
+            <div class="ZXpcjks_sj_all_1" style="width: 24%">
+                <span>评查日期</span>
+                <input id="cbt_caseview_random_ksrq" type="text" class="easyui-datebox" style="width: 100px">
+                <span style=" width: 10px;display: inline-block; text-align: center;">~ </span>
+                <input id="cbt_caseview_random_jsrq" type="text" class="easyui-datebox" style="width: 100px">
+            </div>
+            <div class="ZXpcjks_sj_all_1" style="width: 24%">
+                <span>办结日期</span>
+                <input id="date_caseview_wcbr_begin" type="text" class="easyui-datebox" style="width: 100px">
+                <span style=" width: 10px;display: inline-block; text-align: center;">~ </span>
+                <input id="date_caseview_wcbr_end" type="text" class="easyui-datebox" style="width: 100px">
+            </div>
+            <div class="ZXpcjks_sj_all_1">
+                <span>评查方式</span>
+                <input id="cbt_caseview_random_pcfs" type="text">
+            </div>
+            <div class="ZXpcjks_sj_all_1" style="margin-left: 0px;">
+                <span>案件名称</span>
+                <input id="cbt_caseview_random_ajmc" type="text">
+            </div>
+
+            <div class="ZXpcjks_sj_all_1" style="margin-left: -0px">
+                <span>承办检察官</span>
+                <input id="cbt_caseview_random_cbjcg" type="text" style="width: 138px;">
+            </div>
+            <div class="ZXpcjks_sj_all_1">
+                <span>评查员</span>
+                <input id="cbt_caseview_random_pcy" type="text">
+            </div>
+            <div class="ZXpcjks_sj_all_1">
+                <span>承办人身份</span>
+                <input id="cbt_moniter_random_cbrsf" type="text">
+            </div>
+            <div class="ZXpcjks_sj_all_1" style="margin-left: -0px;">
+                <span>评查结论</span>
+                <input id="cbt_caseview_random_pcjl" type="text">
+            </div>
+            <div class="ZXpcjks_sj_all_1">
+                <span>筛选规则</span>
+                <input id="cbt_caseview_random_cxgz" type="text">
+            </div>
+
+            <div class="ZXpcjks_sj_all_1" style="margin-left: -0px;">
+                <span>评查状态</span>
+                <input id="cbt_caseview_random_pczt" type="text">
+            </div>
+            <div class="ZXpcjks_sj_all_1">
+                <span>业务条线</span>
+                <input id="cbt_caseview_random_pcmb" class="easyui-combotree">
+            </div>
+            <div class="ZXpcjks_sj_all_1">
+                <span>问题项</span>
+                <input id="cbt_caseview_random_pcx" class="easyui-combotree" style="width: 228px;">
+            </div>
+
+
+            <div class="ZXpcjks_sj_all_1" style="width: 10%;margin-left: 20px;">
+                <button id="cbt_caseview_random_cx" class="ZXpcjks_sj_2" style="cursor: pointer">查询</button>
+                <button id="cbt_caseview_random_excel" class="ZXpcjks_sj_2" style="cursor: pointer">导出excel</button>
+            </div>
+        </div>
+    </div>
+    <div class="ZXpcjks_xx" style="/*height: 38px;margin-top: 1px;*/ display: none;">
+        <span style="font-size: 14px;margin-left: 1%">选择分组方式</span>
+        <select id='cbt_caseview_random_xzfzfs' class="easyui-combobox" data-options="editable:false"
+                style="width:200px;height: 28px;">
+            <option value='BFZ'>未分组</option>
+            <option value='BPC_MC'>承办检察官</option>
+            <option value='PCR_MC'>评查员</option>
+            <option value='BPC_DWMC'>承办单位</option>
+            <option value='BPC_BMMC'>承办部门</option>
+            <option value='PCJDMS'>评查状态</option>
+            <option value='PCJL'>评查结论</option>
+        </select>
+
+    </div>
+    <div class="ZXpcjks_content" style="height: calc(100% - 150px)">
+        <table id="datagrid_easyui_caseview_random_sjpc" class="easyui-datagrid ZXpcjks_content1" border="0"></table>
+        <table id="datagrid_easyui_caseview_random_sjpc_no_group" class="easyui-datagrid ZXpcjks_content1"
+               border="0"></table>
+    </div>
+
+</div>
+</body>
+</html>

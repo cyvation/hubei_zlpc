@@ -68,4 +68,8 @@ public interface FilterMapper {
 
     @Select(value = "select ywbm from xt_pc_ryk where dwbm = #{dwbm} and gh = #{gh}")
     List<String> getStuffyYwbm(@Param("dwbm") String currentDwbm, @Param("gh") String currentGh);
+
+    void getPcajgl(Map pcjkParam);
+
+    List<Map> getWtx(Map params);
 }

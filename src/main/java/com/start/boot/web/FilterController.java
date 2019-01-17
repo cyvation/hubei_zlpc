@@ -19,6 +19,7 @@ import com.start.boot.service.PcAjService;
 import com.start.boot.service.XtZzjgDwbmService;
 import com.start.boot.support.utils.EasyUIHelper;
 import com.start.boot.support.utils.FastJsonUtils;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Row;
@@ -554,10 +555,10 @@ public class FilterController extends ArchivesSystemBaseController {
             param.setPcsah("");
             param.setPcslbm("");
             param = filterService.uptSjpcsx(param);
-            result = success(param, "随机/重点筛选案件成功");
+            result = success(param, "筛选案件成功");
         } catch (Exception e) {
-            super.errMsg("随机/重点筛选案件失败", json, e);
-            result = failure(e.getMessage(), "随机/重点筛选案件失败");
+            super.errMsg("筛选案件失败", json, e);
+            result = failure(e.getMessage(), "筛选案件失败");
         }
 
         return result;
@@ -971,5 +972,45 @@ public class FilterController extends ArchivesSystemBaseController {
 
 
     }
+    /**
+     * 评查案件概览
+     */
+    @RequestMapping("/getPcajgl")
+    public String getPcajgl(String json) {
 
+        //响应到页面封装
+        String result = "";
+        try {
+            Param_Pcjk pcjkParam = FastJsonUtils.toObject(Param_Pcjk.class, json);
+           if(StringUtils.isEmpty(pcjkParam.getDwbm())){
+             pcjkParam.setDwbm(getCurrentDwbm());
+           }
+            pcjkParam.setGh(getCurrentGh());
+            pcjkParam.setPage(parsePage(getParameter("page")));
+            pcjkParam.setRows(parseRows(getParameter("rows")));
+
+            Param_Pager data = filterService.getPcajgl(pcjkParam);
+            result = EasyUIHelper.buildDataGridDataSource(data.getList(), data.getCount());
+        } catch (Exception e) {
+            super.errMsg("案件概览数据获取失败", json, e);
+            result = failure(e.getMessage(), "案件概览数据获取失败");
+        }
+
+        return result;
+    }
+
+    @ApiOperation("获取问题项")
+    @RequestMapping("/getWtx")
+    public String getWtx(String ywtx){
+        String resultStr = "";
+        try {
+            Map params = new HashMap<String, Object>();
+            params.put("ywtx", ywtx);
+            List<Map> list = filterService.getWtx(params);
+            resultStr = EasyUIHelper.buildTreeDataSourceWithoutIconCol(list, "DM", "FDM", "MC", "2");
+        }catch (Exception e){
+            super.errMsg("获取问题项列表失败", null, e);
+        }
+        return resultStr;
+    }
 }

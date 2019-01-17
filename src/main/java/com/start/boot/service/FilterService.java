@@ -72,4 +72,8 @@ public interface FilterService {
     boolean removeAssignJxaj(JxpcAj jxpcAj) throws Exception;
 
     List<String> getStuffyYwbm(String currentDwbm, String currentGh);
+
+    Param_Pager getPcajgl(Param_Pcjk pcjkParam) throws Exception;
+
+    List<Map> getWtx(Map params);
 }

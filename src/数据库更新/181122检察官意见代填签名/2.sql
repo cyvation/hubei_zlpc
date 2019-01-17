@@ -52,5 +52,3 @@ BEGIN
 
   END LOOP;
 END;
-
---todo 添加检察长人员 xt_qx_ryjsfp

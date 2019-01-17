@@ -329,7 +329,8 @@ public class MenuButtonXxzyValidate {
                 return true;
             }
         }
-        List<XtQxRyJsfp> xtQxRyJsfp = xtZzjgRmbmService.getXtQxRyJsfp(menuQuery.getDwbm(), menuQuery.getGh());
+//        湖北181227 ：没有使用评查助理，不需要评查助理角色判断
+/*        List<XtQxRyJsfp> xtQxRyJsfp = xtZzjgRmbmService.getXtQxRyJsfp(menuQuery.getDwbm(), menuQuery.getGh());
         if (!CollectionUtils.isEmpty(xtQxRyJsfp)) {
             List<String> collect = xtQxRyJsfp.stream().map(x -> x.getJsbm()).collect(Collectors.toList());
             //评查助理没有评查报审按钮
@@ -337,7 +338,7 @@ public class MenuButtonXxzyValidate {
                 return false;
             }
             //合格案件，分管和检察长。不需要送审
-/*            if ("合格案件".equalsIgnoreCase(jbxx.getPCJL())){
+*//*            if ("合格案件".equalsIgnoreCase(jbxx.getPCJL())){
                 if (collect.contains("107") || collect.contains("120")) {
                     return false;
                 }
@@ -345,8 +346,8 @@ public class MenuButtonXxzyValidate {
                 if (collect.contains("107") || collect.contains("120")||collect.contains("104")) {
                     return false;
                 }
-            }*/
-        }
+            }*//*
+        }*/
         return true;
     }
 

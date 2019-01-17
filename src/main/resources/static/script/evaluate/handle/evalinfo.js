@@ -543,7 +543,7 @@ function init_eval_info_docfiles(){
         }
         var wjlx = node.attributes.LX; //文件类型（0.附件 1.评查方案 2.评查流转单 3.评查案件报告 4.评查汇总报告 5.自动评查报告）
         // 仅评查办理阶段可删除流转单
-        if (EVAL_CASE.PCJDBH >= '007' && wjlx == PCLZDLX){
+        if (EVAL_CASE.PCJDBH >= '011' && wjlx == PCLZDLX){
             Alert("流转单已生效，不能删除！");
             return;
         }
@@ -732,6 +732,7 @@ function open_eval_file(jzwjbh, pczybm, pczylx, wjlx, wjlj) {
                     var ext = result.value.substring(result.value.lastIndexOf('.'));
                     switch (ext) {
                         case ".pdf":
+                            if("0"!=wjlx){//附件调用本地默认软件
                             show_eval_doc_panel("pdf");
                             CloseProgress();
 
@@ -740,6 +741,18 @@ function open_eval_file(jzwjbh, pczybm, pczylx, wjlx, wjlj) {
                             }).embed("divPdf");
 
                             break;
+                            } else{
+                                // 下载附件
+                                try{
+                                    var localFile = boundObjectForJS.downloadFile(getRootPath() + result.value + "," + LOCAL_PATH + result.value);
+                                    // 调用本机默认程序打开附件
+                                    boundObjectForJS.callDefaultEXE(localFile);
+                                    CloseProgress();
+                                }catch (e){
+                                    CloseProgress();
+                                }
+                                break;
+                            }
                         case ".doc":
                         case ".docx":
                             show_eval_doc_panel("doc");

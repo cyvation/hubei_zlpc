@@ -1,12 +1,13 @@
 package com.start.boot.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by lenovo on 2017/10/16.
  * 用户信息：
  */
-public class User {
+public class User implements Serializable{
 
     //单位编码
     public String DWBM;

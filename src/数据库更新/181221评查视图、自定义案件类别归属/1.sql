@@ -61,8 +61,11 @@ SELECT
     from yx_pc_jbxx ju LEFT JOIN xt_pc_mb mu ON   ju.pcmbbm=mu.pcmbbm
     LEFT JOIN xt_dm_stajbs st ON ju.ajlb_bm=st.ajlb_bm
     left join xt_pc_sxgz gz on ju.sxgzbm = gz.gzbm
-    WHERE ju.sfsc='N' AND ju.pcjdbh='011' AND to_char(nvl(ju.bpc_wcrq,ju.bpc_wcbzrq),'yyyy')>='2013' --AND  ju.wcrq_nf>='2013' --AND ju.wcrq_nf<'2018'
+    WHERE ju.sfsc='N'
+          AND ju.pcjdbh='011'
+    --AND to_char(nvl(ju.bpc_wcrq,ju.bpc_wcbzrq),'yyyy')>='2013'
 
+/*
     UNION  ALL
 
     SELECT
@@ -127,3 +130,4 @@ SELECT
       left join xt_pc_sxgz gz on jv.sxgzbm = gz.gzbm
     WHERE  jv.wcrq_nf>='2013' --AND jv.wcrq_nf<'2018'
     AND jv.sfsc='N';
+*/

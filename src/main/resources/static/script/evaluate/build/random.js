@@ -187,13 +187,15 @@ function eval_random_marksInit(pcxx) {
     }else if(pcxx.PCFLBM == "007"){//湖北的随机评查
         //完成日期
         $('#date_eval_build_rd_custom_begin').datebox({
-            editable: true,
+            editable: false,
+            disabled:true,
             value:'2013-01-01'
             // value: new Date().getFullYear() + '-01-01'
         });
 
         $('#date_eval_build_rd_custom_end').datebox({
-            editable: true,
+            editable: false,
+            disabled:true,
             value:'2016-12-31'
             // value: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + (new Date().getDate())
         });

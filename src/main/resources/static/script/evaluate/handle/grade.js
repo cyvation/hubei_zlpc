@@ -602,7 +602,7 @@ function init_eval_info_docfiles(){
         }
         var wjlx = node.attributes.LX; //文件类型（0.附件 1.评查方案 2.评查流转单 3.评查案件报告 4.评查汇总报告 5.自动评查报告）
         // 仅评查办理阶段可删除流转单
-        if (EVAL_CASE.PCJDBH >= '007' && wjlx == PCLZDLX){
+        if (EVAL_CASE.PCJDBH >= '011' && wjlx == PCLZDLX){
             Alert("流转单已生效，不能删除！");
             return;
         }

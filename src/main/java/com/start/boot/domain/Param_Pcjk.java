@@ -41,8 +41,19 @@ public class Param_Pcjk extends Param_Pager {
     private String type;
     //案件名称
     private  String ajmc;
+    //部门受案号
+    private  String bmsah;
     //筛选规则编码
     private  String sxgzbm;
+
+    //业务条线
+    private  String ywtx;
+
+    //承办人身份
+    private  String cbrsf;
+
+    //评查项编码
+    private  String pcxbm;
 
     public String getDwbm() {
         return dwbm;
@@ -175,5 +186,37 @@ public class Param_Pcjk extends Param_Pager {
 
     public void setBjrqend(String bjrqend) {
         this.bjrqend = bjrqend;
+    }
+
+    public String getYwtx() {
+        return ywtx;
+    }
+
+    public void setYwtx(String ywtx) {
+        this.ywtx = ywtx;
+    }
+
+    public String getPcxbm() {
+        return pcxbm;
+    }
+
+    public void setPcxbm(String pcxbm) {
+        this.pcxbm = pcxbm;
+    }
+
+    public String getBmsah() {
+        return bmsah;
+    }
+
+    public void setBmsah(String bmsah) {
+        this.bmsah = bmsah;
+    }
+
+    public String getCbrsf() {
+        return cbrsf;
+    }
+
+    public void setCbrsf(String cbrsf) {
+        this.cbrsf = cbrsf;
     }
 }

@@ -175,7 +175,7 @@ function init_moniter_random_EasyUiCom() {
 
         },
         onShowPanel: index_onShowPanel,
-        onHidePanel: index_onHidePanel,
+        onHidePanel: index_onHidePanel/*,
         onCheck: function (node, checked) {
             var selectedPcfs = $('#cbt_moniter_random_pcfs').combotree('getValues').join(",");//评查分类编码
             if (selectedPcfs.length == 3) { // 评查方式单选
@@ -191,7 +191,7 @@ function init_moniter_random_EasyUiCom() {
                 $('#cbt_moniter_random_cxgz').combotree({disabled: true});
             }
 
-        }
+        }*/
     });
 
     // 获取筛选规则列表
@@ -281,6 +281,9 @@ function init_moniter_random_EasyUiCom() {
 
     //案件名称
     $('#cbt_moniter_random_ajmc').textbox({});
+
+    //受案号
+    $('#cbt_moniter_random_bmsah').textbox({});
 
     //完成日期
     $('#cbt_moniter_random_ksrq').datebox({
@@ -387,7 +390,7 @@ function init_table_monitor_Ajlb_DataGrid_NULL() {
             {field: 'PCSLBM', title: '评查受理编码', hidden: true},
             {field: 'PCFLBM', title: '评查分类编码', hidden: true},
             {field: 'PCSAH', title: '评查案号', width: 180, sortable: true},
-            {field: 'PCFLMC', title: '评查分类名称', width: 90, sortable: true},
+            {field: 'PCFLMC', title: '评查方式', width: 90, sortable: true},
             {
                 field: 'AJMC', title: '案件名称', width: 160, sortable: true,
                 formatter: function (value) {
@@ -465,7 +468,7 @@ function init_table_monitor_Ajlb_DataGrid(groupCol) {
             {field: 'PCSLBM', title: '评查受理编码', hidden: true},
             {field: 'PCFLBM', title: '评查分类编码', hidden: true},
             {field: 'PCSAH', title: '评查案号', width: 180, sortable: true},
-            {field: 'PCFLMC', title: '评查分类名称', width: 90, sortable: true},
+            {field: 'PCFLMC', title: '评查方式', width: 90, sortable: true},
             {
                 field: 'AJMC', title: '案件名称', width: 160, sortable: true,
                 formatter: function (value) {
@@ -569,6 +572,7 @@ function load_monitor_random_sjpc_filter() {
     obj.BJRQEND = $('#date_moniter_wcbr_end').datebox('getValue');//办结日期结束
     obj.TYPE = $(".redio_click_no").attr('data-value');//类型
     obj.AJMC = $('#cbt_moniter_random_ajmc').textbox('getValue');//案件名称
+    obj.BMSAH = $('#cbt_moniter_random_bmsah').textbox('getValue');//案号
     obj.bmbm = $("#cbt_moniter_random_dept").combotree('getValues').join(","); // 部门
 
     $('#datagrid_easyui_monitor_random_sjpc').datagrid({
@@ -603,8 +607,12 @@ function load_monitor_random_sjpc_filter_excel() {
     obj.CBR = $('#cbt_moniter_random_cbjcg').textbox('getValue');//承办检察官
     obj.WCRQBNG = $('#cbt_moniter_random_ksrq').datebox('getValue');//评查日期开始
     obj.WCRQEND = $('#cbt_moniter_random_jsrq').datebox('getValue');//评查日期结束
+
+    obj.BJRQBNG = $('#date_moniter_wcbr_begin').datebox('getValue');//办结日期开始
+    obj.BJRQEND = $('#date_moniter_wcbr_end').datebox('getValue');//办结日期结束
     obj.TYPE = $(".redio_click_no").attr('data-value');//类型
     obj.AJMC = $('#cbt_moniter_random_ajmc').textbox('getValue');//案件名称
+    obj.BMSAH = $('#cbt_moniter_random_bmsah').textbox('getValue');//案号
     obj.bmbm = $("#cbt_moniter_random_dept").combotree('getValues').join(","); // 部门
     $.ajax({
         type: 'post',
@@ -648,8 +656,12 @@ function load_monitor_random_sjpc_filter_excel() {
     obj.CBR = $('#cbt_moniter_random_cbjcg').textbox('getValue');//承办检察官
     obj.WCRQBNG = $('#cbt_moniter_random_ksrq').datebox('getValue');//评查日期开始
     obj.WCRQEND = $('#cbt_moniter_random_jsrq').datebox('getValue');//评查日期结束
+
+    obj.BJRQBNG = $('#date_moniter_wcbr_begin').datebox('getValue');//办结日期开始
+    obj.BJRQEND = $('#date_moniter_wcbr_end').datebox('getValue');//办结日期结束
     obj.TYPE = $(".redio_click_no").attr('data-value');//类型
     obj.AJMC = $('#cbt_moniter_random_ajmc').textbox('getValue');//案件名称
+    obj.BMSAH = $('#cbt_moniter_random_bmsah').textbox('getValue');//案号
     obj.bmbm = $("#cbt_moniter_random_dept").combotree('getValues').join(","); // 部门
     $.ajax({
         type: 'post',

@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author 李治鑫
  * @since 2017-5-9
  */
-public class Jsbm {
+public class Jsbm implements Serializable{
 
 	/**
 	 * 角色编号

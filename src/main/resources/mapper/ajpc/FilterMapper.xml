@@ -186,6 +186,7 @@
                                           #{p_bjrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
                                           #{p_type, mode=IN, jdbcType=VARCHAR},
                                           #{p_ajmc, mode=IN, jdbcType=VARCHAR},
+                                          #{p_bmsah, mode=IN, jdbcType=VARCHAR},
                                           #{p_pagesize,mode=IN,jdbcType=NUMERIC},
                                           #{p_pageindex,mode=IN,jdbcType=NUMERIC},
                                           #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
@@ -575,4 +576,60 @@
             </foreach>
     </delete>
 
+    <!--评查案件概览（含问题数量和问题描述）-->
+    <select id="getPcajgl" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+          call pkg_pcsx.proc_get_pcajgllist(#{p_dwbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_cbdwbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_bmbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_gh, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pcdwbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pcflbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_sxgzbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pcy, mode=IN, jdbcType=VARCHAR},
+                                          #{p_cbr, mode=IN, jdbcType=VARCHAR},
+                                          #{p_cbrsf, mode=IN, jdbcType=VARCHAR},
+
+                                          #{p_pcjl, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pczt, mode=IN, jdbcType=VARCHAR},
+
+                                          #{p_ywtx, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pcxbm, mode=IN, jdbcType=VARCHAR},
+
+                                          #{p_wcrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                          #{p_wcrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+
+                                          #{p_bjrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                          #{p_bjrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                          #{p_type, mode=IN, jdbcType=VARCHAR},
+                                          #{p_ajmc, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                          #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                          #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=pgetPcajglMap},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+    <resultMap id="pgetPcajglMap" type="map"></resultMap>
+
+    <!--根据问题项树-->
+    <select id="getWtx" parameterType="java.util.Map" resultType="java.util.Map">
+        WITH wtxtab AS (
+        SELECT DISTINCT x.flxtdm grade,x.fflxtdm prt_dm,prt.mc prt_mc ,x.xtdm chd_dm,chd.mc chd_mc
+        FROM xt_pc_pcx x
+        INNER JOIN xt_pc_dm prt ON prt.dm = x.fflxtdm and prt.SFSC='N'
+        INNER JOIN xt_pc_dm chd ON chd.dm = x.xtdm and chd.SFSC='N'
+        WHERE  x.pcflbm='001' --AND x.flxtdm ='30003' --错误30002 瑕疵30003
+        <if test="ywtx !=null and ywtx!=''">
+            AND x.ywtx IN ( ${ywtx} )
+        </if>
+        -- ORDER by x.fflxtdm,x.xtdm
+        )
+        SELECT * from (
+        SELECT DISTINCT p.prt_dm dm,'2' fdm,p.prt_mc mc,'2' dmfl from wtxtab p --系统代码表fdm=2
+        UNION ALL
+        SELECT DISTINCT c.prt_dm||c.chd_dm dm,c.prt_dm fdm,c.chd_mc mc,'4' dmfl from wtxtab c --系统代码表fdm=4
+        )  a ORDER by a.fdm,decode(mc,'其他','49999',a.dm)
+
+    </select>
 </mapper>

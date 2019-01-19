@@ -1,7 +1,7 @@
 var ztqkcolumn=[[
     {field: 'id',title: '<span  style="font-size:14px">id</span>',hidden:true },
     {field: 'pid',title: '<span  style="font-size:14px">pid</span>',hidden:true},
-    {field: 'name', title: '<span  style="font-size:14px">筛选规则</span>', width: 300, align: 'center'},
+    {field: 'name', title: '<span  style="font-size:14px">筛选规则</span>', width: 300, align: 'left'},
     {field: 'cbrcount',title: '<span  style="font-size:14px">1办案人数</span>',width: 70,align: 'center'},
     {field: 'bjcount',title: '<span  style=\'font-size:14px\'>2办结案件数</span>',width: 80, align: 'center'},
     {field: 'pcrcount',title: '<span  style=\'font-size:14px\'>3评查人员数</span>',width: 70,align: 'center'},
@@ -323,10 +323,10 @@ function init_analysis_zdfx_tool() {
         },
         onLoadSuccess: function (node, data) {
 
-            if (data != null && data.length >= 1){
-
+          /*  if (data != null && data.length >= 1){
+                setAllCheckbox('#analysis_zdaj_ajtjlb', data);
                 $('#analysis_zdaj_sxgz').combotree("setValue", data[0].id);
-            }
+            }*/
             index_addMousedownDiv(this, "zdaj_ztqk_sxgz");
         },
         onSelect: function (node) {

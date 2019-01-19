@@ -60,7 +60,41 @@ CREATE OR REPLACE VIEW V_BJAJXX
       LEFT JOIN xt_dm_stajbs st ON s.ajlb_bm = st.ajlb_bm
       INNER JOIN xt_pc_dm d ON s.ywtx = d.dm
       LEFT JOIN yx_pc_jbxx j ON s.bmsah=j.bmsah AND j.sfsc='N'
+     INNER JOIN xt_pc_sxgz gz ON s.sxgzbm=gz.gzbm AND gz.sfzdy='N' --重点非自定义
     WHERE s.pcflbm = '008' /*and s.wcrq_nf<'2018'*/
+
+   UNION ALL
+
+    SELECT zx.pcflbm,
+      zx.bmsah,
+      zx.tysah,
+      zx.ajmc,
+      zx.ajlb_bm,
+      zx.ajlb_mc,
+      zx.bpc_dwbm,
+      zx.bpc_dwmc,
+      zx.bpc_bmbm,
+      zx.bpc_bmmc,
+      zx.bpc_gh,
+      zx.bpc_mc,
+      zx.bpc_slrq,
+      zx.bpc_wcrq wcrq,
+      zx.way,
+      m.ywtx,
+      d.mc ywtx_mc,
+      nvl(zx.sfldba,'N') sfldba,
+      wcrq_nf,
+      nvl(st.stajbs,'0') stajbs,
+      zx.sxgzbm gzbm,
+      gz.gzmc ,
+      gz.fgzbm fgzbm
+    FROM yx_pc_jbxx zx
+      LEFT JOIN xt_dm_stajbs st ON zx.ajlb_bm=st.ajlb_bm
+      INNER JOIN xt_pc_mb m ON zx.pcmbbm = m.pcmbbm
+      INNER JOIN xt_pc_dm d ON m.ywtx=d.dm
+      INNER JOIN xt_pc_sxgz gz ON zx.sxgzbm=gz.gzbm AND gz.sfzdy='Y' --重点自定义筛选的案件
+    WHERE zx.pcflbm='008'
+          AND zx.sfsc='N'
 
     UNION ALL --专项的办结案件
 

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.start.boot.dao.ajpc.AnalysisMapper">
 
@@ -1369,11 +1369,11 @@
     <!--获取重点案件质量分析中的筛选规则-->
     <select id="getZdSxgz" resultMap="zdSxgzMap">
        select gz.gzbm BM,
-       gz.gzmc MC,
+        decode(gz.sfzdy,'Y',gz.gzmc||'('||gz.sslb||'重点)',gz.gzmc) MC,
        nvl(gz.fgzbm,'-1') FBM
         from xt_pc_sxgz  gz
-        where gz.sfzdy='N'
-        and gz.dwbm = #{djdwbm}
+        where
+        gz.dwbm = #{djdwbm}
         and gz.pcflbm= #{pcflbm}
     </select>
 

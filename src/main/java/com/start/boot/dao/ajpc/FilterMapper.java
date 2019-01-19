@@ -71,5 +71,7 @@ public interface FilterMapper {
 
     void getPcajgl(Map pcjkParam);
 
+    void exportPcwtxtop(Map pcjkParam);
+
     List<Map> getWtx(Map params);
 }

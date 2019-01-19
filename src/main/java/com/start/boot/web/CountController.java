@@ -1398,4 +1398,47 @@ public class CountController  extends ArchivesSystemBaseController{
         }
         return messageResult;
     }
+
+    @ApiOperation("导出评查案问题项TOP")
+    @PostMapping("/exportPcwtxtop")
+    public MessageResult exportPcwtxtop(String json){
+        MessageResult messageResult;
+        try {
+            Param_Pcjk pcjkParam = FastJsonUtils.toObject(Param_Pcjk.class, json);
+            if(org.apache.commons.lang3.StringUtils.isEmpty(pcjkParam.getDwbm())){
+                pcjkParam.setDwbm(getCurrentDwbm());
+            }
+            pcjkParam.setGh(getCurrentGh());
+            /* pcjkParam.setPage(parsePage(getParameter("page")));
+            pcjkParam.setRows(parseRows(getParameter("rows")));*/
+
+            Param_Pager datas = filterService.exportPcwtxtop(pcjkParam);
+            if(datas==null || datas.getList().size()==0){
+                return new MessageResult("暂无数据",500);
+            }
+            ExcelVo excelVo = new ExcelVo();
+            excelVo.setFileName("评查问题项排名");
+            List<String> header ;
+            header = Arrays.asList("问题项","存在该问题的案件数");
+            List<List<String>> data = new ArrayList<List<String>>();
+            List<Map> list=datas.getList();
+            for(int i=0;i<list.size();i++){
+                Map m=list.get(i);
+                List<String> sigleData = new ArrayList<>();
+                sigleData.add((String)m.get("WTX"));
+                sigleData.add((String)m.get("SL"));
+                data.add(sigleData);
+            }
+            logger.error("开始导出数据");
+            excelVo.setData(data);
+            excelVo.setHeader(header);
+            String fileName  = excelUtils.exportExcelData(excelVo);
+
+            messageResult = new MessageResult(200,fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            messageResult = new MessageResult(e.getMessage(),500);
+        }
+        return messageResult;
+    }
 }

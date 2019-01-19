@@ -612,6 +612,41 @@
     </select>
     <resultMap id="pgetPcajglMap" type="map"></resultMap>
 
+    <!--评查问题项排名（评查监控）-->
+    <select id="exportPcwtxtop" parameterType="map" statementType="CALLABLE">
+        <![CDATA[
+          call pkg_pcsx.proc_get_pcwtxtop(#{p_dwbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_cbdwbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_bmbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_gh, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pcdwbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pcflbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_sxgzbm, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pcy, mode=IN, jdbcType=VARCHAR},
+                                          #{p_cbr, mode=IN, jdbcType=VARCHAR},
+                                          #{p_cbrsf, mode=IN, jdbcType=VARCHAR},
+
+                                          #{p_pcjl, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pczt, mode=IN, jdbcType=VARCHAR},
+
+                                          #{p_ywtx, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pcxbm, mode=IN, jdbcType=VARCHAR},
+
+                                          #{p_wcrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                          #{p_wcrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+
+                                          #{p_bjrqbng, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                          #{p_bjrqend, mode=IN, javaType=java.sql.Date,jdbcType=TIME},
+                                          #{p_type, mode=IN, jdbcType=VARCHAR},
+                                          #{p_ajmc, mode=IN, jdbcType=VARCHAR},
+                                          #{p_pagesize,mode=IN,jdbcType=NUMERIC},
+                                          #{p_pageindex,mode=IN,jdbcType=NUMERIC},
+                                          #{p_count,mode=OUT,jdbcType=NUMERIC,javaType=Integer},
+                                          #{p_cursor,mode=OUT,jdbcType=CURSOR,javaType=java.sql.ResultSet,resultMap=pgetPcajglMap},
+                                          #{p_errmsg,mode=OUT,jdbcType=VARCHAR})
+        ]]>
+    </select>
+
     <!--根据问题项树-->
     <select id="getWtx" parameterType="java.util.Map" resultType="java.util.Map">
         WITH wtxtab AS (

@@ -350,16 +350,17 @@ function init_caseview_random_EasyUiCom() {
     $("#cbt_caseview_random_cx").bind("click", function () {
         load_caseview_random_sjpc_filter();
     });
-//点击查询按钮事件
+//点击导出案件按钮事件
     $("#cbt_caseview_random_excel").unbind("click");
     $("#cbt_caseview_random_excel").bind("click", function () {
         load_caseview_random_sjpc_filter_excel();
     });
     init_table_caseview_Ajlb_DataGrid_NULL();
 
-    $("#cbt_caseview_random_excel").unbind("click");
-    $("#cbt_caseview_random_excel").bind("click", function () {
-        load_caseview_random_sjpc_filter_excel();
+    //点击导出问题项按钮事件
+    $("#cbt_caseview_random_wtx").unbind("click");
+    $("#cbt_caseview_random_wtx").bind("click", function () {
+        load_caseview_random_sjpc_filter_wtx();
     });
     // 分页控件(中文)
     $('#datagrid_easyui_caseview_random_sjpc').datagrid('getPager').pagination({
@@ -411,7 +412,7 @@ function init_table_caseview_Ajlb_DataGrid_NULL() {
             {field: 'PCFLBM', title: '评查分类编码', hidden: true},
             {field: 'PCSAH', title: '评查案号', width: 80, hidden: true},
             {field: 'WTSL', title: '问题数', width: 60, sortable: true,align:'center'},
-            {field: 'WTMS', title: '问题说明', width: 510, formatter: function (value) {
+            {field: 'WTMS', title: '问题说明', width: 460, formatter: function (value) {
                 return "<span title='" + value + "'>" + value + "</span>";
             }},
             {field: 'PCFLMC', title: '评查方式', width: 70, sortable: true,align:'center'},
@@ -515,7 +516,7 @@ function load_caseview_random_sjpc_filter() {
 
 
 
-//获取案件列表（导出
+//导出案件
 function load_caseview_random_sjpc_filter_excel() {
 
     var obj = new Object();
@@ -563,6 +564,58 @@ function load_caseview_random_sjpc_filter_excel() {
         },
         error: function (xhr) {
             Alert('导出评查案件清单出错\n\n' + xhr.responseText);
+        }
+    });
+
+}
+//导出问题项
+function load_caseview_random_sjpc_filter_wtx() {
+
+    var obj = new Object();
+    obj.PCDWBM = $('#cbt_caseview_random_pcdw').combotree('getValues').join(",");//评查单位编码
+    obj.CBDWBM = $('#cbt_caseview_random_cbdw').combotree('getValue') == undefined ? userInfo.DWBM : $('#cbt_caseview_random_cbdw').combotree('getValues').join(",");//承办单位编码
+    obj.PCFLBM = $('#cbt_caseview_random_pcfs').combotree('getValues').join(",");//评查分类编码
+    obj.YWTX = $('#cbt_caseview_random_pcmb').combotree('getValues').join(",");//评查模板编码(业务条线)
+    obj.PCXBM = $('#cbt_caseview_random_pcx').combotree('getValues').join(",");//评查项编码
+    obj.CBRSF = $('#cbt_moniter_random_cbrsf').combotree('getValues').join(",");//承办人身份
+    var tempPCJL = $('#cbt_caseview_random_pcjl').combotree('getText');
+    var tempArr = tempPCJL.split(",");
+    var tempStr = '';
+    if (tempArr.length > 0 && tempPCJL) {
+        for (var o in tempArr) {
+            tempStr += "'" + tempArr[o] + "'" + ",";
+        }
+        tempStr = tempStr.substring(0, tempStr.length - 1);
+        obj.PCJL = tempStr;
+    }
+    //obj.PCJL = $('#cbt_caseview_random_pcjl').combotree('getText');
+    obj.PCZT = $('#cbt_caseview_random_pczt').combotree('getValues').join(",");//评查状态
+    obj.sxgzbm = $('#cbt_caseview_random_cxgz').combotree('getValues').join(","); //筛选规则
+    obj.PCY = $('#cbt_caseview_random_pcy').textbox('getValue');//评查员
+    obj.CBR = $('#cbt_caseview_random_cbjcg').textbox('getValue');//承办检察官
+    obj.WCRQBNG = $('#cbt_caseview_random_ksrq').datebox('getValue');//评查日期开始
+    obj.WCRQEND = $('#cbt_caseview_random_jsrq').datebox('getValue');//评查日期结束
+
+    obj.BJRQBNG = $('#date_caseview_wcbr_begin').datebox('getValue');//办结日期开始
+    obj.BJRQEND = $('#date_caseview_wcbr_end').datebox('getValue');//办结日期结束
+
+    obj.TYPE = $(".redio_click_no").attr('data-value');//类型
+    obj.AJMC = $('#cbt_caseview_random_ajmc').textbox('getValue');//案件名称
+    obj.bmbm = $("#cbt_caseview_random_dept").combotree('getValues').join(","); // 部门
+    $.ajax({
+        type: 'post',
+        url: getRootPath() + '/count/exportPcwtxtop',
+        dataType: 'json',
+        data: {json: JSON.stringify(obj)},
+        success: function (result) {
+            if (result.code == 200) {
+                var path = getRootPath();
+                window.location.href = path+ result.data;
+            }
+            //$('#transmit').window('close');
+        },
+        error: function (xhr) {
+            Alert('导出评查问题项出错\n\n' + xhr.responseText);
         }
     });
 

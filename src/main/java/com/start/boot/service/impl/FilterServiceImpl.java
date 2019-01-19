@@ -747,6 +747,51 @@ public class FilterServiceImpl implements FilterService {
 
         return pcjkParam;
     }
+    // 问题项排名（评查监控）
+    @Override
+    public Param_Pager exportPcwtxtop(Param_Pcjk pcjkParam) throws Exception{
+        String errMsg = "";
+
+        Map map = new HashMap();
+        map.put("p_dwbm",pcjkParam.getDwbm());//评查单位编码
+        map.put("p_cbdwbm", pcjkParam.getCbdwbm()); //承办单位编码
+        map.put("p_bmbm",pcjkParam.getBmbm()); // 部门编码
+        map.put("p_gh",pcjkParam.getGh());//工号
+        map.put("p_pcdwbm",pcjkParam.getPcdwbm());//评查单位编码
+        map.put("p_pcflbm",pcjkParam.getPcflbm());//评查分类编码
+        map.put("p_sxgzbm",pcjkParam.getSxgzbm());//筛选规则编码
+        map.put("p_pcy",pcjkParam.getPcy());//评查员
+        map.put("p_cbr",pcjkParam.getCbr());//承办人
+        map.put("p_cbrsf",pcjkParam.getCbrsf());//承办人身份
+
+        map.put("p_pcjl",pcjkParam.getPcjl());//评查结论
+        map.put("p_pczt",pcjkParam.getPczt());//评查状态
+
+        map.put("p_ywtx",pcjkParam.getYwtx());//业务条线
+        map.put("p_pcxbm",pcjkParam.getPcxbm());//评查项
+
+        map.put("p_wcrqbng",OracleTimeUtils.format(pcjkParam.getWcrqbng()));//评查开始时间
+        map.put("p_wcrqend",OracleTimeUtils.format(pcjkParam.getWcrqend()));//评查结束时间
+
+        map.put("p_bjrqbng",OracleTimeUtils.format(pcjkParam.getBjrqbng()));//案件办结开始时间
+        map.put("p_bjrqend",OracleTimeUtils.format(pcjkParam.getBjrqend()));//案件办结结束时间
+
+        map.put("p_type",pcjkParam.getType());//类型
+        map.put("p_ajmc", pcjkParam.getAjmc());//案件名称
+        map.put("p_pagesize",pcjkParam.getRows());//页大小
+        map.put("p_pageindex",pcjkParam.getPage());//页索引
+
+        filterMapper.exportPcwtxtop(map);
+        errMsg = DataAccessHelper.getString(map,"p_errmsg");
+        if (StringUtils.isNoneEmpty(errMsg)) {
+            throw new Exception(errMsg);
+        }
+
+        pcjkParam.setCount(DataAccessHelper.getInteger(map, "p_count"));
+        pcjkParam.setList(DataAccessHelper.getListMap(map, "p_cursor"));
+
+        return pcjkParam;
+    }
 
     @Override
     public List<Map> getWtx(Map params) {

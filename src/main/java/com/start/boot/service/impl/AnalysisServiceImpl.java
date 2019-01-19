@@ -10,6 +10,7 @@ import com.start.boot.pojo.dto.ZdFxzlfxDto;
 import com.start.boot.pojo.vo.*;
 import com.start.boot.query.ZdFxQuery;
 import com.start.boot.service.AnalysisService;
+import com.start.boot.support.utils.DateUtils;
 import com.start.boot.utils.ExportExcelUtils;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -389,18 +390,28 @@ public class AnalysisServiceImpl implements AnalysisService {
         try {
             xtdms = getXtdmByLbbm("9102");//获取评查结论
 //            String[] wcrqnfs = params.getWcrqnf().split(",");
-            String[] wcrqnfs = params.getStartDate().split(","); // 由于以前根据案件年份分开算，现在兼容
-            for (int i = 0; i < wcrqnfs.length; i++) {
-                nf = wcrqnfs[i];
+//            String[] wcrqnfs = params.getStartDate().split(","); // 由于以前根据案件年份分开算，现在兼容
+            int st_nf=Integer.parseInt(params.getStartDate().substring(0,4));
+            int ed_nf=Integer.parseInt(params.getEndDate().substring(0,4));
+            for (int inf = st_nf; inf <= ed_nf; inf++) {
+               // nf = wcrqnfs[i];
                // map.put("wcrqnf", nf);
-                map.put("startDate", params.getStartDate());
-                map.put("endDate", params.getEndDate());
+//                map.put("startDate", params.getStartDate());
+                map.put("startDate", inf+"-01-01");
+                if(DateUtils.converToDate(inf+"-12-31","yyyy-MM-dd")
+                        .compareTo(DateUtils.converToDate(params.getEndDate(),"yyyy-MM-dd"))<0)
+                {
+                    map.put("endDate", inf+"-12-31");
+                } else{
+                    map.put("endDate", params.getEndDate());
+                }
                 map.put("pcstartDate", params.getPcstartDate());
                 map.put("pcendDate", params.getPcendDate());
                 ajqkzlflVo = new AjqkzlflVo();
                 bjajs = analysisMapper.getNdBjAjCount(map);
                 pcajs = analysisMapper.getNdPcAjCount(map);
-                ajqkzlflVo.setName(nf.split("-")[0]);
+//                ajqkzlflVo.setName(nf.split("-")[0]);
+                ajqkzlflVo.setName(String.valueOf(inf));
                 ajqkzlflVo.setBjs(bjajs);
                 ajqkzlflVo.setPcajs(pcajs);
                 ajqkzlflVo.setPcajZb(calcPercent(pcajs, bjajs));

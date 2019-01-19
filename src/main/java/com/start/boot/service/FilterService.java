@@ -75,5 +75,7 @@ public interface FilterService {
 
     Param_Pager getPcajgl(Param_Pcjk pcjkParam) throws Exception;
 
+    Param_Pager exportPcwtxtop(Param_Pcjk pcjkParam) throws Exception;
+
     List<Map> getWtx(Map params);
 }

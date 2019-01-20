@@ -430,7 +430,7 @@ public class AnalysisController extends ArchivesSystemBaseController{
         try {
             map.put("dwbm", param.getDwbm());
             map.put("cbrsf", param.getCbrsf());
-//            map.put("wcrqnf", param.getWcrqnf());
+            map.put("wcrqnf", param.getWcrqnf());
             map.put("startDate", param.getStartDate());
             map.put("endDate", param.getEndDate());
             map.put("pcstartDate", param.getPcstartDate());

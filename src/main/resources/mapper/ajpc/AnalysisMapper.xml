@@ -1,4 +1,4 @@
-﻿﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.start.boot.dao.ajpc.AnalysisMapper">
 
@@ -728,6 +728,9 @@
                 <!--and c.wcrq_nf in-->
                 <!--<foreach  item="item" collection="wcrqnf" index="index"  open="(" separator="," close=")">#{item}</foreach>-->
             <!--</if>-->
+            <if test="wcrqnf!=null and wcrqnf!=''">
+               and c.wcrq_nf = #{wcrqnf}
+           </if>
 
             <if test="startDate!=null and startDate!=''">
                 and c.BPC_WCRQ &gt;= to_date(#{startDate},'yyyy-MM-dd')
@@ -1233,9 +1236,9 @@
     <select id="getPcAjxxByParams" parameterType="java.util.Map" resultType="java.util.Map">
         SELECT ajxx.bmsah, ajxx.ajmc, ajxx.ajlb_mc ajlbmc, ajxx.bpc_dwmc dwmc, ajxx.pcdwbm, ajxx.bpc_mc cbrmc,
         ajxx.pcr_dwmc, ajxx.cjsj, '' cz, ajxx.pcflbm, ajxx.pcslbm, ajxx.pcr_mc, ajxx.bpc_wcrq, ajxx.bpc_dwbm from v_pcajxx ajxx WHERE 1 = 1
-        <!--<if test="wcrqnf !=null and wcrqnf!=''">-->
-            <!--AND wcrq_nf in (${wcrqnf})-->
-        <!--</if>-->
+        <if test="wcrqnf !=null and wcrqnf!=''">
+            AND wcrq_nf = #{wcrqnf}
+        </if>
 
         <if test="startDate!=null and startDate!=''">
             and bpc_wcrq &gt;= to_date(#{startDate},'yyyy-MM-dd')
@@ -1369,12 +1372,13 @@
     <!--获取重点案件质量分析中的筛选规则-->
     <select id="getZdSxgz" resultMap="zdSxgzMap">
        select gz.gzbm BM,
-        decode(gz.sfzdy,'Y',gz.gzmc||'('||gz.sslb||'重点)',gz.gzmc) MC,
+       decode(gz.sfzdy,'Y',gz.gzmc||'('||gz.sslb||'重点)',gz.gzmc) MC,
        nvl(gz.fgzbm,'-1') FBM
         from xt_pc_sxgz  gz
         where
         gz.dwbm = #{djdwbm}
         and gz.pcflbm= #{pcflbm}
+       ORDER by gz.fgzbm,gz.xh
     </select>
 
     <resultMap id="zdSxgzMap" type="map"/>
@@ -1478,93 +1482,133 @@
 
    <!--重点案件总体分析总体情况-->
     <select id="getZdqk" parameterType="com.start.boot.query.ZdFxQuery" resultType="com.start.boot.pojo.dto.ZdFxZtqkDto">
-        with comm_tab as (
-        select  nvl(max(c.fgzbm),'-1') as pid,
-                max(c.gzbm) as id,
-                count(c.bmsah) as bjcount,
-                0 as pccount,
-                0 pcrcount,
-                count(distinct c.cbdwbm ||c.cbrgh) cbrcount
-
-        FROM V_BJAJXX c <include refid="zdseachBJ" />
-
-        group by c.fgzbm,c.gzbm
-
-        union all
-
-        SELECT  nvl(max(c.fgzbm),'-1') as pid,
-                max(c.sxgzbm) as id,
-                0 as bjcount,
-                count(c.bmsah) as pccount,
-                count(distinct c.PCR_DWBM || c.PCR_GH) pcrcount,
-                count(distinct c.BPC_DWBM || c.BPC_GH) cbrcount
-        from V_PCAJXX c <include refid="zdseachPC" />
-
-        group by  fgzbm,sxgzbm
-
+        WITH
+        bjtab AS (SELECT * from v_bjajxx c  <include refid="zdseachBJ" />),
+        pctab AS (SELECT * from v_pcajxx c <include refid="zdseachPC" />),
+        hztab AS(
+            SELECT gz.sslb,gz.fgzbm ywtx,u.gzbm,
+            SUM(decode(coltype,'bars',cnt,0)) bars, --办案人数
+            SUM(decode(coltype,'bjajs',cnt,0)) bjajs, --办结案件数
+            SUM(decode(coltype,'pcrys',cnt,0)) pcrys, --评查人员数
+            SUM(decode(coltype,'pcajs',cnt,0)) pcajs, --评查案件数
+            'N' sfhj
+            FROM
+            (
+                --办案人数
+                SELECT gzbm , count(*) cnt, 'bars' coltype from ( SELECT DISTINCT gzbm,cbdwbm ,cbrgh from bjtab ) a GROUP BY gzbm
+                UNION ALL
+                --办结案件数
+                SELECT gzbm , count(*) cnt, 'bjajs' coltype from  bjtab  a GROUP BY gzbm
+                UNION ALL
+                --评查人员数
+                SELECT sxgzbm gzbm, count(*) cnt, 'pcrys' coltype from ( SELECT DISTINCT sxgzbm,pcr_dwbm,pcr_gh from pctab v ) a GROUP BY sxgzbm
+                UNION ALL
+                --评查案件数
+                SELECT sxgzbm gzbm, count(bmsah) cnt, 'pcajs' coltype from ( SELECT DISTINCT sxgzbm,bmsah from pctab v ) a GROUP BY sxgzbm
+            ) u
+            INNER JOIN xt_pc_sxgz gz ON gz.gzbm=u.gzbm
+            GROUP BY gz.sslb,gz.fgzbm,u.gzbm
+        ) /*SELECT * from hztab;*/
+        ,txtab AS ( --构建规则树形表
+            SELECT * from (
+                SELECT '-1' ywtx,'-1' gzbm,'合计' gzmc FROM dual --增加总计
+                UNION ALL
+                SELECT  gzbm ywtx  ,'-1' gzbm,sslb||'(合计)' gzmc FROM xt_pc_sxgz sx WHERE sx.pcflbm='008' AND sx.fgzbm IS NULL --增加按父规则合计
+                UNION ALL
+                SELECT h.ywtx , h.gzbm, decode(gz.sfzdy,'Y',gz.gzmc||'('||gz.sslb||'重点)',gz.gzmc) gzmc
+                FROM hztab h
+                INNER JOIN xt_pc_sxgz gz ON gz.gzbm=h.gzbm
+            )
         )
-        select max(pid) pid,
-        max(gz.gzmc) name,
-        max(id) id,
-        max(bjcount) bjcount,
-        max(pccount) pccount,
-        max(pcrcount) pcrcount,
-        max(cbrcount) cbrcount
-        from  comm_tab tab inner join xt_pc_sxgz gz on tab.id = gz.gzbm
-        group by id,pid
-        having max(pccount) >0
+        SELECT
+            (CASE WHEN y.ywtx = '-1' AND y.gzbm='-1' THEN '0' WHEN  y.ywtx != '-1' AND y.gzbm='-1' THEN y.ywtx ELSE y.gzbm END  ) ID,
+            (CASE WHEN y.ywtx = '-1' AND y.gzbm='-1' THEN '-1' WHEN  y.ywtx != '-1' AND y.gzbm='-1' THEN '0'  ELSE y.ywtx END  ) pid,
+            x.gzmc NAME,
+            y.bjajs bjcount,
+            y.pcajs pccount,
+            y.pcrys pcrcount,
+            y.bars cbrcount
+        FROM
+         ( SELECT ywtx,gzbm,bjajs,pcajs,pcrys,bars,sfhj from hztab a
+            UNION ALL
+            --增加总合计行
+           SELECT nvl(ywtx,'-1') ywtx,'-1',sum(bjajs),sum(pcajs),sum(pcrys),sum(bars),'Y' sfhj
+            FROM hztab  GROUP BY ROLLUP (ywtx)
+         ) y
+        INNER JOIN txtab x ON x.ywtx=y.ywtx AND x.gzbm=y.gzbm
+        WHERE y.pcajs >0--只显示评查数大于0的
+        ORDER by x.ywtx,x.gzbm
+
     </select>
 
     <!--重点案件质量分析-->
     <select id="getZdzlfx" parameterType="com.start.boot.query.ZdFxQuery" resultType="com.start.boot.pojo.dto.ZdFxzlfxDto">
-
-        with tab as(
-        select  nvl(max(gz.fgzbm),'-1') pid,
-        max(gz.gzbm) id,
-
-        SUM(case pcjl when '优质案件' then 1 else 0 END)  yzcount,
-        SUM(case pcjl when '合格案件' then 1 else 0 END) hgcount,
-        SUM(case pcjl when '不合格案件' then 1 else 0 END) bhgcount ,
-        SUM(case pcjl when '瑕疵案件' then 1 else 0 END) xccount,
-        0 bjcount
-
-        FROM V_PCAJXX c inner join xt_pc_sxgz gz on c.sxgzbm = gz.gzbm
-
-        <include refid="zdseachPC" />
-
-        group by   gz.fgzbm,gz.gzbm
-
-        union all
-
-        select nvl(max(fgzbm),'-1') pid,
-        max(gzbm) id,
-        0 yzcount,
-        0 hgcount,
-        0 bhgcount,
-        0 xccount,
-        count(c.bmsah) bjcount
-
-        from v_bjajxx c
-      
-        <include refid="zdseachBJ"/>
-
-        group by c.fgzbm,c.gzbm
-
-        )
-        select max(pid) pid,
-        max(id) id,
-        max(gz.gzmc) name,
-        (max(yzcount)+ max(hgcount) + max(bhgcount) + max(xccount)) pccount,
-        max(yzcount) yzcount,
-        max(hgcount) hgcount,
-        max(bhgcount) bhgcount,
-        max(xccount) xccount,
-        max(bjcount) bjcount
-
-
-        from tab inner join xt_pc_sxgz gz on tab.id = gz.gzbm
-        group by pid,id
-        having (max(yzcount)+ max(hgcount) + max(bhgcount) + max(xccount)) >0
+      WITH bjtab AS (SELECT * from v_bjajxx c  <include refid="zdseachBJ" />),
+         pctab AS (SELECT * from v_pcajxx c <include refid="zdseachPC" />),
+         hztab AS (
+         --汇总临时表start
+           SELECT gz.sslb,gz.fgzbm ywtx,u.gzbm,
+            SUM(decode(coltype,'bjajs',cnt,0)) bjajs, --办结案件数
+            SUM(decode(coltype,'pcajs',cnt,0)) pcajs, --评查案件数
+            SUM(decode(coltype,'yzajs',cnt,0)) yzajs, --优质案件数
+            SUM(decode(coltype,'hgajs',cnt,0)) hgajs, --合格案件数
+            SUM(decode(coltype,'xcajs',cnt,0)) xcajs, --瑕疵案件数
+            SUM(decode(coltype,'bhgajs',cnt,0)) bhgajs,  --不合格案件数
+            'N' sfhj
+            from (
+                  --办结案件数
+                  SELECT gzbm , count(*) cnt, 'bjajs' coltype from  bjtab  a GROUP BY gzbm
+                  UNION ALL
+                  --评查案件数
+                  SELECT sxgzbm, COUNT(bmsah) cnt, 'pcajs' coltype FROM ( SELECT DISTINCT sxgzbm,bmsah from pctab ) a GROUP BY a.sxgzbm
+                  UNION ALL
+                  SELECT sxgzbm,COUNT(bmsah) cnt, 'yzajs' coltype FROM pctab b WHERE  pcjl='优质案件' GROUP BY sxgzbm 
+                  UNION ALL
+                  SELECT sxgzbm,COUNT(bmsah) cnt, 'hgajs' coltype FROM pctab WHERE  pcjl='合格案件' GROUP BY sxgzbm 
+                  UNION ALL
+                  SELECT sxgzbm,COUNT(bmsah) cnt, 'xcajs' coltype FROM pctab WHERE  pcjl='瑕疵案件' GROUP BY sxgzbm 
+                  UNION ALL
+                  SELECT sxgzbm,COUNT(bmsah) cnt, 'bhgajs' coltype FROM pctab WHERE  pcjl='不合格案件' GROUP BY sxgzbm 
+              ) u 
+           INNER JOIN xt_pc_sxgz gz ON gz.gzbm=u.gzbm
+            GROUP BY gz.sslb,gz.fgzbm,u.gzbm 
+         )--汇总临时表end   
+         ,txtab AS ( --构建规则树形表
+              SELECT * from (
+                SELECT '-1' ywtx,'-1' gzbm,'合计' gzmc FROM dual --增加总计
+                UNION ALL
+                SELECT  gzbm ywtx  ,'-1' gzbm,sslb||'(合计)' gzmc FROM xt_pc_sxgz sx WHERE sx.pcflbm='008' AND sx.fgzbm IS NULL --增加按父规则合计
+                UNION ALL
+                SELECT h.ywtx , h.gzbm, decode(gz.sfzdy,'Y',gz.gzmc||'('||gz.sslb||'重点)',gz.gzmc) gzmc
+                FROM hztab h
+                INNER JOIN xt_pc_sxgz gz ON gz.gzbm=h.gzbm
+              )
+          ) 
+      SELECT (CASE WHEN y.ywtx = '-1' AND y.gzbm='-1' THEN '0' WHEN  y.ywtx != '-1' AND y.gzbm='-1' THEN y.ywtx ELSE y.gzbm END  ) ID,
+              (CASE WHEN y.ywtx = '-1' AND y.gzbm='-1' THEN '-1' WHEN  y.ywtx != '-1' AND y.gzbm='-1' THEN '0'  ELSE y.ywtx END  ) pid,
+              x.gzmc NAME,
+              bjajs bjcount,
+              pcajs pccount,
+              yzajs yzcount,
+              hgajs hgcount,
+              xcajs xccount,
+              bhgajs bhgcount,
+              to_char(decode(y.bjajs,0,0,y.pcajs*100/y.bjajs),'fm999999990.0099')||'%' pcl,
+              to_char(decode(y.pcajs,0,0,y.yzajs*100/y.pcajs),'fm999999990.0099')||'%' yzpcl,
+              to_char(decode(y.pcajs,0,0,y.hgajs*100/y.pcajs),'fm999999990.0099')||'%' hgpcl,
+              to_char(decode(y.pcajs,0,0,y.xcajs*100/y.pcajs),'fm999999990.0099')||'%' xcpcl,
+              to_char(decode(y.pcajs,0,0,y.bhgajs*100/y.pcajs),'fm999999990.0099')||'%' bhgpcl,
+              sfhj
+      FROM
+              (SELECT ywtx,gzbm,bjajs,pcajs,yzajs,hgajs,xcajs,bhgajs,sfhj from hztab a
+              UNION ALL
+              --增加总合计行
+              SELECT nvl(ywtx,'-1') ywtx,'-1',sum(bjajs),sum(pcajs),sum(yzajs),sum(hgajs),sum(xcajs),sum(bhgajs),'Y' sfhj
+              FROM hztab  GROUP BY ROLLUP (ywtx)
+              ) y
+         INNER JOIN txtab x ON x.ywtx=y.ywtx AND x.gzbm=y.gzbm
+          WHERE y.pcajs >0--只显示评查数大于0的
+          ORDER by x.ywtx,x.gzbm
     </select>
     
     <!--获取重点案件详细信息-->

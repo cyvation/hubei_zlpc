@@ -1419,14 +1419,16 @@ public class CountController  extends ArchivesSystemBaseController{
             ExcelVo excelVo = new ExcelVo();
             excelVo.setFileName("评查问题项排名");
             List<String> header ;
-            header = Arrays.asList("问题项","存在该问题的案件数");
+            header = Arrays.asList("存在该问题的案件数","问题项","分类");
             List<List<String>> data = new ArrayList<List<String>>();
             List<Map> list=datas.getList();
             for(int i=0;i<list.size();i++){
                 Map m=list.get(i);
                 List<String> sigleData = new ArrayList<>();
-                sigleData.add((String)m.get("WTX"));
                 sigleData.add((String)m.get("SL"));
+                sigleData.add((String)m.get("WTX"));
+                sigleData.add((String)m.get("FFL"));
+
                 data.add(sigleData);
             }
             logger.error("开始导出数据");

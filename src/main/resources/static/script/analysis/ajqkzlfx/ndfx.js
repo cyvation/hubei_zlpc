@@ -449,7 +449,7 @@ function ajzlqkfx_nd_expExcel() {
 function alert_jbxx_nd_tj_window(index, pcjl) {
     var obj = new Object();
     var thisRow = $('#table_analysis_ajqkzlfx_nf').datagrid('getRows')[index];
-    //obj.wcrqnf = thisRow.name;
+    obj.wcrqnf = thisRow.name;
 
     obj.startDate = $('#tjfx_nd_wc_start').datebox('getValue');
     obj.endDate = $('#tjfx_nd_wc_end').datebox('getValue');

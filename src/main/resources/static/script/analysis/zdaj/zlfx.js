@@ -85,10 +85,10 @@ var zlfxcolumn=  [[
         align: 'center',
         formatter: function (value, row, index) {
             var r = '';
-            if (row.name!= "合计") {
-                r = '<a href="#"  style="color: #145bae;text-decoration: none;"  data-field={"id":"'+row.id+'","pid":"'+row.pid+'"} onclick="alert_jbxx_tx_tj_window(this ,' + index + ', \'优质案件\')">' + value + '</a> ';
-            } else {
+            if (row.name.indexOf("合计")>0||row.name=='合计') {
                 r = value;
+            } else {
+                r = '<a href="#"  style="color: #145bae;text-decoration: none;"  data-field={"id":"'+row.id+'","pid":"'+row.pid+'"} onclick="alert_jbxx_tx_tj_window(this ,' + index + ', \'优质案件\')">' + value + '</a> ';
             }
             return r;
         }
@@ -322,12 +322,11 @@ function init_analysis_zdfx_tool() {
             return data.code == 200 ? JSON.parse(data.data) : [];
         },
         onLoadSuccess: function (node, data) {
-
-          /*  if (data != null && data.length >= 1){
-                setAllCheckbox('#analysis_zdaj_ajtjlb', data);
-                $('#analysis_zdaj_sxgz').combotree("setValue", data[0].id);
-            }*/
-            index_addMousedownDiv(this, "zdaj_ztqk_sxgz");
+           if (data != null && data.length >= 1){
+              //       setAllCheckbox('#analysis_zdaj_ajtjlb', data);
+              //       $('#analysis_zdaj_sxgz').combotree("setValue", data[0].id);
+                index_addMousedownDiv(this, "zdaj_ztqk_sxgz");
+            }
         },
         onSelect: function (node) {
             if (!node) {

@@ -392,16 +392,20 @@ public class AnalysisServiceImpl implements AnalysisService {
 //            String[] wcrqnfs = params.getWcrqnf().split(",");
 //            String[] wcrqnfs = params.getStartDate().split(","); // 由于以前根据案件年份分开算，现在兼容
             int st_nf=Integer.parseInt(params.getStartDate().substring(0,4));
-            int ed_nf=Integer.parseInt(params.getEndDate().substring(0,4));
+            int ed_nf=st_nf;
+            //后台处理将结束日期+1，年份需要还原
+            if (!StringUtils.isEmpty(params.getEndDate())){
+                ed_nf = DateTime.parse(params.getEndDate()).plusDays(-1).getYear();
+            }
             for (int inf = st_nf; inf <= ed_nf; inf++) {
-               // nf = wcrqnfs[i];
-               // map.put("wcrqnf", nf);
+                // nf = wcrqnfs[i];
+                // map.put("wcrqnf", nf);
 //                map.put("startDate", params.getStartDate());
                 map.put("startDate", inf+"-01-01");
-                if(DateUtils.converToDate(inf+"-12-31","yyyy-MM-dd")
+                if(DateUtils.converToDate((inf+1)+"-01-01","yyyy-MM-dd")
                         .compareTo(DateUtils.converToDate(params.getEndDate(),"yyyy-MM-dd"))<0)
                 {
-                    map.put("endDate", inf+"-12-31");
+                    map.put("endDate", (inf+1)+"-01-01");//因为没有附上 23:59:59
                 } else{
                     map.put("endDate", params.getEndDate());
                 }
@@ -2333,7 +2337,7 @@ public class AnalysisServiceImpl implements AnalysisService {
 
 
         // 构造‘合计’节点：
-        ZdFxTreeVo rootNode = new ZdFxTreeVo();
+ /*       ZdFxTreeVo rootNode = new ZdFxTreeVo();
         rootNode.setId("-1");
         rootNode.setPid("-1");
         rootNode.setName("合计");
@@ -2348,7 +2352,7 @@ public class AnalysisServiceImpl implements AnalysisService {
         rootNode.setPcrcount(Pcrcount);
         rootNode.setPccount(Pccount);
 
-        result.add(0,rootNode);
+        result.add(0,rootNode);*/
 
         // 父项合并子项
 //        result.stream().filter(parentNode-> parentNode.getPid().equals("-1") && !parentNode.getId().equals("-1") )
@@ -2431,7 +2435,7 @@ public class AnalysisServiceImpl implements AnalysisService {
 
 
         // 构造‘合计’节点：
-        ZdFxTreeVo rootNode = new ZdFxTreeVo();
+   /*     ZdFxTreeVo rootNode = new ZdFxTreeVo();
         rootNode.setId("-1");
         rootNode.setPid("-1");
         rootNode.setName("合计");
@@ -2450,7 +2454,7 @@ public class AnalysisServiceImpl implements AnalysisService {
         rootNode.setXccount(Xccount);
         rootNode.setBhgcount(Bhgcount);
 
-        result.add(0,rootNode);
+        result.add(0,rootNode);*/
 
         result.stream().forEach(res -> {
             // 评查比例

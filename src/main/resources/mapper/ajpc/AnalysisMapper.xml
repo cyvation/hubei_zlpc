@@ -644,7 +644,7 @@
         LEFT JOIN xt_dm_ajlbbm@tyyw_link.net ajlb ON pctx.ajlb_bm=ajlb.ajlbbm
         ) --业务条线、案件类别临时表（只统计评查系统里出现过的类别）end
         --算比例start
-        SELECT y.ywtx,txtab.ywtx_mc,y.ajlb_bm,txtab.ajlb_mc,
+        SELECT y.ywtx,txtab.ywtx_mc,nvl(y.ajlb_bm,' ') ajlb_bm,nvl(txtab.ajlb_mc,' ') ajlb_mc,
         y.bars "bjrNum",y.bjajs "bjajNum",y.pcrys "pcrNum",y.pcajs "pcajNum"
         --,to_char((y.pcajs*100/y.bjajs),'fm999999990.0099')||'%'  "评查比例（4/2）"
         ,to_char(decode(y.bjajs,0,0,y.pcajs*100/y.bjajs),'fm999999990.009')||'%' "pcbl"
@@ -678,6 +678,9 @@
                 <!--and c.wcrq_nf in-->
                 <!--<foreach  item="item" collection="wcrqnf" index="index"  open="(" separator="," close=")">#{item}</foreach>-->
             <!--</if>-->
+            <if test="wcrqnf!=null and wcrqnf!=''">
+                and c.wcrq_nf = #{wcrqnf}
+            </if>
 
             <if test="startDate!=null and startDate!=''">
                 and c.wcrq &gt;= to_date(#{startDate},'yyyy-MM-dd')
@@ -1114,7 +1117,7 @@
         ) --业务条线、案件类别临时表（只统计评查系统里出现过的类别）end
         --算比例start
         SELECT
-        y.ywtx,x.ywtx_mc,y.ajlb_bm,x.ajlb_mc,
+        y.ywtx,x.ywtx_mc,nvl(y.ajlb_bm,' ') ajlb_bm,nvl(x.ajlb_mc,' ') ajlb_mc,
         bjajs,pcajs,yzajs,hgajs,xcajs,bhgajs,
         to_char(decode(y.bjajs,0,0,y.pcajs*100/y.bjajs),'fm999999990.0099')||'%' pczb,
         to_char(decode(y.pcajs,0,0,y.yzajs*100/y.pcajs),'fm999999990.0099')||'%' yzajzb,

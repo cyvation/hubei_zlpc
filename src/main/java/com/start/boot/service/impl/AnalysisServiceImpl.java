@@ -925,7 +925,7 @@ public class AnalysisServiceImpl implements AnalysisService {
 
     @Override
     public List<ErrorAndFlawTreeVo> loadTxGeneral(Map map) throws Exception {
-        map.put("wcrqnf", "".equals(map.get("wcrqnf")) ? "" : (map.get("wcrqnf") + "").split(","));
+//        map.put("wcrqnf", "".equals(map.get("wcrqnf")) ? "" : (map.get("wcrqnf") + "").split(","));
         map.put("dwbm", "".equals(map.get("dwbm")) ? "" : (map.get("dwbm") + "").split(","));
         map.put("pcflbm", "".equals(map.get("pcflbm")) ? "" : (map.get("pcflbm") + "").split(","));
         map.put("ywtx", "".equals(map.get("ywtx")) ? "" : (map.get("ywtx") + "").split(","));
@@ -1321,6 +1321,7 @@ public class AnalysisServiceImpl implements AnalysisService {
             }
             list = AjqkzlflTreeVo.formatTree(list);
         } catch (Exception e) {
+            e.printStackTrace();
             throw e;
         }
         return list;
